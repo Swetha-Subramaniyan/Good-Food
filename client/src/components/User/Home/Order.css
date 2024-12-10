@@ -1,0 +1,35 @@
+.order-header{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.8rem;
+    margin-top: 3rem;
+}
+
+.date-box  input{
+    display: flex;
+    width: 10rem;   
+    margin-left: 9.5rem;
+    height: 2rem;
+}
+
+@media only screen and (max-width: 480px) {
+
+    .date-box  input{
+        display: flex;
+        width: 8rem;   
+        margin-left: 2.5rem;
+        height: 1.5rem;
+    }
+   
+    .order-header{
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        justify-items: center;
+        font-weight: bold;
+        font-size: 1.8rem;
+        margin-top: 3rem;
+    }
+}

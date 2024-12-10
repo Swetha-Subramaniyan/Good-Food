@@ -1,0 +1,29 @@
+.home-header{
+    display: flex;
+    flex-wrap: wrap;
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+    justify-content: space-between;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    
+    
+}
+
+@media only screen and (max-width: 480px) {
+    .home-header{
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+        justify-content: space-between;
+        
+    }
+    
+
+
+}
+
+
+
+

@@ -1,0 +1,191 @@
+.search {
+    display: flex;            
+    font-size: 1.8rem;    
+    margin-top: 1rem;
+    background-color: rgb(179, 185, 185);
+    background-color:  rgb(244, 140, 50); 
+    border-radius: 8rem;
+    height: 3rem;
+    margin-left: 26rem;
+    margin-right: 26rem;
+    padding-left: 2rem;
+    
+      
+  }
+
+.search span{
+    margin-left: 33rem;
+    margin-top: 0.5rem;
+  }
+  
+.footer{
+    display: flex;
+    gap: 20rem;
+    margin-top: 10rem;
+    margin-left: 3rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+.break{
+    display: flex;
+    gap: 9rem;
+    justify-content: center;
+    margin-top: 3rem;
+    font-weight: bold;
+    color: aliceblue;
+
+}
+.breakfast-out{
+  background-color: rgb(227, 233, 233);
+  background-color:  rgb(107, 56, 89);  
+  border-radius: 8px;
+  padding: 1rem;
+  min-width: 15rem;
+  text-align: center;
+}
+
+.add {
+  display: flex;
+ justify-content: center;
+   
+}
+
+.add button{
+  font-weight: bold; 
+  width: 3.6rem; 
+  height: 2rem; 
+  border-radius: 2px;
+  font-size: 1.2rem;
+  
+  
+}
+
+.add :hover{
+  background-color: rgb(243, 119, 17);
+  border: none;
+}
+
+img{
+  height: 6rem;
+  width: 10rem;
+
+}
+
+.photo{
+  display: flex;
+  flex-direction: row;
+  gap:0.5rem;
+  justify-content: space-between;
+}
+
+.fast{
+  
+  color: rgb(31, 27, 248);
+  font-size: 1.3rem;
+  color: white;
+}
+
+
+@media only screen and (max-width: 480px) {
+  .search {
+    font-size: 1.5rem;
+    text-align: center;
+    color: black;
+    font-weight: bold;
+    margin-left: 1rem;
+    background-color: rgb(194, 194, 200);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    min-width: 15rem;
+  }
+
+  .search span{
+    margin-left: 5rem;
+    margin-top: 0.5rem;
+  }
+  .break{ 
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-right: 4rem;
+}
+  .breakfast-out {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    margin-left: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .photo {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .add{
+    display: flex;
+    padding-right: 2rem;
+    flex-direction: row;
+  }
+}
+
+ 
+@media only screen and (max-width: 768px) {
+
+  .search {
+    font-size: 18px;
+    padding: 10px;
+    font-size: 1.5rem;
+    text-align: center;
+    color: black;
+    font-weight: bold;
+    margin-left: 1rem;
+    background-color: rgb(194, 194, 200);
+    min-width:30rem;
+   
+  }
+
+
+  .break {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    font-size: 16px;
+    
+  }
+
+  .breakfast-out {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    margin-left: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    
+  }
+
+  .photo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .photo div {
+    width: 80%;
+    margin-bottom: 15px;
+  }
+
+  .add {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+ 
+} 
+

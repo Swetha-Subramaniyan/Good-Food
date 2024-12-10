@@ -1,0 +1,23 @@
+.title{
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.7rem;
+    padding: 1rem;   
+}
+
+.menu-add{
+    padding: 1rem;
+}
+
+.menu-add button{
+    padding: 0.5rem;
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+.menu-pic{
+    height: 20rem;
+    width: 20rem;
+    background-color: rgb(233, 223, 223);
+}

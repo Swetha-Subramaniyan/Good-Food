@@ -1,0 +1,40 @@
+.add-butt button{
+        padding: 0.5rem;
+        font-size: 1.5rem;
+        border-radius: 8px;
+        padding-left: 1rem;
+        padding-right: 1rem;
+}
+
+.add-butt{
+    margin-left: 2rem;
+    margin-top: 2rem;
+    
+}
+
+.admin-subscription h3 {
+   display: flex;
+   justify-content:space-around;
+   
+}
+
+.back-admin{
+    background-color: rgb(197, 190, 203);
+    width: 800px;
+    justify-content: center;
+    padding: 2rem;
+    
+}
+
+.admin-submit{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+}
+
+.admin-submit button{
+    padding: 0.3rem;
+    font-size: 1.3rem;
+    border-radius: 5px;
+    
+}

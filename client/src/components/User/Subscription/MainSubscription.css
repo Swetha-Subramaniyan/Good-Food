@@ -1,0 +1,122 @@
+.choose-plan{
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-left: 2rem;
+   
+}
+
+.comboo{
+    background-color:rgb(227, 124, 92);
+    /* background-color:  rgb(55, 202, 141);   */
+    height: 10rem;
+    width: 20rem;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    padding-top: 3rem;
+    border-radius: 8px;
+    
+}
+
+.combo{
+    background-color:rgb(175, 134, 121);
+    background-color: rgb(235, 117, 49);
+  
+    height: 10rem;
+    width: 20rem;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    padding-top: 3rem;
+    border-radius: 8px;
+    
+    
+}
+
+.combooo{
+    background-color:rgb(223, 186, 74);
+    height: 10rem;
+    width: 20rem;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    padding-top: 3rem;
+    border-radius: 8px;
+    
+    
+}
+
+
+.back{
+    background-image: url(../../../assets/backk.png);
+    background-size: cover;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+
+.choose-plan  button{
+    height: 1.7rem;
+    width: 4rem;
+    border-radius: 2px;
+    border: none;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.heading {
+    font-size: 2.5rem;
+    position:absolute;
+    margin-bottom: 25rem;
+    font-family: cursive;
+  }
+
+.sub{
+    font-size: 2rem;
+    position:absolute;
+    margin-top: 25rem;
+    font-family: cursive;
+    font-weight: bold;
+    background-color: rgb(113, 30, 13);
+    padding: 0.5rem;
+    border-radius: 15px;
+    color: white;
+   
+    
+
+}
+
+@media only screen and (max-width:480px){
+
+    .heading {
+        font-size: 2.5rem;
+        position:absolute;
+        margin-bottom: 48rem;
+        font-family: cursive;
+        padding: 2rem;
+        font-weight: bold;
+        
+      }
+
+      .sub{
+        font-size: 2rem;
+        position:absolute;
+        margin-top: 45rem;
+        font-family: cursive;
+        font-weight: bold;
+        background-color: rgb(135, 38, 18);
+        padding: 0.5rem;
+        border-radius: 15px;
+        color: white;
+        
+    
+    }
+
+}
