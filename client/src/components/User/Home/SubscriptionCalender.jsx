@@ -115,7 +115,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
-    padding: '10px', 
+    padding: '20px', 
     height: '55px',
     fontSize: '18px',
     fontWeight:'bold'
@@ -164,18 +164,20 @@ const SubscriptionCalender = () => {
       <TableContainer
         component={Paper}
         sx={{
-          width: '80%',
+          width: '100%',
           display: 'flex',
           flexWrap: 'wrap',
           justifyContent: 'center',
           alignItems: 'center',
           margin: '0 auto',
+          paddingRight:'1rem',
+          paddingLeft:'1rem'
         }}
       >
-        <Table sx={{ minWidth: 700 }} aria-label="customized table">
+        <Table sx={{ minWidth: 70 }} aria-label="customized table">
           <TableHead>
             <TableRow>
-              <StyledTableCell>Date</StyledTableCell>
+              <StyledTableCell style={{textAlign:'center'}}>Date</StyledTableCell>
               <StyledTableCell align="center">Breakfast</StyledTableCell>
               <StyledTableCell align="center">Lunch</StyledTableCell>
               <StyledTableCell align="center">Dinner</StyledTableCell>
@@ -184,7 +186,7 @@ const SubscriptionCalender = () => {
           <TableBody>
             {rowData.map((row, rowIndex) => (
               <StyledTableRow key={row.name}>
-                <StyledTableCell component="th" scope="row">
+                <StyledTableCell component="th" scope="row" style={{ textAlign: 'center' }}>
                   {row.name}
                 </StyledTableCell>
                 <StyledTableCell align="center">

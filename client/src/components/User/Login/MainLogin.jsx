@@ -17,7 +17,7 @@ const MainLogin = () => {
 
 return (
     <>  
-<Link to={'/admin/AddSubscription'}> 
+    <Link to={'/admin/addsubscription'}> 
     <button> ADMIN</button> </Link> 
     <div className='background'> 
     <div className='sign-in'> 

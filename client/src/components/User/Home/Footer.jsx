@@ -11,11 +11,11 @@ const Footer = () => {
   return (
     <> 
 <div className='footer'> 
-    <div> <FaHome size={25} />Home </div> 
+    <div> <FaHome size={25} /> Home </div> 
     <Link to={'/user/SubscriptionCalender'}> 
-    <div> <FaListAlt />Subscription</div> </Link>
+    <div> <FaListAlt /> Subscription</div> </Link>
     <Link to={'/user/Order'}> 
-    <div > <FaCalendarAlt />Order</div> </Link> 
+    <div > <FaCalendarAlt /> Order</div> </Link> 
     <Link to={'/user/Account'}> 
     <div> <FaCircleUser /> Account</div> </Link>
 </div>  

@@ -1,38 +1,55 @@
-import React from 'react'
+
+import React, { useState } from 'react'
 import './MainAddSubscription.css'
 import { Link } from 'react-router-dom'
+import MainSidebar from '../AdminSidebar/MainSidebar';
 
 const MainAddSubscription = () => {
+  
+  const [isFormVisible, setFormVisible] = useState(false);
+  const toggleFormVisibility = () => {
+    setFormVisible(!isFormVisible);
+  };
+
+  const handleSaveNext= ()=>{
+    alert(' Subscription Plan Saved Successfully!')
+  }
+
   return (
-   <> 
-   <div className='add-butt' >  
-   <button> Add </button> </div> <br/>
-  <div className='back-admin'> 
-   <div className='admin-subscription'> 
-    <h3> Subscription Plan Name </h3>
-    <input/>
-   </div>
-   <div className='admin-subscription'> 
-    <h3> Enter the 1 Day Price</h3>
-    <input/>
-   </div>
-   <div className='admin-subscription'> 
-    <h3> Enter the 15 Days Price</h3>
-    <input/>
-   </div>
-   <div className='admin-subscription'> 
-    <h3> Enter the 30 Days Price</h3>
-    <input/>
-   </div>
-   <div className='admin-submit'> 
-   <Link to={'/admin/addmenuitems'}> 
-    <button> Save</button> 
-    </Link>
-   </div>
-   </div>
-   
-   </>
-  )
+    <>
+    <div> <MainSidebar/> </div>
+      <div className='sub-plan'> Subscription Plans</div> 
+      <div className='add--button'>
+        <button onClick={toggleFormVisibility}> Add Plan </button>
+      </div>     
+      {isFormVisible && (
+
+        <div className='back--admin'>
+      
+          <div className='plan-style'> 
+<div className='pop-break'> 
+
+<label> Plan Name <input/></label> 
+<label> Number of Days <input/></label> 
+<label> Price <input/></label> 
+<label> Breakfast Quantity <input/></label> 
+<label> Lunch Quantity <input/></label> 
+<label> Dinner Quantity <input/></label> 
+</div>
+
+</div>
+<div className='admin--submit'>
+            <button onClick={handleSaveNext}> Save</button>
+            <Link to={'/admin/addmenuitems'}>
+              <button> Next </button>
+            </Link>
+          </div>
+
+        </div>
+
+      )}
+    </>
+  );
 }
 
-export default MainAddSubscription
+export default MainAddSubscription;

@@ -13,11 +13,19 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
+    padding: '0.2px', 
+    height: '55px',
+    fontSize: '18px',
+    fontWeight:'bold'
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
+    fontSize: 17,
+    padding: '7px', 
   },
 }));
+
+
+
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
@@ -52,38 +60,38 @@ const Order = () => {
     <TableContainer component={Paper}
 
     sx={{
-        width: '80%', 
+        width: '100%', 
         display: 'flex', 
         flexWrap:'wrap',
         justifyContent: 'center', 
         alignItems: 'center', 
         margin: '0 auto', 
+        paddingLeft:'1rem',
+        paddingRight:'1rem'
         
       }}
      
      >
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
+      <Table sx={{ minWidth: 70 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Item</StyledTableCell>
-            <StyledTableCell align="right">Title</StyledTableCell>
-            <StyledTableCell align="right">Price</StyledTableCell>
-            <StyledTableCell align="right">Quantity</StyledTableCell>
-            <StyledTableCell align="right">Total Price</StyledTableCell>
-            <StyledTableCell align="right"> Status </StyledTableCell>  
+            <StyledTableCell align='center' >Item</StyledTableCell>
+            <StyledTableCell align='center' >Price</StyledTableCell>
+            <StyledTableCell align='center'>Quantity</StyledTableCell>
+            <StyledTableCell align='center' >Total Price</StyledTableCell>
+            <StyledTableCell align='center'> Status </StyledTableCell>  
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
             <StyledTableRow key={row.name}>
-              <StyledTableCell component="th" scope="row">
+              <StyledTableCell component="th" scope="row" style={{textAlign:'center'}}>
                 {row.name}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.fat}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="right">{row.protein}</StyledTableCell>
-              <StyledTableCell align="right"> Delivered</StyledTableCell>
+              <StyledTableCell align='center'>{row.fat}</StyledTableCell>
+              <StyledTableCell align='center'>{row.carbs}</StyledTableCell>
+              <StyledTableCell align='center'>{row.protein}</StyledTableCell>
+              <StyledTableCell align='center'> Delivered</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

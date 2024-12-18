@@ -7,7 +7,7 @@
 
 .form-container {
     width: 100%;
-    max-width: 600px;
+    max-width: 700px;
     margin: 0 auto;
     padding: 20px;
     background-color: #f9f9f9;
@@ -18,7 +18,7 @@
 
 .form-edit-save {
     display: flex;
-    gap: 25rem;
+    gap: 32rem;
 }
 
 .form-edit-save button{
@@ -36,6 +36,8 @@
     background-color: rgb(50, 96, 202);
     color: white;
 }
+
+
 
 
 @media only screen and (max-width: 480px) {

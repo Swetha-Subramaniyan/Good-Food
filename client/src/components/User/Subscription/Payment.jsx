@@ -36,7 +36,13 @@ const Payment = () => {
             <div className="form-group">
               <h3>Subscription Price: <span >  ₹200 </span>  </h3>
              
-            </div> <br/><br/>
+            </div> <br/>
+            <div className="form-group">
+              <h3>Subscription Days: <span >  30 Days </span>  </h3>
+             
+            </div>
+            
+             <br/><br/>
            
                     
 <div className="payment-method">
@@ -48,13 +54,13 @@ const Payment = () => {
         aria-labelledby="demo-radio-buttons-group-label"
         defaultValue="female"
         name="radio-buttons-group">
-        <FormControlLabel value="fGoogle Pay" control={<Radio />}  label="Google Pay" />
-        <FormControlLabel value="Phone Pay" control={<Radio />} label="Phone Pay" />
-        <FormControlLabel value="Card" control={<Radio />} label="Card" />
+        <FormControlLabel value="fGoogle Pay" control={<Radio />}  label="Google Pay" sx={{ color: 'black' }} />
+        <FormControlLabel value="Phone Pay" control={<Radio />} label="Phone Pay" sx={{ color: 'black' }} />
+        <FormControlLabel value="Card" control={<Radio />} label="Card" sx={{ color: 'black' }} />
       </RadioGroup>
     </FormControl>
             <div className="form-group">
-              <button type="submit">Save</button> 
+              {/* <button type="submit">Save</button>  */}
               <Link to={'/user/Payment'}>
               <button onClick={handlePayment} className='c-t-pay' > Checkout to Payment</button> </Link>  
             </div>

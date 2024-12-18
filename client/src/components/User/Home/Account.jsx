@@ -4,9 +4,9 @@ import './Account.css'
 const Account = () => {
   return (
     <> 
+   
+    <h2 style={{marginTop:'2.5rem'}}> My Profile </h2>
     <div className='form-container'> 
-    <h2> My Profile </h2>
-    
     <div className='profile-form'> 
     
              <div className="form-group">
@@ -45,7 +45,11 @@ const Account = () => {
               <input type='text' required/>
             </div>
             <div className="form-group">
-              <label>City</label>
+              <label>Area</label>
+              <input type='text' required/>
+            </div>
+            <div className="form-group">
+              <label>Pincode</label>
               <input type='text' required/>
             </div>
             <div className="form-group">
@@ -53,7 +57,11 @@ const Account = () => {
               <input/>
             </div>
             <div className="form-group">
-              <label>Payment Type </label>
+              <label>Subscription Days</label>
+              <input/>
+            </div>
+            <div className="form-group">
+              <label>Payment Method </label>
               <input/>
             </div>
             <div className='form-edit-save'> 

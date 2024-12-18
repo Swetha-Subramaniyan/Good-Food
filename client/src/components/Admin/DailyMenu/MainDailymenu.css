@@ -1,0 +1,32 @@
+
+
+.day-dropdown{
+    background-color: aliceblue;
+    width: fit-content;
+    padding: 1.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 10px;
+    background-color: rgb(79, 9, 79);
+    /* background-color: chocolate; */
+    color: white;
+}
+
+select {
+    margin-left: 1rem;
+    font-size: 1rem;
+}
+
+.day-position{
+    display: flex;
+    justify-content: space-around;
+}
+.day-save{
+    background-color: rgb(35, 24, 237);
+    height: 2.5rem;
+    width: 6rem;
+    padding: 0.2rem;
+    color: white;
+    border-radius: 8px;
+    margin-top: 1rem;
+}

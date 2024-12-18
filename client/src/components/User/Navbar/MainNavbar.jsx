@@ -3,14 +3,26 @@ import React from 'react';
 import { SlBasketLoaded } from "react-icons/sl";
 import './MainNavbar.css'
 import { IoPersonCircleOutline } from "react-icons/io5";
+import { Link, useNavigate } from 'react-router-dom';
+
 
 
 const MainNavbar = () => {
+  const navigate =useNavigate();
+
+  const handleCart=()=>{
+    navigate ('/user/cart')
+
+  }
+  const handleProfile=()=>{
+    navigate('/user/Account')
+  }
   return (
     <> 
     <div className='home-header'> 
-    <div> Profile <IoPersonCircleOutline size={30} /> </div>  
-    <div> Cart <SlBasketLoaded size={30}  />  </div>
+    <div onClick={handleProfile} > Profile <IoPersonCircleOutline size={30} /> </div> 
+
+<div onClick={handleCart}> Cart <SlBasketLoaded size={30}  />  </div>
     </div>
     
     </>

@@ -1,9 +1,15 @@
 import React from 'react'
 import './LoginPopup.css'
 import { FaTimes } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 
 const LoginPopup = ({ onClose }) => {
+  const navigate = useNavigate()
+
+  const handleSubmit =() => {
+    navigate ('/user/Subscription')
+  }
   return (
     <> 
     <div className='pop'> 
@@ -17,10 +23,9 @@ const LoginPopup = ({ onClose }) => {
         <br></br>
         <div>
         <label> Phone Number </label>
-        <input placeholder='dhanusharavikannan21@gmail.com'/> </div>
-        <Link to={'/user/Subscription'}> 
-        <button className='submit-btn'> Submit </button> 
-        </Link>
+        <input placeholder='9626528019'/> </div> 
+        <button onClick={handleSubmit} className='submit-btn'> Submit </button> 
+       
         
      </div>
     </>

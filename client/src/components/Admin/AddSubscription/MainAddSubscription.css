@@ -1,40 +1,172 @@
-.add-butt button{
-        padding: 0.5rem;
-        font-size: 1.5rem;
-        border-radius: 8px;
-        padding-left: 1rem;
-        padding-right: 1rem;
-}
 
-.add-butt{
-    margin-left: 2rem;
-    margin-top: 2rem;
-    
-}
+.add--button {
+    text-align:left;
+    margin-top: 20px;
+    margin-left: 8rem;
+    /* margin-left: 80rem; */
+  }
 
-.admin-subscription h3 {
-   display: flex;
-   justify-content:space-around;
+  .add--button button{
+    padding: 10px 20px;
+    background-color: rgb(45, 70, 196);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.2rem;
    
-}
 
-.back-admin{
-    background-color: rgb(197, 190, 203);
-    width: 800px;
-    justify-content: center;
-    padding: 2rem;
+  }
+
+  .back--admin {
     
-}
-
-.admin-submit{
+    width: 40rem;
+    margin: 20px auto; 
+    padding: 20px;
+    background-color: rgb(229, 237, 237);
+    border-radius: 8px;
+    text-align: center; 
+    
+    
+    
+  }
+  
+  .admin-subscription {
+    display: flex;
+    align-items: center; 
+    margin-bottom: 15px;
+  }
+  
+  .admin-subscription label {
+    margin-right: 10px;
+    font-size: 22px;
+    font-weight: bold;
+    color: black;
+    flex: 0 0 200px; 
+    white-space: nowrap;
+    color: rgb(129, 6, 98);
+    color: rgb(251, 90, 32);
+    
+  }
+  
+  .admin-subscription input {
+    flex-grow: 1; 
+    padding: 12px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: rgb(255, 255, 255);
+    
+  }
+  
+  .admin--submit {
     display: flex;
     justify-content: center;
-    justify-items: center;
+    gap: 2rem;
+    text-align: center;
+    /* margin-top: 40px; */
+  }
+  
+  .admin--submit button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: rgb(45, 70, 196);
+    /* background-color: #45a049; */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .admin--submit button:hover {
+    background-color: #45a049;
+  }
+  .sub-plan {
+    text-align: center;
+    font-size: 1.7rem;
+    font-weight: bold;
+   
+    
+  }
+
+
+.pop-break{
+  background-color: #45a049;
+  background-color: rgb(136, 8, 74);
+  background-color: rgb(229, 237, 237);
+  padding: 2rem;
+  width: 38rem;
+  margin-left: 3rem;
+  margin-right: 3rem;
+  border-radius: 8px;
+  /* margin-top: 1rem; */
+
 }
 
-.admin-submit button{
-    padding: 0.3rem;
-    font-size: 1.3rem;
-    border-radius: 5px;
-    
+.pop-break label{
+  text-align: left;
+  color: black;
 }
+
+
+.plan-style{
+  display: flex;
+  justify-content: space-between;
+}
+
+  @media (max-width: 768px) {
+    .add--button {
+      margin-left: 8rem;
+      text-align: center;
+      margin-right: 8rem;
+    }
+  
+    .add--button button {
+      font-size: 1rem;
+      padding: 8px 16px;
+    }
+  
+    .back--admin {
+      width: 90%;
+      padding: 15px;
+    }
+  
+    .admin-subscription {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+  
+    .admin-subscription label {
+      margin-bottom: 5px;
+      font-size: 16px;
+      flex: 0 0 100%;
+    }
+  
+    .admin-subscription input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+    }
+  
+    .admin--submit {
+      flex-direction: row;
+      gap: 3rem;
+    }
+  
+    .admin--submit button {
+      font-size: 14px;
+      padding: 10px 15px;
+      width: 5rem;
+      font-weight: bold;
+      font-size: 1.1rem;
+      background-color: rgb(39, 39, 225);
+      border-radius: 8px;
+    }
+  
+    .sub-plan {
+      font-size: 1.3rem;
+    }
+  }

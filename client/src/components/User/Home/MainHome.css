@@ -1,23 +1,26 @@
-.search {
-    display: flex;            
-    font-size: 1.8rem;    
-    margin-top: 1rem;
-    background-color: rgb(179, 185, 185);
-    background-color:  rgb(244, 140, 50); 
-    border-radius: 8rem;
-    height: 3rem;
-    margin-left: 26rem;
-    margin-right: 26rem;
-    padding-left: 2rem;
-    
-      
-  }
 
+.search{
+  display: flex;
+  border-radius: 15rem;
+  height: 4rem;
+  justify-content: center;
+  justify-items: center;
+  padding-left: 27rem;
+  padding-right: 27rem;
+  margin-top: 1rem;
+}
+
+.search input{
+  border-radius: 20px;
+
+}
 .search span{
-    margin-left: 33rem;
-    margin-top: 0.5rem;
-  }
+  margin-left: 35rem;
+  margin-top: 1rem;
+  position: absolute;
   
+}
+
 .footer{
     display: flex;
     gap: 20rem;
@@ -55,9 +58,14 @@
   width: 3.6rem; 
   height: 2rem; 
   border-radius: 2px;
-  font-size: 1.2rem;
-  
-  
+  font-size: 1.2rem;  
+  margin-left: 0.2rem;
+  margin-right: 0.2rem;
+}
+
+.add span{
+  margin-top: 1.25rem;
+  font-size: 1.5rem;
 }
 
 .add :hover{
@@ -68,7 +76,6 @@
 img{
   height: 6rem;
   width: 10rem;
-
 }
 
 .photo{
@@ -79,113 +86,154 @@ img{
 }
 
 .fast{
-  
   color: rgb(31, 27, 248);
   font-size: 1.3rem;
   color: white;
 }
 
 
-@media only screen and (max-width: 480px) {
+ @media only screen and (max-width: 768px) {
+ 
   .search {
-    font-size: 1.5rem;
-    text-align: center;
-    color: black;
-    font-weight: bold;
-    margin-left: 1rem;
-    background-color: rgb(194, 194, 200);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    min-width: 15rem;
-  }
-
-  .search span{
-    margin-left: 5rem;
-    margin-top: 0.5rem;
-  }
-  .break{ 
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-right: 4rem;
-}
-  .breakfast-out {
-    font-size: 0.9rem;
-    margin-bottom: 5px;
-    margin-left: 1rem;
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .photo {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  .add{
-    display: flex;
+    padding-left: 2rem;
     padding-right: 2rem;
-    flex-direction: row;
+    margin-top: 1rem;
   }
-}
+
+  .search input {
+    width: 100%; 
+  }
+
+  .search span {
+    position: absolute;
+    right: 1px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 
  
-@media only screen and (max-width: 768px) {
-
-  .search {
-    font-size: 18px;
-    padding: 10px;
-    font-size: 1.5rem;
-    text-align: center;
-    color: black;
-    font-weight: bold;
-    margin-left: 1rem;
-    background-color: rgb(194, 194, 200);
-    min-width:30rem;
-   
-  }
-
-
   .break {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    font-size: 16px;
-    
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
   }
 
   .breakfast-out {
-    font-size: 0.9rem;
-    margin-bottom: 5px;
-    margin-left: 1rem;
-    display: flex;
-    flex-wrap: wrap;
-    
+    min-width: 12rem;
+    padding: 0.8rem;  
   }
 
   .photo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
+    flex-direction: row;
+    gap: 1rem;
   }
 
   .photo div {
-    width: 80%;
-    margin-bottom: 15px;
-  }
-
-  .add {
+    display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 10px;
+    text-align: center;
   }
 
-  button {
-    width: 100%;
-    margin-bottom: 10px;
+  img {
+    height: 5rem;
+    width: auto;
   }
- 
-} 
 
+  .add button {
+    width: 3rem;
+    height: 1.8rem;
+    font-size: 1rem;
+  }
+
+  .footer {
+    display: block;
+    text-align: center;
+    margin-top: 3rem;
+    font-size: 1.2rem;
+  }
+}
+
+
+
+
+
+
+@media only screen and (max-width: 480px) {
+  
+  .search {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-top: 1rem;
+  }
+
+  .search input {
+    font-size: 1rem;  
+    padding: 0.8rem;
+    min-width: 7rem;
+  }
+
+  .search span {
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem; 
+  }
+
+  
+  .break {
+    flex-direction: row;
+    gap: 0.8rem;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+    
+  }
+
+  .break span{
+    font-size: 16px;
+  }
+
+  .breakfast-out { 
+    min-width: 10rem;
+    padding: 0.4rem;
+    font-size: 1rem;
+    font-size: 12px;
+  }
+
+  .photo {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .photo div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  img {
+    height: 4rem;
+    width: auto;
+  }
+
+  .add button {
+    width: 2.8rem;
+    height: 1.6rem;
+    font-size: 0.9rem;
+  }
+
+  
+  .footer {
+    display: block;
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 1rem;
+  }
+
+  
+  .navbar {
+    font-size: 1rem;  
+  }
+}
