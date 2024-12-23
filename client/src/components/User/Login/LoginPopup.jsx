@@ -9,27 +9,30 @@ const LoginPopup = ({ onClose }) => {
 
   const handleSubmit =() => {
     navigate ('/user/Subscription')
+    // navigate('/user/OverallHome')
   }
   return (
     <> 
+    <div className='backgroundd'> 
     <div className='pop'> 
          <button className="close-btn" onClick={onClose}>
           <FaTimes /> 
         </button>
         <h2 className='login'> Sign In</h2>
         <div> 
-        <label> Name </label> 
-        <input placeholder='Dhanusha'/> </div>
+        <label> Phone Number </label> 
+        <input placeholder='9626528019'/> </div>
         <br></br>
         <div>
-        <label> Phone Number </label>
-        <input placeholder='9626528019'/> </div> 
-        <button onClick={handleSubmit} className='submit-btn'> Submit </button> 
-       
-        
+        <label> User ID  </label>
+        <input placeholder='GF001'/> </div> 
+        <button onClick={handleSubmit} className='submit-btn'> Submit </button>        
+     </div>
      </div>
     </>
   )
 }
 
 export default LoginPopup
+
+

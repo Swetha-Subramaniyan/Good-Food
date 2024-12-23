@@ -28,6 +28,7 @@ const Payment = () => {
 <div className='details-back'>
         <div className="form-container">
           <h2>Subscription Details</h2><br/>
+
           <form>
           <div className="form-group">
               <h3>Subscription Plan: <span >  Combo Budget </span> </h3>
@@ -38,9 +39,24 @@ const Payment = () => {
              
             </div> <br/>
             <div className="form-group">
-              <h3>Subscription Days: <span >  30 Days </span>  </h3>
+              <h3>Subscription Days: <span >  30 Days </span>  </h3> 
+            </div>
+            <br/> 
+            <div className="form-group">
+              <h3> Starting Date: <span  style={{marginLeft:'18.5rem'}}>  01-12-2024 </span>  </h3>
              
             </div>
+            <br/> 
+            <div className="form-group">
+              <h3> Ending Date: <span style={{marginLeft:'19.2rem'}} >  01-01-2025 </span>  </h3>
+             
+            </div>
+            <br/> 
+            <div className="form-group">
+              <h3> Subscription Validity <span style={{marginLeft:'15rem'}}> 45 Days</span> </h3>
+             
+            </div>
+
             
              <br/><br/>
            
@@ -60,7 +76,7 @@ const Payment = () => {
       </RadioGroup>
     </FormControl>
             <div className="form-group">
-              {/* <button type="submit">Save</button>  */}
+              
               <Link to={'/user/Payment'}>
               <button onClick={handlePayment} className='c-t-pay' > Checkout to Payment</button> </Link>  
             </div>
