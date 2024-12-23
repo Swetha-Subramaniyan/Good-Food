@@ -11,6 +11,11 @@ const LoginPopup = ({ onClose }) => {
     navigate ('/user/Subscription')
     // navigate('/user/OverallHome')
   }
+
+  const landingPage = () =>{
+    navigate ('/user/OverallHome')
+  }
+
   return (
     <> 
     <div className='backgroundd'> 
@@ -18,7 +23,7 @@ const LoginPopup = ({ onClose }) => {
          <button className="close-btn" onClick={onClose}>
           <FaTimes /> 
         </button>
-        <h2 className='login'> Sign In</h2>
+        <h2 onClick={landingPage}  className='login'> Sign In</h2>
         <div> 
         <label> Phone Number </label> 
         <input placeholder='9626528019'/> </div>
@@ -26,7 +31,7 @@ const LoginPopup = ({ onClose }) => {
         <div>
         <label> User ID  </label>
         <input placeholder='GF001'/> </div> 
-        <button onClick={handleSubmit} className='submit-btn'> Submit </button>        
+        <button onClick={handleSubmit} className='submit-btn'> Submit </button>       
      </div>
      </div>
     </>

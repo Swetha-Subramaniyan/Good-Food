@@ -2,9 +2,7 @@
 
 import React from 'react';
 import './IndividualPackBreakfast.css';
-import { IoSunnyOutline } from "react-icons/io5";
 import { IoPartlySunnyOutline } from "react-icons/io5";
-import { MdOutlineModeNight } from "react-icons/md";
 import idly from '../../../assets/idly.jpg'
 import rice from '../../../assets/Rice.jpg'
 import biriyani from '../../../assets/biriya.jpg'

@@ -1,16 +1,189 @@
-.home-head{
-    margin-top: 2rem;
-    margin-left: 20rem;
-    display: flex;
-    gap: 3rem;
-    font-weight: bold;
+ 
+
+.register{
+    width: fit-content;
+    padding: 1.5rem;
     font-size: 1.2rem;
+    font-weight: bold;
+    display: flex;
+    gap: 2rem;
+    margin-left: 1.3rem;
+}
+
+.register div{
+    background-color: rgb(113, 69, 69);
+    padding: 1.4rem;
+    color: white;
+    border-radius: 8px;
+ 
    
 }
 
-.home-sub-plan{
+
+.regi{
+    width: fit-content;
+    padding: 1.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: flex;
+    gap: 2rem;
+    margin-left: 1.3rem;
+    
+}
+
+.regi div{
+
+    padding: 1.3rem;
+    color: white;
+    background-color: darkslategrey;
+    border-radius: 8px;
+}
+
+.vision-head{
+    font-size: 1.5rem;
+   
+}
+
+.vision-back{
+    background-color: aliceblue;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    padding: 1rem;
+
+} 
+
+
+   
+  
+.logo-pic{
+   
+    position: absolute;
+    top: 2rem;
+    left: 4rem;
+   
+}
+
+.home-head{
+    display: flex;
+    gap: 5.3rem;
+    font-weight: bold;
+    font-size: 1.3rem;
+    padding-top: 2rem;
+    margin-left: 18rem;
+}
+
+.home-header{
+    margin-left: 3rem;
+    margin-top: 6rem;
+    font-size: 2.1rem;
+   
+}
+
+.food{
+   background-image: url('../../../assets/foodcolor.png');
+   background-size: cover;
+   min-height: 100vh;
+   width: 100%;
+   
+   
+}
+
+.individual-plan{
+    display: flex;
+    justify-content: center;
+    border: 2px solid rgb(198, 187, 190);
+    margin-left: 38rem;
+    margin-right: 38rem;
+}
+
+
+.backwhite{
+    background-color: rgb(254, 189, 103);
+    background-size: cover;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+  
+.backwhite .heading {
+    font-size: 2.5rem;
     font-family: cursive;
-    font-size: 2rem;
+    color: rgb(56, 38, 199);
+  }
+
+  .home-heading{
+    display: flex;
+    justify-content: center;
+    font-family: cursive;
+    /* color: blue; */
+    color: orangered;
+    font-size: 2.4rem;
+    
+  }
+
+
+  .com{
+   
+    background-color:rgb(223, 186, 74);
+    height: 10rem;
+    width: 20rem;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    padding-top: 3rem;
+    border-radius: 8px;
+    background-color: rgb(229, 237, 237);  
+    font-family: Georgia, 'Times New Roman', Times, serif;   
+}
+
+.chooseplan{
+    display: flex;
+    gap: 10rem;
+    flex-wrap: wrap;
+    margin-left: 2rem;
+     
+   
+}
+
+.plans-head{
+    margin-top: 3rem;
+    display: flex;
+    justify-content: space-around;
+
+}
+
+ .comm{
+
+    height: fit-content;
+    width: fit-content;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    background-color: rgb(77, 41, 28);  
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    padding: 2rem;
+    color: white;
+}
+
+.comm button{
+    margin-top: 0.9rem;
+    height: 2rem;
+    width: 4rem;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.comm button :hover{
+    background-color: rgb(240, 119, 33);
+    cursor: pointer;
+
+}
+
+.contact-details{
     display: flex;
     justify-content: center;
 }
