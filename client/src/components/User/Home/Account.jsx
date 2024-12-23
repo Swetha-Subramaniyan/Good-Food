@@ -64,6 +64,10 @@ const Account = () => {
               <label>Payment Method </label>
               <input/>
             </div>
+            <div className="form-group">
+              <label >Refer Your Friend and Get Discount</label>
+              
+            </div>
             <div className='form-edit-save'> 
                 <button> Edit </button> <button> Save</button>
             </div>

@@ -132,7 +132,6 @@
 
 
 import React, { useState } from 'react';
-import { BsSearch } from "react-icons/bs";
 import './MainHome.css';
 import MainNavbar from '../Navbar/MainNavbar';
 import { IoSunnyOutline } from "react-icons/io5";
@@ -167,7 +166,7 @@ const MainHome = () => {
     setAddedItems((prevState) => {
       const newQuantity = operation === 'increment' 
         ? prevState[item] + 1 
-        : (prevState[item] > 0 ? prevState[item] - 1 : 0); // Prevent going below 0
+        : (prevState[item] > 0 ? prevState[item] - 1 : 0); 
       return { ...prevState, [item]: newQuantity };
     });
   };

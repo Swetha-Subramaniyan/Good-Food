@@ -63,7 +63,6 @@ img{
     color: rgb(242, 241, 246);
    
   }
-
   
 .break{
     display: flex;
@@ -71,14 +70,12 @@ img{
     justify-content: center;
     margin-top: 3rem;
     font-weight: bold;
-    /* font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; */
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
 
 }
 .breakfast-outt{
   background-color: rgb(12, 13, 13);
   background-color:  rgb(107, 56, 89);
-  /* border-radius: 35px; */
   border-radius: 5px;
   padding: 0.4rem;
   min-width: 22rem;
@@ -86,7 +83,7 @@ img{
   font-size: 1.2rem;
   color: orangered;
   color: rgb(233, 233, 236);
-  /* color: rgb(236, 68, 34); */
+  
 }
 
 .add {
@@ -132,12 +129,10 @@ img{
     font-size: 1.6rem;
     font-weight: bold;
     position: absolute;
-    /* margin-top: 1rem; */
     margin-left: 82rem;
     border-radius: 8px;
     color: red;
     color: rgb(246, 248, 245);
-    background-color: black;
     background-color:  rgb(107, 56, 89);   
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
@@ -164,4 +159,235 @@ img{
   padding: 2rem;
   border-radius: 8px;
   font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+}
+
+
+.days-align{
+  text-align: center;
+  background-color:rgb(151, 200, 244);
+  width: fit-content;
+  padding: 0.2rem;
+  margin-left: 3rem;
+  font-weight: bold;
+}
+
+
+
+/* .breakfast {
+  display: flex;
+  gap: 3rem;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.pic {
+  background-color: rgb(156, 161, 161);
+  height: 15rem;
+  width: 23rem;
+  border-radius: 8px;
+}
+
+img {
+  height: 10rem;
+  width: 15rem;
+}
+
+.add button {
+  margin-top: 1.5rem;
+}
+
+.photo {
+  margin-left: 2rem;
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.photo h3 {
+  text-align: center;
+}
+
+.list {
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 2rem;
+  margin-top: 2rem;
+}
+
+.listt {
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 2.4rem;
+  margin-top: 2rem;
+  font-family: cursive;
+}
+
+.fastt {
+  font-size: 1.4rem;
+  padding-right: 1rem;
+  color: rgb(242, 241, 246);
+}
+
+.break {
+  display: flex;
+  gap: 9rem;
+  justify-content: center;
+  margin-top: 3rem;
+  font-weight: bold;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.breakfast-outt {
+  background-color: rgb(12, 13, 13);
+  background-color: rgb(107, 56, 89);
+  border-radius: 5px;
+  padding: 0.4rem;
+  min-width: 22rem;
+  text-align: center;
+  font-size: 1.2rem;
+  color: orangered;
+  color: rgb(233, 233, 236);
+}
+
+.add {
+  display: flex;
+  justify-content: center;
+}
+
+.add button {
+  font-weight: bold;
+  width: 3.6rem;
+  height: 2rem;
+  border-radius: 2px;
+  font-size: 1.2rem;
+  background-color: rgb(36, 97, 16);
+  background-color: orangered;
+  color: white;
+  border: none;
+}
+
+.add :hover {
+  background-color: rgb(34, 121, 47);
+  border: none;
+}
+
+img {
+  height: 6rem;
+  width: 10rem;
+}
+
+.photo {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+
+.sub-add button {
+  padding: 1rem;
+  font-size: 1.6rem;
+  font-weight: bold;
+  position: absolute;
+  margin-left: 82rem;
+  border-radius: 8px;
+  color: red;
+  color: rgb(246, 248, 245);
+  background-color: black;
+  background-color: rgb(107, 56, 89);
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.sub-add :hover {
+  color: white;
+  cursor: pointer;
+}
+
+.days {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 2rem;
+  font-weight: bold;
+  font-size: 1.6rem;
+}
+
+.days div {
+  background-color: rgb(238, 74, 24);
+  color: aliceblue;
+  padding: 2rem;
+  border-radius: 8px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+} */
+
+
+@media (max-width: 768px) {
+  .breakfast {
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 2rem;
+  }
+
+  .pic {
+      height: 12rem;
+      width: 18rem;
+  }
+
+  img {
+      height: 8rem;
+      width: 12rem;
+  }
+
+  .photo {
+      margin-left: 0;
+      margin-top: 1rem;
+      flex-direction: column;
+      gap: 1rem;
+  }
+
+  .list, .listt {
+      font-size: 1.6rem;
+  }
+
+  .add button {
+      font-size: 1rem;
+      width: 4rem;
+      height: 2.4rem;
+  }
+
+  .break {
+      flex-direction: column;
+      gap: 3rem;
+      margin-top: 2rem;
+      font-size: 1.4rem;
+  }
+
+  .breakfast-outt {
+      min-width: 18rem;
+      font-size: 1rem;
+  }
+
+  .sub-add button {
+     
+      margin-left: 0;
+      margin-top: 5rem;
+      padding: 0.3rem;
+      font-size: 1.2rem;
+      margin-left: 1rem;
+  }
+
+  .days {
+   
+      flex-direction: column;
+      font-size: 1.4rem;
+  }
+
+  .days div {
+      padding: 1rem;
+      text-align: center;
+      margin-top: 2rem;
+     
+  }
 }

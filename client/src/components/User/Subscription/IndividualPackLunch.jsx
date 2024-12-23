@@ -1,81 +1,3 @@
-// import React from 'react'
-// import '../Subscription/IndividualPack.css'
-// import { IoSunnyOutline } from "react-icons/io5";
-// import { IoPartlySunnyOutline } from "react-icons/io5";
-// import { MdOutlineModeNight } from "react-icons/md";
-// import idly from '../../assets/idly.jpg'
-// import dosa from '../../assets/dosa.webp'
-// import rice from '../../assets/Rice.jpg'
-// import biriyani from '../../assets/biriya.jpg'
-// import chappathi from '../../assets/chappathi.jpg'
-// import pongal from '../../assets/pongal.jpg'
-
-
-// const IndividualPack = () => {
-//   return (
-//     <>
-
-//     <div className='breakfast'> 
-//             <div> <IoPartlySunnyOutline /> Breakfast <br/> 8:00 AM - 11:00AM </div>
-//             <div> <IoSunnyOutline /> Lunch <br/> 11:00 AM - 3:00AM  </div>
-//             <div>  <MdOutlineModeNight /> Dinner <br/> 3:00 AM - 7:00AM </div> 
-//     </div>
-//     <div className='photo'> 
-//     <div> 
-//     <img src={idly} alt='idly'/><br/> 
-//     <h3> Idly+chutney+sambar <br/> Star Ratings</h3>
-//     <div className='add'> 
-//     <button> Rs.80</button><button style={{marginLeft:'7rem'}} > Add </button> </div> 
-//     </div>
-//     <div> 
-//     <img src={pongal} alt='dosa'/><br/> 
-//     <h3> Pongal+sambar+vada <br/> Star Ratings</h3>
-//     <div className='add'> 
-//     <button> Rs.80</button><button style={{marginLeft:'7rem'}}> Add</button>  </div> 
-//     </div>
-
-
-//     <div> 
-//     <img src={rice} alt='idly'/><br/> 
-//     <h3> White Rice + Chicken gravy <br/> Star Ratings</h3>
-//     <div className='add'> 
-//     <button> Rs.80</button><button style={{marginLeft:'7rem'}} > Add </button> </div> 
-//     </div>
-//     <div> 
-//     <img src={biriyani} alt='dosa'/><br/> 
-//     <h3> Chicken Biriyani <br/> Star Ratings</h3>
-//     <div className='add'> 
-//     <button> Rs.80</button><button style={{marginLeft:'7rem'}}> Add</button>  </div> 
-//     </div>
-
-
-
-//     <div> 
-//     <img src={chappathi} alt='idly'/><br/> 
-//     <h3> Chappathi + chicken gravy <br/> Star Ratings</h3>
-//     <div className='add'> 
-//     <button> Rs.80</button><button style={{marginLeft:'7rem'}} > Add </button> </div> 
-//     </div>
-//     <div> 
-//     <img src={dosa} alt='dosa'/><br/> 
-//     <h3> Dosa+chutney+sambar <br/> Star Ratings</h3>
-//     <div className='add'> 
-//     <button> Rs.80</button><button style={{marginLeft:'7rem'}}> Add</button>  </div> 
-//     </div>
-
-
-
-
-//     </div>
-//     </>
-    
-//   )
-// }
-
-// export default IndividualPack
-
-
-
 
 
 import React from 'react';
@@ -93,7 +15,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 
-const IndividualPack = () => {
+const IndividualPackLunch = () => {
 
   const [addedItems, setAddedItems] = useState({
     idly: false,
@@ -120,13 +42,13 @@ const IndividualPack = () => {
     <br/><br/>
   
   <div className='days'> 
-    <div> 1 Day - ₹75</div> 
-    <div> 15 Days - ₹68 </div>
-    <div> 30 Days - ₹60 </div>
+    <div> 1 Day - ₹100</div> 
+    <div> 15 Days - ₹90 </div>
+    <div> 30 Days - ₹80 </div>
 
   </div>
 
-  <div className='break'> 
+  {/* <div className='break'> 
             <div className='breakfast-outt'> <IoPartlySunnyOutline/><span className='fastt'> Breakfast </span>Order before 11:00AM </div>         
   </div>
 
@@ -185,7 +107,7 @@ const IndividualPack = () => {
             </button>
      </div> 
     </div>
-    </div>
+    </div> */}
 
 
     <div className='break'> 
@@ -245,7 +167,7 @@ const IndividualPack = () => {
     </div>
 
 
-    <div className='break'> 
+    {/* <div className='break'> 
       
             <div className='breakfast-outt'>  <MdOutlineModeNight /> <span className='fastt'> Dinner </span> Order before 7:00PM </div> 
   </div>
@@ -298,7 +220,7 @@ const IndividualPack = () => {
             </button>
      </div> 
     </div>
-    </div>
+    </div> */}
 
 
     </div>
@@ -308,4 +230,4 @@ const IndividualPack = () => {
   )
 }
 
-export default IndividualPack
+export default IndividualPackLunch
