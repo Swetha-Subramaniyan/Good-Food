@@ -62,10 +62,6 @@
 //     <div className='add'> 
 //     <button> Rs.80</button><button style={{marginLeft:'7rem'}}> Add</button>  </div> 
 //     </div>
-
-
-
-
 //     </div>
 //     </>
     
@@ -120,9 +116,9 @@ const IndividualPack = () => {
     <br/><br/>
   
   <div className='days'> 
-    <div> 1 Day - ₹75</div> 
-    <div> 15 Days - ₹68 </div>
-    <div> 30 Days - ₹60 </div>
+    <div> 1 Day - ₹350*1 = 350</div> 
+    <div> 15 Days - ₹325*15 = 4875 </div>
+    <div> 30 Days - ₹300*30 = 9000 </div>
 
   </div>
 
@@ -187,10 +183,8 @@ const IndividualPack = () => {
     </div>
     </div>
 
-
-    <div className='break'> 
-            
-            <div className='breakfast-outt'> <IoSunnyOutline /><span className='fastt'> Lunch </span>   Order before 3:00AM  </div>
+  <div className='break'> 
+               <div className='breakfast-outt'> <IoSunnyOutline /><span className='fastt'> Lunch </span>   Order before 3:00AM  </div>
             
   </div>
 
@@ -245,9 +239,8 @@ const IndividualPack = () => {
     </div>
 
 
-    <div className='break'> 
-      
-            <div className='breakfast-outt'>  <MdOutlineModeNight /> <span className='fastt'> Dinner </span> Order before 7:00PM </div> 
+  <div className='break'> 
+     <div className='breakfast-outt'>  <MdOutlineModeNight /> <span className='fastt'> Dinner </span> Order before 7:00PM </div> 
   </div>
 
   <div className='photo'> 
@@ -300,9 +293,7 @@ const IndividualPack = () => {
     </div>
     </div>
 
-
     </div>
-  
 
     </>
   )

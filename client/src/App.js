@@ -1,4 +1,6 @@
-import React from 'react'
+import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.js';
 import {Routes, Route, BrowserRouter, Outlet} from "react-router-dom"
 import IndividualPack from './components/User/Subscription/IndividualPack'
 import AddDetails from './components/User/Subscription/AddDetails'
