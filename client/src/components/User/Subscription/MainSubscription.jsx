@@ -71,22 +71,22 @@ const MainSubscription = () => {
               <tbody>
                 <tr>
                   <td style={{ backgroundColor: 'rgb(229, 237, 237)' }}>
-                    <button onClick={handleCost}> ₹200</button>
+                    <button onClick={handleCost}> Budget ₹200  </button>
                   </td>
                   <td style={{ backgroundColor: 'rgb(229, 237, 237)' }}>
-                    <button onClick={handleCost}> ₹300 </button>
+                    <button onClick={handleCost}> Elite ₹300  </button>
                   </td>
                   <td style={{ backgroundColor: 'rgb(229, 237, 237)' }}>
-                    <button onClick={handleCostLunch}> ₹200 </button>
+                    <button onClick={handleCostLunch}> Budget ₹200  </button>
                   </td>
                   <td style={{ backgroundColor: 'rgb(229, 237, 237)' }}>
-                    <button onClick={handleCostLunch}> ₹300 </button>
+                    <button onClick={handleCostLunch}> Elite ₹300  </button>
                   </td>
                   <td style={{ backgroundColor: 'rgb(229, 237, 237)' }}>
-                    <button onClick={handleCostDinner}> ₹200 </button>
+                    <button onClick={handleCostDinner}> Budget ₹200  </button>
                   </td>
                   <td style={{ backgroundColor: 'rgb(229, 237, 237)' }}>
-                    <button onClick={handleCostDinner}> ₹300 </button>
+                    <button onClick={handleCostDinner}> Elite ₹300  </button>
                   </td>
                 </tr>
               </tbody>

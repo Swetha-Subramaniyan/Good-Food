@@ -1,5 +1,8 @@
  
-
+html {
+    scroll-behavior: smooth;
+  }
+  
 .register{
     width: fit-content;
     padding: 1.5rem;
@@ -14,13 +17,11 @@
     background-color: rgb(113, 69, 69);
     padding: 1.4rem;
     color: white;
-    border-radius: 8px;
- 
-   
+    border-radius: 8px;  
 }
 
-
 .regi{
+
     width: fit-content;
     padding: 1.5rem;
     font-size: 1.2rem;
@@ -51,16 +52,13 @@
     padding: 1rem;
 
 } 
-
-
-   
+  
   
 .logo-pic{
    
     position: absolute;
     top: 2rem;
-    left: 4rem;
-   
+    left: 4rem;  
 }
 
 .home-head{
@@ -83,9 +81,7 @@
    background-image: url('../../../assets/foodcolor.png');
    background-size: cover;
    min-height: 100vh;
-   width: 100%;
-   
-   
+   width: 100%;   
 }
 
 .individual-plan{
@@ -118,7 +114,6 @@
     display: flex;
     justify-content: center;
     font-family: cursive;
-    /* color: blue; */
     color: orangered;
     font-size: 2.4rem;
     
@@ -143,16 +138,13 @@
     display: flex;
     gap: 10rem;
     flex-wrap: wrap;
-    margin-left: 2rem;
-     
-   
+    margin-left: 2rem; 
 }
 
 .plans-head{
     margin-top: 3rem;
     display: flex;
     justify-content: space-around;
-
 }
 
  .comm{
@@ -180,10 +172,269 @@
 .comm button :hover{
     background-color: rgb(240, 119, 33);
     cursor: pointer;
-
 }
 
 .contact-details{
     display: flex;
     justify-content: center;
+    color: orangered;   
 }
+
+
+.foot{ 
+    display: flex;
+    justify-content: center;
+    height: 6rem;
+    width: 7rem;
+    border-radius: 5px;
+}
+
+.foot-details{
+    display: flex;
+}
+
+.footer-down{
+    display: flex;
+    justify-content: space-around;
+}
+
+.name-foot{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(229, 237, 237);
+    background-color: rgb(251, 253, 255);
+    padding: 2rem;
+    flex-shrink: 3rem;  
+}
+
+.bold-word{
+    font-weight: bold;
+    justify-content: center;
+    font-size: 1.3rem;
+    text-decoration: underline;
+}
+
+.feedback-head{
+    display: flex;
+    flex-direction: column;
+    background-color: aliceblue;
+    margin-left: 30rem;
+    margin-right: 30rem;
+    padding: 2rem;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+.feedback-submit{
+    height: fit-content;
+    width: fit-content;
+    padding: 0.5rem;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 5px;
+    color: rgb(254, 254, 255);
+    background-color: rgb(90, 111, 226);
+    border: none;
+   margin-left: 13rem;
+   margin-right: 13rem;
+}
+
+
+
+ .mmodal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  
+  .cclose-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 3px;
+    cursor: pointer;
+    border-radius: 3px;
+    position: relative;
+    font-size: 0.8rem;
+    margin-left: 62.3rem;
+    top: 2.2rem;
+   
+  } 
+
+  a{
+    text-decoration: none;
+    color: black;
+    
+  }
+
+  a:hover{
+    text-decoration: underline;
+    color: blue;
+  }
+
+  .ideas{
+    cursor: pointer;
+  }
+
+  .ideas:hover{
+    text-decoration:underline;
+    color: blue;  
+  }
+
+  .nav-link{
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+
+
+.header-img{
+  height: 6rem;
+  width: 7rem;
+  border-radius: 5px;
+}
+
+
+
+
+ 
+@media (max-width: 768px) {
+
+
+  .home-head{
+        display: flex;
+        gap: 1rem;
+        font-weight: bold;
+        font-size: 1rem;
+        padding-top: 2rem;    
+    }
+    
+  .home-header{
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+        font-size: 1.2rem;  
+    }
+
+  .regi{
+    flex-direction: column;
+    margin-left: 0;
+    padding: 1rem;
+
+  }
+
+  .register {
+    flex-direction: column;
+    margin-left: 0;
+    padding: 1rem;
+  }
+
+  .vision-back {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 1rem; 
+  }
+
+  .vision-head {
+    font-size: 1.2rem;
+  }
+
+  .com {
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 2rem;
+  }
+
+  .chooseplan {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .plans-head {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    
+  }
+
+  .comm {
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .footer-down {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .name-foot {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .feedback-head {
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+
+  .mmodal-content {
+    width: 90%;
+  }
+
+  .feedback-submit {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .cclose-btn {
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1rem;
+  }
+.home-heading{
+
+    margin-left: 3rem;
+    margin-top: 6rem;
+    font-size: 2.1rem;
+}
+
+.foot{ 
+  display: flex;
+  height: 6rem;
+  width: 7rem;
+  border-radius: 5px;
+  margin-left: 7rem;
+}
+
+.header-img{
+
+  height: 3rem;
+  width: 3rem;
+  border-radius: 5px; 
+  margin-left: 14rem;
+ 
+}
+.navbar-toggler{
+  margin-top: 1.5rem;
+}
+
+.text-center{
+  margin-top: 3rem;
+}
+
+.register{
+  margin-top: 3rem;
+}
+
+} 
