@@ -31,6 +31,7 @@ const MainAddSubscription = () => {
 
 <label> Plan Name <input/></label> 
 <label> Number of Days <input/></label> 
+<label> Number of Days Validity <input/></label> 
 <label> Price <input/></label> 
 <label> Breakfast Quantity <input/></label> 
 <label> Lunch Quantity <input/></label> 

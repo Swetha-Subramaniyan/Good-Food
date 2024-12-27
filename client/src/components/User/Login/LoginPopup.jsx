@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const LoginPopup = ({ onClose }) => {
+
     const navigate = useNavigate();
     const [customerId, setCustomerId] = useState('Fetching...');
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -113,3 +114,4 @@ const LoginPopup = ({ onClose }) => {
 };
 
 export default LoginPopup;
+

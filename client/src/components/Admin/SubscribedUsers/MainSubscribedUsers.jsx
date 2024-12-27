@@ -19,7 +19,6 @@ const MainSubscribedUsers = () => {
               <th> Meal Type</th>
               <th> Days </th>
               <th> Date</th>
-
              
             </tr>
           </thead>

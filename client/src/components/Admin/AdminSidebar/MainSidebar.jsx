@@ -156,7 +156,7 @@ const MainSidebar = () => {
           </DrawerHeader>
           <Divider />
           <List>
-            {['Subscription Plan', 'Add Items', 'Subscription Menu List', 'List of Items', 'Daily Menu', 'Orders', 'Notifications', 'Subscribed Users', 'Users'].map((text, index) => (
+            {['Subscription Plan', 'Add Items', 'Subscription Menu List', 'List of Items', 'Daily Menu', 'Orders',  'Subscribed Users', 'Users'].map((text, index) => (
               <ListItem key={text} disablePadding>
                 <ListItemButton onClick={() => handleNavigation(text)}>
                   <ListItemIcon>

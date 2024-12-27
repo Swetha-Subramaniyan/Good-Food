@@ -1,10 +1,21 @@
 import React, { useState } from 'react';
 import './MainLogin.css';
 import LoginPopup from './LoginPopup';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
+
+
 
 const MainLogin = () => {
   const [showPopup, setShowPopup] = useState(false);
+
+  const navigate = useNavigate()
+
+  const handlePopup = () => {
+    navigate ('/user/LoginPopup')
+    setShowPopup(!showPopup);
+  };
+
 
   const handleClosePopup = () => {
     setShowPopup(false);
@@ -31,6 +42,7 @@ const MainLogin = () => {
 
   return (
     <>  
+
       <Link to={'/admin/addsubscription'}>
         <button>ADMIN</button>
       </Link>
@@ -43,6 +55,7 @@ const MainLogin = () => {
 
         {showPopup && <LoginPopup onClose={handleClosePopup} />}
       </div>
+
     </>
   );
 };
