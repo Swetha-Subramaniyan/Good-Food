@@ -20,6 +20,7 @@ import MenuAddon from './components/User/Home/MenuAddon'
 import DailyMenu from './Pages/Admin/DailyMenu'
 import SubscriptionMenuList from './Pages/Admin/SubscriptionMenuList'
 import SubscribedUsers from './Pages/Admin/SubscribedUsers'
+import LoginPopup from './components/User/Login/LoginPopup'
 
 
 
@@ -41,6 +42,9 @@ const App = () => {
     <Route path='Cart' element={<Cart/>}/>
     <Route path='SubscriptionCalender' element={< SubscriptionCalender/>}/>
     <Route path='MenuAddon' element={<MenuAddon/>}/>
+    <Route path='LoginPopup' element={< LoginPopup/>}/>
+  
+    
     </Route>
    </Routes>
 
