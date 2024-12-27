@@ -1,0 +1,158 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum ItemType {
+  Veg
+  Non_Veg
+}
+
+enum MealType {
+  Breakfast
+  Lunch
+  Dinner
+}
+
+enum Plan {
+  Individual
+  Budget 
+  Elite 
+}
+
+
+model Users {
+  id Int @id @default(autoincrement())
+  customer_id String @unique
+  username String
+  email String @unique
+  display_picture String?
+  created_at DateTime
+  updatedAt DateTime
+  UserNumber Phone_Number[]
+  UserPosition User_Position[]
+  UserAddress User_Address[]
+  UserSubscription User_Subscription[]
+  SubscriptionPayment Subscription_Payment[]
+}
+
+model Phone_Number {
+  id Int @id @default(autoincrement())
+  user_id Int
+  customer_id String
+  phone_number String
+  alternate_number String?
+  created_at DateTime
+  UserNumber Users @relation(fields: [user_id],references: [id])
+}
+
+model User_Position {
+  id Int @id @default(autoincrement())
+  position String
+  user_id Int
+  created_at DateTime
+  updatedAt DateTime
+  Users Users @relation(fields: [user_id],references: [id])
+}
+
+model User_Address {
+  id Int @id @default(autoincrement())
+  address String
+  city String
+  street String
+  area String
+  landmark String
+  pincode Int
+  phone Int
+  alternate_phone Int
+  user_details_id Int
+  created_at DateTime
+  updatedAt DateTime
+  UserDetails Users @relation(fields: [user_details_id],references: [id])
+}
+
+model User_Subscription { 
+  id Int @id @default(autoincrement())
+  subscription_id Int 
+  start_date Int
+  end_date Int
+  status String
+  user_id Int
+  created_at DateTime
+  updatedAt DateTime
+  UserSubcription Users @relation(fields: [user_id],references: [id])
+}
+
+model Subscription {
+  id Int @id @default(autoincrement())
+  plan_name String
+  parent_plan_id Int
+  plan_description String
+  breakfast_qty Int
+  lunch_qty Int
+  dinner_qty Int
+  plan_duration String
+  price Int
+  created_at DateTime
+  updatedAt DateTime
+  SubscriptionPayment Subscription_Payment[]
+  parentPlan1 Parent_Plan @relation(fields: [parent_plan_id],references: [id])
+}
+
+model Parent_Plan {
+  id Int @id @default(autoincrement())
+  plan Plan
+  parent_id Int
+  created_at DateTime
+  updatedAt DateTime
+  parentPlan Subscription[]
+}
+model Subscription_Payment {
+  id Int @id @default(autoincrement())
+  payment_method String
+  subscription_id Int
+  user_id Int
+  payment_status String
+  created_at DateTime
+  updatedAt DateTime
+  SubscriptionPayment Subscription @relation(fields: [subscription_id],references: [id])
+  SubscriptionPaymentUsers Users @relation(fields: [user_id],references: [id])
+}
+
+
+model Food_Items {
+  id Int @id @default(autoincrement())
+  item_name String
+  item_type ItemType
+  description String
+  price Int
+  image_url String
+  created_at DateTime
+  updatedAt DateTime
+}
+
+model Subscription_Food_Menu {
+  id Int @id @default(autoincrement())
+  subscription_id Int
+  food_item_id Int
+  created_at DateTime
+  updatedAt DateTime
+}
+
+model Meal_type {
+  id Int @id @default(autoincrement())
+  meal_type MealType
+  food_item_id Int
+  created_at DateTime
+  updatedAt DateTime
+}
