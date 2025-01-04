@@ -22,7 +22,7 @@ const MainNavbar = () => {
   }
   return (
     <> 
-    <div className='home-header'> 
+    <div className='home-headerr'> 
     <div onClick={handleProfile} > Profile <IoPersonCircleOutline size={30} /> </div> 
 
 <div onClick={handleCart}> Cart <SlBasketLoaded size={30}  />  </div>

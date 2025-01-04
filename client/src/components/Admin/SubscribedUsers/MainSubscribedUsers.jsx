@@ -31,9 +31,7 @@ const MainSubscribedUsers = () => {
               <td> All</td>
               <td> 30</td>
               <td> 21-12-2024</td>
-            
-             
-            
+                         
             </tr>
           </tbody>
         </table>

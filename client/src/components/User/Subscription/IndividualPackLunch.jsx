@@ -176,7 +176,7 @@ const IndividualPackLunch = () => {
           ].map((item) => (
             <div key={item.name}>
               <img src={item.image} alt={item.name} /><br />
-              <h4>{item.description} <br /> <StarRatings /></h4>
+              <h6>{item.description} <br /> <StarRatings /></h6>
 
               <div className='add'>
                 {addedItems[item.name] > 0 ? (

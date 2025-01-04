@@ -173,44 +173,44 @@ const IndividualPackDinner = () => {
   <div className='photo'> 
   <div> 
     <img src={idly} alt='idly'/><br/> 
-    <h4> Idly+chutney+sambar <br/> <StarRatings/></h4>
+    <h6> Idly+chutney+sambar <br/> <StarRatings/></h6>
     <div className='add'> 
     <button > Add </button> </div> 
   </div>
   <div> 
     <img src={pongal} alt='dosa'/><br/> 
-    <h4> Pongal+sambar+vada <br/>  <StarRatings/></h4>
+    <h6> Pongal+sambar+vada <br/>  <StarRatings/></h6>
     <div className='add'> 
     <button> Add</button>  </div> 
   </div>
   <div> 
     <img src={rice} alt='idly'/><br/> 
-    <h4> Rice + Chicken gravy <br/>  <StarRatings/></h4>
+    <h6> Rice + Chicken gravy <br/>  <StarRatings/></h6>
     <div className='add'> 
    <button  > Add </button> </div> 
   </div>
   <div> 
     <img src={biriyani} alt='dosa'/><br/> 
-    <h4> Chicken Biriyani <br/>  <StarRatings/></h4>
+    <h6> Chicken Biriyani <br/>  <StarRatings/></h6>
     <div className='add'> 
     <button> Add</button>  </div> 
   </div>
   <div> 
     <img src={pongal} alt='dosa'/><br/> 
-    <h4> Pongal+sambar+vada <br/>  <StarRatings/></h4>
+    <h6> Pongal+sambar+vada <br/>  <StarRatings/></h6>
     <div className='add'> 
     <button> Add</button>  </div> 
   </div>
   <div> 
     <img src={rice} alt='idly'/><br/> 
-    <h4>Rice + Chicken gravy <br/>  <StarRatings/></h4>
+    <h6>Rice + Chicken gravy <br/>  <StarRatings/></h6>
     <div className='add'> 
    <button  > Add </button> </div> 
   </div>
 
   <div> 
     <img src={chappathi} alt='idly'/><br/> 
-    <h4> Chappathi  <br/>  <StarRatings /></h4>
+    <h6> Chappathi  <br/>  <StarRatings /></h6>
     <div className='add'> 
     <button onClick={() => handleAddClick('chappathi')}> 
               {addedItems.chappathi ? 'Added' : 'Add'} 

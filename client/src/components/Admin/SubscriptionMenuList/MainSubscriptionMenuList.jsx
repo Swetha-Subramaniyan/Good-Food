@@ -7,8 +7,7 @@ import MainSidebar from '../AdminSidebar/MainSidebar'
 const MainSubscriptionMenuList = () => {
 
   return (
-    <> 
-       
+    <>      
 <div><MainSidebar/> </div>
 <h2> Subscription Food Items</h2>
 <br/>
@@ -22,7 +21,6 @@ const MainSubscriptionMenuList = () => {
               <th> Price </th>
               <th> Subscription Plan  </th>
               <th> Days </th>
-              
               <th>  Action</th>
             </tr>
           </thead>
@@ -33,15 +31,12 @@ const MainSubscriptionMenuList = () => {
               <td> Dosa</td>
               <td> ₹60</td>
               <td> Combo Budget Elite</td>
-              <td> 30</td>
-            
-              <td> Delete</td>
-            
+              <td> 30</td>            
+              <td> Delete</td>            
             </tr>
           </tbody>
         </table>
       </div>
-
     
     </>
   )

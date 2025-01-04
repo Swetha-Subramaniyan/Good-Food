@@ -28,6 +28,9 @@ import OverallHome from './Pages/User/OverallHome'
 import IndividualPackLunch from './components/User/Subscription/IndividualPackLunch'
 import IndividualPackDinner from './components/User/Subscription/IndividualPackDinner'
 import IndividualPackBreakfast from './components/User/Subscription/IndividualPackBreakfast'
+import ChefOrderList from './Pages/Admin/ChefOrderList';
+import AdminOrderList from './Pages/Admin/AdminOrderList';
+import PaymentCart from './components/User/Home/PaymentCart';
 
 
 
@@ -62,6 +65,8 @@ const App = () => {
     <Route path='IndividualPackDinner' element={< IndividualPackDinner/>}/>
     <Route path='IndividualPackBreakfast' element={< IndividualPackBreakfast />}/> 
 
+    <Route path='PaymentCart'  element={< PaymentCart />}   />
+
     </Route>
    </Routes>
 
@@ -75,12 +80,12 @@ const App = () => {
       <Route path='dailymenu' element={<DailyMenu/>}/>
       <Route path='subscriptionmenulist' element={<SubscriptionMenuList />}/>
       <Route path='subscribedusers' element={<SubscribedUsers/>}/>
- 
-      
+      <Route path='cheforderlist' element={<ChefOrderList/>}/>
+      <Route path='adminorderlist' element={< AdminOrderList/>}/>
+       
     </Route>
    </Routes>
-   </BrowserRouter>
-  
+   </BrowserRouter>  
    </>
   )
 }

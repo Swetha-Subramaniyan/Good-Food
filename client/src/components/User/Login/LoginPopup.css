@@ -72,9 +72,10 @@ input {
     position: absolute; 
     top: 1.5rem;        
     right: 1rem;      
+   
     background: none;   
     border: none;     
-    color: white;       
+    color: rgb(227, 30, 30);       
     font-size: 1rem;     
     cursor: pointer;
 }
@@ -99,8 +100,8 @@ input {
 
     .close-btn {
         position: absolute; 
-        top: 1.5rem;        
-        left: 20rem;      
+        top: 1rem;        
+        left: 18rem;      
         background: none;   
         border: none;     
         color: white;       

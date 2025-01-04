@@ -4,65 +4,32 @@
     font-size: 2rem;
     margin-bottom: 1rem;
   }
-  
 
-  .MuiTableContainer-root {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-    width: 80%;
-  }
+.cart-checkout button{
   
-  /* Media query for mobile (max-width: 768px) */
-  @media (max-width: 768px) {
-    .MuiTableContainer-root {
-        display: flex;
+  padding: 0.5rem;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: white;
+  background-color: blue;
+  background-color:  rgb(107, 56, 89); 
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+  
+}
 
-      width: 100%;  /* Make the table container take the full width on mobile */
-      overflow-x: auto; /* Allow horizontal scrolling */
-     
-    }
-  
-    .MuiTable-root {
-      min-width: 400px; /* Set minimum width for the table */
-    }
-  
-    .order-header {
-      font-size: 1.5rem; /* Reduce the font size of the header */
-    }
-  
-    /* Adjusting table for smaller screens */
-    .MuiTableCell-root {
-      font-size: 12px; /* Smaller font size for better readability */
-      padding: 8px; /* Reduce padding for compact layout */
-    }
-  
-    /* Stack table rows vertically on mobile */
-    .MuiTableCell-root, .MuiTableRow-root {
-      display: block;
-      width: 100%;
-      text-align: left; /* Align text to the left for better readability */
-    }
-  
-    .MuiTableCell-root {
-      margin-bottom: 8px; /* Add spacing between columns in block layout */
-    }
-  
-    .MuiTableCell-root:last-child {
-      margin-bottom: 0;
-    }
-  
-    .MuiTableRow-root {
-      margin-bottom: 10px; /* Add spacing between rows */
-    }
-  
-    /* Optional: Hide the 'Action' column on mobile for simplicity */
-    .MuiTableCell-action {
-      display: none;
-    }
-  }
-  
+.cart-checkout{
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-left: 10rem;
+  margin-top: 3rem;
+}
+
+.cart-checkout button:hover{
+  background-color: rgb(104, 6, 104);
+  text-decoration: none;
+}
 
 
 
