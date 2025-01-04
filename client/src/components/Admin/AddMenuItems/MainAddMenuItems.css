@@ -43,7 +43,7 @@
   }
   
   .item-save button {
-    height: 2rem;
+    height: 2.3rem;
     width: 5rem;
     font-size: 1.1rem;
     font-weight: bold;
@@ -54,6 +54,9 @@
     margin-left: 11rem;
   }
   
+  div h5{
+    font-weight: bold;
+  }
   
   @media (max-width: 768px) {
     .title {

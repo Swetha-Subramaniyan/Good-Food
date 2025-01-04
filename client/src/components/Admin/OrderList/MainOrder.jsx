@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import MainSidebar from '../AdminSidebar/MainSidebar';
 import './MainOrder.css';
 import { FaEye } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 const MainOrder = () => {
 
@@ -21,11 +22,16 @@ const MainOrder = () => {
   return (
     <>
       <div><MainSidebar /></div>
-      <h2>Order List</h2>
-      <div className='date-header'>
-        <h4>Date: 21-01-2024</h4>
+      <h2 style={{fontWeight:'bold'}} > Order List</h2>
+      <div className='chef-admin-orders'> 
+      <Link to={'/admin/cheforderlist'}> 
+      <div className='Chef-order'> Chef Orders List</div></Link>
+      <Link to={'/admin/adminorderlist'}> 
+      <div className='Chef-order' > Admin Orders List </div></Link> 
       </div>
-
+      <div className='date-header'>
+        <h5>Date: 21-01-2024</h5>
+      </div>
       <div>
         <table className="styled-table">
           <thead>
@@ -78,9 +84,9 @@ const MainOrder = () => {
               </tbody>
             </table>
             <div className='user-details'> 
-            <h4> Name: Dhanusha R</h4>
-            <h4> Phone Number: 9361884122</h4>
-            <h4>Address: 1/234,Saravanampatti, Coimbatore - 567890</h4>
+            <h5> Name: Dhanusha R</h5>
+            <h5> Phone Number: 9361884122</h5>
+            <h5>Address: 1/234,Saravanampatti, Coimbatore - 567890</h5>
             </div>
             <div className='submit-share'> 
             <button> Submit </button>

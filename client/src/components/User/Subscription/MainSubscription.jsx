@@ -9,7 +9,6 @@ const MainSubscription = () => {
 
   const handleIndividual = () => {
     setIsModalOpen(true); 
- 
   };
 
   const closeModal = () => {
@@ -54,12 +53,12 @@ const MainSubscription = () => {
           </h2>
         </div>
       </div>
-
   
       {isModalOpen && (
         <div className="modal">
           <div className="modal-content">
             <button className="close-btn" onClick={closeModal}>X</button>
+     
             <table className="styled--table">
               <thead>
                 <tr>
@@ -71,22 +70,22 @@ const MainSubscription = () => {
               <tbody>
                 <tr>
                   <td style={{ backgroundColor: 'rgb(229, 237, 237)' }}>
-                    <button onClick={handleCost}> Budget ₹200  </button>
+                    <button onClick={handleCost}> Budget <br/> ₹200  </button>
                   </td>
                   <td style={{ backgroundColor: 'rgb(229, 237, 237)' }}>
-                    <button onClick={handleCost}> Elite ₹300  </button>
+                    <button onClick={handleCost}> Elite <br/>  ₹300  </button>
                   </td>
                   <td style={{ backgroundColor: 'rgb(229, 237, 237)' }}>
-                    <button onClick={handleCostLunch}> Budget ₹200  </button>
+                    <button onClick={handleCostLunch}> Budget <br/>  ₹200  </button>
                   </td>
                   <td style={{ backgroundColor: 'rgb(229, 237, 237)' }}>
-                    <button onClick={handleCostLunch}> Elite ₹300  </button>
+                    <button onClick={handleCostLunch}> Elite <br/>  ₹300  </button>
                   </td>
                   <td style={{ backgroundColor: 'rgb(229, 237, 237)' }}>
-                    <button onClick={handleCostDinner}> Budget ₹200  </button>
+                    <button onClick={handleCostDinner}> Budget <br/>  ₹200  </button>
                   </td>
                   <td style={{ backgroundColor: 'rgb(229, 237, 237)' }}>
-                    <button onClick={handleCostDinner}> Elite ₹300  </button>
+                    <button onClick={handleCostDinner}> Elite <br/>  ₹300  </button>
                   </td>
                 </tr>
               </tbody>

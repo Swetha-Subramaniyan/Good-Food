@@ -1,0 +1,24 @@
+.place-order{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+
+.address-fontsize div{   
+    font-size: 1.1rem;
+}
+
+.update-profile button {
+    padding-left: 1rem;
+    font-size: 1rem;
+    padding-right: 1rem;
+    border-radius: 3px;
+    margin-left: 0.5rem;
+    margin-top: 2rem;
+        
+}
+.place-order-item{
+    margin-left: 15rem;
+    font-weight: bold;
+   
+}
