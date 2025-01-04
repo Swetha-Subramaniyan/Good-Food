@@ -8,130 +8,94 @@ const LoginPopup = ({ onClose }) => {
 
   const navigate = useNavigate()
 
-  const handleSubmit =() => {
-    // navigate ('/user/Subscription')
-    navigate ('/user/OverallHome')
-   
-  }
-
   const landingPage = () =>{
     navigate ('/user/OverallHome')
   }
 
-  return (
-    <> 
-    <div className='backgroundd'> 
-    <div className='pop'> 
-         <button className="close-btn" onClick={onClose}>
-          <FaTimes /> 
-        </button>
-        <h2 onClick={landingPage}  className='login'> Sign In</h2>
-        <div> 
-        <label> Phone Number </label> 
-        <input placeholder='9626528019'/> </div>
-        <br></br>
-        <div>
-        <label> User ID  </label>
-        <input placeholder='GF001'/> </div> 
-        <button onClick={handleSubmit} className='submit-btn'> Submit </button>       
-     </div>
-     </div>
-    </>
-  )
-}
+  const [customerId, setCustomerId] = useState('Fetching...');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
-export default LoginPopup
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+  console.log("Token : " , token)
+    localStorage.setItem('token', token);
+  
+  }, []);
 
-
-    const navigate = useNavigate();
-    const [customerId, setCustomerId] = useState('Fetching...');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
-    const [successMessage, setSuccessMessage] = useState('');
-
-    useEffect(() => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const token = urlParams.get('token');
-    console.log("Token : " , token)
-      localStorage.setItem('token', token);
-    
-    }, []);
-
-    useEffect(() => {
-      const fetchCustomerID = async () => {
-        try {
-          const token = localStorage.getItem('token');
-    
-          if (!token) {
-            console.error("No token found in localStorage.");
-            setCustomerId("Token not available");
-            return;
-          }
-    
-    
-          const response = await axios.get(
-            `${process.env.REACT_APP_BACKEND_SERVER_URL}/api/getID`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-    
-          setCustomerId(response.data.getID[0]?.customer_id || "Not Found");
-        } catch (error) {
-          console.error("Error fetching customer ID:", error.response?.data || error.message);
-          setCustomerId("Error Fetching ID");
-        }
-      };
-    
-      fetchCustomerID();
-    }, []);
-    
-
-    const handleSubmit = async () => {
+  useEffect(() => {
+    const fetchCustomerID = async () => {
       try {
-        const token = localStorage.getItem('token');  
+        const token = localStorage.getItem('token');
   
         if (!token) {
-          setErrorMessage("Token not found.");
+          console.error("No token found in localStorage.");
+          setCustomerId("Token not available");
           return;
         }
   
-        const response = await axios.post(
-          `${process.env.REACT_APP_BACKEND_SERVER_URL}/phone/createPhone`,
-          {
-            phone_number: phoneNumber,
-          },
+  
+        const response = await axios.get(
+          `${process.env.REACT_APP_BACKEND_SERVER_URL}/api/getID`,
           {
             headers: {
-              Authorization: `Bearer ${token}`,  
+              Authorization: `Bearer ${token}`,
             },
           }
         );
   
-        setSuccessMessage(response.data.message);
-        setPhoneNumber('');  
-        alert('Phone number created successfully!');
-
-        navigate('/user/OverallHome')
-
-
-        navigate('/user/Subscription'); 
-
+        setCustomerId(response.data.getID[0]?.customer_id || "Not Found");
       } catch (error) {
-        setErrorMessage(error.response?.data.error || 'Failed to create phone number');
-        console.error('Error submitting phone number:', error);
+        console.error("Error fetching customer ID:", error.response?.data || error.message);
+        setCustomerId("Error Fetching ID");
       }
     };
+  
+    fetchCustomerID();
+  }, []);
+  
 
+  const handleSubmit = async () => {
+    try {
+      const token = localStorage.getItem('token');  
+
+      if (!token) {
+        setErrorMessage("Token not found.");
+        return;
+      }
+
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_SERVER_URL}/phone/createPhone`,
+        {
+          phone_number: phoneNumber,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,  
+          },
+        }
+      );
+
+      setSuccessMessage(response.data.message);
+      setPhoneNumber('');  
+      alert('Phone number created successfully!');
+
+      navigate('/user/OverallHome')
+
+    } catch (error) {
+      setErrorMessage(error.response?.data.error || 'Failed to create phone number');
+      console.error('Error submitting phone number:', error);
+    }
+  };
     
     return (
         <div className="pop">
             <button className="close-btn" onClick={onClose}>
                 <FaTimes />
             </button>
-            <h2 className="login" >Sign In</h2>
+            <h2 onClick={landingPage} className="login" >Sign In</h2>
             <div>
                 <label>Customer ID</label>
                 <input value={customerId}  readOnly /> 
@@ -152,6 +116,5 @@ export default LoginPopup
             </button>
         </div>
     );
-};
-
+  }
 export default LoginPopup;
