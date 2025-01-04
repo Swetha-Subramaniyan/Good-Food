@@ -13,21 +13,34 @@ const getAllSubscription = async (req,res) => {
     }
 }
 
+const getSubscription = async (req,res) => {
+try {
+    const getSUB = await prisma.subscription.findMany({
+        include : {
+           parentPlan1 : true,
+           SubscriptionPayments : true
+        }
+    })
+    res.status(200).json({message : "Subscription found",getSUB})
+} catch (error) {
+    console.log(error)
+    res.status(404).json({error : "Subscriptions not found "})
+}
+}
 
 
 const createSubscription = async (req,res) => {
  try {
-    const {plan_name,parent_plan_id,plan_description,breakfast_qty,lunch_qty,dinner_qty,plan_duration,price}=req.body
+    const {parent_plan_id,plan_description,tier_id,duration_qty_id,meal_type_id,price_id}=req.body
     const createSubs = await prisma.subscription.create({
         data : {
-            plan_name,
+           
             parent_plan_id,
             plan_description,
-            breakfast_qty,
-            lunch_qty,
-            dinner_qty,
-            plan_duration,
-            price,
+            tier_id,
+            duration_qty_id,
+            meal_type_id,
+            price_id,
             created_at : new Date(),
             updatedAt : new Date()
         }
@@ -39,4 +52,4 @@ const createSubscription = async (req,res) => {
  }
 }
 
-module.exports={getAllSubscription,createSubscription}
+module.exports={getAllSubscription,getSubscription,createSubscription}

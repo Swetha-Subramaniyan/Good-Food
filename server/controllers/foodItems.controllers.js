@@ -14,14 +14,14 @@ try {
 
 const createFoodItems = async(req,res) => {
     try {
-        const {item_name,item_type,description,price,image_url} = req.body
+        const {item_name,item_type,description,price_id,image_url} = req.body
         const createFood = await prisma.food_Items.create({
             data : {
                 item_name,
                 item_type,
                 description,
-                price,
-                image_url : "1",
+                price_id,
+                image_url,
                 created_at : new Date(),
                 updatedAt : new Date()
             }

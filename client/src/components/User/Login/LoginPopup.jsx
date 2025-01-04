@@ -113,19 +113,25 @@ export default LoginPopup
         setSuccessMessage(response.data.message);
         setPhoneNumber('');  
         alert('Phone number created successfully!');
+
+        navigate('/user/OverallHome')
+
+
         navigate('/user/Subscription'); 
+
       } catch (error) {
         setErrorMessage(error.response?.data.error || 'Failed to create phone number');
         console.error('Error submitting phone number:', error);
       }
     };
 
+    
     return (
         <div className="pop">
             <button className="close-btn" onClick={onClose}>
                 <FaTimes />
             </button>
-            <h2 className="login">Sign In</h2>
+            <h2 className="login" >Sign In</h2>
             <div>
                 <label>Customer ID</label>
                 <input value={customerId}  readOnly /> 

@@ -26,8 +26,12 @@ enum MealType {
 
 enum Plan {
   Individual
-  Budget 
-  Elite 
+  Combo
+}
+ 
+enum tier {
+  Budget
+  Elite
 }
 
 
@@ -84,8 +88,8 @@ model User_Address {
 model User_Subscription { 
   id Int @id @default(autoincrement())
   subscription_id Int 
-  start_date Int
-  end_date Int
+  start_date DateTime
+  end_date DateTime
   status String
   user_id Int
   created_at DateTime
@@ -94,49 +98,84 @@ model User_Subscription {
 }
 
 model Subscription {
+  id                 Int                  @id @default(autoincrement())
+  parent_plan_id     Int
+  plan_description   String
+  tier_id Int
+  duration_qty_id Int
+  meal_type_id Int
+  price_id              Float
+  created_at         DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  SubscriptionPayments Subscription_Payment[] @relation("SubscriptionToPayment")
+  parentPlan1        Parent_Plan          @relation(fields: [parent_plan_id], references: [id])
+  TierSub Tier @relation(fields: [tier_id],references: [id])
+  DurationSub Duration_qty @relation(fields: [duration_qty_id],references: [id])
+  MealSub Meal_type @relation(fields: [meal_type_id],references: [id])
+}
+
+model Tier {
   id Int @id @default(autoincrement())
-  plan_name String
-  parent_plan_id Int
-  plan_description String
-  breakfast_qty Int
-  lunch_qty Int
-  dinner_qty Int
-  plan_duration String
-  price Int
+  type tier
   created_at DateTime
   updatedAt DateTime
-  SubscriptionPayment Subscription_Payment[]
-  parentPlan1 Parent_Plan @relation(fields: [parent_plan_id],references: [id])
+  TierSub Subscription[]
 }
+
+model Duration_qty {
+  id Int @id @default(autoincrement())
+  days Int
+  created_at DateTime
+  updatedAt DateTime
+  DurationSub Subscription[]
+}
+
 
 model Parent_Plan {
-  id Int @id @default(autoincrement())
-  plan Plan
-  parent_id Int
-  created_at DateTime
-  updatedAt DateTime
-  parentPlan Subscription[]
-}
-model Subscription_Payment {
-  id Int @id @default(autoincrement())
-  payment_method String
-  subscription_id Int
-  user_id Int
-  payment_status String
-  created_at DateTime
-  updatedAt DateTime
-  SubscriptionPayment Subscription @relation(fields: [subscription_id],references: [id])
-  SubscriptionPaymentUsers Users @relation(fields: [user_id],references: [id])
+  id         Int       @id @default(autoincrement())
+  plan_name       Plan
+  created_at DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  subscriptions Subscription[]
 }
 
+
+
+model Subscription_Payment {
+  id                     Int      @id @default(autoincrement())
+  payment_method         String
+  subscription_id        Int
+  user_id                Int
+  payment_status         String
+  created_at             DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+  SubscriptionPayment    Subscription @relation("SubscriptionToPayment", fields: [subscription_id], references: [id])
+  SubscriptionPaymentUsers Users        @relation(fields: [user_id], references: [id])
+}
+
+model Subscription_Pricing {
+  id Int @id @default(autoincrement())
+  subscription_id Int
+  pricing_id Int
+  created_at DateTime
+  updatedAt DateTime
+  SubPricing Pricing_Details @relation(fields: [pricing_id],references: [id])
+}
+model Pricing_Details {
+  id Int @id @default(autoincrement())
+  price Float
+  created_at DateTime
+  updatedAt DateTime
+  PricingSub Subscription_Pricing[]
+}
 
 model Food_Items {
   id Int @id @default(autoincrement())
   item_name String
   item_type ItemType
   description String
-  price Int
-  image_url String
+  price_id Int
+  image_url String?
   created_at DateTime
   updatedAt DateTime
 }
@@ -152,7 +191,7 @@ model Subscription_Food_Menu {
 model Meal_type {
   id Int @id @default(autoincrement())
   meal_type MealType
-  food_item_id Int
   created_at DateTime
   updatedAt DateTime
+  MealSub Subscription[]
 }

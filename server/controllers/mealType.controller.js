@@ -15,27 +15,12 @@ const getAllMealType = async (req,res) => {
 
 const createMealType = async (req, res) => {
     try {
-        const { meal_type, food_item_id } = req.body;
+        const { meal_type} = req.body;
 
-        const foodItemId = parseInt(food_item_id, 10);
-        if (isNaN(foodItemId)) {
-            return res.status(400).json({ error: "Invalid or missing food_item_id" });
-        }
-
-        const getFoodItem = await prisma.food_Items.findUnique({
-            where: {
-                id: foodItemId, 
-            },
-        });
-
-        if (!getFoodItem) {
-            return res.status(404).json({ error: "Food item not found" });
-        }
-
+      
         const createMeal = await prisma.meal_type.create({
             data: {
-                meal_type,
-                food_item_id: foodItemId, 
+                meal_type, 
                 created_at: new Date(),
                 updatedAt: new Date(),
             },
