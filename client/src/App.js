@@ -22,6 +22,9 @@ import MenuAddon from './components/User/Home/MenuAddon'
 import DailyMenu from './Pages/Admin/DailyMenu'
 import SubscriptionMenuList from './Pages/Admin/SubscriptionMenuList'
 import SubscribedUsers from './Pages/Admin/SubscribedUsers'
+
+import LoginPopup from './components/User/Login/LoginPopup'
+
 import IndividualPlan from './components/User/Subscription/IndividualPlan'
 import LoginPopup from './components/User/Login/LoginPopup'
 import OverallHome from './Pages/User/OverallHome'
@@ -31,6 +34,7 @@ import IndividualPackBreakfast from './components/User/Subscription/IndividualPa
 import ChefOrderList from './Pages/Admin/ChefOrderList';
 import AdminOrderList from './Pages/Admin/AdminOrderList';
 import PaymentCart from './components/User/Home/PaymentCart';
+
 
 
 
@@ -52,13 +56,20 @@ const App = () => {
     <Route path='Cart' element={<Cart/>}/>
     <Route path='SubscriptionCalender' element={< SubscriptionCalender/>}/>
     <Route path='MenuAddon' element={<MenuAddon/>}/>
+
+    <Route path='LoginPopup' element={< LoginPopup/>}/>
+  
+    
+
     <Route path='IndividualPlan' element={< IndividualPlan/>}/> 
     <Route path='LoginPopup' element={< LoginPopup />}/>
     <Route path='OverallHome' element={< OverallHome/>}/>
     <Route path='IndividualPackLunch'  element={< IndividualPackLunch />}/>
     <Route path='IndividualPackDinner' element={< IndividualPackDinner/>}/>
     <Route path='IndividualPackBreakfast' element={< IndividualPackBreakfast />}/> 
+
     <Route path='PaymentCart'  element={< PaymentCart />}   />
+
     </Route>
    </Routes>
 
