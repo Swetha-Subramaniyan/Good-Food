@@ -22,11 +22,8 @@ import MenuAddon from './components/User/Home/MenuAddon'
 import DailyMenu from './Pages/Admin/DailyMenu'
 import SubscriptionMenuList from './Pages/Admin/SubscriptionMenuList'
 import SubscribedUsers from './Pages/Admin/SubscribedUsers'
-
 import LoginPopup from './components/User/Login/LoginPopup'
-
 import IndividualPlan from './components/User/Subscription/IndividualPlan'
-import LoginPopup from './components/User/Login/LoginPopup'
 import OverallHome from './Pages/User/OverallHome'
 import IndividualPackLunch from './components/User/Subscription/IndividualPackLunch'
 import IndividualPackDinner from './components/User/Subscription/IndividualPackDinner'
@@ -54,7 +51,7 @@ const App = () => {
     <Route path='SubscriptionCalender' element={< SubscriptionCalender/>}/>
     <Route path='MenuAddon' element={<MenuAddon/>}/>
 
-    <Route path='LoginPopup' element={< LoginPopup/>}/>
+  
   
     
 

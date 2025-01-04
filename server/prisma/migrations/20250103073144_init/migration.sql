@@ -58,8 +58,8 @@ CREATE TABLE `User_Address` (
 CREATE TABLE `User_Subscription` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `subscription_id` INTEGER NOT NULL,
-    `start_date` INTEGER NOT NULL,
-    `end_date` INTEGER NOT NULL,
+    `start_date` DATETIME(3) NOT NULL,
+    `end_date` DATETIME(3) NOT NULL,
     `status` VARCHAR(191) NOT NULL,
     `user_id` INTEGER NOT NULL,
     `created_at` DATETIME(3) NOT NULL,
@@ -71,14 +71,32 @@ CREATE TABLE `User_Subscription` (
 -- CreateTable
 CREATE TABLE `Subscription` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `plan_name` VARCHAR(191) NOT NULL,
     `parent_plan_id` INTEGER NOT NULL,
     `plan_description` VARCHAR(191) NOT NULL,
-    `breakfast_qty` INTEGER NOT NULL,
-    `lunch_qty` INTEGER NOT NULL,
-    `dinner_qty` INTEGER NOT NULL,
-    `plan_duration` VARCHAR(191) NOT NULL,
-    `price` INTEGER NOT NULL,
+    `tier_id` INTEGER NOT NULL,
+    `duration_qty_id` INTEGER NOT NULL,
+    `meal_type_id` INTEGER NOT NULL,
+    `price_id` DOUBLE NOT NULL,
+    `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Tier` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `type` ENUM('Budget', 'Elite') NOT NULL,
+    `created_at` DATETIME(3) NOT NULL,
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Duration_qty` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `days` INTEGER NOT NULL,
     `created_at` DATETIME(3) NOT NULL,
     `updatedAt` DATETIME(3) NOT NULL,
 
@@ -88,9 +106,8 @@ CREATE TABLE `Subscription` (
 -- CreateTable
 CREATE TABLE `Parent_Plan` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `plan` ENUM('Individual', 'Budget', 'Elite') NOT NULL,
-    `parent_id` INTEGER NOT NULL,
-    `created_at` DATETIME(3) NOT NULL,
+    `plan_name` ENUM('Individual', 'Combo') NOT NULL,
+    `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -103,6 +120,27 @@ CREATE TABLE `Subscription_Payment` (
     `subscription_id` INTEGER NOT NULL,
     `user_id` INTEGER NOT NULL,
     `payment_status` VARCHAR(191) NOT NULL,
+    `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Subscription_Pricing` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `subscription_id` INTEGER NOT NULL,
+    `pricing_id` INTEGER NOT NULL,
+    `created_at` DATETIME(3) NOT NULL,
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Pricing_Details` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `price` DOUBLE NOT NULL,
     `created_at` DATETIME(3) NOT NULL,
     `updatedAt` DATETIME(3) NOT NULL,
 
@@ -115,8 +153,8 @@ CREATE TABLE `Food_Items` (
     `item_name` VARCHAR(191) NOT NULL,
     `item_type` ENUM('Veg', 'Non_Veg') NOT NULL,
     `description` VARCHAR(191) NOT NULL,
-    `price` INTEGER NOT NULL,
-    `image_url` VARCHAR(191) NOT NULL,
+    `price_id` INTEGER NOT NULL,
+    `image_url` VARCHAR(191) NULL,
     `created_at` DATETIME(3) NOT NULL,
     `updatedAt` DATETIME(3) NOT NULL,
 
@@ -138,7 +176,6 @@ CREATE TABLE `Subscription_Food_Menu` (
 CREATE TABLE `Meal_type` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `meal_type` ENUM('Breakfast', 'Lunch', 'Dinner') NOT NULL,
-    `food_item_id` INTEGER NOT NULL,
     `created_at` DATETIME(3) NOT NULL,
     `updatedAt` DATETIME(3) NOT NULL,
 
@@ -161,7 +198,19 @@ ALTER TABLE `User_Subscription` ADD CONSTRAINT `User_Subscription_user_id_fkey` 
 ALTER TABLE `Subscription` ADD CONSTRAINT `Subscription_parent_plan_id_fkey` FOREIGN KEY (`parent_plan_id`) REFERENCES `Parent_Plan`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE `Subscription` ADD CONSTRAINT `Subscription_tier_id_fkey` FOREIGN KEY (`tier_id`) REFERENCES `Tier`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Subscription` ADD CONSTRAINT `Subscription_duration_qty_id_fkey` FOREIGN KEY (`duration_qty_id`) REFERENCES `Duration_qty`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Subscription` ADD CONSTRAINT `Subscription_meal_type_id_fkey` FOREIGN KEY (`meal_type_id`) REFERENCES `Meal_type`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE `Subscription_Payment` ADD CONSTRAINT `Subscription_Payment_subscription_id_fkey` FOREIGN KEY (`subscription_id`) REFERENCES `Subscription`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Subscription_Payment` ADD CONSTRAINT `Subscription_Payment_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `Users`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Subscription_Pricing` ADD CONSTRAINT `Subscription_Pricing_pricing_id_fkey` FOREIGN KEY (`pricing_id`) REFERENCES `Pricing_Details`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

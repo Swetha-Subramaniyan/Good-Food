@@ -77,7 +77,7 @@ const LoginPopup = ({ onClose }) => {
         setPhoneNumber('');  
         alert('Phone number created successfully!');
 
-        navigate('/user/Subscription'); 
+        navigate('/user/OverallHome')
 
       } catch (error) {
         setErrorMessage(error.response?.data.error || 'Failed to create phone number');
@@ -85,12 +85,13 @@ const LoginPopup = ({ onClose }) => {
       }
     };
 
+    
     return (
         <div className="pop">
             <button className="close-btn" onClick={onClose}>
                 <FaTimes />
             </button>
-            <h2 className="login">Sign In</h2>
+            <h2 className="login" >Sign In</h2>
             <div>
                 <label>Customer ID</label>
                 <input value={customerId}  readOnly /> 

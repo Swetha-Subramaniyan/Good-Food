@@ -330,7 +330,8 @@
 
 
 
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
+import axios from 'axios';
 import './MainOverallHome.css';
 import logo from '../../../assets/Foodlogo.jpg';
 import { FaListCheck } from "react-icons/fa6";
@@ -349,15 +350,75 @@ const MainOverallHome = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFeedbackVisible, setIsFeedbackVisible] = useState(false);
+  const [parentPlans, setParentPlans] = useState([]);
+const [tiers, setTiers] = useState([]);
+const [selectedParentPlan,setSelectedParentPlan] = useState(null)
 
-  const handleIndividual = () => {
-    setIsModalOpen(true);
+
+useEffect(() => {
+  fetchParentPlans();
+}, []);
+  
+
+  
+    const fetchParentPlans = async () => {
+      try {
+        const token = localStorage.getItem('token');
+  
+       
+  
+  
+        const response = await axios.get(
+          `${process.env.REACT_APP_BACKEND_SERVER_URL}/parentPlan/getPlan`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+  
+        setParentPlans(response.data.parentPlans); 
+      } catch (error) {
+        console.error("Error fetching customer ID:", error.response?.data || error.message);
+      }
+    };
+
+
+
+  const fetchCommonTiers = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_SERVER_URL}/tier/getTier`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.error("Error fetching tiers:", error);
+    }
+  };
+  
+  const handleParentPlanClick = (plan) => {
+    setSelectedParentPlan(plan);
+    fetchCommonTiers();
+    setIsModalOpen(true); 
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setTiers([]);
+  };
+  
+
+  
+  const handleIndividual = () => {
+    setIsModalOpen(true);
   };
 
+ 
   const handleCost = () => {
     navigate('/user/individualPackBreakfast');
   };
@@ -510,6 +571,47 @@ const MainOverallHome = () => {
         )}
       
 <br/><br/>
+<div className="main-container">
+  <header className="header">
+    <h1>Parent Plans</h1>
+  </header>
+
+  {parentPlans.length > 0 ? (
+    <div className="plans-grid">
+      {parentPlans.map((plan) => (
+        
+        <div key={plan.id} className="plan-card" onClick={fetchCommonTiers}>
+                    <h3>{plan.plan_name}</h3>
+
+          <li key={plan.id}   onClick={() => handleParentPlanClick(plan)}></li>
+        </div>
+      ))}
+    </div>
+  ) : (
+    <p>No plans available at the moment.</p>
+  )}
+  {isModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Tiers for {selectedParentPlan?.plan_name}</h2>
+            <div className="tier-cards">
+              {tiers.length > 0 ? (
+                tiers.map((tier) => (
+                  <div className="tier-card" key={tier.id}>
+                    <h3>{tier.type}</h3>
+                    <p>Details about {tier.type}</p>
+                  </div>
+                ))
+              ) : (
+                <p>No tiers available.</p>
+              )}
+            </div>
+            <button onClick={closeModal}>Close</button>
+          </div>
+        </div>
+      )}
+</div>
+
       <div id='contact-section'>
         <h1 className='contact-details text-center'>Contact Us</h1>
         <div className='footer-down'>
