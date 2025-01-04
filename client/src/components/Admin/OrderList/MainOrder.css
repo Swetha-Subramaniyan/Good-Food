@@ -148,3 +148,20 @@
   margin-top: 1rem;
   
 }
+
+.chef-admin-orders{ 
+display: flex;
+justify-content:right;
+padding: 2rem;
+padding-right: 10rem;
+gap: 3rem;
+}
+
+.Chef-order{
+  background-color: #4182c3;
+  padding: 0.5rem;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  font-size: 1.3rem;
+}

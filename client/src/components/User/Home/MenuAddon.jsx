@@ -6,6 +6,12 @@ const MenuAddon = () => {
     <> 
 
    <div>MenuAddon</div>
+ <div> Idly</div>    
+ <div> Dosa</div>
+ <div> Poori</div>
+ <div> Chappathi</div>
+ <div> White Rice</div>
+ <div> Biriyani </div>
     
     </>
   

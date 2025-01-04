@@ -8,8 +8,9 @@ const LoginPopup = ({ onClose }) => {
   const navigate = useNavigate()
 
   const handleSubmit =() => {
-    navigate ('/user/Subscription')
-    // navigate('/user/OverallHome')
+    // navigate ('/user/Subscription')
+    navigate ('/user/OverallHome')
+   
   }
 
   const landingPage = () =>{

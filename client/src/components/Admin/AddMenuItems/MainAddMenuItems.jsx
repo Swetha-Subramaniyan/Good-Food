@@ -23,23 +23,23 @@ const MainAddMenuItems = () => {
     <div className='admin-ground'> 
     <div className='menu-add-new'> 
   <div> 
-    <h3> Upload Image</h3>
+    <h5> Upload Image</h5>
     <input type='file'  style={{backgroundColor:'white'}}  />
   </div>
   <div> 
-    <h3> Product Name </h3>
+    <h5> Product Name </h5>
     <input type='text' /> 
   </div>
   <div> 
-    <h3> Product Description</h3>
+    <h5> Product Description</h5>
     <input type='textarea' />
   </div>
   <div> 
-    <h3> Product Type </h3>
+    <h5> Product Type </h5>
     <input/>
   </div>
   <div> 
-    <h3> Product Price </h3>
+    <h5> Product Price </h5>
     <input/>
   </div>
   <div className='item-save'> <button onClick={handleSaveSuccess}> Save</button> </div>

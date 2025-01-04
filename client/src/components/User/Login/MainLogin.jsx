@@ -24,10 +24,7 @@ return (
     <button> ADMIN</button> </Link> 
     <div className='background'> 
     <div className='sign-in'> 
-    {/* <Link to={'/user/LoginPopup'}>  */}
-    <h2 onClick={handlePopup}> Sign In  </h2>
-    {/* </Link> */}
-    <h2> To Explore </h2>  
+    <div onClick={handlePopup}> Sign In  </div>
     </div>
     {showPopup && <LoginPopup onClose={handleClosePopup} />}
     </div>

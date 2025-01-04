@@ -2,7 +2,13 @@
 html {
     scroll-behavior: smooth;
   }
+
+.background-imageee{
+  background-image: url('../../../assets/foodcolor.png');
+  background-size: cover;
   
+}
+
 .register{
     width: fit-content;
     padding: 1.5rem;
@@ -50,6 +56,7 @@ html {
     margin-left: 2rem;
     margin-right: 2rem;
     padding: 1rem;
+   
 
 } 
   
@@ -71,10 +78,9 @@ html {
 }
 
 .home-header{
-    margin-left: 3rem;
+    margin-left: 6rem;
     margin-top: 6rem;
-    font-size: 2.1rem;
-   
+    font-size: 2.1rem;   
 }
 
 .food{
@@ -114,12 +120,19 @@ html {
     display: flex;
     justify-content: center;
     font-family: cursive;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    
+    /* font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; */
     color: orangered;
     font-size: 2.4rem;
+    font-weight: bold;
     
   }
 
-
+ .navbar{
+  padding-top: 1.5rem;
+  
+ }
   .com{
    
     background-color:rgb(223, 186, 74);
@@ -178,6 +191,10 @@ html {
     display: flex;
     justify-content: center;
     color: orangered;   
+    font-family: cursive;
+    font-weight: bold;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 
@@ -235,8 +252,8 @@ html {
     color: rgb(254, 254, 255);
     background-color: rgb(90, 111, 226);
     border: none;
-   margin-left: 13rem;
-   margin-right: 13rem;
+    margin-left: 13rem;
+    margin-right: 13rem;
 }
 
 
@@ -266,6 +283,8 @@ html {
     font-size: 0.8rem;
     margin-left: 62.3rem;
     top: 2.2rem;
+    padding-left: 6px;
+    padding-right: 6px;
    
   } 
 
@@ -295,20 +314,38 @@ html {
   }
 
 
-.header-img{
-  height: 6rem;
-  width: 7rem;
+.header-img {
+  width: 100%;
+  max-width: 6rem;
+  height: auto;
   border-radius: 5px;
 }
 
 
+.food {
+  background-image: url('../../../assets/foodcolor.png');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  width: 100%;
+}
 
+.foot {
+  display: flex;
+  justify-content: center;
+  height: auto;
+  width: 100%;
+  max-width: 4rem;
+  border-radius: 5px;
+}
 
- 
+.nav-link{
+  font-size: 1.38rem;
+}
+
 @media (max-width: 768px) {
 
-
-  .home-head{
+.home-head{
         display: flex;
         gap: 1rem;
         font-weight: bold;
@@ -316,7 +353,7 @@ html {
         padding-top: 2rem;    
     }
     
-  .home-header{
+.home-header{
         display: flex;
         justify-content: center;
         margin-top: 1rem;
@@ -404,7 +441,7 @@ html {
   }
 .home-heading{
 
-    margin-left: 3rem;
+    margin-left: 1rem;
     margin-top: 6rem;
     font-size: 2.1rem;
 }
@@ -417,24 +454,60 @@ html {
   margin-left: 7rem;
 }
 
-.header-img{
 
-  height: 3rem;
-  width: 3rem;
-  border-radius: 5px; 
-  margin-left: 14rem;
- 
-}
+
 .navbar-toggler{
   margin-top: 1.5rem;
-}
-
-.text-center{
-  margin-top: 3rem;
+ 
 }
 
 .register{
-  margin-top: 3rem;
+  margin-top: 2rem;
 }
 
+
+.logo-pic {
+  max-width: 150px;  
+  padding: 0.5rem; 
+  margin-left: 15rem; 
+
+}
+
+
+.header-img {
+  max-width: 150px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.logo-pic {
+  max-width: 150px;
+  padding: 0.5rem;
+}
+
+.food {
+  min-height: 80vh;
+}
+
+.foot {
+  width: 4rem;
+  height: 4rem;
+}
+
+.home-header {
+  margin-left: 1rem;
+  margin-top: 2rem;
+  font-size: 1.4rem;
+}
+
+.header-img {
+  /* width: 100%; */
+  max-width: 6rem;
+  height: auto;
+  border-radius: 5px;
+}
+
+
 } 
+
+
