@@ -1,0 +1,15 @@
+.feed-header{
+    display: flex;
+    justify-content: end;
+    margin-right: 10rem;
+    font-size: 1.5rem;  
+    position: relative;   
+    margin-top: 6rem;      
+}
+
+.feed-header button{
+    padding: 0.5rem;    
+    font-weight: bold;
+    border-radius: 8px;
+}
+
