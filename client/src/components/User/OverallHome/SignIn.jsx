@@ -6,15 +6,33 @@ import { FaGoogle } from "react-icons/fa6";
 const SignIn = ({ isVisible, onClose }) => {
   if (!isVisible) return null;
 
+  // const handleGoogleSignIn = () => {
+  //   const backendUrl = process.env.REACT_APP_BACKEND_SERVER_URL;
+
+  //   if (!backendUrl) {
+  //     console.error('Backend URL is not set in environment variables.');
+  //     alert('Configuration error: Backend URL is missing.');
+  //     return;
+  //   }
+
+  //   try {
+  //     window.location.href = `${backendUrl}/auth/google`;
+  //   } catch (error) {
+  //     console.error('Error redirecting to Google Sign-In:', error);
+  //     alert('Failed to redirect to Google authentication.');
+  //   }
+  // };
+
+
   const handleGoogleSignIn = () => {
     const backendUrl = process.env.REACT_APP_BACKEND_SERVER_URL;
-
+ 
     if (!backendUrl) {
       console.error('Backend URL is not set in environment variables.');
       alert('Configuration error: Backend URL is missing.');
       return;
     }
-
+ 
     try {
       window.location.href = `${backendUrl}/auth/google`;
     } catch (error) {
@@ -22,6 +40,10 @@ const SignIn = ({ isVisible, onClose }) => {
       alert('Failed to redirect to Google authentication.');
     }
   };
+ 
+ 
+
+
 
 
 
