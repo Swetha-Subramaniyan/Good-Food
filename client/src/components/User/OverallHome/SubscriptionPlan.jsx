@@ -71,7 +71,7 @@ const SubscriptionPlan = () => {
         {isModalOpen && (
           <div className="modal">
             <div className="modal-content">
-              <button className="closee-btn" onClick={closeModal}>X</button>
+              <button className="closee-btn" onClick={closeModal}> X</button>
               <table className="styled---table">
                 <thead>
                   <tr>

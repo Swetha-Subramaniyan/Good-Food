@@ -24,11 +24,14 @@
     width: 4rem;
     font-size: 1rem;
     font-weight: bold;
+   
 }
 
-.comm button :hover{
-    background-color: rgb(240, 119, 33);
+.comm button:hover{
+    
     cursor: pointer;
+    background-color: orangered;
+    color: white;
 }
 
 
@@ -42,15 +45,35 @@
   justify-content: center; 
 }
 
-.closee-btn{
+/* .closee-btn{
   display: flex;
-  width: fit-content;
+  width: 1rem;
   margin-left: 60rem;
   margin-top: 1rem;
+  background-color: orangered;
+  color: white;
+  border: none;
+  
 
   
-}
+} */
 
+
+.closee-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 1px;
+  cursor: pointer;
+  border-radius: 3px;
+  position: relative;
+  font-size: 0.8rem;
+  margin-left: 60rem;
+  top: 2.2rem;
+  width: fit-content;
+  padding-left: 6px;
+  padding-right: 6px; 
+} 
 
 
 @media (max-width: 768px) {

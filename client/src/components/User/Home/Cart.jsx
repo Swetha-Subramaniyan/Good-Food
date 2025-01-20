@@ -97,6 +97,7 @@ const Cart = () => {
         <div style={{marginLeft:'10rem', fontWeight:'bold'}}> 
           Pay for Add Ons
         </div>
+        
         <div className='cart-checkout'>
           <p>Total: ₹{totalPrice}</p>
           <Link to={'/user/PaymentCart'}> 

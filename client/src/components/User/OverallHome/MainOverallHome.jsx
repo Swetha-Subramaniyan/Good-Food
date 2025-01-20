@@ -645,6 +645,7 @@ console.log("Response :" , response.data)
         <IdeasToImprove isVisible={isFeedbackVisible} onClose={closeFeedbackForm} />
        
 <br/> <br/> 
+
 {/* <div className="main-container">
   <header className="header">
     <h1 className="home-heading">Choose Your Plan for Subscription!</h1>
@@ -715,6 +716,8 @@ console.log("Response :" , response.data)
     </div>
   )}
 </div> */}
+
+
 
     </>
   );

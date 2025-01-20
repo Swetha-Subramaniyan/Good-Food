@@ -41,6 +41,7 @@ import Vision from './components/User/OverallHome/Vision';
 import SignIn from './components/User/OverallHome/SignIn';
 import MoneyTransfer from './components/User/Subscription/MoneyTransfer';
 import BudgetCombo from './components/User/Subscription/BudgetCombo';
+import FeedItemsOption from './components/Admin/FeedItems/FeedItemsOption';
 
 
 const App = () => {
@@ -93,7 +94,8 @@ const App = () => {
       <Route path='subscribedusers' element={<SubscribedUsers/>}/>
       <Route path='cheforderlist' element={<ChefOrderList/>}/>
       <Route path='adminorderlist' element={< AdminOrderList/>}/>  
-      <Route path='feeditem' element={<FeedItems  />}/>    
+      <Route path='feeditem' element={<FeedItems  />}/>   
+      <Route path='feeditemoption' element={< FeedItemsOption/>}/> 
     </Route>
    </Routes>
    </BrowserRouter>  

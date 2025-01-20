@@ -13,7 +13,8 @@ const MoneyTransfer = () => {
      <div className="subscription-detailss">                            
 <div className="payment-method">
           <div style={{fontSize:'1.5rem'}}>Select Payment Method</div>
-        </div>        
+        </div>   
+        <br/>     
     <FormControl>
       <RadioGroup
         aria-labelledby="demo-radio-buttons-group-label"

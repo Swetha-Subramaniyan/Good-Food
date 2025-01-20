@@ -98,11 +98,8 @@ const MainAddSubscription = () => {
 
   return (
     <>
-       <MainFeedItems/> 
-      <div>
         <MainSidebar />
-      </div>
-     
+        <MainFeedItems/>      
       <div className="sub-plan">Subscription Plans</div>  
       <div className="add--button">
         <button onClick={toggleFormVisibility}>Add Plan</button>
