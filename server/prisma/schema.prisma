@@ -22,12 +22,10 @@ enum MealType {
   Breakfast
   Lunch
   Dinner
-}
-
-enum Plan {
-  Individual
   Combo
 }
+
+
  
 enum tier {
   Budget
@@ -104,7 +102,7 @@ model Subscription {
   tier_id Int
   duration_qty_id Int
   meal_type_id Int
-  price_id              Float
+  price_id              Int
   created_at         DateTime             @default(now())
   updatedAt          DateTime             @updatedAt
   SubscriptionPayments Subscription_Payment[] @relation("SubscriptionToPayment")
@@ -112,6 +110,7 @@ model Subscription {
   TierSub Tier @relation(fields: [tier_id],references: [id])
   DurationSub Duration_qty @relation(fields: [duration_qty_id],references: [id])
   MealSub Meal_type @relation(fields: [meal_type_id],references: [id])
+  PricingDetails Pricing_Details @relation(fields: [price_id],references: [id])
 }
 
 model Tier {
@@ -133,7 +132,7 @@ model Duration_qty {
 
 model Parent_Plan {
   id         Int       @id @default(autoincrement())
-  plan_name       Plan
+  plan_name       String
   created_at DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   subscriptions Subscription[]
@@ -167,6 +166,7 @@ model Pricing_Details {
   created_at DateTime
   updatedAt DateTime
   PricingSub Subscription_Pricing[]
+  PricingDetails Subscription[]
 }
 
 model Food_Items {

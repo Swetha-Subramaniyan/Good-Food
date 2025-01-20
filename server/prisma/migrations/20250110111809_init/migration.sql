@@ -76,7 +76,7 @@ CREATE TABLE `Subscription` (
     `tier_id` INTEGER NOT NULL,
     `duration_qty_id` INTEGER NOT NULL,
     `meal_type_id` INTEGER NOT NULL,
-    `price_id` DOUBLE NOT NULL,
+    `price_id` INTEGER NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
@@ -106,7 +106,7 @@ CREATE TABLE `Duration_qty` (
 -- CreateTable
 CREATE TABLE `Parent_Plan` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `plan_name` ENUM('Individual', 'Combo') NOT NULL,
+    `plan_name` VARCHAR(191) NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
@@ -205,6 +205,9 @@ ALTER TABLE `Subscription` ADD CONSTRAINT `Subscription_duration_qty_id_fkey` FO
 
 -- AddForeignKey
 ALTER TABLE `Subscription` ADD CONSTRAINT `Subscription_meal_type_id_fkey` FOREIGN KEY (`meal_type_id`) REFERENCES `Meal_type`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Subscription` ADD CONSTRAINT `Subscription_price_id_fkey` FOREIGN KEY (`price_id`) REFERENCES `Pricing_Details`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Subscription_Payment` ADD CONSTRAINT `Subscription_Payment_subscription_id_fkey` FOREIGN KEY (`subscription_id`) REFERENCES `Subscription`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
