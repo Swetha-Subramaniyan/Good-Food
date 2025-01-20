@@ -145,18 +145,46 @@
 
 
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Payment.css';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
 import Alert from '@mui/material/Alert';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Payment = () => {
   const [paymentSuccess, setPaymentSuccess] = useState(false);
-  const [subscriptionPlan, setSubscriptionPlan] = useState('Combo'); // Default subscription plan
+  const [subscriptionPlan, setSubscriptionPlan] = useState('Combo'); 
+  const [userSubscriptions, setUserSubscriptions] = useState(null);
+
+
+  const [error, setError] = useState(null);
+ 
+  useEffect(() => {
+    const fetchSubscriptionDetails = async () => {
+      try {
+        const token = localStorage.getItem("token");
+ 
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER_URL}/userSubscription/getUserDetails`,
+           {
+            headers: { Authorization: `Bearer ${token}` },
+ 
+        });
+        console.log("GET DETAILS",response.data)
+        setUserSubscriptions(response.data.userSubscriptions[0]);
+      } catch (err) {
+        console.error("Error fetching subscription details:", err);
+        setError(
+          err.response?.data?.message || "Failed to fetch subscription details"
+        );
+      }
+    };
+ 
+    fetchSubscriptionDetails();
+  }, []);
+ 
+  if (error) {
+    return <Alert severity="error">{error}</Alert>;
+  }
 
   const handlePayment = () => {
     setPaymentSuccess(true);
@@ -165,64 +193,81 @@ const Payment = () => {
     }, 240000);
   };
 
-  const handlePlanChange = (event) => {
-    setSubscriptionPlan(event.target.value);
-  };
+  // const handlePlanChange = (event) => {
+  //   setSubscriptionPlan(event.target.value);
+  // };
+
+
+
+  const planName = userSubscriptions?.Subscription?.parentPlan1?.plan_name ;
+  const price = userSubscriptions?.Subscription?.PricingDetails?.price;
+  const days = userSubscriptions?.Subscription?.DurationSubs?.actual_days;
+  const startDate = userSubscriptions?.start_date;
+  const endDate = userSubscriptions?.end_date;
+  const validity = userSubscriptions?.validity_days
+ 
+console.log("PLAN AND ITS DETAILS :", planName,price,days,startDate,endDate,validity)
 
   return (
     <>
-      <div className="details-back">
+<div className="details-back">
         <div className="form-container">
+          <h2>Subscription Details</h2>
+          <br />
           <form>
             <div className="subscription-details">
-              <h2>Subscription Details</h2>
-              <div className="form-group">
-                <label>Customer ID:</label>
-                <span>GF001</span>
-              </div>
               <div className="form-group">
                 <label>Subscription Plan:</label>
-                <span>
-                  <select
-                    value={subscriptionPlan}
-                    onChange={handlePlanChange}
-                    style={{ padding: '5px', borderRadius: '5px' }}
-                  >
-                    <option value="Individual">Individual Pack</option>
-                    <option value="Combo">Combo Budget</option>
-                    <option value="ComboElite">Combo Elite</option>
-                    
-                  </select>
-                </span>
+                <span>{planName}</span>
               </div>
+ 
               <div className="form-group">
                 <label>Subscription Price:</label>
-                <span>₹200</span>
+                <span>
+                ₹{price}
+ 
+ 
+                </span>
               </div>
+ 
               <div className="form-group">
                 <label>Subscription Days:</label>
-                <span>30 Days</span>
+                <span>
+                  {days} Days
+                </span>
               </div>
+ 
               <div className="form-group">
                 <label>Starting Date:</label>
-                <span>01-12-2024</span>
+                <span>{startDate}</span>
               </div>
+ 
               <div className="form-group">
                 <label>Ending Date:</label>
-                <span>01-01-2025</span>
+                <span>{endDate}</span>
               </div>
+ 
               <div className="form-group">
                 <label>Subscription Validity:</label>
-                <span>45 Days</span>
+                <span>
+                 
+                 {validity} Days
+                </span>
               </div>
             </div>
-
+            <br />
             <br />
             <div className="details-back">
               <div className="form-container">
                 <h2>Food Delivery Details</h2>
                 <br />
                 <form>
+                <div className="form-group">
+                    <label>Customer ID:</label>
+                    <span>
+                      <input />
+                    </span>
+                  </div>
                   <div className="form-group">
                     <label>Name:</label>
                     <span>
@@ -248,15 +293,21 @@ const Payment = () => {
                     </span>
                   </div>
                   <div className="form-group">
-                    <label>Street / LandMark:</label>
+                    <label>Street:</label>
                     <span>
                       <input />
                     </span>
                   </div>
                   <div className="form-group">
-                    <label>City / Pincode:</label>
+                    <label>City:</label>
                     <span>
                       <textarea />
+                    </span>
+                  </div>
+                  <div className="form-group">
+                    <label>Pincode:</label>
+                    <span>
+                      <input />
                     </span>
                   </div>
 
@@ -269,15 +320,21 @@ const Payment = () => {
                         </span>
                       </div>
                       <div className="form-group">
-                        <label>Street / LandMark:</label>
+                        <label>Street :</label>
                         <span>
                           <input />
                         </span>
                       </div>
                       <div className="form-group">
-                        <label>City / Pincode:</label>
+                        <label>City:</label>
                         <span>
                           <textarea />
+                        </span>
+                      </div>
+                      <div className="form-group">
+                        <label>Pincode :</label>
+                        <span>
+                          <input />
                         </span>
                       </div>
                     </>
