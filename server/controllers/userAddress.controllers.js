@@ -14,18 +14,19 @@ const getPhoneNumber = async (req,res) => {
 
 const createPhoneNumber = async (req,res) => {
     try {
-        const {address,city,street,area,landmark,pincode,phone,alternate_phone,user_details_id}=req.body;
+        const {name,email,phone_number,landmark,street,city,pincode,alternate_number}=req.body;
+        const{customer_id} = req.user;
 const createPhone = await prisma.user_Address.create({
     data : {
-        address,
-        city,
-        street,
-        area,
+        name,
+        customer_id,
+        email,
+        phone_number,
+        alternate_number,
         landmark,
+        street,
+        city,
         pincode,
-        phone,
-        alternate_phone,
-        user_details_id,
         created_at : new Date(),
         updatedAt : new Date()
     }
