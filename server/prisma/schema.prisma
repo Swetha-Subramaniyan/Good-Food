@@ -1,210 +1,3 @@
-// // This is your Prisma schema file,
-// // learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
-// generator client {
-//   provider = "prisma-client-js"
-// }
-
-// datasource db {
-//   provider = "mysql"
-//   url      = env("DATABASE_URL")
-// }
-
-// enum ItemType {
-//   Veg
-//   Non_Veg
-// }
-
-// enum MealType {
-//   Breakfast
-//   Lunch
-//   Dinner
-//   Combo
-// }
-
-
- 
-// enum tier {
-//   Budget
-//   Elite
-// }
-
-
-// model Users {
-//   id Int @id @default(autoincrement())
-//   customer_id String @unique
-//   username String
-//   email String @unique
-//   display_picture String?
-//   created_at DateTime
-//   updatedAt DateTime
-//   UserNumber Phone_Number[]
-//   UserPosition User_Position[]
-//   UserAddress User_Address[]
-//   UserSubscription User_Subscription[]
-//   SubscriptionPayment Subscription_Payment[]
-// }
-
-// model Phone_Number {
-//   id Int @id @default(autoincrement())
-//   user_id Int
-//   customer_id String
-//   phone_number String
-//   alternate_number String?
-//   created_at DateTime
-//   UserNumber Users @relation(fields: [user_id],references: [id])
-// }
-
-// model User_Position {
-//   id Int @id @default(autoincrement())
-//   position String
-//   user_id Int
-//   created_at DateTime
-//   updatedAt DateTime
-//   Users Users @relation(fields: [user_id],references: [id])
-// }
-
-// model User_Address {
-//   id Int @id @default(autoincrement())
-//   address String
-//   city String
-//   street String
-//   area String
-//   landmark String
-//   pincode Int
-//   phone Int
-//   alternate_phone Int
-//   user_details_id Int
-//   created_at DateTime
-//   updatedAt DateTime
-//   UserDetails Users @relation(fields: [user_details_id],references: [id])
-// }
-
-// model User_Subscription { 
-//   id Int @id @default(autoincrement())
-//   subscription_id Int 
-//   start_date DateTime
-//   end_date DateTime
-//   status String
-//   user_id Int
-//   created_at DateTime
-//   updatedAt DateTime
-//   UserSubcription Users @relation(fields: [user_id],references: [id])
-// }
-
-// model Subscription {
-//   id                 Int                  @id @default(autoincrement())
-//   parent_plan_id     Int
-//   plan_description   String
-//   tier_id Int
-//   duration_qty_id Int
-//   meal_type_id Int
-//   price_id              Int
-//   created_at         DateTime             @default(now())
-//   updatedAt          DateTime             @updatedAt
-//   SubscriptionPayments Subscription_Payment[] @relation("SubscriptionToPayment")
-//   parentPlan1        Parent_Plan          @relation(fields: [parent_plan_id], references: [id])
-//   TierSub Tier @relation(fields: [tier_id],references: [id])
-//   DurationSub Duration_qty @relation(fields: [duration_qty_id],references: [id])
-//   MealSub Meal_type @relation(fields: [meal_type_id],references: [id])
-//   PricingDetails Pricing_Details @relation(fields: [price_id],references: [id])
-// }
-
-// model Tier {
-//   id Int @id @default(autoincrement())
-//   type tier
-//   created_at DateTime
-//   updatedAt DateTime
-//   TierSub Subscription[]
-// }
-
-// model Duration_qty {
-//   id Int @id @default(autoincrement())
-//   days Int
-//   created_at DateTime
-//   updatedAt DateTime
-//   DurationSub Subscription[]
-// }
-
-
-// model Parent_Plan {
-//   id         Int       @id @default(autoincrement())
-//   plan_name       String
-//   created_at DateTime  @default(now())
-//   updatedAt  DateTime  @updatedAt
-//   subscriptions Subscription[]
-// }
-
-
-
-// model Subscription_Payment {
-//   id                     Int      @id @default(autoincrement())
-//   payment_method         String
-//   subscription_id        Int
-//   user_id                Int
-//   payment_status         String
-//   created_at             DateTime @default(now())
-//   updatedAt              DateTime @updatedAt
-//   SubscriptionPayment    Subscription @relation("SubscriptionToPayment", fields: [subscription_id], references: [id])
-//   SubscriptionPaymentUsers Users        @relation(fields: [user_id], references: [id])
-// }
-
-// model Subscription_Pricing {
-//   id Int @id @default(autoincrement())
-//   subscription_id Int
-//   pricing_id Int
-//   created_at DateTime
-//   updatedAt DateTime
-//   SubPricing Pricing_Details @relation(fields: [pricing_id],references: [id])
-// }
-// model Pricing_Details {
-//   id Int @id @default(autoincrement())
-//   price Float
-//   created_at DateTime
-//   updatedAt DateTime
-//   PricingSub Subscription_Pricing[]
-//   PricingDetails Subscription[]
-// }
-
-// model Food_Items {
-//   id Int @id @default(autoincrement())
-//   item_name String
-//   item_type ItemType
-//   description String
-//   price_id Int
-//   image_url String?
-//   created_at DateTime
-//   updatedAt DateTime
-// }
-
-// model Subscription_Food_Menu {
-//   id Int @id @default(autoincrement())
-//   subscription_id Int
-//   food_item_id Int
-//   created_at DateTime
-//   updatedAt DateTime
-// }
-
-// model Meal_type {
-//   id Int @id @default(autoincrement())
-//   meal_type MealType
-//   created_at DateTime
-//   updatedAt DateTime
-//   MealSub Subscription[]
-// }
-
-
-
-
-
-
-
-
-
-
 
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
@@ -254,7 +47,6 @@ model Users {
   updatedAt DateTime
   UserNumber Phone_Number[]
   UserPosition User_Position[]
-  UserAddress User_Address[]
   SubscriptionPayment Subscription_Payment[]
 }
  
@@ -279,18 +71,17 @@ model User_Position {
  
 model User_Address {
   id Int @id @default(autoincrement())
-  address String
-  city String
-  street String
-  area String
+  name String
+  customer_id String
+  email String
+  phone_number String
+  alternate_number String?
   landmark String
-  pincode Int
-  phone Int
-  alternate_phone Int
-  user_details_id Int
+  street String
+  city String
+  pincode String
   created_at DateTime
   updatedAt DateTime
-  UserDetails Users @relation(fields: [user_details_id],references: [id])
 }
  
 model User_Subscription {
@@ -325,6 +116,8 @@ model Subscription {
   MealSub Meal_type @relation(fields: [meal_type_id],references: [id])
   PricingDetails Pricing_Details @relation(fields: [price_id],references: [id])
   Subscription User_Subscription[]
+  FoodSubscription Subscription_Food_Menu[]
+  SubscriptionPricing Subscription_Pricing[]
 }
  
 model Tier {
@@ -381,6 +174,7 @@ model Subscription_Pricing {
   pricing_id Int
   created_at DateTime
   updatedAt DateTime
+  SubscriptionPricing Subscription @relation(fields: [subscription_id],references: [id])
   SubPricing Pricing_Details @relation(fields: [pricing_id],references: [id])
 }
 model Pricing_Details {
@@ -390,6 +184,8 @@ model Pricing_Details {
   updatedAt DateTime
   PricingSub Subscription_Pricing[]
   PricingDetails Subscription[]
+  SubscriptionPriceDetailss Food_Items[]
+  
 }
  
 model Food_Items {
@@ -401,6 +197,8 @@ model Food_Items {
   image_url String?
   created_at DateTime
   updatedAt DateTime
+  SubscriptionPriceDetails Pricing_Details @relation(fields: [price_id],references: [id]) 
+  FoodItemsMenu Subscription_Food_Menu[]
 }
  
 model Subscription_Food_Menu {
@@ -409,6 +207,8 @@ model Subscription_Food_Menu {
   food_item_id Int
   created_at DateTime
   updatedAt DateTime
+  FoodSubscription Subscription @relation(fields: [subscription_id],references: [id])
+  FoodItems Food_Items @relation(fields: [food_item_id],references: [id])
 }
  
 model Meal_type {
