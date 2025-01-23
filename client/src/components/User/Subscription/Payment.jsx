@@ -148,13 +148,16 @@
 
 
 
+
 import React, { useState, useEffect } from "react";
 import "./Payment.css";
 import Alert from "@mui/material/Alert";
 import axios from "axios";
- 
+import { useNavigate } from "react-router-dom";
+
 const Payment = () => {
-  const [userSubscriptions, setUserSubscriptions] = useState(null);
+  const [userSubscriptions, setUserSubscriptions] = useState([]);
+
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
@@ -167,6 +170,10 @@ const Payment = () => {
   });
   const [successMessage, setSuccessMessage] = useState(null);
  
+
+  const navigate = useNavigate();
+
+
   useEffect(() => {
     const fetchSubscriptionDetails = async () => {
       try {
@@ -177,20 +184,23 @@ const Payment = () => {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        console.log("Detailsss :", response.data)
-        setUserSubscriptions(response.data.userSubscriptions[0]);
+
+        console.log("User Details:", response.data);
+        const subscriptions = response.data.userSubscriptions;
+        setUserSubscriptions(subscriptions);
+
       } catch (err) {
         setError(err.response?.data?.message || "Failed to fetch subscription details");
       }
     };
     fetchSubscriptionDetails();
   }, []);
- 
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
- 
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -200,7 +210,11 @@ const Payment = () => {
         formData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      console.log("Form Submitted ", response.data)
+
+      console.log("Form Submitted:", response.data);
+      alert("Success!")
+      navigate('/user/MoneyTransfer')
+      
       setSuccessMessage(response.data.message);
       setFormData({
         name: "",
@@ -215,23 +229,28 @@ const Payment = () => {
       setError(error.response?.data?.message || "Failed to submit address");
     }
   };
- 
+
+
   if (error) {
     return <Alert severity="error">{error}</Alert>;
   }
- 
-  const planName = userSubscriptions?.Subscription?.parentPlan1?.plan_name;
-  const price = userSubscriptions?.Subscription?.PricingDetails?.price;
-  const days = userSubscriptions?.Subscription?.DurationSubs?.actual_days;
-  const startDate = userSubscriptions?.start_date;
-  const endDate = userSubscriptions?.end_date;
-  const validity = userSubscriptions?.validity_days;
- 
+
+  const recentPlan = userSubscriptions[userSubscriptions.length - 1];
+
+  const planName = recentPlan?.Subscription?.parentPlan1?.plan_name || "N/A";
+  const price = recentPlan?.Subscription?.PricingDetails?.price || "N/A";
+  const days = recentPlan?.Subscription?.DurationSubs?.actual_days || "N/A";
+  const startDate = recentPlan?.start_date || "N/A";
+  const endDate = recentPlan?.end_date || "N/A";
+  const validity = recentPlan?.validity_days || "N/A";
+
   return (
     <div className="details-back">
       <div className="form-container">
         <h2>Subscription Details</h2>
+
         <form onSubmit={handleFormSubmit} noValidate>
+
           <div className="subscription-details">
             <div className="form-group">
               <label>Subscription Plan:</label>
@@ -258,7 +277,6 @@ const Payment = () => {
               <span>{validity} Days</span>
             </div>
           </div>
- 
           <h2>Food Delivery Details</h2>
           <div className="form-group">
             <label>Name:</label>
@@ -316,7 +334,7 @@ const Payment = () => {
               onChange={handleInputChange}
             />
           </div>
- 
+
           <button type="submit" className="submit-color">
             Submit
           </button>
