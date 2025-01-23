@@ -45,7 +45,7 @@
   justify-content: center; 
 }
 
-/* .closee-btn{
+.closee-btn{
   display: flex;
   width: 1rem;
   margin-left: 60rem;
@@ -56,7 +56,7 @@
   
 
   
-} */
+}
 
 
 .closee-btn {
@@ -74,6 +74,7 @@
   padding-left: 6px;
   padding-right: 6px; 
 } 
+
 
 
 @media (max-width: 768px) {
@@ -241,4 +242,5 @@
     }
     
     } 
+    
     
