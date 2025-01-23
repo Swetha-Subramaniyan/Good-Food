@@ -12,7 +12,7 @@ const MainChefOrderList = () => {
         <h5>Date: 21-01-2024</h5>
       </div>
       
-      <div>
+      {/* <div>
         <table className="styled-table">
           <thead>
             <tr className='style-head'>
@@ -40,7 +40,37 @@ const MainChefOrderList = () => {
             </tr>         
           </tbody>
         </table>
-      </div>
+      </div> */}
+
+      <table className="styled-table">
+          <thead>
+            <tr className='style-head'>
+              <th colSpan={2}>Breakfast</th>
+              <th colSpan={2}>Lunch </th>  
+              <th colSpan={2} >Dinner</th>
+            </tr>
+            <tr> 
+                <th> Budget</th>
+                <th> Elite</th>
+                <th> Budget</th>
+                <th> Elite</th>
+                <th> Budget</th>
+                <th> Elite</th>
+                       
+            </tr>
+            
+          </thead>
+          <tbody>
+            <tr> 
+              <td>1</td>
+              <td>1</td>
+              <td>1</td>
+              <td>1</td>    
+              <td>1</td>
+              <td>1</td>           
+            </tr>         
+          </tbody>
+        </table>
     </>
   )
 }

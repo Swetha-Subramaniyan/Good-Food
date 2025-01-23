@@ -147,13 +147,15 @@ img{
   margin-top: 2rem;
   font-weight: bold;
   font-size: 1.6rem;
+  margin-top: 7rem;
  
 }
 
 .days div{
+  
   background-color: rgb(238, 74, 24);
   color: aliceblue;
-  padding: 2rem;
+  padding: 1rem;
   border-radius: 8px;
   font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
 }
