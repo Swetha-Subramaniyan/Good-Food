@@ -31,7 +31,9 @@ const MainSubscription = () => {
   return (
     <>
       <div className="back">
-        {/* <h1 className="heading"> Choose Your Plan for Subscription!</h1> */}
+
+        <h1 className="heading"> Choose Your Plan for Subscriptions!</h1>
+
         <div className="choose-plan">
           <h2 className="combo">
             Individual Pack <br />
