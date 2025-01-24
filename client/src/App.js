@@ -22,7 +22,6 @@ import DailyMenu from './Pages/Admin/DailyMenu'
 import SubscriptionMenuList from './Pages/Admin/SubscriptionMenuList'
 import SubscribedUsers from './Pages/Admin/SubscribedUsers'
 import LoginPopup from './components/User/Login/LoginPopup'
-import IndividualPlan from './components/User/Subscription/IndividualPlan'
 import OverallHome from './Pages/User/OverallHome'
 import IndividualPackLunch from './components/User/Subscription/IndividualPackLunch'
 import IndividualPackDinner from './components/User/Subscription/IndividualPackDinner'
@@ -36,7 +35,6 @@ import SubscriptionPlan from './components/User/OverallHome/SubscriptionPlan';
 import ContactUs from './components/User/OverallHome/ContactUs';
 import LicenseContent from './components/User/OverallHome/LicenseContent';
 import IdeasToImprove from './components/User/OverallHome/IdeasToImprove';
-import IndividualBreakLunchDinner from './components/User/OverallHome/IndividualBreakLunchDinner';
 import Vision from './components/User/OverallHome/Vision';
 import SignIn from './components/User/OverallHome/SignIn';
 import MoneyTransfer from './components/User/Subscription/MoneyTransfer';
@@ -62,7 +60,6 @@ const App = () => {
     <Route path='Cart' element={<Cart/>}/>
     <Route path='SubscriptionCalender' element={< SubscriptionCalender/>}/>
     <Route path='MenuAddon' element={<MenuAddon/>}/>
-    <Route path='IndividualPlan' element={< IndividualPlan/>}/> 
     <Route path='LoginPopup' element={< LoginPopup />}/>
     <Route path='IndividualPackLunch'  element={< IndividualPackLunch />}/>
     <Route path='IndividualPackDinner' element={< IndividualPackDinner/>}/>
@@ -74,10 +71,13 @@ const App = () => {
     <Route path='ContactUs'  element={< ContactUs />} />
     <Route path='LicenseContent' element={< LicenseContent />} />
     <Route path='IdeasToImprove' element= {< IdeasToImprove/> } />   
-    <Route path='IndividualBreakLunchDinner' element={<IndividualBreakLunchDinner />}/>
+   
     <Route path='Vision' element={<Vision/>} />
     <Route path='SignIn'  element={<SignIn />} />
     <Route path='MoneyTransfer' element={< MoneyTransfer />} />
+
+    {/* <Route path="BudgetCombo" element={<BudgetCombo />} />
+        <Route path="Payment/:planId" element={<Payment />} /> */}
     </Route>
    </Routes>
 
