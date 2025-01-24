@@ -55,8 +55,7 @@ const MainChefOrderList = () => {
                 <th> Budget</th>
                 <th> Elite</th>
                 <th> Budget</th>
-                <th> Elite</th>
-                       
+                <th> Elite</th>                       
             </tr>
             
           </thead>
@@ -70,6 +69,7 @@ const MainChefOrderList = () => {
               <td>1</td>           
             </tr>         
           </tbody>
+          
         </table>
     </>
   )

@@ -1,4 +1,5 @@
 import React, {  useEffect, useState } from 'react';
+import './EliteCombo.css'
 import { IoSunnyOutline, IoPartlySunnyOutline } from "react-icons/io5";
 import { MdOutlineModeNight } from "react-icons/md";
 import idly from '../../../assets/idly.jpg';
@@ -10,14 +11,11 @@ import StarRatings from '../Home/StarRatings';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
  
- 
- 
 const EliteCombo = () => {
-
-
   const [error, setError] = useState("");
   const [plans, setPlans] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedPlanId, setSelectedPlanId] = useState(null); 
   const navigate = useNavigate();
  
   useEffect(() => {
@@ -42,48 +40,58 @@ const EliteCombo = () => {
     fetchPlans();
   }, []);
  
-  const handlePlanClick =  async (subscription_id) => {
+
+  const handlePlanClick = (planId) => {
+    setSelectedPlanId(planId); 
+  };
+
+  const handleSubscribe = async () => {
+    if (!selectedPlanId) {
+      alert("Please select a plan first.");
+      return;
+    }
+
     try {
-      console.log("ABCD",subscription_id)
       const token = localStorage.getItem("token");
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_SERVER_URL}/userSubscription/createUserSubscription`,
-        { subscription_id },
- 
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+        { subscription_id: selectedPlanId },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
-        console.log("Subscription Created:", response.data);
-        alert("Subscription successfully created.");
-        navigate("/user/Payment");
+
+      console.log("Subscription Created:", response.data);
+      alert("Subscription successfully created.");
+      navigate("/user/Payment");
     } catch (err) {
-      console.error("Error creating subscription");
+      console.error("Error creating subscription:", err);
       setError("Failed to create subscription. Please try again.");
-    }  
+    }
   };
  
   return (
     <>   
+
 <div className="backgrd">
-      <div className="listt">Choose your Subscription Plans</div>
-      <button >Subscribe</button>
-      {error && <div className="error">{error}</div>}
-      <div className='days'>
-      {loading ? (
-          <div>Loading...</div>
-        ) : (
-          plans.map((plan) => (
-            <div
-              key={plan.id}
-              className="plan-item"
-              onClick={() => handlePlanClick(plan.id)}
-            >
-              <div>{plan.days} Days - ₹{plan.price}</div>
-            </div>
-          ))
-        )}
-      </div>
+        <div className="listt">Choose your Subscription Plans</div>
+        <div className='sub-add'> 
+        <button onClick={handleSubscribe}>Subscribe</button> </div>
+        {error && <div className="error">{error}</div>}
+        <div className="days">
+          {loading ? (
+            <div>Loading...</div>
+          ) : (
+            plans.map((plan) => (
+              <div
+                key={plan.id}
+                className={`plan-item ${selectedPlanId === plan.id ? 'selected' : ''}`}
+                onClick={() => handlePlanClick(plan.id)}
+              >
+                <div>{plan.days} Days - ₹{plan.price}</div>
+              </div>
+            ))
+          )}
+        </div>
+
  
   <div className='break'>
             <div className='breakfast-outt'> <IoPartlySunnyOutline/><span className='fastt'> Breakfast </span>Order before 11:00AM </div>        

@@ -1,14 +1,20 @@
+
+
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./MainOverallHome.css";
 import { useNavigate } from "react-router-dom";
 
+
 const SubscriptionPlan = () => {
   const navigate = useNavigate();
   const [groupedSubscriptions, setGroupedSubscriptions] = useState({});
   const [filteredPlans, setFilteredPlans] = useState([]);
-  const [showModal, setShowModal] = useState(false); 
-  const [modalData, setModalData] = useState(null); 
+
+  const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState(null);
+
 
   useEffect(() => {
     const fetchSubscriptions = async () => {
@@ -43,7 +49,9 @@ const SubscriptionPlan = () => {
           if (planName.includes("Individual Plan")) {
             acc["Individual"] = {
               ...(acc["Individual"] || {}),
-              [planName.split(" ")[2]]: details, 
+
+              [planName.split(" ")[2]]: details,
+
             };
           } else {
             acc[planName] = details;
@@ -62,6 +70,38 @@ const SubscriptionPlan = () => {
 
     fetchSubscriptions();
   }, []);
+
+
+  const handleModalItemClick = (meal, planType) => {
+    const planDetails =
+      groupedSubscriptions[`Individual Plan ${planType}`]?.[meal] || [];
+    navigate(`/user/IndividualPack${meal}${planType}`, { state: { meal, planDetails } });
+    setShowModal(false);
+  };
+
+  const handleCardClick = (planName) => {
+    if (planName === "Combo Plan Budget") {
+      navigate("/user/BudgetCombo");
+    } else if (planName === "Combo Plan Elite") {
+      navigate("/user/EliteCombo");
+    } else if (planName === "Individual") {
+      const individualPlans = Object.entries(groupedSubscriptions).filter(
+        ([key]) =>
+          key === "Individual Plan Budget" || key === "Individual Plan Elite"
+      );
+      const modalDetails = individualPlans.reduce((acc, [key, value]) => {
+        const subPlan = key.split(" ")[2];
+        acc[subPlan] = value;
+        return acc;
+      }, {});
+
+      setModalData(modalDetails);
+      setShowModal(true);
+    } else {
+      console.log(`Unknown plan selected: ${planName}`);
+    }
+  };
+
 
 
 
@@ -103,7 +143,7 @@ const SubscriptionPlan = () => {
   return (
     <div className="main-container">
       <header className="header">
-        <h1 className="home-heading">Choose Your Plan for Subscription!</h1>
+        <h1 style={{fontSize:'2.5rem'}} className="home-heading">Choose Your Plan for Subscription!</h1>
       </header>
 
       <div className="plans-container">
@@ -144,8 +184,6 @@ const SubscriptionPlan = () => {
     </div>
   </div>
 )}
-
-
     </div>
   );
 };

@@ -78,7 +78,6 @@ img{
   background-color:  rgb(107, 56, 89);
   border-radius: 5px;
   padding: 0.4rem;
-  /* min-width: 22rem; */
   text-align: center;
   font-size: 1.2rem;
   color: orangered;
@@ -121,14 +120,12 @@ img{
 }
 
 .sub-add button{
-
-    padding: 1rem;
+    padding: 0.7rem;
     font-size: 1.6rem;
     font-weight: bold;
     position: absolute;
     margin-left: 82rem;
     border-radius: 8px;
-    color: red;
     color: rgb(246, 248, 245);
     background-color:  rgb(107, 56, 89);   
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -151,13 +148,17 @@ img{
  
 }
 
-.days div{
-  
+
+.days div{  
   background-color: rgb(238, 74, 24);
   color: aliceblue;
   padding: 1rem;
   border-radius: 8px;
-  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  margin-left: 2rem;
+  margin-right: 2rem;
+
+
 }
 
 
@@ -270,3 +271,14 @@ img{
     font-size: 1.4rem;
   }
 }
+
+
+
+
+.plan-item.selected {
+  color: white;
+  border: 2px solid violet;
+  background-color:  rgb(107, 56, 89); 
+}
+
+

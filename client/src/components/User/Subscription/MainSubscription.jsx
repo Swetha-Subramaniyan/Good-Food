@@ -30,10 +30,9 @@ const MainSubscription = () => {
 
   return (
     <>
+
       <div className="back">
-
         <h1 className="heading"> Choose Your Plan for Subscriptions!</h1>
-
         <div className="choose-plan">
           <h2 className="combo">
             Individual Pack <br />
@@ -53,7 +52,7 @@ const MainSubscription = () => {
             </Link>
           </h2>
         </div>
-      </div>
+      </div> */}
   
       {/* {isModalOpen && (
         <div className="modal">
