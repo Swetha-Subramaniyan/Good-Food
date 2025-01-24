@@ -13,11 +13,28 @@ const getAllMenu = async(req,res) => {
     }
 }
 
+const getFoodMenuWithSubId = async(req,res) => {
+    try {
+        const{subscription_id}=req.body;
+        
+        const menuWithID = await prisma.subscription_Food_Menu.findMany({
+            where : {subscription_id},
+            select : {food_item_id : true}
+        })
+        res.status(200).json({message : "Success",menuWithID})
+    } catch (error) {
+        console.log(error)
+        res.status(404).json({error : "No Menu found with this ID"})
+    }
+}
+
 const createMenu = async(req,res) => {
     try {
-        const {subscription_id,food_item_id} = req.body;
+        const {parent_plan_id,tier_id,subscription_id,food_item_id} = req.body;
         const newMenu = await prisma.subscription_Food_Menu.create({
             data : {
+                parent_plan_id,
+                tier_id,
                 subscription_id,
                 food_item_id,
                 created_at : new Date(),
@@ -32,4 +49,4 @@ const createMenu = async(req,res) => {
 }
 
 
-module.exports = {getAllMenu,createMenu}
+module.exports = {getAllMenu,getFoodMenuWithSubId,createMenu}
