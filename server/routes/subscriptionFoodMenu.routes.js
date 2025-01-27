@@ -4,7 +4,14 @@ const router = express.Router()
 
 
 router.get('/getMenu',getAllMenu)
-router.get('/getWithID',getFoodMenuWithSubId)
+router.post('/getWithID',getFoodMenuWithSubId)
 router.post('/createMenu',createMenu)
 
 module.exports = router;
+
+
+
+
+
+
+

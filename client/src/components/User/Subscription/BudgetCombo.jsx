@@ -14,6 +14,7 @@ import axios from 'axios';
 const BudgetCombo = () => {
   const [error, setError] = useState("");
   const [plans, setPlans] = useState([]);
+  const [foodItems, setFoodItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedPlanId, setSelectedPlanId] = useState(null); 
   const navigate = useNavigate();
@@ -29,7 +30,6 @@ const BudgetCombo = () => {
         const plansData = response.data.groupedSubscriptions?.['Combo Plan Budget']?.Combo || [];
         setPlans(plansData);
         setLoading(false);
-        console.log('Fetched Plans:', plansData);
       } catch (error) {
         console.error('Error fetching subscription plans:', error.response?.data || error.message);
         setPlans([]);
@@ -40,30 +40,50 @@ const BudgetCombo = () => {
     fetchPlans();
   }, []);
 
-  const handlePlanClick = (planId) => {
-    setSelectedPlanId(planId); 
+  const handlePlanClick = async (planId) => {
+    setSelectedPlanId(planId);
+    setFoodItems([]); 
+  
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_SERVER_URL}/foodMenu/getWithID`,
+        { subscription_id: planId },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      console.log('Food Items fetched:', response.data);
+  
+      const fetchedItems = response.data.menuWithID?.map((item) => item.FoodItems) || [];
+      setFoodItems(fetchedItems);
+    } catch (error) {
+      console.error('Error fetching food items:', error.response?.data || error.message);
+      setFoodItems([]);
+      setError('Failed to fetch food items. Please try again.');
+    }
   };
+
 
   const handleSubscribe = async () => {
     if (!selectedPlanId) {
-      alert("Please select a plan first.");
+      alert('Please select a plan first.');
       return;
     }
 
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem('token');
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_SERVER_URL}/userSubscription/createUserSubscription`,
         { subscription_id: selectedPlanId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      console.log("Subscription Created:", response.data);
-      // alert("Subscription successfully created.");
-      navigate("/user/Payment");
+      alert('Subscription successfully created.');
+      navigate('/user/Payment');
     } catch (err) {
-      console.error("Error creating subscription:", err);
-      setError("Failed to create subscription. Please try again.");
+      console.error('Error creating subscription:', err);
+      setError('Failed to create subscription. Please try again.');
     }
   };
 
@@ -90,7 +110,21 @@ const BudgetCombo = () => {
             ))
           )}
         </div>
-
+        {foodItems.length > 0 && (
+  <div className="food-items">
+    <h2>Food Items for Selected Plan:</h2>
+    <ul>
+    {foodItems.length > 0 && (
+  
+    <ul>
+      {foodItems.map((item) => (
+        <li key={item.id}>{item.item_name}</li> 
+      ))}
+    </ul>
+)}
+    </ul>
+  </div>
+)}
        
         <div className='break'>
             <div className='breakfast-outt'> <IoPartlySunnyOutline/><span className='fastt'> Breakfast </span>Order before 11:00AM </div>        

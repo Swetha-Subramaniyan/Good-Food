@@ -19,7 +19,14 @@ const getFoodMenuWithSubId = async(req,res) => {
         
         const menuWithID = await prisma.subscription_Food_Menu.findMany({
             where : {subscription_id},
-            select : {food_item_id : true}
+            select : {
+                FoodItems : {
+                    select : {
+                        id : true,
+                        item_name : true
+                    }
+                }
+            }
         })
         res.status(200).json({message : "Success",menuWithID})
     } catch (error) {

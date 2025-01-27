@@ -355,7 +355,6 @@ model Tier {
   created_at DateTime
   updatedAt DateTime
   TierSub Subscription[]
-  TierSubscriptionFood Subscription_Food_Menu[]
 }
  
 model Quantity {
@@ -382,7 +381,6 @@ model Parent_Plan {
   created_at DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   subscriptions Subscription[]
-  ParentPlan Subscription_Food_Menu[]
 }
  
  
@@ -434,14 +432,10 @@ model Food_Items {
  
 model Subscription_Food_Menu {
   id Int @id @default(autoincrement())
-  parent_plan_id Int
-  tier_id Int
   subscription_id Int
   food_item_id Int
   created_at DateTime
   updatedAt DateTime
-  ParentPlan Parent_Plan @relation(fields: [parent_plan_id],references: [id])
-  Tiers Tier @relation(fields: [tier_id],references: [id])
   FoodSubscription Subscription @relation(fields: [subscription_id],references: [id])
   FoodItems Food_Items @relation(fields: [food_item_id],references: [id])
 }
