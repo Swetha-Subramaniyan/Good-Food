@@ -13,7 +13,20 @@ const getSubscriptionPricing = async(req,res) => {
     }
 }
 
+const getPaymentProcess = async(req,res) => {
+    try {
+        const {id} = req.body;
+        const getAmount = await prisma.subscription.findMany({
+            where : {id},
+           select : { PricingDetails : {select : {price : true }}}})
+        res.status(200).json({message : "success",getAmount})
+    } catch (error) {
+        console.log(error)
+        res.status(404).json({error : "Failureeeeeeeeeee"})
+    }
+}
 
+22
 const createSubscriptionPricing = async(req,res) => {
     try {
         const {subscription_id,pricing_id} = req.body;
@@ -32,4 +45,4 @@ const createSubscriptionPricing = async(req,res) => {
     }
 }
 
-module.exports= {getSubscriptionPricing,createSubscriptionPricing}
+module.exports= {getSubscriptionPricing,getPaymentProcess,createSubscriptionPricing}

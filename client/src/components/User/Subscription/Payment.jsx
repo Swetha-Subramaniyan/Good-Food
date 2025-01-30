@@ -568,6 +568,8 @@ import { useNavigate } from "react-router-dom";
  
 const Payment = () => {
   const [userSubscriptions, setUserSubscriptions] = useState([]);
+    const [amount, setAmount] = useState(null); 
+  
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
@@ -582,24 +584,27 @@ const Payment = () => {
   const navigate = useNavigate();
  
   useEffect(() => {
-    const fetchSubscriptionDetails = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_SERVER_URL}/userSubscription/getUserDetails`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
+        const fetchSubscriptionDetails = async () => {
+          try {
+            const token = localStorage.getItem("token");
+            const response = await axios.get(
+              `${process.env.REACT_APP_BACKEND_SERVER_URL}/userSubscription/getUserDetails`,
+              { headers: { Authorization: `Bearer ${token}` } }
+            );
+    
+            const subscriptions = response.data.userSubscriptions;
+            setUserSubscriptions(subscriptions);
+    
+            if (subscriptions.length > 0) {
+              const latestPlan = subscriptions[subscriptions.length - 1];
+              setAmount(latestPlan?.Subscription?.PricingDetails?.price || 0);
+            }
+          } catch (err) {
+            setError(err.response?.data?.message || "Failed to fetch subscription details");
           }
-        );
-        console.log("User Details:", response.data);
-        const subscriptions = response.data.userSubscriptions;
-        setUserSubscriptions(subscriptions);
-      } catch (err) {
-        setError(err.response?.data?.message || "Failed to fetch subscription details");
-      }
-    };
-    fetchSubscriptionDetails();
-  }, []);
+        };
+        fetchSubscriptionDetails();
+      }, []);
  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -617,7 +622,7 @@ const Payment = () => {
       );
       console.log("Form Submitted:", response.data);
       alert("Success!")
-      navigate('/user/MoneyTransfer')
+      navigate('/')
       setSuccessMessage(response.data.message);
       setFormData({
         name: "",
@@ -645,6 +650,61 @@ const Payment = () => {
   const startDate = recentPlan?.start_date || "N/A";
   const endDate = recentPlan?.end_date || "N/A";
   const validity = recentPlan?.validity_days || "N/A";
+
+   const handlePayment = async () => {
+    if (!amount) {
+      alert("Amount not available");
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem("token");
+
+      const keyResponse = await axios.get(
+        `${process.env.REACT_APP_BACKEND_SERVER_URL}/payment/getKey`,
+        { headers: { Authorization: `Bearer ${token}` } }
+
+      );
+      const razorpayKey = keyResponse.data.key;
+
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_BACKEND_SERVER_URL}/payment/razorPay`,
+        { amount: amount },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      if (!data.order) {
+        alert("Failed to create order.");
+        return;
+      }
+
+      const options = {
+        key: razorpayKey,
+        amount: data.order.amount,
+        currency: "INR",
+        name: "Your Company",
+        description: "Payment Transaction",
+        order_id: data.order.id,
+        handler: function (response) {
+          alert("Payment Successful!");
+          console.log("Payment Response:", response);
+        },
+        prefill: {
+          name: "User Name",
+          email: "user@example.com",
+          contact: "9999999999",
+        },
+        theme: { color: "#3399cc" },
+      };
+
+      const razor = new window.Razorpay(options);
+      razor.open();
+    } catch (error) {
+      console.error("Error during payment:", error);
+      alert("Payment failed. Please try again.");
+    }
+  };
+
  
   return (
     <div className="details-back">
@@ -677,7 +737,9 @@ const Payment = () => {
               <span>{validity} Days</span>
             </div>
           </div>
- 
+          <button type="button" className="submit-color bg-secondary" onClick={handlePayment}>
+             Pay ₹{amount || 0}
+           </button>
           <h2>Food Delivery Details</h2>
           <div className="form-group">
             <label>Name:</label>
@@ -735,10 +797,12 @@ const Payment = () => {
               onChange={handleInputChange}
             />
           </div>
- 
-          <button type="submit" className="submit-color">
+ <div className="push">
+          <button type="submit" className="submit-color bg-success">
             Submit
           </button>
+          
+          </div>
           {successMessage && <Alert severity="success">{successMessage}</Alert>}
         </form>
       </div>
@@ -747,3 +811,167 @@ const Payment = () => {
 };
  
 export default Payment;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React, { useState, useEffect } from "react";
+// import "./Payment.css";
+// import Alert from "@mui/material/Alert";
+// import axios from "axios";
+// import { useNavigate } from "react-router-dom";
+
+// const Payment = () => {
+//   const [userSubscriptions, setUserSubscriptions] = useState([]);
+//   const [amount, setAmount] = useState(null);
+//   const [error, setError] = useState(null);
+//   const navigate = useNavigate();
+
+//   useEffect(() => {
+//     const fetchSubscriptionDetails = async () => {
+//       try {
+//         const token = localStorage.getItem("token");
+//         const response = await axios.get(
+//           `${process.env.REACT_APP_BACKEND_SERVER_URL}/userSubscription/getUserDetails`,
+//           { headers: { Authorization: `Bearer ${token}` } }
+//         );
+
+//         const subscriptions = response.data.userSubscriptions;
+//         setUserSubscriptions(subscriptions);
+
+//         if (subscriptions.length > 0) {
+//           const latestPlan = subscriptions[subscriptions.length - 1];
+//           setAmount(latestPlan?.Subscription?.PricingDetails?.price || 0);
+//         }
+//       } catch (err) {
+//         setError(err.response?.data?.message || "Failed to fetch subscription details");
+//       }
+//     };
+//     fetchSubscriptionDetails();
+//   }, []);
+
+//   const handlePayment = async () => {
+//     if (!amount) {
+//       alert("Amount not available");
+//       return;
+//     }
+
+//     try {
+//       const token = localStorage.getItem("token");
+
+//       // Fetch Razorpay Key from Backend
+//       const keyResponse = await axios.get(
+//         `${process.env.REACT_APP_BACKEND_SERVER_URL}/payment/getKey`,
+//         { headers: { Authorization: `Bearer ${token}` } }
+
+//       );
+//       const razorpayKey = keyResponse.data.key;
+
+//       // Create Razorpay Order from Backend
+//       const { data } = await axios.post(
+//         `${process.env.REACT_APP_BACKEND_SERVER_URL}/payment/razorPay`,
+//         { amount: amount },
+//         { headers: { Authorization: `Bearer ${token}` } }
+//       );
+
+//       if (!data.order) {
+//         alert("Failed to create order.");
+//         return;
+//       }
+
+//       // Open Razorpay Payment Window
+//       const options = {
+//         key: razorpayKey, // ✅ Secure key fetched from backend
+//         amount: data.order.amount,
+//         currency: "INR",
+//         name: "Your Company",
+//         description: "Payment Transaction",
+//         order_id: data.order.id,
+//         handler: function (response) {
+//           alert("Payment Successful!");
+//           console.log("Payment Response:", response);
+//         },
+//         prefill: {
+//           name: "User Name",
+//           email: "user@example.com",
+//           contact: "9999999999",
+//         },
+//         theme: { color: "#3399cc" },
+//       };
+
+//       const razor = new window.Razorpay(options);
+//       razor.open();
+//     } catch (error) {
+//       console.error("Error during payment:", error);
+//       alert("Payment failed. Please try again.");
+//     }
+//   };
+
+//   if (error) {
+//     return <Alert severity="error">{error}</Alert>;
+//   }
+
+//   return (
+//     <div className="details-back">
+//       <div className="form-container">
+//         <h2>Subscription Details</h2>
+//         <div className="subscription-details">
+//           <div className="form-group">
+//             <label>Subscription Price:</label>
+//             <span>₹{amount || 0}</span>
+//           </div>
+//         </div>
+
+//         <div className="push">
+//           <button type="button" className="submit-color bg-secondary" onClick={handlePayment}>
+//             Pay ₹{amount || 0}
+//           </button>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Payment;
