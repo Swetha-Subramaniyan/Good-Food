@@ -646,77 +646,125 @@ import biriyani from '../../../assets/biriya.jpg';
 import chappathi from '../../../assets/chappathi.jpg';
 import pongal from '../../../assets/pongal.jpg';
 import StarRatings from '../Home/StarRatings';
-import { Link, useNavigate } from 'react-router-dom';
+
+  
+import {useNavigate } from 'react-router-dom';
 
 const IndividualPackBreakfastBudget = () => {
-  const [addedItems, setAddedItems] = useState({
-    idly: 0,
-    pongal: 0,
-    rice: 0,
-    biriyani: 0,
-    chappathi: 0,
-  });
-  const [selectedDay, setSelectedDay] = useState('');
-  const [subscriptionData, setSubscriptionData] = useState([]);
-  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [error, setError] = useState('');
+  const [plans, setPlans] = useState([]);
+  const [foodItems, setFoodItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedPlanId, setSelectedPlanId] = useState(null);
   const navigate = useNavigate();
-  
+
   useEffect(() => {
-    const fetchSubscriptionData = async () => {
+      const fetchPlans = async () => {
+        try {
+          const token = localStorage.getItem('token');
+          const response = await axios.get(
+            `${process.env.REACT_APP_BACKEND_SERVER_URL}/sub/names`,
+            { headers: { Authorization: `Bearer ${token}` } }
+          );
+          const BudgetData = response.data.groupedSubscriptions["Individual Plan Budget"]["Breakfast"];
+          setPlans(BudgetData);
+          setLoading(false);
+        } catch (error) {
+          console.error('Error fetching subscription plans:', error.response?.data || error.message);
+          setPlans([]);
+          setLoading(false);
+        }
+      };
+  
+      fetchPlans();
+    }, []);
+
+
+  const handlePlanClick = async (planId) => {
+      setSelectedPlanId(planId);
+      setFoodItems([]); 
+    
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_SERVER_URL}/sub/names`,
+        const response = await axios.post(
+          `${process.env.REACT_APP_BACKEND_SERVER_URL}/foodMenu/getWithID`,
+          { subscription_id: planId },
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        const breakfastData = response.data.groupedSubscriptions["Individual Plan Budget"]["Breakfast"];
-        setSubscriptionData(breakfastData);
+        console.log('Food Items fetched:', response.data);
+    
+        const fetchedItems = response.data.menuWithID?.map((item) => item.FoodItems) || [];
+        setFoodItems(fetchedItems);
       } catch (error) {
-        console.error("Error fetching subscription data:", error.response?.data || error.message);
+        console.error('Error fetching food items:', error.response?.data || error.message);
+        setFoodItems([]);
+        setError('Failed to fetch food items. Please try again.');
       }
     };
 
-    fetchSubscriptionData();
-  }, []);
-
-  const handleDayClick = (plan) => {
-    setSelectedDay(prevSelectedDay => (prevSelectedDay === plan.days ? '' : plan.days)); 
-    setSelectedPlan(plan);
-  };
-
-  const handleSubscribe = () => {
-    if (selectedPlan) {
-      alert("Subscription created successfully!");
-      navigate('/user/Payment', { state: { selectedPlan } });
-    } else {
-      alert("Please select a subscription plan first.");
-    }
-  };
+  const handleSubscribe = async () => {
+      if (!selectedPlanId) {
+        alert('Please select a plan first.');
+        return;
+      }
   
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.post(
+          `${process.env.REACT_APP_BACKEND_SERVER_URL}/userSubscription/createUserSubscription`,
+          { subscription_id: selectedPlanId },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+  console.log("Subscription Created:",response.data)
+        alert('Subscription successfully created.');
+        navigate('/user/Payment');
+      } catch (err) {
+        console.error('Error creating subscription:', err);
+        setError('Failed to create subscription. Please try again.');
+      }
+    };
 
   return (
     <> 
       <div className='backgrd'> 
-        <div className='sub-add'>
-          <button onClick={handleSubscribe}>SUBSCRIBE</button>
-        </div>
 
-        <div className='listt'>Choose your Subscription Plans</div>
-        <br/><br/>
-
-        <div className='days'>
-          {subscriptionData.map((plan) => (
+      <div className="sub-add">
+        <button onClick={handleSubscribe}>Subscribe</button>
+      </div>
+      {error && <div className="error">{error}</div>}
+      <div className="days">
+        {loading ? (
+          <div>Loading...</div>
+        ) : (
+          plans.map((plan) => (
             <div
               key={plan.id}
-              className={`day-item ${selectedDay === plan.days ? 'selected' : ''}`} 
-              onClick={() => handleDayClick(plan)} 
+              className={`plan-item ${selectedPlanId === plan.id ? 'selected' : ''}`}
+              onClick={() => handlePlanClick(plan.id)}
+
             >
-              {`${plan.days} Day${plan.days > 1 ? 's' : ''} - ₹${plan.price}`}
+              <div>{plan.days} Days - ₹{plan.price}</div>
             </div>
-          ))}
-        </div>
+          ))
+        )}
+      </div>
+      {foodItems.length > 0 && (
+  <div className="food-items">
+    <h2>Food Items for Selected Plan:</h2>
+    <ul>
+    {foodItems.length > 0 && (
+  
+    <ul>
+      {foodItems.map((item) => (
+        <li key={item.id}>{item.item_name}</li> 
+      ))}
+    </ul>
+)}
+    </ul>
+  </div>
+)}
 
         <div className='break'> 
           <div className='breakfast-outt'>
