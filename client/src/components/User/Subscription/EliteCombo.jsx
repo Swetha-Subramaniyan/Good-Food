@@ -65,13 +65,11 @@ const EliteCombo = () => {
       }
     };
 
-
   const handleSubscribe = async () => {
       if (!selectedPlanId) {
         alert('Please select a plan first.');
         return;
-      }
-  
+      }  
       try {
         const token = localStorage.getItem('token');
         const response = await axios.post(
@@ -89,176 +87,178 @@ const EliteCombo = () => {
     };
 
   return (
-    <div className="backgrd">
-      <div className="listt">Choose your Subscription Plans</div>
-      <div className="sub-add">
-        <button onClick={handleSubscribe}>Subscribe</button>
-      </div>
-      {error && <div className="error">{error}</div>}
-      <div className="days">
-        {loading ? (
-          <div>Loading...</div>
-        ) : (
-          plans.map((plan) => (
-            <div
-              key={plan.id}
-              className={`plan-item ${selectedPlanId === plan.id ? 'selected' : ''}`}
-              onClick={() => handlePlanClick(plan.id)}
-            >
-              <div>{plan.days} Days - ₹{plan.price}</div>
-            </div>
-          ))
-        )}
-      </div>
-      {foodItems.length > 0 && (
-  <div className="food-items">
-    <h2>Food Items for Selected Plan:</h2>
-    <ul>
-    {foodItems.length > 0 && (
-  
-    <ul>
-      {foodItems.map((item) => (
-        <li key={item.id}>{item.item_name}</li> 
-      ))}
-    </ul>
-)}
-    </ul>
+<>
+<div className="backgrd">
+  <div className="listt">Choose your Subscription Plans</div>
+  <div className='sub-add'> 
+  <button onClick={handleSubscribe}>Subscribe</button> </div>
+  <br/><br/> <br/> 
+  {error && <div className="error">{error}</div>}
+  <div className="days">
+    {loading ? (
+      <div>Loading...</div>
+    ) : (
+      plans.map((plan) => (
+        <div
+          key={plan.id}
+          className={`plan-item ${selectedPlanId === plan.id ? 'selected' : ''}`}
+          onClick={() => handlePlanClick(plan.id)}
+        >
+          <div>{plan.days} Days - ₹{plan.price}</div>
+        </div>
+      ))
+    )}
   </div>
-)}
-<div className='break'>
-            <div className='breakfast-outt'> <IoPartlySunnyOutline/><span className='fastt'> Breakfast </span>Order before 11:00AM </div>        
-  </div>
- 
-  <div className='photo'>
-  <div>
-    <div className='days-align'> Monday</div> <br/>
-    <img src={idly} alt='idly'/><br/>
-    <h6> Idly+chutney+sambar <br/> <StarRatings/></h6>
-   
-  </div>
-  <div>
-  <div className='days-align'> Tuesday</div> <br/>
-    <img src={pongal} alt='dosa'/><br/>
-    <h6> Pongal+sambar+vada <br/>  <StarRatings/></h6>
- 
-  </div>
-  <div>
-  <div className='days-align'> Wednesday</div> <br/>
-    <img src={rice} alt='idly'/><br/>
-    <h6> Rice + Chicken gravy <br/>  <StarRatings/></h6>
-   
-  </div>
-  <div>
-  <div className='days-align'> Thursday</div> <br/>
-    <img src={biriyani} alt='dosa'/><br/>
-    <h6> Chicken Biriyani <br/>  <StarRatings/></h6>
-   
-  </div>
-  <div>
-  <div className='days-align'> Friday</div> <br/>
-    <img src={pongal} alt='dosa'/><br/>
-    <h6> Pongal+sambar+vada <br/>  <StarRatings/></h6>
-   
-  </div>
-  <div>
-  <div className='days-align'> Saturday</div> <br/>
-    <img src={rice} alt='idly'/><br/>
-    <h6>Rice + Chicken gravy <br/>  <StarRatings/></h6>
-   
-  </div>
- 
-  <div>
-  <div className='days-align'> Sunday</div> <br/>
-    <img src={chappathi} alt='idly'/><br/>
-    <h6> Chappathi  <br/>  <StarRatings /></h6>
-    </div>
-    </div>
- 
-  <div className='break'>
-               <div className='breakfast-outt'> <IoSunnyOutline /><span className='fastt'> Lunch </span>   Order before 3:00AM  </div>
-           
-  </div>
- 
-  <div className='photo'>
-  <div>
-    <img src={idly} alt='idly'/><br/>
-    <h6> Idly+chutney+sambar <br/> <StarRatings/></h6>
-   
-  </div>
-  <div>
-    <img src={pongal} alt='dosa'/><br/>
-    <h6> Pongal+sambar+vada <br/>  <StarRatings/></h6>
-   
-  </div>
-  <div>
-    <img src={rice} alt='idly'/><br/>
-    <h6> Rice + Chicken gravy <br/>  <StarRatings/></h6>
-   
-  </div>
-  <div>
-    <img src={biriyani} alt='dosa'/><br/>
-    <h6> Chicken Biriyani <br/>  <StarRatings/></h6>
-   
-  </div>
-  <div>
-    <img src={pongal} alt='dosa'/><br/>
-    <h6> Pongal+sambar+vada <br/>  <StarRatings/></h6>
-   
-  </div>
-  <div>
-    <img src={rice} alt='idly'/><br/>
-    <h6>Rice + Chicken gravy <br/>  <StarRatings/></h6>
- 
-  </div>
- 
-  <div>
-    <img src={chappathi} alt='idly'/><br/>
-    <h6> Chappathi  <br/>  <StarRatings /></h6>
-    </div>
-    </div>
- 
-  <div className='break'>
-     <div className='breakfast-outt'>  <MdOutlineModeNight /> <span className='fastt'> Dinner </span> Order before 7:00PM </div>
-  </div>
-  <div className='photo'>
-  <div>
-    <img src={idly} alt='idly'/><br/>
-    <h6> Idly+chutney+sambar <br/> <StarRatings/></h6>
-   
-  </div>
-  <div>
-    <img src={pongal} alt='dosa'/><br/>
-    <h6> Pongal+sambar+vada <br/>  <StarRatings/></h6>
-   
-  </div>
-  <div>
-    <img src={rice} alt='idly'/><br/>
-    <h6> Rice + Chicken gravy <br/>  <StarRatings/></h6>
-   
-  </div>
-  <div>
-    <img src={biriyani} alt='dosa'/><br/>
-    <h6> Chicken Biriyani <br/>  <StarRatings/></h6>
-   
-  </div>
-  <div>
-    <img src={pongal} alt='dosa'/><br/>
-    <h6> Pongal+sambar+vada <br/>  <StarRatings/></h6>
-   
-  </div>
-  <div>
-    <img src={rice} alt='idly'/><br/>
-    <h6>Rice + Chicken gravy <br/>  <StarRatings/></h6>
- 
-  </div>
- 
-  <div>
-    <img src={chappathi} alt='idly'/><br/>
-    <h6> Chappathi  <br/>  <StarRatings /></h6>   
-    </div>
-    </div> 
+  {foodItems.length > 0 && (
+<div className="food-items">
+<h2>Food Items for Selected Plan:</h2>
+<ul>
+{foodItems.length > 0 && (
 
-    </div>
+<ul>
+{foodItems.map((item) => (
+  <li key={item.id}>{item.item_name}</li> 
+))}
+</ul>
+)}
+</ul>
+</div>
+)}
+ 
+  <div className='break'>
+      <div className='breakfast-outt'> <IoPartlySunnyOutline/><span className='fastt'> Breakfast </span>Order before 11:00AM </div>        
+</div>
+
+<div className='photo'>
+<div>
+<div className='days-align'> Monday</div> <br/>
+<img src={idly} alt='idly'/><br/>
+<h6> Idly+chutney+sambar <br/> <StarRatings/></h6>
+
+</div>
+<div>
+<div className='days-align'> Tuesday</div> <br/>
+<img src={pongal} alt='dosa'/><br/>
+<h6> Pongal+sambar+vada <br/>  <StarRatings/></h6>
+
+</div>
+<div>
+<div className='days-align'> Wednesday</div> <br/>
+<img src={rice} alt='idly'/><br/>
+<h6> Rice + Chicken gravy <br/>  <StarRatings/></h6>
+
+</div>
+<div>
+<div className='days-align'> Thursday</div> <br/>
+<img src={biriyani} alt='dosa'/><br/>
+<h6> Chicken Biriyani <br/>  <StarRatings/></h6>
+
+</div>
+<div>
+<div className='days-align'> Friday</div> <br/>
+<img src={pongal} alt='dosa'/><br/>
+<h6> Pongal+sambar+vada <br/>  <StarRatings/></h6>
+
+</div>
+<div>
+<div className='days-align'> Saturday</div> <br/>
+<img src={rice} alt='idly'/><br/>
+<h6>Rice + Chicken gravy <br/>  <StarRatings/></h6>
+
+</div>
+
+<div>
+<div className='days-align'> Sunday</div> <br/>
+<img src={chappathi} alt='idly'/><br/>
+<h6> Chappathi  <br/>  <StarRatings /></h6>
+</div>
+</div>
+
+<div className='break'>
+         <div className='breakfast-outt'> <IoSunnyOutline /><span className='fastt'> Lunch </span>   Order before 3:00AM  </div>
+     
+</div>
+
+<div className='photo'>
+<div>
+<img src={idly} alt='idly'/><br/>
+<h6> Idly+chutney+sambar <br/> <StarRatings/></h6>
+
+</div>
+<div>
+<img src={pongal} alt='dosa'/><br/>
+<h6> Pongal+sambar+vada <br/>  <StarRatings/></h6>
+
+</div>
+<div>
+<img src={rice} alt='idly'/><br/>
+<h6> Rice + Chicken gravy <br/>  <StarRatings/></h6>
+
+</div>
+<div>
+<img src={biriyani} alt='dosa'/><br/>
+<h6> Chicken Biriyani <br/>  <StarRatings/></h6>
+
+</div>
+<div>
+<img src={pongal} alt='dosa'/><br/>
+<h6> Pongal+sambar+vada <br/>  <StarRatings/></h6>
+
+</div>
+<div>
+<img src={rice} alt='idly'/><br/>
+<h6>Rice + Chicken gravy <br/>  <StarRatings/></h6>
+
+</div>
+
+<div>
+<img src={chappathi} alt='idly'/><br/>
+<h6> Chappathi  <br/>  <StarRatings /></h6>
+</div>
+</div>
+
+<div className='break'>
+<div className='breakfast-outt'>  <MdOutlineModeNight /> <span className='fastt'> Dinner </span> Order before 7:00PM </div>
+</div>
+<div className='photo'>
+<div>
+<img src={idly} alt='idly'/><br/>
+<h6> Idly+chutney+sambar <br/> <StarRatings/></h6>
+
+</div>
+<div>
+<img src={pongal} alt='dosa'/><br/>
+<h6> Pongal+sambar+vada <br/>  <StarRatings/></h6>
+
+</div>
+<div>
+<img src={rice} alt='idly'/><br/>
+<h6> Rice + Chicken gravy <br/>  <StarRatings/></h6>
+
+</div>
+<div>
+<img src={biriyani} alt='dosa'/><br/>
+<h6> Chicken Biriyani <br/>  <StarRatings/></h6>
+
+</div>
+<div>
+<img src={pongal} alt='dosa'/><br/>
+<h6> Pongal+sambar+vada <br/>  <StarRatings/></h6>
+
+</div>
+<div>
+<img src={rice} alt='idly'/><br/>
+<h6>Rice + Chicken gravy <br/>  <StarRatings/></h6>
+</div>
+
+<div>
+<img src={chappathi} alt='idly'/><br/>
+<h6> Chappathi  <br/>  <StarRatings /></h6>   
+</div>
+</div> 
+
+</div>
+</>
   );
 };
 

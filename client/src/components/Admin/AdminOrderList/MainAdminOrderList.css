@@ -97,3 +97,114 @@
     background-color: darkred;
   }
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  .modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  .customer-id-section {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  
+  .customer-list, .customer-address {
+    flex: 1;
+  }
+  
+  .customer-id-button {
+    display: block;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .customer-id-button:hover {
+    background-color: #ddd;
+  }
+  
+  .customer-address p {
+    margin-top: 0.5rem;
+  }
+  
+
+
+
+
+
+
+  .product-id-section {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  
+  .product-list, .product-description {
+    flex: 1;
+  }
+  
+  .product-id-button {
+    display: block;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .product-id-button:hover {
+    background-color: #ddd;
+  }
+  
+  .product-description p {
+    margin-top: 0.5rem;
+  }
+  
+
+
+  .export-buttons{
+    display: flex;
+    gap: 1rem;
+    justify-content: end;
+    margin-right: 10rem;
+
+  }
+
+  .export-buttons button{
+    font-weight: bold;
+
+  }
+
+  .export-buttons button:hover{
+    font-weight: bold;
+    background-color: #007bff;
+
+  }
