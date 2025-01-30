@@ -180,6 +180,7 @@ const MainHome = () => {
     setAddedItems(initialState);
   }, []);
 
+
   const handleQuantityChange = (item, operation) => {
     setAddedItems((prevState) => {
       const newQuantity = operation === 'increment'
@@ -187,22 +188,21 @@ const MainHome = () => {
         : prevState[item] > 0
         ? prevState[item] - 1
         : 0;
-
-      const storedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-      const existingItem = storedItems.find(cartItem => cartItem.name === item);
-
-      if (existingItem) {
-        existingItem.quantity = newQuantity;
-        existingItem.totalPrice = existingItem.quantity * existingItem.price;
-      } else {
-        storedItems.push({ name: item, quantity: newQuantity, price: items.find(i => i.name === item).price, totalPrice: newQuantity * items.find(i => i.name === item).price });
-      }
-
-      localStorage.setItem('cartItems', JSON.stringify(storedItems));
-
+  
+      let storedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+      let updatedItems = storedItems.map(cartItem => {
+        if (cartItem.name === item) {
+          return { ...cartItem, quantity: newQuantity, totalPrice: newQuantity * cartItem.price };
+        }
+        return cartItem;
+      }).filter(cartItem => cartItem.quantity > 0);
+  
+      localStorage.setItem('cartItems', JSON.stringify(updatedItems));
+  
       return { ...prevState, [item]: newQuantity };
     });
   };
+  
 
   const handleAddToCart = (item) => {
     const storedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
