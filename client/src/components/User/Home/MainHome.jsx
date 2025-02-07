@@ -26,6 +26,7 @@
 
 //   const navigate = useNavigate();
 
+
 //   const addonMenu = () => {
 //     navigate('/user/MenuAddon');
 //   };
@@ -402,11 +403,137 @@
 
 
 
+//   const addonMenu = () => {
+//     navigate('/user/MenuAddon');
+//   };
+
+//   const items = [
+//     { name: 'idly', image: idly, description: 'Idly+chutney+sambar', price: 30 },
+//     { name: 'pongal', image: pongal, description: 'Pongal+sambar+vada', price: 40 },
+//     { name: 'rice', image: rice, description: 'Rice + Chicken gravy', price: 50 },
+//     { name: 'biriyani', image: biriyani, description: 'Chicken Biriyani', price: 60 },
+//     { name: 'chappathi', image: chappathi, description: 'Chappathi', price: 20 },
+//     { name: 'biriyani', image: biriyani, description: 'Chicken Biriyani', price: 60 },
+//     { name: 'rice', image: rice, description: 'Rice + Chicken gravy', price: 50 },
+    
+//   ];
+
+//   useEffect(() => {
+//     const storedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+//     const initialState = {};
+//     items.forEach(item => {
+//       const storedItem = storedItems.find(stored => stored.name === item.name);
+//       initialState[item.name] = storedItem ? storedItem.quantity : 0;
+//     });
+//     setAddedItems(initialState);
+//   }, []);
+
+
+//   const handleQuantityChange = (item, operation) => {
+//     setAddedItems((prevState) => {
+//       const newQuantity = operation === 'increment'
+//         ? prevState[item] + 1
+//         : prevState[item] > 0
+//         ? prevState[item] - 1
+//         : 0;
+  
+//       let storedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+//       let updatedItems = storedItems.map(cartItem => {
+//         if (cartItem.name === item) {
+//           return { ...cartItem, quantity: newQuantity, totalPrice: newQuantity * cartItem.price };
+//         }
+//         return cartItem;
+//       }).filter(cartItem => cartItem.quantity > 0);
+  
+//       localStorage.setItem('cartItems', JSON.stringify(updatedItems));
+  
+//       return { ...prevState, [item]: newQuantity };
+//     });
+//   };
+  
+
+//   const handleAddToCart = (item) => {
+//     const storedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+//     const existingItem = storedItems.find(cartItem => cartItem.name === item.name);
+
+//     if (existingItem) {
+      
+//       existingItem.quantity += 1;
+//       existingItem.totalPrice = existingItem.quantity * existingItem.price;
+//     } else {
+   
+//       storedItems.push({ ...item, quantity: 1, totalPrice: item.price });
+//     }
+   
+//     localStorage.setItem('cartItems', JSON.stringify(storedItems));
+
+//     setAddedItems((prevState) => ({
+//       ...prevState,
+//       [item.name]: prevState[item.name] + 1,
+//     }));
+//   };
+
+//   const daysOfWeek = [
+//     'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
+//   ];
+
+//   return (
+//     <>
+//       <MainNavbar />
+
+//       <div className='search'>
+//         <input placeholder='Search' />
+//       </div>
+
+//       <div className='break'>
+//         <div className='breakfast-out'>
+//           <IoPartlySunnyOutline /><span className='fast'> Breakfast </span> <br /> Order before 11:00AM
+//         </div>
+//         <div className='breakfast-out'>
+//           <IoSunnyOutline /><span className='fast'> Lunch </span>  <br /> Order before 3:00AM
+//         </div>
+//         <div className='breakfast-out'>
+//           <MdOutlineModeNight /> <span className='fast'> Dinner </span>  <br /> Order before 7:00PM
+//         </div>
+//         <div onClick={addonMenu} className='breakfast-out'>
+//           <ImSpoonKnife /> <span className='fast'> Menu </span> <br /> Additional Charge
+//         </div>
+//       </div>
+//       <div className='photo'>
+//         {items.map((item, index) => (
+//           <div key={item.name}>             
+//             <div className='days-align'>{daysOfWeek[index % daysOfWeek.length]}</div>
+//             <br/>                            
+//             <img src={item.image} alt={item.name} /><br />
+//             <h4>{item.description} <br /> <StarRatings /></h4>               
+//             <div className='add'>
+//               {addedItems[item.name] > 0 ? (
+//                 <div className="quantity-container">
+//                   <button onClick={() => handleQuantityChange(item.name, 'decrement')}>-</button>
+//                   <span>{addedItems[item.name]}</span>
+//                   <button onClick={() => handleQuantityChange(item.name, 'increment')}>+</button>
+//                 </div>
+//               ) : (
+//                 <button onClick={() => handleAddToCart(item)}>Add</button>
+//               )}
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+//       <Footer />
+//     </>
+//   );
+// };
+
+
+// export default MainHome;
 
 
 
 
 
+
+ 
 import React, { useState, useEffect } from 'react';
 import './MainHome.css';
 import MainNavbar from '../Navbar/MainNavbar';
@@ -429,7 +556,6 @@ import chicken from '../../../assets/chicken.jpg'
 import seafood from '../../../assets/seafood.jpg'
 import varietyrice from '../../../assets/varietyrice.jpg'
 
-
 const MainHome = () => {
   const [addedItems, setAddedItems] = useState({
     idly: 0,
@@ -438,7 +564,7 @@ const MainHome = () => {
     biriyani: 0,
     chappathi: 0,
   });
-
+  
   // State for additional items
   const [addonItems, setAddonItems] = useState({
     fish: 0,
@@ -450,11 +576,11 @@ const MainHome = () => {
   });
 
   const navigate = useNavigate();
-
+ 
   const addonMenu = () => {
     navigate('/user/MenuAddon');
   };
-
+ 
   const items = [
     { name: 'idly', image: idly, description: 'Idly+chutney+sambar', price: 30 },
     { name: 'pongal', image: pongal, description: 'Pongal+sambar+vada', price: 40 },
@@ -482,17 +608,27 @@ const MainHome = () => {
         return cartItem;
       }).filter(cartItem => cartItem.quantity > 0);
 
+
       localStorage.setItem('cartItems', JSON.stringify(updatedItems));
 
       return { ...prevState, [item]: newQuantity };
     });
   };
 
+
+ 
+      localStorage.setItem('cartItems', JSON.stringify(updatedItems));
+ 
+      return { ...prevState, [item]: newQuantity };
+    });
+  };
+ 
+
   // Handle add to cart for the main items
   const handleAddToCart = (item) => {
     const storedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
     const existingItem = storedItems.find(cartItem => cartItem.name === item.name);
-
+ 
     if (existingItem) {
       existingItem.quantity += 1;
       existingItem.totalPrice = existingItem.quantity * existingItem.price;
@@ -501,7 +637,7 @@ const MainHome = () => {
     }
 
     localStorage.setItem('cartItems', JSON.stringify(storedItems));
-
+ 
     setAddedItems((prevState) => ({
       ...prevState,
       [item.name]: prevState[item.name] + 1,
@@ -525,11 +661,15 @@ const MainHome = () => {
         return cartItem;
       }).filter(cartItem => cartItem.quantity > 0);
 
+
       localStorage.setItem('cartItems', JSON.stringify(updatedItems));
 
       return { ...prevState, [addon]: newQuantity };
     });
   };
+
+
+ 
 
   // Handle add to cart for additional items
   const handleAddonAddToCart = (addon) => {
@@ -542,9 +682,11 @@ const MainHome = () => {
       varietyrice: { name: 'varietyrice', image: varietyrice, description: 'Variety Rice', price: 35 },
     };
 
+
     const item = addonItemsList[addon];
     const storedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
     const existingItem = storedItems.find(cartItem => cartItem.name === item.name);
+
 
     if (existingItem) {
       existingItem.quantity += 1;
@@ -553,7 +695,9 @@ const MainHome = () => {
       storedItems.push({ ...item, quantity: 1, totalPrice: item.price });
     }
 
+
     localStorage.setItem('cartItems', JSON.stringify(storedItems));
+
 
     setAddonItems((prevState) => ({
       ...prevState,
@@ -564,14 +708,14 @@ const MainHome = () => {
   const daysOfWeek = [
     'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
   ];
-
+ 
   return (
     <>
       <MainNavbar />
       <div className='search'>
         <input placeholder='Search' />
       </div>
-
+ 
       <div className='break'>
         <div className='breakfast-out'>
           <IoPartlySunnyOutline /><span className='fast'> Breakfast </span> <br /> Order before 11:00AM
@@ -609,7 +753,9 @@ const MainHome = () => {
         ))}
       </div>
 
+
       <div className='choose-menu'> Choose more Delicious Foods </div>
+
 
       <div className='addon-container'>
         {['fish', 'egg', 'chicken', 'noodles', 'seafood', 'varietyrice'].map((addon) => (
@@ -628,14 +774,16 @@ const MainHome = () => {
           </div>
         ))}
       </div>
+
       <br/> 
       <br/> 
       <br/> 
       <br/> 
+
 
       {/* <Footer /> */}
     </>
   );
 };
-
+ 
 export default MainHome;

@@ -196,6 +196,7 @@ const IndividualPackLunchBudget = () => {
         setLoading(false);
       }
     };
+
  
     fetchPlans();
   }, []);
@@ -210,6 +211,7 @@ const handlePlanClick = async (planId) => {
     try {
       const token = localStorage.getItem('token');
  
+
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_SERVER_URL}/foodMenu/getWithID`,
         { subscription_id: planId },
@@ -218,7 +220,7 @@ const handlePlanClick = async (planId) => {
         }
       );
       console.log('Food Items fetched:', response.data);
-   
+
         const fetchedItems = response.data.menuWithID?.map((item) => item.FoodItems) || [];
         setFoodItems(fetchedItems);
       } catch (error) {
@@ -232,7 +234,7 @@ const handlePlanClick = async (planId) => {
         alert('Please select a plan first.');
         return;
       }
- 
+
       try {
         const token = localStorage.getItem('token');
         const response = await axios.post(
@@ -248,8 +250,7 @@ const handlePlanClick = async (planId) => {
         setError('Failed to create subscription. Please try again.');
       }
     };
- 
- 
+
   return (
     <>
       <div className='backgrd'>
@@ -270,7 +271,7 @@ const handlePlanClick = async (planId) => {
             >
               <div>{plan.days} Days - ₹{plan.price}</div>
               </div>
- 
+
           ))
           )}
         </div>

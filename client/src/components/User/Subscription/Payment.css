@@ -89,6 +89,30 @@ label{
 
 }
 
+.address-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.address-box {
+  width: 48%;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background: #f9f9f9;
+}
+.address-box h3 {
+  margin-bottom: 10px;
+}
+
+.address-box input {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
 
 
 @media (max-width: 768px) {
