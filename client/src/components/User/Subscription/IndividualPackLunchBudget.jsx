@@ -297,41 +297,44 @@ const IndividualPackLunchBudget = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-      const fetchPlans = async () => {
-        try {
-          const token = localStorage.getItem('token');
-          const response = await axios.get(
-            `${process.env.REACT_APP_BACKEND_SERVER_URL}/sub/names`,
-            { headers: { Authorization: `Bearer ${token}` } }
-          );
-          const EliteData = response.data.groupedSubscriptions["Individual Plan Budget"]["Lunch"];
-          setPlans(EliteData);
-          setLoading(false);
-        } catch (error) {
-          console.error('Error fetching subscription plans:', error.response?.data || error.message);
-          setPlans([]);
-          setLoading(false);
-        }
-      };
-  
-      fetchPlans();
-    }, []);
-
-
-  const handlePlanClick = async (planId) => {
-      setSelectedPlanId(planId);
-      setFoodItems([]); 
-    
+    const fetchPlans = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.post(
-          `${process.env.REACT_APP_BACKEND_SERVER_URL}/foodMenu/getWithID`,
-          { subscription_id: planId },
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
+        const response = await axios.get(
+          `${process.env.REACT_APP_BACKEND_SERVER_URL}/sub/names`,
+          { headers: { Authorization: `Bearer ${token}` } }
         );
-        console.log('Food Items fetched:', response.data);
+        const EliteData = response.data.groupedSubscriptions["Individual Plan Budget"]["Lunch"];
+        setPlans(EliteData);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching subscription plans:', error.response?.data || error.message);
+        setPlans([]);
+        setLoading(false);
+      }
+    };
+
+    fetchPlans();
+  }, []);
+
+
+const handlePlanClick = async (planId) => {
+    setSelectedPlanId(planId);
+    setFoodItems([]); 
+
+
+    
+    try {
+      const token = localStorage.getItem('token');
+
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_SERVER_URL}/foodMenu/getWithID`,
+        { subscription_id: planId },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      console.log('Food Items fetched:', response.data);
     
         const fetchedItems = response.data.menuWithID?.map((item) => item.FoodItems) || [];
         setFoodItems(fetchedItems);
@@ -341,22 +344,28 @@ const IndividualPackLunchBudget = () => {
         setError('Failed to fetch food items. Please try again.');
       }
     };
- 
-    fetchSubscriptionData();
-  }, []);
- 
-  const handleDayClick = (day) => {
-    setSelectedDay(prevSelectedDay => (prevSelectedDay === day ? '' : day));
-  };
- 
-  const handleQuantityChange = (item, operation) => {
-    setAddedItems(prevState => {
-      const newQuantity = operation === 'increment'
-        ? prevState[item] + 1
-        : (prevState[item] > 0 ? prevState[item] - 1 : 0);
-      return { ...prevState, [item]: newQuantity };
-    });
-  };
+    const handleSubscribe = async () => {
+      if (!selectedPlanId) {
+        alert('Please select a plan first.');
+        return;
+      }
+  
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.post(
+          `${process.env.REACT_APP_BACKEND_SERVER_URL}/userSubscription/createUserSubscription`,
+          { subscription_id: selectedPlanId },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+  console.log("Subscription Created:",response.data)
+        alert('Subscription successfully created.');
+        navigate('/user/Payment');
+      } catch (err) {
+        console.error('Error creating subscription:', err);
+        setError('Failed to create subscription. Please try again.');
+      }
+    };
+
   
   return (
     <> 
@@ -377,7 +386,7 @@ const IndividualPackLunchBudget = () => {
 
             >
               <div>{plan.days} Days - ₹{plan.price}</div>
-            </div>
+              </div>
 
           ))
           )}
