@@ -25,7 +25,7 @@ const MainNavbar = () => {
     <div className='home-headerr'> 
     <div onClick={handleProfile} > <IoPersonCircleOutline size={30} /> Profile  </div> 
 
-<div onClick={handleCart}> Cart <SlBasketLoaded size={30}  />  </div>
+<div onClick={handleCart}> Cartttttt <SlBasketLoaded size={30}  />  </div>
     </div>
     
     </>
