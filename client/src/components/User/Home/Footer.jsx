@@ -41,11 +41,13 @@ import { Link } from 'react-router-dom';
 const Footer = () => {
  
   return (
-    <>
-<div className='footer'>
-    <Link to={'/user/Home'}>
+
+    <> 
+<div className='footer'> 
+    <Link to={'/user/Home'}> 
     <div> <FaHome size={25} /> Home </div>  </Link>
-    <Link to={'/user/SubscriptionCalender'}>
+    <Link to={'/user/SubscriptionCalender'}> 
+
     <div> <FaListAlt /> Subscription</div> </Link>
     <Link to={'/user/Order'}>
     <div > <FaCalendarAlt /> Order</div> </Link>

@@ -131,4 +131,16 @@ label{
 
 }
 
+.submit-color{
+  background-color: #007BFF;
+  background-color:  rgb(77, 40, 64);
+  color: white;
+  border: none;
+  height: 2.5rem;
+  border-radius: 5PX;
+  margin-left: 1.6rem;
+  font-weight: bold;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
 

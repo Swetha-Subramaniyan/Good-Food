@@ -1,0 +1,17 @@
+.wallet {
+    margin-top: 2rem;
+}
+
+.wallet-container{
+    
+    background-color: aliceblue;
+    background-color: #f9f9f9;
+    background-color: #d8d3d3;    
+    width: 40rem;
+    height: 20rem;
+    padding: 2rem;
+    justify-content: center;
+    margin-left: 30rem;  
+    margin-top: 2rem;  
+    border-radius: 8px;
+}

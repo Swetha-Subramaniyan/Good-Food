@@ -1,3 +1,4 @@
+
 // import React, { useState, useEffect } from "react";
 // import "./Payment.css";
 // import Alert from "@mui/material/Alert";
@@ -252,12 +253,13 @@
 
 
 
+
 import React, { useState, useEffect } from "react";
 import "./Payment.css";
 import Alert from "@mui/material/Alert";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
- 
+
 const Payment = () => {
   const [userSubscriptions, setUserSubscriptions] = useState([]);
   const [amount, setAmount] = useState(null);
@@ -270,13 +272,13 @@ const Payment = () => {
   });
   const [successMessage, setSuccessMessage] = useState(null);
   const navigate = useNavigate();
- 
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString();
   };
   const [mealType, setMealType] = useState(null);
- 
+
   useEffect(() => {
     const fetchSubscriptionDetails = async () => {
       try {
@@ -285,10 +287,12 @@ const Payment = () => {
           `${process.env.REACT_APP_BACKEND_SERVER_URL}/userSubscription/getUserDetails`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
- 
+
+
         const subscriptions = response.data.userSubscriptions;
         setUserSubscriptions(subscriptions);
- 
+
+
         if (subscriptions.length > 0) {
           const latestPlan = subscriptions[subscriptions.length - 1];
           setAmount(latestPlan?.Subscription?.PricingDetails?.price || 0);
@@ -298,29 +302,31 @@ const Payment = () => {
         setError(err.response?.data?.message || "Failed to fetch subscription details");
       }
     };
- 
+
+
     fetchSubscriptionDetails();
   }, []);
- 
+
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
- 
+
   const handleAddressInputChange = (index, e) => {
     const { name, value } = e.target;
     const updatedAddresses = [...formData.addresses];
     updatedAddresses[index][name] = value;
     setFormData((prevData) => ({ ...prevData, addresses: updatedAddresses }));
   };
- 
+
   const handleAddAddress = () => {
     setFormData((prevData) => ({
       ...prevData,
       addresses: [...prevData.addresses, { landmark: "", street: "", city: "", pincode: "" }],
     }));
   };
- 
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -343,10 +349,7 @@ const Payment = () => {
       setError(error.response?.data?.message || "Failed to submit address");
     }
   };
- 
- 
- 
- 
+
   const handlePayment = async () => {
     if (!amount) {
       alert("Amount not available");
@@ -399,11 +402,13 @@ const Payment = () => {
       alert("Payment failed. Please try again.");
     }
   };
- 
+
+
   if (error) {
     return <Alert severity="error">{error}</Alert>;
   }
- 
+
+
   const recentPlan = userSubscriptions.length > 0 ? userSubscriptions[userSubscriptions.length - 1] : null;
   const planName = recentPlan?.Subscription?.parentPlan1?.plan_name || "N/A";
   const price = recentPlan?.Subscription?.PricingDetails?.price || "N/A";
@@ -413,9 +418,9 @@ const Payment = () => {
   const validity = recentPlan?.validity_days || "N/A";
   const tierType = recentPlan?.Subscription?.TierSub?.type || "N/A";
   const customerId = recentPlan?.customer_id;
+
  
- 
- 
+
   return (
     <div className="details-back">
       <div className="form-container">
@@ -455,6 +460,16 @@ const Payment = () => {
               <span>{customerId} </span>
             </div>
           </div>
+
+
+          <button type="button" className="submit-color" onClick={handlePayment}>
+            Pay ₹{amount || 0}
+          </button>
+
+          <h2>Food Delivery Details</h2>
+
+    
+
  
           <button type="button" className="submit-color" onClick={handlePayment}>
             Pay ₹{amount || 0}
@@ -463,6 +478,7 @@ const Payment = () => {
           <h2>Food Delivery Details</h2>
  
    
+
           <div className="form-group">
             <label>Name:</label>
             <input name="name" value={formData.name} onChange={handleInputChange} required />
@@ -475,7 +491,7 @@ const Payment = () => {
             <label>Phone Number:</label>
             <input name="phone_number" value={formData.phone_number} onChange={handleInputChange} required />
           </div>
- 
+
        
           {formData.addresses.map((address, index) => (
             <div key={index} className="address-box">
@@ -510,19 +526,29 @@ const Payment = () => {
               />
             </div>
           ))}
- 
-       
+        
           <button type="button" onClick={handleAddAddress}>
             + Add Delivery Address
           </button>
- 
-       
+
+          <button type="submit">Submit Addresses</button>
+
+          {successMessage && <Alert severity="success">{successMessage}</Alert>}
+
+          <div>
+            <Link to={'/user/Home'}> 
+    
+          <button type="button" onClick={handleAddAddress}>
+            + Add Delivery Address
+          </button>
+  
           <button type="submit">Submit Addresses</button>
  
           {successMessage && <Alert severity="success">{successMessage}</Alert>}
  
           <div>
             <Link to={'/user/Home'}>
+
              <button> Next </button>  
              </Link>
           </div>
@@ -531,6 +557,7 @@ const Payment = () => {
     </div>
   );
 };
- 
+
+
 export default Payment;
- 
+

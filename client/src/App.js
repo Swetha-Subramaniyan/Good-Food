@@ -42,6 +42,9 @@ import IndividualPackDinnerBudget from './components/User/Subscription/Individua
 import IndividualPackBreakfastElite from './components/User/Subscription/IndividualPackBreakfastElite';
 import IndividualPackLunchElite from './components/User/Subscription/IndividualPackLunchElite';
 import IndividualPackDinnerElite from './components/User/Subscription/IndividualPackDinnerElite';
+import UserSidebar from './Pages/User/UserSidebar';
+import Wallet from './components/User/Home/Wallet';
+import Notification from './components/User/Home/Notification';
 
 
 const App = () => {
@@ -78,6 +81,9 @@ const App = () => {
     <Route path='Vision' element={<Vision/>} />
     <Route path='SignIn'  element={<SignIn />} />
     <Route path='MoneyTransfer' element={< MoneyTransfer />} />
+    <Route path='UserSidebar' element={< UserSidebar  />} />
+    <Route path='Wallet' element={< Wallet  />}/>
+    <Route path='Notification' element={< Notification />} /> 
     </Route>
    </Routes>
 
