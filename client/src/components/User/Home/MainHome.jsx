@@ -533,7 +533,6 @@
 
 
 
- 
 import React, { useState, useEffect } from 'react';
 import './MainHome.css';
 import MainNavbar from '../Navbar/MainNavbar';
@@ -555,7 +554,8 @@ import noodles from '../../../assets/noodles.jpg'
 import chicken from '../../../assets/chicken.jpg'
 import seafood from '../../../assets/seafood.jpg'
 import varietyrice from '../../../assets/varietyrice.jpg'
-
+ 
+ 
 const MainHome = () => {
   const [addedItems, setAddedItems] = useState({
     idly: 0,
@@ -564,7 +564,7 @@ const MainHome = () => {
     biriyani: 0,
     chappathi: 0,
   });
-  
+ 
   // State for additional items
   const [addonItems, setAddonItems] = useState({
     fish: 0,
@@ -574,7 +574,7 @@ const MainHome = () => {
     seafood: 0,
     varietyrice: 0,
   });
-
+ 
   const navigate = useNavigate();
  
   const addonMenu = () => {
@@ -590,7 +590,7 @@ const MainHome = () => {
     { name: 'biriyani', image: biriyani, description: 'Chicken Biriyani', price: 60 },
     { name: 'rice', image: rice, description: 'Rice + Chicken gravy', price: 50 },
   ];
-
+ 
   // Handle increment and decrement for the main items
   const handleQuantityChange = (item, operation) => {
     setAddedItems((prevState) => {
@@ -599,7 +599,7 @@ const MainHome = () => {
         : prevState[item] > 0
         ? prevState[item] - 1
         : 0;
-
+ 
       let storedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
       let updatedItems = storedItems.map(cartItem => {
         if (cartItem.name === item) {
@@ -607,15 +607,6 @@ const MainHome = () => {
         }
         return cartItem;
       }).filter(cartItem => cartItem.quantity > 0);
-
-
-      localStorage.setItem('cartItems', JSON.stringify(updatedItems));
-
-      return { ...prevState, [item]: newQuantity };
-    });
-  };
-
-
  
       localStorage.setItem('cartItems', JSON.stringify(updatedItems));
  
@@ -623,7 +614,6 @@ const MainHome = () => {
     });
   };
  
-
   // Handle add to cart for the main items
   const handleAddToCart = (item) => {
     const storedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
@@ -635,7 +625,7 @@ const MainHome = () => {
     } else {
       storedItems.push({ ...item, quantity: 1, totalPrice: item.price });
     }
-
+ 
     localStorage.setItem('cartItems', JSON.stringify(storedItems));
  
     setAddedItems((prevState) => ({
@@ -643,7 +633,7 @@ const MainHome = () => {
       [item.name]: prevState[item.name] + 1,
     }));
   };
-
+ 
   // Handle add to cart for additional items
   const handleAddonQuantityChange = (addon, operation) => {
     setAddonItems((prevState) => {
@@ -652,7 +642,7 @@ const MainHome = () => {
         : prevState[addon] > 0
         ? prevState[addon] - 1
         : 0;
-
+ 
       let storedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
       let updatedItems = storedItems.map(cartItem => {
         if (cartItem.name === addon) {
@@ -660,17 +650,13 @@ const MainHome = () => {
         }
         return cartItem;
       }).filter(cartItem => cartItem.quantity > 0);
-
-
+ 
       localStorage.setItem('cartItems', JSON.stringify(updatedItems));
-
+ 
       return { ...prevState, [addon]: newQuantity };
     });
   };
-
-
  
-
   // Handle add to cart for additional items
   const handleAddonAddToCart = (addon) => {
     const addonItemsList = {
@@ -681,30 +667,26 @@ const MainHome = () => {
       seafood: { name: 'seafood', image: seafood, description: 'Seafood', price: 60 },
       varietyrice: { name: 'varietyrice', image: varietyrice, description: 'Variety Rice', price: 35 },
     };
-
-
+ 
     const item = addonItemsList[addon];
     const storedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
     const existingItem = storedItems.find(cartItem => cartItem.name === item.name);
-
-
+ 
     if (existingItem) {
       existingItem.quantity += 1;
       existingItem.totalPrice = existingItem.quantity * existingItem.price;
     } else {
       storedItems.push({ ...item, quantity: 1, totalPrice: item.price });
     }
-
-
+ 
     localStorage.setItem('cartItems', JSON.stringify(storedItems));
-
-
+ 
     setAddonItems((prevState) => ({
       ...prevState,
       [addon]: prevState[addon] + 1,
     }));
   };
-
+ 
   const daysOfWeek = [
     'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
   ];
@@ -730,7 +712,7 @@ const MainHome = () => {
           <ImSpoonKnife /> <span className='fast'> Menu </span> <br /> Additional Charge
         </div>
       </div>
-
+ 
       <div className='photo'>
         {items.map((item, index) => (
           <div key={item.name}>
@@ -752,11 +734,9 @@ const MainHome = () => {
           </div>
         ))}
       </div>
-
-
+ 
       <div className='choose-menu'> Choose more Delicious Foods </div>
-
-
+ 
       <div className='addon-container'>
         {['fish', 'egg', 'chicken', 'noodles', 'seafood', 'varietyrice'].map((addon) => (
           <div className='addon-item' key={addon}>
@@ -774,13 +754,11 @@ const MainHome = () => {
           </div>
         ))}
       </div>
-
-      <br/> 
-      <br/> 
-      <br/> 
-      <br/> 
-
-
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+ 
       {/* <Footer /> */}
     </>
   );
