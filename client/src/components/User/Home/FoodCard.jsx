@@ -235,5 +235,12 @@ const FoodCard = ({ image, name, description, onAddToCart }) => {
     </Card>
   );
 };
- 
+
+
 export default FoodCard;
+
+
+
+
+
+

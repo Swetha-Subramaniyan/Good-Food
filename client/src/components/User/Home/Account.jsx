@@ -1,268 +1,17 @@
-// import React, { useEffect, useState } from 'react'
-// import axios from 'axios';
-// import './Account.css'
-
-
-// const Account = () => {
-//   const [userDetails, setUserDetails] = useState(null);
-
-//   useEffect(() => {
-//     const fetchUserDetails = async () => {
-//       try {
-//         const token = localStorage.getItem("token"); 
-//         if (!token) {
-//           console.error("No token found.");
-//           return;
-//         }
-  
-//         const response = await axios.get(
-//           `${process.env.REACT_APP_BACKEND_SERVER_URL}/userSubscription/getUserDetails`,
-//           {
-//             headers: { Authorization: `Bearer ${token}` },
-//           }
-//         );
-//   console.log("User Details Fetchedddd :",response.data)
-//         let subscriptions = response.data.userSubscriptions;
-  
-//         if (subscriptions.length > 0) {
-//           subscriptions.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-          
-//           setUserDetails(subscriptions[0]);  
-//         } else {
-//           setUserDetails(null);
-//         }
-  
-//       } catch (error) {
-//         console.error("Error fetching user details:", error);
-//       }
-//     };
-  
-//     fetchUserDetails();
-//   }, []);
-  
-
-//   return (
-//     <>
-
-// <div className='details-back'>
-//         <div className="form-container">
-//           <h2>My Profile</h2><br/>
-//  <form>
-//         <div className="subscription-details">
-//   <div className="form-group">
-//     <label>Name:</label>  
-//     <span></span>
-//   </div>
-
-//   <div className="form-group">
-//     <label>Email ID:</label>
-//     <span>₹200</span>
-//   </div>
-
-//   <div className="form-group">
-//     <label>Phone Number:</label>
-//     <span>30 Days</span>
-//   </div>
-
-//   <div className="form-group">
-//     <label>Delivery Address 1:</label>
-//     <span>01-12-2024</span>
-//   </div>
-
-//   <div className="form-group">
-//     <label>Street / LandMark:</label>
-//     <span>01-01-2025</span>
-//   </div>
-
-//   <div className="form-group">
-//     <label> City: </label>
-//     <span>45 Days</span>
-//   </div>
-//   <div className="form-group">
-//     <label> Delivery Address 2: </label>
-//     <span>45 Days</span>
-//   </div>
-//   <div className="form-group">
-//     <label> Street / LandMark: </label>
-//     <span>45 Days</span>
-//   </div>
-//   <div className="form-group">
-//     <label> Area:  </label>
-//     <span>45 Days</span>
-//   </div>
-//   <div className="form-group">
-//     <label> Pincode: </label>
-//     <span>45 Days</span>
-//   </div>
-//   <div className="form-group">
-//     <label> Subscription Plan:  </label>
-//     <span>{userDetails?.Subscription?.parentPlan1?.plan_name}</span>
-//   </div>
-//   <div className="form-group">
-//     <label> Subscription Days: </label>
-//     <span> {userDetails?.validity_days} </span>
-//     </div>  
-//     <div className="form-group">
-//       <label> Price: </label>
-//       <span> ₹{userDetails?.Subscription?.PricingDetails?.price} </span>
-//     </div>
-// </div>
-//             <br/>
-      
-//  <div className="subscription-details">                            
-// <div className="payment-method">
-        
-//           <h4 style={{fontWeight:'bold'}}>Refer Your Friend and Get Discount</h4>
-// </div>        
-// </div>   
-//        </form>
-//      </div>
-//       </div>
-//     </>
-//   )
-// }
-
-// export default Account
-
-
-
-
-// import React, { useEffect, useState } from "react";
-// import axios from "axios";
-// import "./Account.css";
-
-// const Account = () => {
-//   const [userDetails, setUserDetails] = useState(null);
-//   const [userAddresses, setUserAddresses] = useState([]); 
-
-//   useEffect(() => {
-//     const fetchUserDetails = async () => {
-//       try {
-//         const token = localStorage.getItem("token");
-//         if (!token) {
-//           console.error("No token found.");
-//           return;
-//         }
-
-//         // Fetch user subscriptions
-//         const response = await axios.get(
-//           `${process.env.REACT_APP_BACKEND_SERVER_URL}/userSubscription/getUserDetails`,
-//           { headers: { Authorization: `Bearer ${token}` } }
-//         );
-
-//         console.log("User Details Fetched:", response.data);
-
-//         let subscriptions = response.data.userSubscriptions;
-
-//         if (subscriptions.length > 0) {
-//           subscriptions.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-//           setUserDetails(subscriptions[0]);
-//         } else {
-//           setUserDetails(null);
-//         }
-
-//         // Fetch user addresses
-//         const addressResponse = await axios.get(
-//           `${process.env.REACT_APP_BACKEND_SERVER_URL}/adrress/getUser`,
-//           { headers: { Authorization: `Bearer ${token}` } }
-//         );
-
-//         console.log("User Addresses Fetched:", addressResponse.data);
-//         setUserAddresses(addressResponse.data.getUser || []);
-
-//       } catch (error) {
-//         console.error("Error fetching user details or addresses:", error);
-//       }
-//     };
-
-//     fetchUserDetails();
-//   }, []);
-
-//   return (
-//     <>
-//       <div className="details-back">
-//         <div className="form-container">
-//           <h2>My Profile</h2><br />
-//           <form>
-//             <div className="subscription-details">
-//               <div className="form-group">
-//                 <label>Name:</label>
-//                 <span>{userDetails?.name || "N/A"}</span>
-//               </div>
-
-//               <div className="form-group">
-//                 <label>Email ID:</label>
-//                 <span>{userDetails?.email || "N/A"}</span>
-//               </div>
-
-//               <div className="form-group">
-//                 <label>Phone Number:</label>
-//                 <span>{userAddresses?.phone_number || "N/A"}</span>
-//               </div>
-
-//               {/* Render User Addresses */}
-//               {userAddresses.length > 0 && (
-//                 <>
-//                   <h3>Delivery Addresses</h3>
-//                   {userAddresses.map((address, index) => (
-//                     <div key={index} className="address-box">
-//                       <div className="form-group">
-//                         <label>Delivery Address {index + 1}:</label>
-//                         <span>{address.landmark}, {address.street}, {address.city}, {address.pincode}</span>
-//                       </div>
-//                     </div>
-//                   ))}
-//                 </>
-//               )}
-
-//               {/* Subscription Details */}
-//               <div className="form-group">
-//                 <label>Subscription Plan:</label>
-//                 <span>{userDetails?.Subscription?.parentPlan1?.plan_name || "N/A"}</span>
-//               </div>
-
-//               <div className="form-group">
-//                 <label>Subscription Days:</label>
-//                 <span>{userDetails?.validity_days || "N/A"}</span>
-//               </div>
-
-//               <div className="form-group">
-//                 <label>Price:</label>
-//                 <span>₹{userDetails?.Subscription?.PricingDetails?.price || "N/A"}</span>
-//               </div>
-//             </div>
-
-//             <br />
-
-//             <div className="subscription-details">
-//               <div className="payment-method">
-//                 <h4 style={{ fontWeight: "bold" }}>Refer Your Friend and Get Discount</h4>
-//               </div>
-//             </div>
-//           </form>
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
-
-// export default Account;
-
-
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Account.css";
- 
+
 const Account = () => {
   const [userDetails, setUserDetails] = useState(null);
   const [userAddresses, setUserAddresses] = useState([]);
- 
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString();
   };
- 
+
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
@@ -271,41 +20,41 @@ const Account = () => {
           console.error("No token found.");
           return;
         }
- 
+
    
         const response = await axios.get(
           `${process.env.REACT_APP_BACKEND_SERVER_URL}/userSubscription/getUserDetails`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
- 
+
         console.log("User Details Fetched:", response.data);
- 
+
         let subscriptions = response.data.userSubscriptions;
- 
+
         if (subscriptions.length > 0) {
           subscriptions.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
           setUserDetails(subscriptions[0]);
         } else {
           setUserDetails(null);
         }
- 
+
         const addressResponse = await axios.get(
           `${process.env.REACT_APP_BACKEND_SERVER_URL}/adrress/getUser`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
- 
+
         console.log("User Addresses Fetched:", addressResponse.data);
         setUserAddresses(addressResponse.data.getUser || []);
       } catch (error) {
         console.error("Error fetching user details or addresses:", error);
       }
     };
- 
+
     fetchUserDetails();
   }, []);
- 
+
   const userAddress = userAddresses[0] || {};
- 
+
   return (
     <>
       <div className="details-back">
@@ -313,22 +62,22 @@ const Account = () => {
           <h2>My Profile</h2><br />
           <form>
             <div className="subscription-details">
-             
+              
               <div className="form-group">
                 <label>Name:</label>
                 <span>{userAddress?.name || "N/A"}</span>
               </div>
- 
+
               <div className="form-group">
                 <label>Email ID:</label>
                 <span>{userAddress?.email || "N/A"}</span>
               </div>
- 
+
               <div className="form-group">
                 <label>Phone Number:</label>
                 <span>{userAddress?.phone_number || "N/A"}</span>
               </div>
- 
+
              
               {userAddresses.length > 0 && (
                 <>
@@ -343,8 +92,8 @@ const Account = () => {
                   ))}
                 </>
               )}
- 
-             
+
+              
               <div className="form-group">
                 <label>Customer ID:</label>
                 <span>{userDetails?.customer_id}</span>
@@ -356,15 +105,15 @@ const Account = () => {
               <div className="form-group">
                 <label>Meal Type:</label>
                 <span>{userDetails?.Subscription?.TierSub?.type || "N/A"}</span>
-              </div>
+              </div> 
               <div className="form-group">
                 <label>Subscription Days:</label>
                 <span>{userDetails?.validity_days || "N/A"} Days</span>
-              </div>
+              </div> 
               <div className="form-group">
                 <label>Price:</label>
                 <span>₹{userDetails?.Subscription?.PricingDetails?.price || "N/A"}</span>
-              </div>            
+              </div>             
               <div className="form-group">
                 <label>Start Date:</label>
                 <span>{userDetails ? formatDate(userDetails.start_date) : "N/A"}</span>
@@ -377,7 +126,7 @@ const Account = () => {
                 <label>Validity:</label>
                 <span>{userDetails?.validity_days || "N/A"} Days</span>
               </div>            
-            </div>
+            </div> 
             <br />            
             <div className="subscription-details">
               <div className="payment-method">
@@ -390,5 +139,6 @@ const Account = () => {
     </>
   );
 };
- 
+
 export default Account;
+

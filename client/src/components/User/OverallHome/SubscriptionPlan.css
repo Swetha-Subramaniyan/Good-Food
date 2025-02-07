@@ -241,6 +241,37 @@
  */
 
 
+.plans-container {
+  display: flex;
+  flex-direction: column; 
+  gap: 60px;
+  margin-top: 20px; 
+  margin-left: 30rem;
+ 
+}
+
+.plan-card {
+  padding: 20px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #f9f9f9;
+  text-align: center;
+  font-size: 1.2rem;
+  transition: background-color 0.3s ease;
+  height: 8rem;
+  width: 25rem;
+}
+
+.plan-card:hover {
+  background-color: #e0e0e0;
+}
+
+.plan-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
 
 
 
