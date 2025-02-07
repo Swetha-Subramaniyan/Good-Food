@@ -52,7 +52,7 @@ const MainSubscription = () => {
             </Link>
           </h2>
         </div>
-      </div> */}
+      </div> 
   
       {/* {isModalOpen && (
         <div className="modal">

@@ -157,123 +157,6 @@
 
 
 
-// import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
-// import './IndividualPackLunchBudget.css';
-// import { IoPartlySunnyOutline } from "react-icons/io5";
-// import idly from '../../../assets/idly.jpg';
-// import rice from '../../../assets/Rice.jpg';
-// import biriyani from '../../../assets/biriya.jpg';
-// import chappathi from '../../../assets/chappathi.jpg';
-// import pongal from '../../../assets/pongal.jpg';
-// import StarRatings from '../Home/StarRatings';
-// import { Link } from 'react-router-dom';
-
-// const IndividualPackLunchBudget = () => {
-//   const [addedItems, setAddedItems] = useState({
-//     idly: 0,
-//     pongal: 0,
-//     rice: 0,
-//     biriyani: 0,
-//     chappathi: 0,
-//   });
-//   const [selectedDay, setSelectedDay] = useState('');
-//   const [subscriptionData, setSubscriptionData] = useState([]);
-  
-//   // Fetch lunch subscription data on component mount
-//   useEffect(() => {
-//     const fetchSubscriptionData = async () => {
-//       try {
-//         const token = localStorage.getItem('token');
-//         const response = await axios.get(
-//           `${process.env.REACT_APP_BACKEND_SERVER_URL}/sub/names`,
-//           {
-//             headers: { Authorization: `Bearer ${token}` },
-//           }
-//         );
-//         const lunchData = response.data.groupedSubscriptions["Individual Plan Budget"]["Lunch"];
-//         setSubscriptionData(lunchData);
-//       } catch (error) {
-//         console.error("Error fetching subscription data:", error.response?.data || error.message);
-//       }
-//     };
-
-//     fetchSubscriptionData();
-//   }, []);
-
-//   const handleDayClick = (day) => {
-//     setSelectedDay(prevSelectedDay => (prevSelectedDay === day ? '' : day)); 
-//   };
-
-//   const handleQuantityChange = (item, operation) => {
-//     setAddedItems(prevState => {
-//       const newQuantity = operation === 'increment' 
-//         ? prevState[item] + 1 
-//         : (prevState[item] > 0 ? prevState[item] - 1 : 0);
-//       return { ...prevState, [item]: newQuantity };
-//     });
-//   };
-
-//   return (
-//     <> 
-//       <div className='backgrd'> 
-//         <Link to={'/user/Payment'}> 
-//           <div className='sub-add'>
-//             <button>SUBSCRIBE</button>
-//           </div>
-//         </Link>
-//         <div className='listt'>Choose your Subscription Plans</div>
-//         <br/><br/>
-
-//         <div className='days'>
-//           {subscriptionData.map((plan) => (
-//             <div
-//               key={plan.id}
-//               className={`day-item ${selectedDay === plan.days ? 'selected' : ''}`} 
-//               onClick={() => handleDayClick(plan.days)} 
-//             >
-//               {`${plan.days} Day${plan.days > 1 ? 's' : ''} - ₹${plan.price}`}
-//             </div>
-//           ))}
-//         </div>
-
-//         <div className='break'> 
-//           <div className='breakfast-outt'>
-//             <IoPartlySunnyOutline />
-//             <span className='fastt'> Lunch </span>Order before 11:00AM
-//           </div>
-//         </div>
-
-//         <div className='photo'>
-//           {/* You can adjust the meal items for Lunch here */}
-//           {[{ name: 'idly', image: idly, description: 'Idly+chutney+sambar', day: 'Monday' },
-//             { name: 'pongal', image: pongal, description: 'Pongal+sambar+vada', day: 'Tuesday' },
-//             { name: 'rice', image: rice, description: 'Rice + Chicken gravy', day: 'Wednesday' },
-//             { name: 'biriyani', image: biriyani, description: 'Chicken Biriyani', day: 'Thursday' },
-//             { name: 'pongal', image: pongal, description: 'Pongal+sambar+vada', day: 'Friday' },
-//             { name: 'rice', image: rice, description: 'Rice + Chicken gravy', day: 'Saturday' },
-//             { name: 'chappathi', image: chappathi, description: 'Chappathi', day: 'Sunday' }
-//           ].map((item) => (
-//             <div key={item.name}>
-//               <div className='days-align'>{item.day}</div>
-//               <br />
-//               <img src={item.image} alt={item.name} />
-//               <br />
-//               <h6>{item.description} <br /><StarRatings /></h6>
-//             </div>
-//           ))}
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
-
-// export default IndividualPackLunchBudget;
-
-
-
-
-
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -286,7 +169,7 @@ import chappathi from '../../../assets/chappathi.jpg';
 import pongal from '../../../assets/pongal.jpg';
 import StarRatings from '../Home/StarRatings';
 import { useNavigate } from 'react-router-dom';
-
+ 
 const IndividualPackLunchBudget = () => {
  
   const [error, setError] = useState('');
@@ -295,44 +178,47 @@ const IndividualPackLunchBudget = () => {
   const [loading, setLoading] = useState(true);
   const [selectedPlanId, setSelectedPlanId] = useState(null);
   const navigate = useNavigate();
-
+ 
   useEffect(() => {
-      const fetchPlans = async () => {
-        try {
-          const token = localStorage.getItem('token');
-          const response = await axios.get(
-            `${process.env.REACT_APP_BACKEND_SERVER_URL}/sub/names`,
-            { headers: { Authorization: `Bearer ${token}` } }
-          );
-          const EliteData = response.data.groupedSubscriptions["Individual Plan Budget"]["Lunch"];
-          setPlans(EliteData);
-          setLoading(false);
-        } catch (error) {
-          console.error('Error fetching subscription plans:', error.response?.data || error.message);
-          setPlans([]);
-          setLoading(false);
-        }
-      };
-  
-      fetchPlans();
-    }, []);
-
-
-  const handlePlanClick = async (planId) => {
-      setSelectedPlanId(planId);
-      setFoodItems([]); 
-    
+    const fetchPlans = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.post(
-          `${process.env.REACT_APP_BACKEND_SERVER_URL}/foodMenu/getWithID`,
-          { subscription_id: planId },
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
+        const response = await axios.get(
+          `${process.env.REACT_APP_BACKEND_SERVER_URL}/sub/names`,
+          { headers: { Authorization: `Bearer ${token}` } }
         );
-        console.log('Food Items fetched:', response.data);
-    
+        const EliteData = response.data.groupedSubscriptions["Individual Plan Budget"]["Lunch"];
+        setPlans(EliteData);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching subscription plans:', error.response?.data || error.message);
+        setPlans([]);
+        setLoading(false);
+      }
+    };
+ 
+    fetchPlans();
+  }, []);
+ 
+ 
+const handlePlanClick = async (planId) => {
+    setSelectedPlanId(planId);
+    setFoodItems([]);
+ 
+ 
+   
+    try {
+      const token = localStorage.getItem('token');
+ 
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_SERVER_URL}/foodMenu/getWithID`,
+        { subscription_id: planId },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      console.log('Food Items fetched:', response.data);
+   
         const fetchedItems = response.data.menuWithID?.map((item) => item.FoodItems) || [];
         setFoodItems(fetchedItems);
       } catch (error) {
@@ -341,26 +227,32 @@ const IndividualPackLunchBudget = () => {
         setError('Failed to fetch food items. Please try again.');
       }
     };
+    const handleSubscribe = async () => {
+      if (!selectedPlanId) {
+        alert('Please select a plan first.');
+        return;
+      }
  
-    fetchSubscriptionData();
-  }, []);
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.post(
+          `${process.env.REACT_APP_BACKEND_SERVER_URL}/userSubscription/createUserSubscription`,
+          { subscription_id: selectedPlanId },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+  console.log("Subscription Created:",response.data)
+        alert('Subscription successfully created.');
+        navigate('/user/Payment');
+      } catch (err) {
+        console.error('Error creating subscription:', err);
+        setError('Failed to create subscription. Please try again.');
+      }
+    };
  
-  const handleDayClick = (day) => {
-    setSelectedDay(prevSelectedDay => (prevSelectedDay === day ? '' : day));
-  };
  
-  const handleQuantityChange = (item, operation) => {
-    setAddedItems(prevState => {
-      const newQuantity = operation === 'increment'
-        ? prevState[item] + 1
-        : (prevState[item] > 0 ? prevState[item] - 1 : 0);
-      return { ...prevState, [item]: newQuantity };
-    });
-  };
-  
   return (
-    <> 
-      <div className='backgrd'> 
+    <>
+      <div className='backgrd'>
       <div className="sub-add">
         <button onClick={handleSubscribe}>Subscribe</button>
       </div>
@@ -374,32 +266,32 @@ const IndividualPackLunchBudget = () => {
               key={plan.id}
               className={`plan-item ${selectedPlanId === plan.id ? 'selected' : ''}`}
               onClick={() => handlePlanClick(plan.id)}
-
+ 
             >
               <div>{plan.days} Days - ₹{plan.price}</div>
-            </div>
-
+              </div>
+ 
           ))
           )}
         </div>
  
-  
+ 
       {foodItems.length > 0 && (
   <div className="food-items">
     <h2>Food Items for Selected Plan:</h2>
     <ul>
     {foodItems.length > 0 && (
-  
+ 
     <ul>
       {foodItems.map((item) => (
-        <li key={item.id}>{item.item_name}</li> 
+        <li key={item.id}>{item.item_name}</li>
       ))}
     </ul>
 )}
     </ul>
   </div>
-)}        <div className='break'> 
-
+)}        <div className='break'>
+ 
           <div className='breakfast-outt'>
             <IoPartlySunnyOutline />
             <span className='fastt'> Lunch </span>Order before 11:00AM
@@ -407,8 +299,8 @@ const IndividualPackLunchBudget = () => {
         </div>
  
         <div className='photo'>
-
-          
+ 
+         
           {[{ name: 'idly', image: idly, description: 'Idly+chutney+sambar', day: 'Monday' },
             { name: 'pongal', image: pongal, description: 'Pongal+sambar+vada', day: 'Tuesday' },
             { name: 'rice', image: rice, description: 'Rice + Chicken gravy', day: 'Wednesday' },

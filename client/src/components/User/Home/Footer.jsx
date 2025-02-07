@@ -11,7 +11,8 @@ const Footer = () => {
   return (
     <> 
 <div className='footer'> 
-    <div> <FaHome size={25} /> Home </div> 
+    <Link to={'/user/Home'}> 
+    <div> <FaHome size={25} /> Home </div>  </Link>
     <Link to={'/user/SubscriptionCalender'}> 
     <div> <FaListAlt /> Subscription</div> </Link>
     <Link to={'/user/Order'}> 

@@ -272,7 +272,8 @@ const getUserSubscriptionDetails = async (req, res) => {
                     },
                   },
             MealSub : {select : {meal_type : true}},
-            PricingDetails : {select : {price : true}}
+            PricingDetails : {select : {price : true}},
+            TierSub : {select : {type : true}}
           }
         }
       }

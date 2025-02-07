@@ -116,3 +116,8 @@ const FoodCard = ({ image, name, description, onAddToCart }) => {
 };
 
 export default FoodCard;
+
+
+
+
+
