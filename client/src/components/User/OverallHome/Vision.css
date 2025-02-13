@@ -1,4 +1,4 @@
-
+/* 
 .vision-head{
     font-size: 1.5rem;
    
@@ -20,6 +20,7 @@
   }
 
   .vision-back {
+    
     margin-left: 0;
     margin-right: 0;
     padding: 1rem; 
@@ -28,5 +29,53 @@
   .vision-head {
     font-size: 1.2rem;
   }
+
+  .vision-back div{
+    display: flex;
+    flex-direction: column;
+  }
+} */
+
+
+
+
+
+
+
+.vm-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 2rem;
 }
 
+.vision-back {
+  background-color: aliceblue;
+  padding: 1.5rem;
+  flex: 1;
+  border-radius: 8px;
+}
+
+.vision-head{
+  font-size: 1.5rem;
+}
+
+
+@media (max-width: 768px) {
+  .vm-box {
+      flex-direction: column-reverse; 
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+  }
+
+  .vision-back {
+      width: 100%;
+      text-align: center;
+  }
+
+  .vision-head {
+      font-size: 1.5rem;
+  }
+}

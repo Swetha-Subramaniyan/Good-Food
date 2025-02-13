@@ -729,6 +729,9 @@ const IndividualPackBreakfastBudget = () => {
   return (
     <> 
       <div className='backgrd'> 
+<div className="listt"> 
+      <h2> Choose Your Subscription Plans </h2>
+      </div>
 
       <div className="sub-add">
         <button onClick={handleSubscribe}>Subscribe</button>

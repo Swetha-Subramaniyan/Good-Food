@@ -100,9 +100,10 @@ const SubscriptionPlan = () => {
   };
  
   return (
-    <div className="main-container">
+    <> 
+     <div className="main-container">
       <header className="header">
-        <h1 style={{fontSize:'2.5rem'}} className="home-heading">Choose Your Plan for Subscription!</h1>
+        <h1 style={{fontSize:'2.5rem'}} className="choose">Choose Your Plan for Subscription!</h1>
       </header>
  
       <div className="plans-container">
@@ -116,9 +117,9 @@ const SubscriptionPlan = () => {
           </div>
         ))}
       </div>
-      {showModal && modalData && (
-        <div className="mmodal">
-          <div className="modal-content">
+      {/* {showModal && modalData && (
+        <div className="moddal">
+          <div className="modal-content" style={{width:'500rem', height:'20rem'}}>
             <h2 className="modal-heading">Individual Plan Details</h2>
             <table className="modal-table">
               <thead>
@@ -140,9 +141,55 @@ const SubscriptionPlan = () => {
               Close
             </button>
           </div>
+         </div>
+      )} */}
+
+{showModal && modalData && (
+  <div className="modal-overlay">
+    {/* <div className="modal-content"> */}
+    <div className="modal-content" style={{width:'500rem', height:'30rem'}}>
+      <h2 className="modal-heading">Individual Plan Details</h2>
+
+      <div className="plan-container">
+        {/* Budget Column (Left Side) */}
+        <div className="plan-column">
+          <h3 className="plan-title">Budget</h3>
+          <div className="meal-card" onClick={() => handleModalItemClick("Breakfast", "Budget")}>
+            Breakfast
+          </div>
+          <div className="meal-card" onClick={() => handleModalItemClick("Lunch", "Budget")}>
+            Lunch
+          </div>
+          <div className="meal-card" onClick={() => handleModalItemClick("Dinner", "Budget")}>
+            Dinner
+          </div>
         </div>
-      )}
+
+        {/* Elite Column (Right Side) */}
+        <div className="plan-column">
+          <h3 className="plan-title">Elite</h3>
+          <div className="meal-card" onClick={() => handleModalItemClick("Breakfast", "Elite")}>
+            Breakfast
+          </div>
+          <div className="meal-card" onClick={() => handleModalItemClick("Lunch", "Elite")}>
+            Lunch
+          </div>
+          <div className="meal-card" onClick={() => handleModalItemClick("Dinner", "Elite")}>
+            Dinner
+          </div>
+        </div>
+      </div>
+
+      <button className="close-button" onClick={closeModal}>X</button>
     </div>
+  </div>
+)}
+
+
+
+     </div>
+
+    </>
   );
 };
  

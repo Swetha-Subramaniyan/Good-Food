@@ -45,6 +45,7 @@ import IndividualPackDinnerElite from './components/User/Subscription/Individual
 import UserSidebar from './Pages/User/UserSidebar';
 import Wallet from './components/User/Home/Wallet';
 import Notification from './components/User/Home/Notification';
+import Skippedcart from './components/User/Home/Skippedcart';
 
 
 const App = () => {
@@ -84,11 +85,9 @@ const App = () => {
     <Route path='UserSidebar' element={< UserSidebar  />} />
     <Route path='Wallet' element={< Wallet  />}/>
     <Route path='Notification' element={< Notification />} /> 
+    <Route path='Skippedcart' element={<Skippedcart/>} /> 
     </Route>
    </Routes>
-
-
-
 
    <Routes> 
     <Route path='admin' element={<Outlet/>}>
@@ -107,7 +106,7 @@ const App = () => {
     </Route>
    </Routes>
    </BrowserRouter>  
-   
+      
    </>
   )
 }

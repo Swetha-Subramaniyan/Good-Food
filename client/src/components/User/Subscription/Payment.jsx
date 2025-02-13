@@ -253,11 +253,24 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 import React, { useState, useEffect } from "react";
 import "./Payment.css";
 import Alert from "@mui/material/Alert";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+
  
 const Payment = () => {
   const [userSubscriptions, setUserSubscriptions] = useState([]);
@@ -321,42 +334,54 @@ const Payment = () => {
       addresses: [...prevData.addresses, { landmark: "", street: "", city: "", pincode: "" }],
     }));
   };
- 
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem("token");
-      const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_SERVER_URL}/adrress/createPhone`,
-        formData,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      console.log("Form Submitted:", response.data);
-      alert("Addresses submitted successfully!");
-      setSuccessMessage(response.data.message);
-      setFormData({
-        name: "",
-        email: "",
-        phone_number: "",
-        addresses: [{ landmark: "", street: "", city: "", pincode: "" }],
-      });
+        const token = localStorage.getItem("token");    
+        const addressResponse = await axios.post(
+            `${process.env.REACT_APP_BACKEND_SERVER_URL}/adrress/createPhone`,
+            formData,
+            { headers: { Authorization: `Bearer ${token}` } }
+        );
+        
+        console.log("Address Submitted:", addressResponse.data);
+        alert("Addresses submitted successfully!");
+        setSuccessMessage(addressResponse.data.message);
+     
+        if (userSubscriptions.length > 0) {
+            const latestSubscription = userSubscriptions[userSubscriptions.length - 1]; 
+            const user_subscription_id = latestSubscription.id; 
+
+            const foodReportResponse = await axios.post(
+                `${process.env.REACT_APP_BACKEND_SERVER_URL}/foodReport/createReport`,
+                { user_subscription_id },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+
+            console.log("Food Report Created:", foodReportResponse.data);
+            alert("Food report generated successfully!");
+        }
+
+        setFormData({
+            name: "",
+            email: "",
+            phone_number: "",
+            addresses: [{ landmark: "", street: "", city: "", pincode: "" }],
+        });
     } catch (error) {
-      setError(error.response?.data?.message || "Failed to submit address");
+        setError(error.response?.data?.message || "Failed to submit address and food report");
     }
-  };
- 
- 
- 
- 
+};
+
   const handlePayment = async () => {
     if (!amount) {
       alert("Amount not available");
       return;
-    }
- 
+    } 
     try {
       const token = localStorage.getItem("token");
- 
+
       const keyResponse = await axios.get(
         `${process.env.REACT_APP_BACKEND_SERVER_URL}/payment/getKey`,
         { headers: { Authorization: `Bearer ${token}` } }
@@ -392,7 +417,7 @@ const Payment = () => {
         },
         theme: { color: "#3399cc" },
       };
- 
+
       const razor = new window.Razorpay(options);
       razor.open();
     } catch (error) {
@@ -414,10 +439,9 @@ const Payment = () => {
   const validity = recentPlan?.validity_days || "N/A";
   const tierType = recentPlan?.Subscription?.TierSub?.type || "N/A";
   const customerId = recentPlan?.customer_id;
- 
- 
- 
+   
   return (
+
     <div className="details-back">
       <div className="form-container">
         <h2>Subscription Details</h2>
@@ -456,14 +480,12 @@ const Payment = () => {
               <span>{customerId} </span>
             </div>
           </div>
- 
+
           <button type="button" className="submit-color" onClick={handlePayment}>
             Pay ₹{amount || 0}
           </button>
  
-          <h2>Food Delivery Details</h2>
- 
-   
+          <h2>Food Delivery Details</h2>   
           <div className="form-group">
             <label>Name:</label>
             <input name="name" value={formData.name} onChange={handleInputChange} required />
@@ -476,8 +498,7 @@ const Payment = () => {
             <label>Phone Number:</label>
             <input name="phone_number" value={formData.phone_number} onChange={handleInputChange} required />
           </div>
- 
-       
+        
           {formData.addresses.map((address, index) => (
             <div key={index} className="address-box">
               <h4>Delivery Address {index + 1}</h4>
@@ -511,17 +532,14 @@ const Payment = () => {
               />
             </div>
           ))}
- 
-       
+        
           <button type="button" onClick={handleAddAddress}>
             + Add Delivery Address
           </button>
- 
-       
-          <button type="submit">Submit Addresses</button>
- 
-          {successMessage && <Alert severity="success">{successMessage}</Alert>}
- 
+        
+          <button type="submit"> Submit Addresses </button> 
+          {successMessage && <Alert severity="success">{successMessage}</Alert>} 
+
           <div>
             <Link to={'/user/Home'}>
              <button> Next </button>  
@@ -533,4 +551,6 @@ const Payment = () => {
   );
 };
  
-export default Payment;
+export default Payment
+
+

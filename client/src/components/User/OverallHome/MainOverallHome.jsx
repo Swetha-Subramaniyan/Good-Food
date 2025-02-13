@@ -640,84 +640,10 @@ console.log("Response :" , response.data)
         < Vision/> 
         </div>
         < SubscriptionPlan />
-        < ContactUs />  
-       
+        < ContactUs />         
         <IdeasToImprove isVisible={isFeedbackVisible} onClose={closeFeedbackForm} />
        
 <br/> <br/> 
-
-{/* <div className="main-container">
-  <header className="header">
-    <h1 className="home-heading">Choose Your Plan for Subscription!</h1>
-  </header> 
-  <div className="plans-grid">
-    <div className="plan-card" onClick={() => handlePlanClick("Individual")}>
-      <h3 className="plan-name">Individual</h3>
-    </div>
-    <div className="plan-card" onClick={() => handlePlanClick("Combo")}>
-      <h3 className="plan-name">Combo</h3>
-    </div>
-  </div> 
-  {isModalOpen && selectedPlan && (
-    <div className="modal">
-      <div className="modal-content">
-        <button className="close-btn" onClick={closeModal}>
-          X
-        </button>
-        <h3 className="modal-heading">{selectedPlan} Plan</h3>
-        <table className="styled-table">
-          <thead>
-            <tr>
-              <th>Budget</th>
-              <th>Elite</th>
-            </tr>
-          </thead>
-          <tbody>
-            {selectedPlan === "Individual" ? (
-              <>
-                <tr>
-                  <td style={{ backgroundColor: "rgb(229, 237, 237)" }}>
-                    <button onClick={handleIndividualBreakfast}>Breakfast</button>
-                  </td>
-                  <td style={{ backgroundColor: "rgb(229, 237, 237)" }}>
-                    <button onClick={handleIndividualBreakfast}>Breakfast</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td style={{ backgroundColor: "rgb(229, 237, 237)" }}>
-                    <button onClick={handleIndividualLunch}>Lunch</button>
-                  </td>
-                  <td style={{ backgroundColor: "rgb(229, 237, 237)" }}>
-                    <button onClick={handleIndividualLunch}>Lunch</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td style={{ backgroundColor: "rgb(229, 237, 237)" }}>
-                    <button onClick={handleIndividualDinner}>Dinner</button>
-                  </td>
-                  <td style={{ backgroundColor: "rgb(229, 237, 237)" }}>
-                    <button onClick={handleIndividualDinner}>Dinner</button>
-                  </td>
-                </tr>
-              </>
-            ) : (
-              <tr>
-                <td style={{ backgroundColor: "rgb(229, 237, 237)" }}>
-                  <button onClick={handleComboBudget}>Budget</button>
-                </td>
-                <td style={{ backgroundColor: "rgb(229, 237, 237)" }}>
-                  <button onClick={handleComboElite}>Elite</button>
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  )}
-</div> */}
-
-
 
     </>
   );

@@ -49,21 +49,7 @@ html {
     border-radius: 8px;
 }
 
-/* .vision-head{
-    font-size: 1.5rem;
-   
-} */
-
-/* .vision-back{
-    background-color: aliceblue;
-    margin-left: 2rem;
-    margin-right: 2rem;
-    padding: 1rem;
-   
-
-}  */
-  
-  
+ 
 .logo-pic{
    
     position: absolute;
@@ -84,7 +70,6 @@ html {
 
 .food{
    background-image: url('../../../assets/foodimage.png');
-   /* background-image: url(../../../assets/sharedimage.png); */
    background-size: cover;
    min-height: 100vh;
    width: 100%;  
@@ -124,7 +109,6 @@ html {
     justify-content: center;
     font-family: cursive;
     font-family: Verdana, Geneva, Tahoma, sans-serif; 
-    /* font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; */
     color: orangered;
     font-size: 2.4rem;
     font-weight: bold;
@@ -210,23 +194,6 @@ html {
     justify-content: center;
     border-radius: 8px;
 }
-
-/* .feedback-submit{
-    height: fit-content;
-    width: fit-content;
-    padding: 0.5rem;
-    font-weight: bold;
-    font-size: 1rem;
-    border-radius: 5px;
-    color: rgb(254, 254, 255);
-    background-color: rgb(90, 111, 226);
-    border: none;
-    margin-left: 13rem;
-    margin-right: 13rem;
-} */
-
-
-
  .mmodal {
     position: fixed;
     top: 0;
@@ -239,9 +206,6 @@ html {
     align-items: center;
     z-index: 1000;
   }
-  
-  
- 
 
   a{
     text-decoration: none;
@@ -485,13 +449,7 @@ html {
         font-size: 1rem;
         padding-top: 2rem;    
     }
-    
-/* .home-header{
-        display: flex;
-        justify-content: center;
-        margin-top: 1rem;
-        font-size: 1.2rem;  
-    } */
+
 
   .regi{
     flex-direction: column;
@@ -506,15 +464,7 @@ html {
     padding: 1rem;
   }
 
-  /* .vision-back {
-    margin-left: 0;
-    margin-right: 0;
-    padding: 1rem; 
-  } */
 
-  /* .vision-head {
-    font-size: 1.2rem;
-  } */
 
   .com {
     width: 100%;

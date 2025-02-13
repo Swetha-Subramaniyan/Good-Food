@@ -60,14 +60,17 @@ const IndividualPackDinnerBudget = () => {
   return (
     <> 
       <div className='backgrd'> 
+
+      <div className="listt"> 
+      <h2> Choose Your Subscription Plans </h2>
+      </div>
+
         <Link to={'/user/Payment'}> 
           <div className='sub-add'>
             <button>SUBSCRIBE</button>
           </div>
         </Link>
-        <div className='listt'>Choose your Subscription Plans</div>
-        <br/><br/>
-
+  
         <div className='days'>
           {subscriptionData.map((plan) => (
             <div

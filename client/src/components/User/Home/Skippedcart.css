@@ -1,0 +1,11 @@
+.skipped-head{
+    margin-top: 3rem;
+}
+
+.info-text{
+    margin-left: 10rem;
+    border: 1px solid black;
+    width: 14rem;
+    padding: 0.5rem;
+    font-weight: bold;
+}

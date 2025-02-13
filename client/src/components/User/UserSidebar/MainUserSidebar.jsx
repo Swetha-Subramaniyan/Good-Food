@@ -303,6 +303,8 @@ const MainUserSidebar = () => {
       navigate('/user/Home');
     } else if (menuItem === 'Notification'){
       navigate('/user/Notification')
+    } else if (menuItem=== 'Skippedcart'){
+      navigate('/user/Skippedcart')
     }
   };
 
@@ -358,6 +360,7 @@ const MainUserSidebar = () => {
               { text: 'Log Out', icon: <FaHome size={25} /> }, 
               { text: 'Admin', icon: <IoPersonCircleOutline size={30} /> }, 
               { text: 'Home', icon: <FaHome size={25} /> }, 
+              { text: 'Skippedcart', icon: <SlBasketLoaded size={24} />  }, 
             ].map(({ text, icon }) => (
               <ListItem key={text} disablePadding>
                 <ListItemButton onClick={() => handleNavigation(text)}>
@@ -378,3 +381,4 @@ const MainUserSidebar = () => {
 };
 
 export default MainUserSidebar;
+
