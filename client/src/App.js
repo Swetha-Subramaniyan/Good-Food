@@ -57,7 +57,7 @@ const App = () => {
     <Route path='user' element={<Outlet/> }> 
     <Route path='subscription' element={<Subscription/>}/>
     <Route path='AddDetails' element={< AddDetails/>}/>
-    <Route path='Payment' element={< Payment/>}/>
+    <Route path='Payment/:id' element={< Payment/>}/>
     <Route path='Home' element={< Home/>}/>
     <Route path='Navbar' element={< Navbar/>}/>
     <Route path='Order' element={<Order/>} />
@@ -112,4 +112,6 @@ const App = () => {
 }
 
 export default App
+
+
 

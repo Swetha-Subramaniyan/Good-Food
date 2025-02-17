@@ -8,6 +8,8 @@ import biriyani from '../../../assets/biriya.jpg';
 import chappathi from '../../../assets/chappathi.jpg';
 import pongal from '../../../assets/pongal.jpg';
 import StarRatings from '../Home/StarRatings';
+import SignIn from '../OverallHome/SignIn';
+
 import { useNavigate } from 'react-router-dom';
 
 
@@ -17,15 +19,15 @@ const IndividualPackBreakfastElite = () => {
   const [foodItems, setFoodItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedPlanId, setSelectedPlanId] = useState(null);
+    const [isSignInVisible, setIsSignInVisible] = useState(false); 
+  
   const navigate = useNavigate();
 
   useEffect(() => {
       const fetchPlans = async () => {
         try {
-          const token = localStorage.getItem('token');
           const response = await axios.get(
             `${process.env.REACT_APP_BACKEND_SERVER_URL}/sub/names`,
-            { headers: { Authorization: `Bearer ${token}` } }
           );
           const EliteData = response.data.groupedSubscriptions["Individual Plan Elite"]["Breakfast"];
           setPlans(EliteData);
@@ -41,18 +43,15 @@ const IndividualPackBreakfastElite = () => {
     }, []);
 
 
-  const handlePlanClick = async (planId) => {
+    const handlePlanClick = async (planId) => {
       setSelectedPlanId(planId);
       setFoodItems([]); 
     
       try {
-        const token = localStorage.getItem('token');
         const response = await axios.post(
           `${process.env.REACT_APP_BACKEND_SERVER_URL}/foodMenu/getWithID`,
           { subscription_id: planId },
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
+          
         );
         console.log('Food Items fetched:', response.data);
     
@@ -65,37 +64,37 @@ const IndividualPackBreakfastElite = () => {
       }
     };
 
-
-  const handleSubscribe = async () => {
+    const handleSubscribe = async () => {
       if (!selectedPlanId) {
         alert('Please select a plan first.');
         return;
       }
+
+      const token = localStorage.getItem('token');
   
-      try {
-        const token = localStorage.getItem('token');
-        const response = await axios.post(
-          `${process.env.REACT_APP_BACKEND_SERVER_URL}/userSubscription/createUserSubscription`,
-          { subscription_id: selectedPlanId },
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-  console.log("Subscription Created:",response.data)
-        alert('Subscription successfully created.');
-        navigate('/user/Payment');
-      } catch (err) {
-        console.error('Error creating subscription:', err);
-        setError('Failed to create subscription. Please try again.')
+      if (!token) {
+        setIsSignInVisible(true);
+        return;
       }
+      navigate(`/user/Payment/${selectedPlanId}`);
+};
+
+    
+    const handleCloseSignIn = () => {
+      setIsSignInVisible(false);
     };
+  
 
   return (
     <> 
+
       <div className='backgrd'>
 
         <div className="listt"> 
       <h2> Choose Your Subscription Plans </h2>
       </div>
        
+
       <div className="sub-add">
         <button onClick={handleSubscribe}>Subscribe</button>
       </div>
@@ -109,12 +108,15 @@ const IndividualPackBreakfastElite = () => {
               key={plan.id}
               className={`plan-item ${selectedPlanId === plan.id ? 'selected' : ''}`}
               onClick={() => handlePlanClick(plan.id)}
+
             >
               <div>{plan.days} Days - ₹{plan.price}</div>
             </div>
           ))
         )}
       </div>
+      {isSignInVisible && <SignIn isVisible={isSignInVisible} onClose={handleCloseSignIn} />}
+
       {foodItems.length > 0 && (
   <div className="food-items">
     <h2>Food Items for Selected Plan:</h2>
@@ -131,36 +133,36 @@ const IndividualPackBreakfastElite = () => {
   </div>
 )}
 
-      <div className='break'> 
-        <div className='breakfast-outt'>
-          <IoPartlySunnyOutline />
-          <span className='fastt'> Breakfast </span>Order before 11:00AM
+        <div className='break'> 
+          <div className='breakfast-outt'>
+            <IoPartlySunnyOutline />
+            <span className='fastt'> Breakfast </span>Order before 11:00AM
+          </div>
+        </div>
+
+        <div className='photo'>
+          {[{ name: 'idly', image: idly, description: 'Idly+chutney+sambar', day: 'Monday' },
+            { name: 'pongal', image: pongal, description: 'Pongal+sambar+vada', day: 'Tuesday' },
+            { name: 'rice', image: rice, description: 'Rice + Chicken gravy', day: 'Wednesday' },
+            { name: 'biriyani', image: biriyani, description: 'Chicken Biriyani', day: 'Thursday' },
+            { name: 'pongal', image: pongal, description: 'Pongal+sambar+vada', day: 'Friday' },
+            { name: 'rice', image: rice, description: 'Rice + Chicken gravy', day: 'Saturday' },
+            { name: 'chappathi', image: chappathi, description: 'Chappathi', day: 'Sunday' }
+          ].map((item) => (
+            <div key={item.name}>
+              <div className='days-align'>{item.day}</div>
+              <br />
+              <img src={item.image} alt={item.name} />
+              <br />
+              <h6>{item.description} <br /><StarRatings /></h6>
+            </div>
+          ))}
         </div>
       </div>
-
-      <div className='photo'>
-        {[{ name: 'idly', image: idly, description: 'Idly+chutney+sambar', day: 'Monday' },
-          { name: 'pongal', image: pongal, description: 'Pongal+sambar+vada', day: 'Tuesday' },
-          { name: 'rice', image: rice, description: 'Rice + Chicken gravy', day: 'Wednesday' },
-          { name: 'biriyani', image: biriyani, description: 'Chicken Biriyani', day: 'Thursday' },
-          { name: 'pongal', image: pongal, description: 'Pongal+sambar+vada', day: 'Friday' },
-          { name: 'rice', image: rice, description: 'Rice + Chicken gravy', day: 'Saturday' },
-          { name: 'chappathi', image: chappathi, description: 'Chappathi', day: 'Sunday' }
-        ].map((item) => (
-          <div key={item.name}>
-            <div className='days-align'>{item.day}</div>
-            <br />
-            <img src={item.image} alt={item.name} />
-            <br />
-            <h6>{item.description} <br /><StarRatings /></h6>
-          </div>
-        ))}
-      </div>
-    </div>
-  </>
-   
+    </>
   );
 };
+
 
 export default IndividualPackBreakfastElite;
 

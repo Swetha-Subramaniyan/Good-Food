@@ -188,16 +188,38 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
  
  
-const getAllSubscription = async (req,res) => {
-    try {
-        const getSubs = await prisma.subscription.findMany()
-        res.status(200).json({message : "All Subscription fetched",getSubs})
-    } catch (error) {
-       console.log(error)
-       res.status(404).json({error : "No Subscriptions found"})
-    }
-}
- 
+const getSubscriptionById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const subscription = await prisma.subscription.findUnique({
+      where: { id: parseInt(id)},
+
+      include: {
+        parentPlan1: { select: { plan_name: true } },
+        DurationSub: { select: { quantity: true } },
+        DurationSubs: {
+          select: {
+            actual_days: true,
+            addon_days: true,
+          },
+        },
+        MealSub: { select: { meal_type: true } },
+        PricingDetails: { select: { price: true } },
+        TierSub : {select : {type : true}},
+        
+      },
+        
+    });
+
+    res
+      .status(200)
+      .json({ message: "Subscription details fetched", subscription });
+  } catch (error) {
+    console.error("Error fetching subscription by ID:", error);
+    res.status(500).json({ error: "Failed to fetch subscription details" });
+  }
+};
+
 const getSubscription = async (req,res) => {
 try {
     const getSUB = await prisma.subscription.findMany({
@@ -226,7 +248,6 @@ const getSubscriptionNames = async (req, res) => {
           PricingDetails: { select: { price: true } },
         },
       });
-      console.log(getSUB,"iiiiiiiiiiiiiiiiiiiiii")
  
       const groupedSubscriptions = getSUB.reduce((acc, sub) => {
         const key = `${sub.parentPlan1.plan_name} ${sub.TierSub.type}`;
@@ -353,7 +374,7 @@ const createSubscription = async (req, res) => {
  
  
 module.exports={
-    getAllSubscription,
+    getSubscriptionById,
     getSubscriptionNames,
     getSubscription,
     createSubscription,

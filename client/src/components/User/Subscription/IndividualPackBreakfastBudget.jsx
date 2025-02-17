@@ -646,6 +646,7 @@ import biriyani from '../../../assets/biriya.jpg';
 import chappathi from '../../../assets/chappathi.jpg';
 import pongal from '../../../assets/pongal.jpg';
 import StarRatings from '../Home/StarRatings';
+import SignIn from '../OverallHome/SignIn';
 
   
 import {useNavigate } from 'react-router-dom';
@@ -656,16 +657,17 @@ const IndividualPackBreakfastBudget = () => {
   const [foodItems, setFoodItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedPlanId, setSelectedPlanId] = useState(null);
+  const [isSignInVisible, setIsSignInVisible] = useState(false); 
+
   const navigate = useNavigate();
 
   useEffect(() => {
       const fetchPlans = async () => {
         try {
-          const token = localStorage.getItem('token');
           const response = await axios.get(
             `${process.env.REACT_APP_BACKEND_SERVER_URL}/sub/names`,
-            { headers: { Authorization: `Bearer ${token}` } }
           );
+         
           const BudgetData = response.data.groupedSubscriptions["Individual Plan Budget"]["Breakfast"];
           setPlans(BudgetData);
           setLoading(false);
@@ -685,13 +687,10 @@ const IndividualPackBreakfastBudget = () => {
       setFoodItems([]); 
     
       try {
-        const token = localStorage.getItem('token');
         const response = await axios.post(
           `${process.env.REACT_APP_BACKEND_SERVER_URL}/foodMenu/getWithID`,
           { subscription_id: planId },
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
+          
         );
         console.log('Food Items fetched:', response.data);
     
@@ -704,27 +703,26 @@ const IndividualPackBreakfastBudget = () => {
       }
     };
 
-  const handleSubscribe = async () => {
+    const handleSubscribe = async () => {
       if (!selectedPlanId) {
         alert('Please select a plan first.');
         return;
       }
+
+      const token = localStorage.getItem('token');
   
-      try {
-        const token = localStorage.getItem('token');
-        const response = await axios.post(
-          `${process.env.REACT_APP_BACKEND_SERVER_URL}/userSubscription/createUserSubscription`,
-          { subscription_id: selectedPlanId },
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-  console.log("Subscription Created:",response.data)
-        alert('Subscription successfully created.');
-        navigate('/user/Payment');
-      } catch (err) {
-        console.error('Error creating subscription:', err);
-        setError('Failed to create subscription. Please try again.');
+      if (!token) {
+        setIsSignInVisible(true); 
+        return;
       }
+      navigate(`/user/Payment/${selectedPlanId}`);
     };
+
+    
+    const handleCloseSignIn = () => {
+      setIsSignInVisible(false);
+    };
+  
 
   return (
     <> 
@@ -753,6 +751,8 @@ const IndividualPackBreakfastBudget = () => {
           ))
         )}
       </div>
+      {isSignInVisible && <SignIn isVisible={isSignInVisible} onClose={handleCloseSignIn} />}
+
       {foodItems.length > 0 && (
   <div className="food-items">
     <h2>Food Items for Selected Plan:</h2>

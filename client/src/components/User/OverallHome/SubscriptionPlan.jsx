@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -11,27 +10,73 @@ const SubscriptionPlan = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState(null);
  
+  // useEffect(() => {
+  //   const fetchSubscriptions = async () => {
+  //     try {
+  //       const token = localStorage.getItem("token");
+  //       if (!token) {
+  //         console.error("Authorization token not found.");
+  //         return;
+  //       }
+ 
+  //       const response = await axios.get(
+  //         `${process.env.REACT_APP_BACKEND_SERVER_URL}/sub/names`,
+  //         {
+  //           headers: { Authorization: `Bearer ${token}` },
+  //         }
+  //       );
+ 
+  //       console.log("Response:", response.data);
+ 
+  //       const allSubscriptions = response.data.groupedSubscriptions || {};
+  //       setGroupedSubscriptions(allSubscriptions);
+ 
+  //       const relevantPlans = Object.entries(allSubscriptions).filter(
+  //         ([planName]) =>
+  //           planName === "Individual Plan Budget" ||
+  //           planName === "Individual Plan Elite" ||
+  //           planName === "Combo Plan Budget" ||
+  //           planName === "Combo Plan Elite"
+  //       );
+ 
+  //       const plans = relevantPlans.reduce((acc, [planName, details]) => {
+  //         if (planName.includes("Individual Plan")) {
+  //           acc["Individual"] = {
+  //             ...(acc["Individual"] || {}),
+  //             [planName.split(" ")[2]]: details,
+  //           };
+  //         } else {
+  //           acc[planName] = details;
+  //         }
+  //         return acc;
+  //       }, {});
+ 
+  //       setFilteredPlans(Object.keys(plans));
+  //     } catch (error) {
+  //       console.error(
+  //         "Error fetching subscriptions:",
+  //         error.response?.data || error.message
+  //       );
+  //     }
+  //   };
+ 
+  //   fetchSubscriptions();
+  // }, []);
+
+
   useEffect(() => {
     const fetchSubscriptions = async () => {
       try {
-        const token = localStorage.getItem("token");
-        if (!token) {
-          console.error("Authorization token not found.");
-          return;
-        }
- 
+  
         const response = await axios.get(
           `${process.env.REACT_APP_BACKEND_SERVER_URL}/sub/names`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
         );
- 
+  
         console.log("Response:", response.data);
- 
+  
         const allSubscriptions = response.data.groupedSubscriptions || {};
         setGroupedSubscriptions(allSubscriptions);
- 
+  
         const relevantPlans = Object.entries(allSubscriptions).filter(
           ([planName]) =>
             planName === "Individual Plan Budget" ||
@@ -39,7 +84,7 @@ const SubscriptionPlan = () => {
             planName === "Combo Plan Budget" ||
             planName === "Combo Plan Elite"
         );
- 
+  
         const plans = relevantPlans.reduce((acc, [planName, details]) => {
           if (planName.includes("Individual Plan")) {
             acc["Individual"] = {
@@ -51,7 +96,7 @@ const SubscriptionPlan = () => {
           }
           return acc;
         }, {});
- 
+  
         setFilteredPlans(Object.keys(plans));
       } catch (error) {
         console.error(
@@ -60,9 +105,10 @@ const SubscriptionPlan = () => {
         );
       }
     };
- 
+  
     fetchSubscriptions();
   }, []);
+  
  
   const handleModalItemClick = (meal, planType) => {
     const planDetails =

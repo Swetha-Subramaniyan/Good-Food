@@ -522,23 +522,14 @@ import Vision from './Vision';
 
  
 const MainOverallHome = () => {
-  const navigate = useNavigate();
   const [isFeedbackVisible, setIsFeedbackVisible] = useState(false); 
-  const [selectedPlan, setSelectedPlan] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [groupedSubscriptions, setGroupedSubscriptions] = useState({});
  
   useEffect(() => {
     const fetchSubscriptions = async () => {
       try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          console.error("Authorization token not found.");
-          return;
-        }
- 
+       
         const response = await axios.get(`${process.env.REACT_APP_BACKEND_SERVER_URL}/sub/names`, {
-          headers: { Authorization: `Bearer ${token}` },
         });
 console.log("Response :" , response.data)
         setGroupedSubscriptions(response.data.groupedSubscriptions);
@@ -550,20 +541,9 @@ console.log("Response :" , response.data)
     fetchSubscriptions();
   }, []);
  
-  const handlePlanClick = (planName) => {
-    setSelectedPlan(planName);
-    setIsModalOpen(true);
-  };
+  
  
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedPlan(null);
-  };
- 
- 
-  const handleIndividuals = () => {
-    setIsModalOpen(true);
-  };
+  
  
   const showFeedbackForm = () => {
     
@@ -574,25 +554,7 @@ console.log("Response :" , response.data)
     setIsFeedbackVisible(false);
   };
  
-  const handleIndividualBreakfast = () => {
-    navigate('/user/individualPackBreakfast');
-  };
- 
-  const handleIndividualLunch = () => {
-    navigate('/user/individualPackLunch');
-  };
- 
-  const handleIndividualDinner = () => {
-    navigate('/user/individualPackDinner');
-  };
- 
-  const handleComboBudget = () => {
-    navigate('/user/IndividualPack')
-  }
- 
-  const handleComboElite = () => {
-    navigate('/user/EliteCombo')
-  }
+
   return (
     <>   
     <div className='food'> 
