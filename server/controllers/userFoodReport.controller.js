@@ -10,7 +10,6 @@ const createUserFoodReport = async (req, res) => {
             return res.status(400).json({ error: "User Subscription ID is required" });
         }
 
-        console.log("Checking if subscription exists...");
         const userSubscription = await prisma.user_Subscription.findUnique({
             where: { id: user_subscription_id },
             select: {

@@ -52,10 +52,28 @@ app.use(passport.initialize());
 app.use(passport.session());
  
 app.use('/', authRoutes);
-app.use(authentication);
- 
-app.use('/api',userRoutes);
 app.use('/sub',subRoutes);
+app.use('/foodMenu',subscriptionFoodMenuRoutes)
+
+
+
+
+app.use(authentication);
+app.use('/userSubscription',userSubscriptionRoutes)
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.use('/api',userRoutes);
 app.use('/adrress',adrressRoutes)
 app.use('/foodItem',foodItemRoutes)
 app.use('/mealType',mealTypeRoutes)
@@ -63,13 +81,13 @@ app.use('/phone', phoneRoutes)
 app.use('/subscription',subscriptionRoutes)
 app.use('/subsPay',subscriptionPaymentRoutes)
 app.use('/parentPlan',parentPlanRoutes)
-app.use('/userSubscription',userSubscriptionRoutes)
+// app.use('/userSubscription',userSubscriptionRoutes)
 app.use('/tier',tierRoutes)
 app.use('/duration',durationRoutes)
 app.use('/price',pricingRoutes)
 app.use('/subPrice',subscriptionPricingRoutes)
 app.use('/quantity',quantityRoutes)
-app.use('/foodMenu',subscriptionFoodMenuRoutes)
+// app.use('/foodMenu',subscriptionFoodMenuRoutes)
 app.use('/payment',paymentRoutes)
 app.use('/subscriptionOrder',subscriptionOrderRoutes)
 app.use('/orders',orderRoutes)
