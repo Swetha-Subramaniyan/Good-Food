@@ -169,7 +169,7 @@ const MainHome = () => {
           <IoPartlySunnyOutline /><span className='fast'> Breakfast </span> <br /> Order before 11:00AM
         </div>
         <div className='breakfast-out'>
-          <IoSunnyOutline /><span className='fast'> Lunch </span>  <br /> Order before 3:00AM
+          <IoSunnyOutline /><span className='fast'> Lunch </span>  <br /> Order before 3:00PM
         </div>
         <div className='breakfast-out'>
           <MdOutlineModeNight /> <span className='fast'> Dinner </span>  <br /> Order before 7:00PM

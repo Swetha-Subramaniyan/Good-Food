@@ -271,6 +271,15 @@ import Alert from "@mui/material/Alert";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
+
+
+import Box from '@mui/material/Box';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import NavigationIcon from '@mui/icons-material/Navigation';
+
  
 const Payment = () => {
   const [userSubscriptions, setUserSubscriptions] = useState([]);
@@ -480,12 +489,10 @@ const Payment = () => {
               <span>{customerId} </span>
             </div>
           </div>
-
           <button type="button" className="submit-color" onClick={handlePayment}>
             Pay ₹{amount || 0}
           </button>
- 
-          <h2>Food Delivery Details</h2>   
+          <h2 className="delivery-header">Food Delivery Details</h2>   
           <div className="form-group">
             <label>Name:</label>
             <input name="name" value={formData.name} onChange={handleInputChange} required />
@@ -499,9 +506,13 @@ const Payment = () => {
             <input name="phone_number" value={formData.phone_number} onChange={handleInputChange} required />
           </div>
         
-          {formData.addresses.map((address, index) => (
-            <div key={index} className="address-box">
-              <h4>Delivery Address {index + 1}</h4>
+          {/* {formData.addresses.map((address, index) => (
+            <div key={index} className="address-box"> <Box sx={{ '& > :not(style)': { m: 1 } }} >
+            <Fab color="primary" aria-label="add" onClick={handleAddAddress}>
+            <AddIcon  />
+            </Fab>   
+            </Box>
+              <h4>Delivery Address {index + 1}</h4>                
               <input
                 name="landmark"
                 value={address.landmark}
@@ -531,10 +542,50 @@ const Payment = () => {
                 required
               />
             </div>
-          ))}
-        
+          ))} */}
+
+{formData.addresses.map((address, index) => (
+  <div key={index} className="address-box">
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <h4>Delivery Address {index + 1}</h4>
+      <Fab color="primary" aria-label="add" onClick={handleAddAddress} size="small">
+        <AddIcon />
+      </Fab>
+    </div>
+    <input
+      name="landmark"
+      value={address.landmark}
+      onChange={(e) => handleAddressInputChange(index, e)}
+      placeholder="Landmark"
+      required
+    />
+    <input
+      name="street"
+      value={address.street}
+      onChange={(e) => handleAddressInputChange(index, e)}
+      placeholder="Street"
+      required
+    />
+    <input
+      name="city"
+      value={address.city}
+      onChange={(e) => handleAddressInputChange(index, e)}
+      placeholder="City"
+      required
+    />
+    <input
+      name="pincode"
+      value={address.pincode}
+      onChange={(e) => handleAddressInputChange(index, e)}
+      placeholder="Pincode"
+      required
+    />
+  </div>
+))}
+
+       
           <button type="button" onClick={handleAddAddress}>
-            + Add Delivery Address
+            + Delivery Address
           </button>
         
           <button type="submit"> Submit Addresses </button> 
@@ -544,13 +595,23 @@ const Payment = () => {
             <Link to={'/user/Home'}>
              <button> Next </button>  
              </Link>
-          </div>
+
+</div>
         </form>
       </div>
     </div>
+
+    
+
+
   );
 };
  
 export default Payment
+
+
+
+
+
 
 

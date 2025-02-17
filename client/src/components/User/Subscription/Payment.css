@@ -121,3 +121,11 @@ label{
   padding-right: 1rem;
 }
 
+
+.form-group label{
+  width: 14rem;
+}
+
+.delivery-header{
+  margin-top: 2rem;
+}
