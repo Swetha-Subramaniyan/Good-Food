@@ -132,25 +132,6 @@ const createAddress = async (req, res) => {
     }
 };
 
-const getUserAddress = async(req,res) => {
-    try {
-        const {customer_id } =req.user;
-        const getUser = await prisma.user_Address.findMany({
-            where : {customer_id},
-            select : {name : true,
-                email : true,
-                phone_number : true,
-                landmark : true,
-                street : true,
-                city : true,
-                pincode : true
-            },
-        })
-        res.status(200).json({message : "User Address",getUser})
-    } catch (error) {
-        console.log(error)
-        res.status(404).json({error : "No Address fetched"})
-    }
-}
 
-module.exports = {getPhoneNumber,createAddress,getUserAddress}
+
+module.exports = {getPhoneNumber,createAddress}
