@@ -90,7 +90,7 @@ const BudgetCombo = () => {
         <div className="listt">Choose your Subscription Plans</div>
         <div className='sub-add'> 
         <button onClick={handleSubscribe}>Subscribe</button> </div>
-        <br/><br/> <br/> 
+         
         {error && <div className="error">{error}</div>}
         <div className="days">
           {loading ? (

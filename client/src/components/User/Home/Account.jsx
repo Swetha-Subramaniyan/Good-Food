@@ -108,12 +108,12 @@ const Account = () => {
               </div> 
               <div className="form-group">
                 <label>Subscription Days:</label>
-                <span>{userDetails?.validity_days || "N/A"} Days</span>
+                <span>{userDetails?.Subscription?.DurationSubs?.actual_days || "N/A"} Days</span>
               </div> 
               <div className="form-group">
                 <label>Price:</label>
                 <span>₹{userDetails?.Subscription?.PricingDetails?.price || "N/A"}</span>
-              </div>             
+              </div>  
               <div className="form-group">
                 <label>Start Date:</label>
                 <span>{userDetails ? formatDate(userDetails.start_date) : "N/A"}</span>

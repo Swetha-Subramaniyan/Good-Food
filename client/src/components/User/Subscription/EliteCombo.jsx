@@ -45,6 +45,7 @@ const EliteCombo = () => {
       }
     };
 
+
     fetchPlans();
   }, []);
 
@@ -94,6 +95,7 @@ const EliteCombo = () => {
   };
 
   return (
+
     <>
       <div className="backgrd">
         <div className="listt">Choose your Subscription Plans</div>
@@ -121,6 +123,7 @@ const EliteCombo = () => {
               </div>
             ))
           )}
+
         </div>
         {isSignInVisible && (
           <SignIn isVisible={isSignInVisible} onClose={handleCloseSignIn} />
@@ -362,20 +365,3 @@ export default EliteCombo;
 
 
 
-
-
-
-// try {
-    //   const response = await axios.post(
-    //     `${process.env.REACT_APP_BACKEND_SERVER_URL}/userSubscription/createUserSubscription`,
-    //     { subscription_id: selectedPlanId },
-    //     { headers: { Authorization: `Bearer ${token}` } }
-    //   );
-
-    //   console.log("Subscription Created:", response.data);
-    //   alert("Subscription successfully created.");
-    //   navigate("/user/Payment");
-    // } catch (err) {
-    //   console.error("Error creating subscription:", err);
-    //   setError("Failed to create subscription. Please try again.");
-    // }

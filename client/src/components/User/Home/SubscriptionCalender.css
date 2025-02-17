@@ -2,7 +2,8 @@
 .sub-status{
     display: flex;
     /* flex-direction: column; */
-    margin-left: 9rem;
+    margin-left: 10rem;
+    gap: 2rem;
 
 }
 
