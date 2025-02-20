@@ -54,7 +54,37 @@ const prisma = new PrismaClient();
  
 const getPhoneNumber = async (req,res) => {
     try {
-      const getPhone = await prisma.user_Address.findMany()
+        const {customer_id} = req.user;
+      const getPhone = await prisma.users.findMany({
+        where : {customer_id},
+        select : {
+            userAddress : true,
+            userSubscription : {
+                select : {
+                    subscription_id : true,
+                    start_date : true,
+                    end_date:true,
+                    status : true,
+                    validity_days : true,
+                    Subscription : {
+                        select : {
+                            parentPlan1 : {select : {plan_name : true}},
+                            TierSub : {select : {type : true}},
+                            MealSub : {select : {meal_type : true}},
+                            DurationSubs : {
+                                select : {
+                                    actual_days : true,
+                                    addon_days : true
+                                }
+                            },
+                            PricingDetails : {select : {price : true}}
+                        }
+                    }
+                }
+            }
+
+        }
+      })
       res.status(200).json(getPhone)  
     } catch (error) {
         console.log(error)

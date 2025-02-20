@@ -67,23 +67,45 @@ const IndividualPackDinnerBudget = () => {
     }
   };
 
+  // const handleSubscribe = async () => {
+  //   if (!selectedPlanId) {
+  //     alert('Please select a plan first.');
+  //     return;
+  //   }
+
+  //   const token = localStorage.getItem('token');
+
+  //   if (!token) {
+  //     setIsSignInVisible(true); 
+  //     return;
+  //   }
+  //   navigate(`/user/Payment/${selectedPlanId}`);
+
+
+   
+  // };
+
   const handleSubscribe = async () => {
     if (!selectedPlanId) {
       alert('Please select a plan first.');
       return;
     }
-
+  
     const token = localStorage.getItem('token');
-
+  
     if (!token) {
+      // Store selectedPlanId in localStorage before showing SignIn popup
+      localStorage.setItem('pendingSubscription', selectedPlanId);
       setIsSignInVisible(true); 
       return;
     }
+  
     navigate(`/user/Payment/${selectedPlanId}`);
-
-
-   
   };
+
+  const handleCloseSignIn=()=>{
+    setIsSignInVisible(false)
+  }
 
 
   return (

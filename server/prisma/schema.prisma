@@ -282,7 +282,7 @@ model User_Position {
 model User_Address {
   id               Int      @id @default(autoincrement())
   name             String
-  customer_id      String @unique
+  customer_id      String 
   email            String
   phone_number     String
   alternate_number String?
@@ -301,7 +301,7 @@ model User_Subscription {
   start_date       DateTime
   end_date         DateTime
   status           String
-  customer_id      String @unique
+  customer_id      String 
   validity_days    Int
   created_at       DateTime
   updatedAt        DateTime
@@ -431,7 +431,7 @@ model Subscription_Food_Menu {
 model Subscription_Order {
   id                   Int               @id @default(autoincrement())
   user_id              Int
-  customer_id          String @unique
+  customer_id          String 
   order_item_id        Int
   user_subscription_id Int
   created_at           DateTime
@@ -629,7 +629,7 @@ model cart {
 model User_Rating {
   id Int @id @default(autoincrement())
   user_id Int
-  customer_id String @unique
+  customer_id String 
   rating Int
   description String
   created_at DateTime

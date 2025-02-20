@@ -54,45 +54,6 @@ const MainSubscription = () => {
         </div>
       </div> 
   
-      {/* {isModalOpen && (
-        <div className="modal">
-          <div className="modal-content">
-            <button className="close-btnn" onClick={closeModal}>X</button>
-     
-            <table className="styled--table">
-              <thead>
-                <tr>
-                  <th colSpan={2}> Breakfast</th> 
-                  <th colSpan={2}> Lunch</th>
-                  <th colSpan={2}> Dinner</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style={{ backgroundColor: 'rgb(229, 237, 237)' }}>
-                    <button onClick={handleCost}> Budget <br/> ₹200  </button>
-                  </td>
-                  <td style={{ backgroundColor: 'rgb(229, 237, 237)' }}>
-                    <button onClick={handleCost}> Elite <br/>  ₹300  </button>
-                  </td>
-                  <td style={{ backgroundColor: 'rgb(229, 237, 237)' }}>
-                    <button onClick={handleCostLunch}> Budget <br/>  ₹200  </button>
-                  </td>
-                  <td style={{ backgroundColor: 'rgb(229, 237, 237)' }}>
-                    <button onClick={handleCostLunch}> Elite <br/>  ₹300  </button>
-                  </td>
-                  <td style={{ backgroundColor: 'rgb(229, 237, 237)' }}>
-                    <button onClick={handleCostDinner}> Budget <br/>  ₹200  </button>
-                  </td>
-                  <td style={{ backgroundColor: 'rgb(229, 237, 237)' }}>
-                    <button onClick={handleCostDinner}> Elite <br/>  ₹300  </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )} */}
     </>
   );
 };

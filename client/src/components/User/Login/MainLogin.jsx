@@ -4,13 +4,10 @@ import LoginPopup from './LoginPopup';
 import { Link, useNavigate } from 'react-router-dom';
 
 
-
-
 const MainLogin = () => {
   const [showPopup, setShowPopup] = useState(false);
 
   const navigate = useNavigate()
-
   const handlePopup = () => {
     navigate ('/user/LoginPopup')
     setShowPopup(!showPopup);

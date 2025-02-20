@@ -10,8 +10,6 @@ import StarRatings from '../Home/StarRatings';
 import { useNavigate } from 'react-router-dom';
 import SignIn from '../OverallHome/SignIn';
 
-
-
 const IndividualPackLunchElite = () => {
   const [error, setError] = useState('');
   const [plans, setPlans] = useState([]);
@@ -21,7 +19,6 @@ const IndividualPackLunchElite = () => {
     const [isSignInVisible, setIsSignInVisible] = useState(false); 
   
   const navigate = useNavigate();
-
   useEffect(() => {
       const fetchPlans = async () => {
         try {
@@ -72,6 +69,7 @@ const IndividualPackLunchElite = () => {
   
         const token = localStorage.getItem('token');
         if (!token) {
+          localStorage.setItem('pendingSubscription', selectedPlanId);
           setIsSignInVisible(true); 
           return;
         }
@@ -81,7 +79,6 @@ const IndividualPackLunchElite = () => {
     const handleCloseSignIn = () => {
       setIsSignInVisible(false);
     };
-  
 
   return (
     <> 
@@ -127,7 +124,6 @@ const IndividualPackLunchElite = () => {
     </ul>
   </div>
 )}
-
       <div className='break'> 
         <div className='breakfast-outt'>
           <IoPartlySunnyOutline />

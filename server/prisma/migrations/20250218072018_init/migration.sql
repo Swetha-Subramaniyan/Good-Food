@@ -14,18 +14,6 @@ CREATE TABLE `Users` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `Phone_Number` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `user_id` INTEGER NOT NULL,
-    `customer_id` VARCHAR(191) NOT NULL,
-    `phone_number` VARCHAR(191) NOT NULL,
-    `alternate_number` VARCHAR(191) NULL,
-    `created_at` DATETIME(3) NOT NULL,
-
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
 CREATE TABLE `User_Position` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `position` VARCHAR(191) NOT NULL DEFAULT 'USER',
@@ -189,7 +177,7 @@ CREATE TABLE `Subscription_Food_Menu` (
 CREATE TABLE `Subscription_Order` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `user_id` INTEGER NOT NULL,
-    `customer_id` INTEGER NOT NULL,
+    `customer_id` VARCHAR(191) NOT NULL,
     `order_item_id` INTEGER NOT NULL,
     `user_subscription_id` INTEGER NOT NULL,
     `created_at` DATETIME(3) NOT NULL,
@@ -241,20 +229,6 @@ CREATE TABLE `Order_Item` (
     `food_item_id` INTEGER NOT NULL,
     `quantity` INTEGER NOT NULL,
     `price_id` INTEGER NOT NULL,
-    `order_id` INTEGER NOT NULL,
-    `created_at` DATETIME(3) NOT NULL,
-    `updatedAt` DATETIME(3) NOT NULL,
-
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `Cart` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `subscription_id` INTEGER NOT NULL,
-    `user_id` INTEGER NOT NULL,
-    `customer_id` VARCHAR(191) NOT NULL,
-    `food_item_id` INTEGER NOT NULL,
     `created_at` DATETIME(3) NOT NULL,
     `updatedAt` DATETIME(3) NOT NULL,
 
@@ -277,14 +251,176 @@ CREATE TABLE `User_Food_Report` (
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
--- AddForeignKey
-ALTER TABLE `Phone_Number` ADD CONSTRAINT `Phone_Number_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `Users`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+-- CreateTable
+CREATE TABLE `Daily_Menu` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `period` INTEGER NOT NULL,
+    `subscription_food_menu_id` INTEGER NOT NULL,
+    `created_at` DATETIME(3) NOT NULL,
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Additional_Itemss` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `food_item_id` INTEGER NOT NULL,
+    `is_additional` BOOLEAN NOT NULL,
+    `created_at` DATETIME(3) NOT NULL,
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Periodical` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `period` VARCHAR(191) NOT NULL,
+    `comments` VARCHAR(191) NOT NULL,
+    `created_at` DATETIME(3) NOT NULL,
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Item_Payment` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `payment_method` VARCHAR(191) NOT NULL,
+    `food_item_id` INTEGER NOT NULL,
+    `user_id` INTEGER NOT NULL,
+    `customer_id` VARCHAR(191) NOT NULL,
+    `user_subscription_id` INTEGER NOT NULL,
+    `payment_status` VARCHAR(191) NOT NULL,
+    `payment_info` JSON NOT NULL,
+    `created_at` DATETIME(3) NOT NULL,
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Order_Response` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `status` VARCHAR(191) NOT NULL,
+    `address_id` INTEGER NOT NULL,
+    `user_id` INTEGER NOT NULL,
+    `customer_id` INTEGER NOT NULL,
+    `delivery_user_id` INTEGER NOT NULL,
+    `user_subscription_id` INTEGER NOT NULL,
+    `created_at` DATETIME(3) NOT NULL,
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Delivery` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `oredr_id` INTEGER NOT NULL,
+    `user_position_id` INTEGER NOT NULL,
+    `user_id` INTEGER NOT NULL,
+    `customer_id` VARCHAR(191) NOT NULL,
+    `delivery_status` VARCHAR(191) NOT NULL,
+    `delivery_response` VARCHAR(191) NOT NULL,
+    `created_at` DATETIME(3) NOT NULL,
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Cancellation` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `cancellation_criteria_id` INTEGER NOT NULL,
+    `subscription_id` INTEGER NOT NULL,
+    `user_subscription_id` INTEGER NOT NULL,
+    `user_id` INTEGER NOT NULL,
+    `customer_id` VARCHAR(191) NOT NULL,
+    `cancellation_date` DATETIME(3) NOT NULL,
+    `cancellation_reason` VARCHAR(191) NOT NULL,
+    `refund_status` VARCHAR(191) NOT NULL,
+    `cancellation_status` VARCHAR(191) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Notication_Details` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `entity_type` VARCHAR(191) NOT NULL,
+    `entity_id` INTEGER NOT NULL,
+    `created_at` DATETIME(3) NOT NULL,
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Notification` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `user_id` INTEGER NOT NULL,
+    `customer_id` VARCHAR(191) NOT NULL,
+    `admin_id` INTEGER NOT NULL,
+    `notifier_type` VARCHAR(191) NOT NULL,
+    `notofication_description` VARCHAR(191) NOT NULL,
+    `notification_details_id` INTEGER NOT NULL,
+    `created_at` DATETIME(3) NOT NULL,
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `User_Wallet` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `refunded_amount` VARCHAR(191) NOT NULL,
+    `user_id` INTEGER NOT NULL,
+    `customer_id` VARCHAR(191) NOT NULL,
+    `created_at` DATETIME(3) NOT NULL,
+    `updateAt` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `cart` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `subscription_id` INTEGER NOT NULL,
+    `user_id` INTEGER NOT NULL,
+    `customer_id` VARCHAR(191) NOT NULL,
+    `food_item_id` INTEGER NOT NULL,
+    `created_at` DATETIME(3) NOT NULL,
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `User_Rating` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `user_id` INTEGER NOT NULL,
+    `customer_id` VARCHAR(191) NOT NULL,
+    `rating` INTEGER NOT NULL,
+    `description` VARCHAR(191) NOT NULL,
+    `created_at` DATETIME(3) NOT NULL,
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
 ALTER TABLE `User_Position` ADD CONSTRAINT `User_Position_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `Users`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE `User_Address` ADD CONSTRAINT `User_Address_customer_id_fkey` FOREIGN KEY (`customer_id`) REFERENCES `Users`(`customer_id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE `User_Subscription` ADD CONSTRAINT `User_Subscription_subscription_id_fkey` FOREIGN KEY (`subscription_id`) REFERENCES `Subscription`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `User_Subscription` ADD CONSTRAINT `User_Subscription_customer_id_fkey` FOREIGN KEY (`customer_id`) REFERENCES `Users`(`customer_id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Subscription` ADD CONSTRAINT `Subscription_parent_plan_id_fkey` FOREIGN KEY (`parent_plan_id`) REFERENCES `Parent_Plan`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -329,6 +465,9 @@ ALTER TABLE `Subscription_Food_Menu` ADD CONSTRAINT `Subscription_Food_Menu_food
 ALTER TABLE `Subscription_Order` ADD CONSTRAINT `Subscription_Order_user_subscription_id_fkey` FOREIGN KEY (`user_subscription_id`) REFERENCES `User_Subscription`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE `Subscription_Order` ADD CONSTRAINT `Subscription_Order_customer_id_fkey` FOREIGN KEY (`customer_id`) REFERENCES `Users`(`customer_id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE `Orders` ADD CONSTRAINT `Orders_subscription_id_fkey` FOREIGN KEY (`subscription_id`) REFERENCES `Subscription`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -344,13 +483,7 @@ ALTER TABLE `Order_Item` ADD CONSTRAINT `Order_Item_food_item_id_fkey` FOREIGN K
 ALTER TABLE `Order_Item` ADD CONSTRAINT `Order_Item_price_id_fkey` FOREIGN KEY (`price_id`) REFERENCES `Pricing_Details`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Order_Item` ADD CONSTRAINT `Order_Item_order_id_fkey` FOREIGN KEY (`order_id`) REFERENCES `Orders`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `Cart` ADD CONSTRAINT `Cart_subscription_id_fkey` FOREIGN KEY (`subscription_id`) REFERENCES `Subscription`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `Cart` ADD CONSTRAINT `Cart_food_item_id_fkey` FOREIGN KEY (`food_item_id`) REFERENCES `Food_Items`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE `User_Food_Report` ADD CONSTRAINT `User_Food_Report_user_subscription_id_fkey` FOREIGN KEY (`user_subscription_id`) REFERENCES `User_Subscription`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `User_Rating` ADD CONSTRAINT `User_Rating_customer_id_fkey` FOREIGN KEY (`customer_id`) REFERENCES `Users`(`customer_id`) ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -10,9 +10,7 @@ import pongal from "../../../assets/pongal.jpg";
 import StarRatings from "../Home/StarRatings";
 import axios from "axios";
 import SignIn from "../OverallHome/SignIn";
-
 import { useNavigate } from "react-router-dom";
-
 const EliteCombo = () => {
 
   const [error, setError] = useState("");
@@ -44,12 +42,8 @@ const EliteCombo = () => {
         setLoading(false);
       }
     };
-
-
     fetchPlans();
   }, []);
-
-  
 
   const handlePlanClick = async (planId) => {
     setSelectedPlanId(planId);
@@ -75,27 +69,42 @@ const EliteCombo = () => {
     }
   };
 
+  // const handleSubscribe = async () => {
+  //   if (!selectedPlanId) {
+  //     alert("Please select a plan first.");
+  //     return;
+  //   }
+  //   const token = localStorage.getItem("token");
+
+  //   if (!token) {
+  //     setIsSignInVisible(true);
+  //     return;
+  //   }
+  //   navigate(`/user/Payment/${selectedPlanId}`);
+    
+  // };
+
+
   const handleSubscribe = async () => {
     if (!selectedPlanId) {
       alert("Please select a plan first.");
       return;
     }
     const token = localStorage.getItem("token");
-
+  
     if (!token) {
+      localStorage.setItem("pendingSubscription", selectedPlanId); // Store the pending subscription ID
       setIsSignInVisible(true);
       return;
     }
     navigate(`/user/Payment/${selectedPlanId}`);
-    
   };
-
+  
   const handleCloseSignIn = () => {
     setIsSignInVisible(false);
   };
 
   return (
-
     <>
       <div className="backgrd">
         <div className="listt">Choose your Subscription Plans</div>
