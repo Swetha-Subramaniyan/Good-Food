@@ -85,6 +85,10 @@ const IndividualPackDinnerBudget = () => {
    
   };
 
+  const handleCloseSignIn =() => {
+    setIsSignInVisible(false)
+  }
+
 
   return (
   <> 
