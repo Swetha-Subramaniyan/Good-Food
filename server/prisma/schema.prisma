@@ -282,7 +282,7 @@ model User_Position {
 model User_Address {
   id               Int      @id @default(autoincrement())
   name             String
-  customer_id      String @unique
+  customer_id      String
   email            String
   phone_number     String
   alternate_number String?
@@ -301,7 +301,7 @@ model User_Subscription {
   start_date       DateTime
   end_date         DateTime
   status           String
-  customer_id      String @unique
+  customer_id      String 
   validity_days    Int
   created_at       DateTime
   updatedAt        DateTime
@@ -416,6 +416,7 @@ model Food_Items {
   FoodItemsMenu            Subscription_Food_Menu[]
   FoodItemsOrder Order_Item[]
   FoodItemsCart Cart[]
+  additionalItems Additional_Itemss[]
 }
 
 model Subscription_Food_Menu {
@@ -431,7 +432,7 @@ model Subscription_Food_Menu {
 model Subscription_Order {
   id                   Int               @id @default(autoincrement())
   user_id              Int
-  customer_id          String @unique
+  customer_id          String 
   order_item_id        Int
   user_subscription_id Int
   created_at           DateTime
@@ -522,9 +523,10 @@ model Daily_Menu {
 model Additional_Itemss {
   id Int @id @default(autoincrement())
   food_item_id Int
-  is_additional Boolean
+  is_additional Boolean?
   created_at DateTime
   updatedAt DateTime
+  additionalItems Food_Items @relation(fields: [food_item_id],references: [id])
 }
 
 model Periodical {
@@ -629,7 +631,7 @@ model cart {
 model User_Rating {
   id Int @id @default(autoincrement())
   user_id Int
-  customer_id String @unique
+  customer_id String 
   rating Int
   description String
   created_at DateTime

@@ -1,36 +1,25 @@
-
-// import React, { useState, useEffect } from 'react';
+// import React, { useState } from 'react';
 // import './Cart.css';
 // import { Link } from 'react-router-dom';
-// import { Checkbox } from '@mui/material';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faBottleWater } from '@fortawesome/free-solid-svg-icons';
-// import { faPlateWheat } from '@fortawesome/free-solid-svg-icons';
 
-
-// const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 
 // const Cart = () => {
 //   const [cartItems, setCartItems] = useState([]);
-//   const [includeWaterBottle, setIncludeWaterBottle] = useState(false);
-//   const [includePlate, setIncludePlate] = useState(false);
 
-//   useEffect(() => {
-//     const storedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-//     setCartItems(storedItems);
-//   }, []);
+
+  
+
+
 
 //   const handleRemoveFromCart = (itemName) => {
 //     const updatedItems = cartItems.filter(item => item.name !== itemName);
 //     setCartItems(updatedItems);
-//     localStorage.setItem('cartItems', JSON.stringify(updatedItems));
+//     localStorage.setItem("cartItems", JSON.stringify(updatedItems));
 //   };
 
-//   const waterBottleCost = includeWaterBottle ? 15 : 0;
-//   const plateCost = includePlate ? 20 : 0;
+  
 
-//   const totalPrice = cartItems.reduce((acc, item) => acc + item.totalPrice, 0) + waterBottleCost + plateCost;
 
 //   return (
 //     <>
@@ -48,8 +37,8 @@
 //             </tr>
 //           </thead>
 //           <tbody>
-//             {cartItems.map((item) => (
-//               <tr key={item.name}>
+//             {cartItems.map((item, index) => (
+//               <tr key={index}>
 //                 <td>{item.name}</td>
 //                 <td>₹{item.price}</td>
 //                 <td>{item.quantity}</td>
@@ -61,36 +50,11 @@
 //             ))}
 //           </tbody>
 //         </table>
-//         <div style={{ marginLeft: '10rem', fontWeight: 'bold', fontSize:'1.5rem' }}> 
 
-//         </div>
-
-//         <div className='waterbottle'> 
-//         <div>           
-//           <h4>  <FontAwesomeIcon icon={faBottleWater} />  Water Bottle (₹15)  
- 
-//           <Checkbox {...label} 
-//             checked={includeWaterBottle}
-//             onChange={() => setIncludeWaterBottle(!includeWaterBottle)}          
-//           />              
-//         </h4>
-//         </div>
-//         <div> 
-//           <h4> <FontAwesomeIcon icon={faPlateWheat} />  Plate (₹20)
-//           <Checkbox {...label} 
-//           checked={includePlate}
-//           onChange={() => setIncludePlate(!includePlate)}       
-//           />              
-//           </h4>
-//         </div>
-//         </div>
-
-//         <div className='cart-checkout'>
-//           <p>Total: ₹{totalPrice}</p>
+    
 //           <Link to={'/user/PaymentCart'}> 
 //             <button>Checkout to Payment</button>
 //           </Link>
-//         </div>
 //       </div>
 //     </>
 //   );
@@ -101,56 +65,67 @@
 
 
 
-
-
-
-
-
-
-
-import React, { useState, useEffect } from 'react';
-import './Cart.css';
-import { Link } from 'react-router-dom';
-import { Checkbox } from '@mui/material';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBottleWater, faPlateWheat } from '@fortawesome/free-solid-svg-icons';
-
-const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+import React, { useState, useEffect } from "react";
+import "./Cart.css";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
-  const [includeWaterBottle, setIncludeWaterBottle] = useState(false);
-  const [includePlate, setIncludePlate] = useState(false);
 
+  // 🔹 Fetch Cart Items on Component Mount
   useEffect(() => {
-    // Load cart items from localStorage when the component mounts
-    const storedItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    setCartItems(storedItems);
+    const fetchCartItems = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(
+          `${process.env.REACT_APP_BACKEND_SERVER_URL}/cart/get`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        console.log("CART DATA:", response.data);
+
+        // 🔹 Extract items from response
+        const items = response.data.cartItems.map((cartItem) => ({
+          id: cartItem.id,
+          name: cartItem.item_name,
+          price: cartItem.price,
+          quantity: 1, // Default quantity
+          totalPrice: cartItem.price * 1, // Calculate total price
+        }));
+
+        setCartItems(items);
+      } catch (error) {
+        console.error("Error fetching cart items:", error);
+      }
+    };
+
+    fetchCartItems();
   }, []);
 
-  useEffect(() => {
-    // Update cart items when a new meal is reordered
-    const storedItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    setCartItems(storedItems);
-  }, [localStorage.getItem("cartItems")]); // Listen for changes in localStorage
+  // 🔹 Handle Removing Item from Cart
+  const handleRemoveFromCart = async (itemId) => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.delete(
+        `${process.env.REACT_APP_BACKEND_SERVER_URL}/cart/removeCart/${itemId}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
 
-  const handleRemoveFromCart = (itemName) => {
-    const updatedItems = cartItems.filter(item => item.name !== itemName);
-    setCartItems(updatedItems);
-    localStorage.setItem("cartItems", JSON.stringify(updatedItems));
+      // 🔹 Update state after deletion
+      const updatedItems = cartItems.filter((item) => item.id !== itemId);
+      setCartItems(updatedItems);
+      localStorage.setItem("cartItems", JSON.stringify(updatedItems));
+    } catch (error) {
+      console.error("Error removing cart item:", error);
+    }
   };
-
-  const waterBottleCost = includeWaterBottle ? 15 : 0;
-  const plateCost = includePlate ? 20 : 0;
-
-  const totalPrice = cartItems.reduce((acc, item) => acc + item.totalPrice, 0) + waterBottleCost + plateCost;
 
   return (
     <>
-      <div className='order-header'>Added Items</div>
+      <div className="order-header">Added Items</div>
       <br />
       <div>
-        <table className='styled-table'>
+        <table className="styled-table">
           <thead>
             <tr>
               <th>Item</th>
@@ -168,40 +143,18 @@ const Cart = () => {
                 <td>{item.quantity}</td>
                 <td>₹{item.totalPrice}</td>
                 <td>
-                  <button onClick={() => handleRemoveFromCart(item.name)}>Delete</button>
+                  <button onClick={() => handleRemoveFromCart(item.id)}>
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
 
-        <div className='waterbottle'> 
-          <div>           
-            <h4>
-              <FontAwesomeIcon icon={faBottleWater} /> Water Bottle (₹15)
-              <Checkbox {...label} 
-                checked={includeWaterBottle}
-                onChange={() => setIncludeWaterBottle(!includeWaterBottle)}          
-              />              
-            </h4>
-          </div>
-          <div> 
-            <h4>
-              <FontAwesomeIcon icon={faPlateWheat} /> Plate (₹20)
-              <Checkbox {...label} 
-                checked={includePlate}
-                onChange={() => setIncludePlate(!includePlate)}       
-              />              
-            </h4>
-          </div>
-        </div>
-
-        <div className='cart-checkout'>
-          <p>Total: ₹{totalPrice}</p>
-          <Link to={'/user/PaymentCart'}> 
-            <button>Checkout to Payment</button>
-          </Link>
-        </div>
+        <Link to={"/user/PaymentCart"}>
+          <button>Checkout to Payment</button>
+        </Link>
       </div>
     </>
   );

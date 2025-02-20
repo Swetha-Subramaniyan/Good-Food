@@ -11,12 +11,13 @@
 
 
 const express = require('express');
-const { getUserSubscription, createUserSubscription, getUserSubscriptionDetails } = require('../controllers/userSubscription.controller');
+const { getUserSubscription, getUserSubscriptionDetails, getMenuWithSubID } = require('../controllers/userSubscription.controller');
 const router = express.Router();
  
  
 router.get('/getUserSubscription',getUserSubscription)
 router.get('/getUserDetails',getUserSubscriptionDetails)
-router.post('/createUserSubscription',createUserSubscription)
+router.get('/getFoodWithID/:id',getMenuWithSubID)
+// router.post('/createUserSubscription',createUserSubscription)
  
 module.exports = router;
