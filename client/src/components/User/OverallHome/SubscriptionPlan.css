@@ -1,745 +1,252 @@
-
-
-
-
-
 .plans-container {
-
-
-
   display: flex;
-
-
-
   flex-direction: column;
-
-
-
   gap: 60px;
-
-
-
   margin-top: 20px;
-
-
-
   margin-left: 30rem;
-
-
-
- 
-
-
-
 }
 
-
-
-
-
-
-
 .plan-card {
-
-
-
   padding: 20px;
-
-
 
   border: 2px solid #ccc;
 
-
-
   border-radius: 8px;
 
-
-
   cursor: pointer;
-
-
 
   background-color: #f9f9f9;
 
-
-
   text-align: center;
 
-
-
   font-size: 1.2rem;
-
-
 
   transition: background-color 0.3s ease;
 
-
-
   height: 8rem;
 
-
-
   width: 30rem;
-
-
-
 }
-
-
-
-
-
-
 
 .plan-card:hover {
-
-
-
   background-color: #e0e0e0;
-
-
-
 }
-
-
-
-
-
-
 
 .plan-name {
-
-
-
   font-size: 1.5rem;
 
-
-
   font-weight: bold;
-
-
-
 }
 
-
-
-
-
-
-
-.header{
-
-
-
+.header {
   margin-top: 3rem;
-
-
-
 }
 
-
-
-
-
-
-
-.choose{
-
-
-
+.choose {
   font-weight: bold;
-
-
 
   color: orangered;
-
-
-
 }
 
-
-
-
-
-
-
-
-
-
-
 @media (max-width: 768px) {
-
-
-
-
-
-
-
   .plans-container {
-
-
-
     flex-direction: column;
 
-
-
     align-items: center;
-
-
 
     margin-left: 0;
 
-
-
     gap: 20px;
-
-
-
   }
 
-
-
-
-
-
-
   .plan-card {
-
-
-
     width: 90%;
-
-
 
     height: auto;
 
-
-
-    padding: 30px ;
-
-
+    padding: 30px;
 
     font-size: 1rem;
-
-
-
   }
-
-
-
-
-
-
 
   .plan-name {
-
-
-
     font-size: 1.2rem;
-
-
-
   }
-
-
-
-
-
-
 
   .header {
-
-
-
     text-align: center;
 
-
-
     padding: 10px;
-
-
-
   }
-
-
-
-
-
-
 
   .home-heading {
-
-
-
     font-size: 2rem;
-
-
-
   }
 
-
-
-
-
-
-
   .mmodal {
-
-
-
     width: 100%;
-
-
 
     height: 100%;
 
-
-
     position: fixed;
-
-
 
     top: 0;
 
-
-
     left: 0;
-
-
 
     background: rgba(0, 0, 0, 0.6);
 
-
-
     display: flex;
-
-
 
     align-items: center;
 
-
-
     justify-content: center;
-
-
-
   }
 
-
-
-
-
-
-
   .modal-content {
-
-
-
     width: 90%;
-
-
 
     padding: 10px;
 
-
-
     background: white;
-
-
 
     border-radius: 10px;
 
-
-
     text-align: center;
-
-
-
   }
-
-
-
-
-
-
 
   .modal-table {
-
-
-
     width: 100%;
 
-
-
     font-size: 0.9rem;
-
-
-
   }
-
-
-
-
-
-
 
   .modal-table th {
-
-
-
     padding: 8px;
 
-
-
     cursor: pointer;
-
-
-
   }
 
-
-
-
-
-
-
   .close-button {
-
-
-
     margin-top: 20px;
-
-
 
     padding: 10px 20px;
 
-
-
     font-size: 1rem;
-
-
 
     border: none;
 
-
-
     background: red;
-
-
 
     color: white;
 
-
-
     cursor: pointer;
 
-
-
     border-radius: 5px;
-
-
-
   }
-
-
-
-
-
-
 
   .close-button:hover {
-
-
-
     background: darkred;
-
-
-
   }
-
-
-
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .moddal {
-
-
-
   width: 100%;
-
-
 
   height: 100%;
 
-
-
   position: fixed;
-
-
 
   top: 0;
 
-
-
   left: 0;
-
-
 
   background: rgba(0, 0, 0, 0.6);
 
-
-
   display: flex;
-
-
 
   align-items: center;
 
-
-
   justify-content: center;
-
-
-
- 
-
-
-
 }
 
-
-
-
-
-
-
 .modal-content {
-
-
-
-  width: 60rem;  
-
-
+  width: 60rem;
 
   height: 40rem;
 
-
-
   background: grey;
-
-
 
   border-radius: 10px;
 
-
-
   text-align: center;
-
-
 
   padding: 20px;
 
-
-
   display: flex;
-
-
 
   flex-direction: column;
 
-
-
   align-items: center;
 
-
-
   justify-content: center;
-
-
-
 }
 
-
-
-
-
-
-
 .modal-heading {
-
-
-
   font-size: 2rem;
-
-
 
   font-weight: bold;
 
-
-
-  
-
-
-
   margin-bottom: 1rem;
-
-
-
 }
 
-
-
-
-
-
-
 .modal-table {
-
-
-
   width: 90%;
 
-
-
   font-size: 1.2rem;
-
-
 
   background: white;
 
-
-
   border-radius: 8px;
 
-
-
   overflow: hidden;
-
-
-
 }
 
-
-
-
-
-
-
 .modal-table th {
-
-
-
   padding: 12px;
 
-
-
   cursor: pointer;
-
-
 
   background: #ddd;
 
-
-
   transition: 0.3s;
-
-
-
 }
-
-
-
-
-
-
 
 .modal-table th:hover {
-
-
-
   background: #bbb;
-
-
-
 }
 
-
-
-
-
-
-
 .close-button {
-
-
-
   margin-top: 2px;
-
-
 
   padding: 10px 20px;
 
-
-
   font-size: 1.2rem;
-
-
 
   border: none;
 
-
-
   background: red;
-
-
 
   color: white;
 
-
-
   cursor: pointer;
 
-
-
   border-radius: 5px;
-
-
-
 }
-
-
-
-
-
-
 
 .close-button:hover {
-
-
-
   background: darkred;
-
-
-
 }
-
-
-
-
 
 .modal-overlay {
   position: fixed;
@@ -770,8 +277,6 @@
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 20px;
-  
-
 }
 
 .plan-container {
@@ -787,7 +292,7 @@
   width: 45%;
   background-color: rgb(234, 227, 227);
   background-color: rgb(240, 215, 138);
-  
+
   padding: 15px;
   border-radius: 10px;
 }
@@ -813,7 +318,6 @@
 }
 
 .meal-card:hover {
-  
   background-color: rgb(96, 25, 25);
   color: white;
 }

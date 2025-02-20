@@ -1,15 +1,3 @@
-/* .vision-head{
-    font-size: 1.5rem;
-   
-}
-
-.vision-back{
-   
-    background-color: aliceblue;
-    margin-left: 2rem;
-    margin-right: 2rem;
-    padding: 1rem;   
-} */
 
 .signing-in{
   display: flex;
@@ -25,9 +13,7 @@
   font-size: 1.2rem;
   font-weight: bold;
   background-color: rgb(113, 69, 69); 
-  color: white;
-
-  
+  color: white;  
 }
 
 
@@ -82,12 +68,10 @@
   font-weight: bold;
   display: flex;
   gap: 2rem;
-  margin-left: 1.3rem;
-  
+  margin-left: 1.3rem;  
 }
 
 .regi div{
-
   padding: 1.3rem;
   color: white;
   background-color: darkslategrey;

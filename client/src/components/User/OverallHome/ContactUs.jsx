@@ -14,7 +14,7 @@ const ContactUs = () => {
     <div className='contact-last'> 
     <div id='contact-section'>
     
-        <h1 className='contact-details text-center'>Contact Us</h1>   <br/>   <br/>
+        <h2 className='contact-details text-center'>Contact Us</h2>   <br/>   <br/>
         <div className='footer-down'>
           <div className='name-foot'>
           <img className='foot' src={logo} alt='food' />

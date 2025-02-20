@@ -22,7 +22,7 @@ const LicenseContent = () => {
   return (
     <> 
       <div className='signing-in'>  
-        <button onClick={handleSignInClick}> Sign In </button> <span> </span>
+        {/* <button onClick={handleSignInClick}> Sign In </button> <span> </span> */}
         <Link to={'/admin/addsubscription'}> 
         <button> Admin </button> </Link>
       </div>
@@ -46,7 +46,6 @@ const LicenseContent = () => {
           <PiChefHatBold size={25} /> 3.5L+ <span> Sellers </span>
         </div>
       </div>
-
       <SignIn isVisible={isSignInVisible} onClose={handleCloseSignIn} />
     </>
   );

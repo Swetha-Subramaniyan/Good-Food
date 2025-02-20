@@ -73,6 +73,7 @@ const IndividualPackBreakfastElite = () => {
       const token = localStorage.getItem('token');
   
       if (!token) {
+        localStorage.setItem('pendingSubscription', selectedPlanId);
         setIsSignInVisible(true);
         return;
       }

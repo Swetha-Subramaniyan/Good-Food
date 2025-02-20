@@ -1,4 +1,3 @@
- 
 import React, { useState, useEffect } from "react";
 import "./Payment.css";
 import Alert from "@mui/material/Alert";
@@ -6,11 +5,11 @@ import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
  
 const Payment = () => {
-  const { id } = useParams(); 
+  const { id } = useParams();
   const [subscription, setSubscription] = useState({});
   const [amount, setAmount] = useState(null);
   const [error, setError] = useState(null);
-
+ 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -35,12 +34,12 @@ const Payment = () => {
         setError(err.response?.data?.message || "Failed to fetch subscription details");
       }
     };
-
+ 
     if (id) {
       fetchSubscriptionDetails();
     }
   }, [id]);
-
+ 
  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -92,29 +91,29 @@ const Payment = () => {
       alert("Amount not available");
       return;
     }
-
+ 
     try {
       const token = localStorage.getItem("token");
-
+ 
       // 1️⃣ Get Razorpay Key
       const keyResponse = await axios.get(
         `${process.env.REACT_APP_BACKEND_SERVER_URL}/payment/getKey`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       const razorpayKey = keyResponse.data.key;
-
+ 
       // 2️⃣ Create Razorpay Order
       const { data } = await axios.post(
         `${process.env.REACT_APP_BACKEND_SERVER_URL}/payment/razorPay`,
         { subscription_id: id, amount },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-
+ 
       if (!data.order) {
         alert("Failed to create order.");
         return;
       }
-
+ 
       // 3️⃣ Razorpay Options
       const options = {
         key: razorpayKey,
@@ -142,24 +141,24 @@ const Payment = () => {
         },
         theme: { color: "#3399cc" },
       };
-
+ 
       // 4️⃣ Launch Razorpay Checkout
       const razor = new window.Razorpay(options);
       razor.on("payment.failed", function (response) {
         alert("Payment Failed. Please try again.");
         console.error("Payment Failed:", response.error);
       });
-
+ 
       razor.open();
     } catch (error) {
       console.error("Error during payment:", error);
       alert("Payment failed. Please try again.");
     }
   };
-
+ 
   // Format Date Function
   const formatDate = (date) => date.toLocaleDateString("en-GB");
-
+ 
   // Calculate Validity and Dates
   const planName = subscription?.parentPlan1?.plan_name || "N/A";
   const mealType = subscription?.MealSub?.meal_type || "N/A";
@@ -168,12 +167,12 @@ const Payment = () => {
   const days = subscription?.DurationSubs?.actual_days || 0;
   const addonDays = subscription?.DurationSubs?.addon_days || 0;
   const validity = days + addonDays;
-
+ 
   const startDate = new Date();
   startDate.setHours(0, 0, 0, 0);
   const endDate = new Date(startDate);
   endDate.setDate(startDate.getDate() + validity);
-
+ 
  
   return (
     <div className="details-back">
