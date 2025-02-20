@@ -1,8 +1,8 @@
 const express = require("express");
-const { createOrder, getKey } = require("../controllers/paymentController");
+const { getKey, createOrderAndSubscription } = require("../controllers/paymentController");
 const router = express.Router();
 
-router.post("/razorPay", createOrder);
+router.post("/razorPay", createOrderAndSubscription);
 router.get('/getKey',getKey)
 
 module.exports = router;

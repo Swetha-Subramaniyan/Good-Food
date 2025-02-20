@@ -1,5 +1,5 @@
 
-.search{
+.search {
   display: flex;
   border-radius: 15rem;
   height: 5rem;
@@ -7,7 +7,6 @@
   justify-items: center;
   padding-left: 27rem;
   padding-right: 27rem;
-  /* margin-top: 1rem; */
 }
 
 .search input{
@@ -91,6 +90,12 @@ img{
   font-size: 1.3rem;
   color: white;
 }
+.cart-button {
+background-color:red;
+height: 50px;
+color: whitesmoke;
+margin-left: 80rem;
+}
 
 .photo h4 {
   font-size: 1rem;  
@@ -104,6 +109,57 @@ img{
   background-color: aquamarine;
 
 }
+.food-items {
+  margin-top: 3rem;
+}
+
+.food-items-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.food-item {
+  background-color: #f0f0f0;
+  padding: 1rem;
+  border-radius: 8px;
+  width: 200px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.food-item span {
+  display: block;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.food-item-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.food-item-actions button {
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  background-color: rgb(243, 119, 17);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.food-item-actions button:hover {
+  background-color: rgb(220, 95, 0);
+}
+
+.food-item-actions span {
+  font-size: 1.2rem;
+  padding: 0.5rem;
+}
+
 
 
  @media only screen and (max-width: 768px) {

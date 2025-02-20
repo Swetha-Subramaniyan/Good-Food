@@ -4,7 +4,7 @@ import MainHome from '../../components/User/Home/MainHome'
 const Home = () => {
   return (
    <>
-   <MainHome/>
+   <MainHome  />
  
  
    </>

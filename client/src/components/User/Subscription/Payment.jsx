@@ -1,5 +1,3 @@
-
- 
 import React, { useState, useEffect } from "react";
 import "./Payment.css";
 import Alert from "@mui/material/Alert";
@@ -11,6 +9,7 @@ const Payment = () => {
   const [subscription, setSubscription] = useState({});
   const [amount, setAmount] = useState(null);
   const [error, setError] = useState(null);
+ 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -40,6 +39,7 @@ const Payment = () => {
       fetchSubscriptionDetails();
     }
   }, [id]);
+ 
  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -95,14 +95,14 @@ const Payment = () => {
     try {
       const token = localStorage.getItem("token");
  
-      // Get Razorpay API key
+      // 1️⃣ Get Razorpay Key
       const keyResponse = await axios.get(
         `${process.env.REACT_APP_BACKEND_SERVER_URL}/payment/getKey`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       const razorpayKey = keyResponse.data.key;
  
-      // Create Razorpay order
+      // 2️⃣ Create Razorpay Order
       const { data } = await axios.post(
         `${process.env.REACT_APP_BACKEND_SERVER_URL}/payment/razorPay`,
         { subscription_id: id, amount },
@@ -114,6 +114,7 @@ const Payment = () => {
         return;
       }
  
+      // 3️⃣ Razorpay Options
       const options = {
         key: razorpayKey,
         amount: data.order.amount,
@@ -124,37 +125,30 @@ const Payment = () => {
         handler: async function (response) {
           alert("Payment Successful!");
           console.log("Payment Response:", response);
- 
-          try {
-            const userSubscriptionResponse = await axios.post(
-              `${process.env.REACT_APP_BACKEND_SERVER_URL}/userSubscription/createUserSubscription`,
-              { subscription_id: subscription.id },
-              { headers: { Authorization: `Bearer ${token}` } }
-            );
- 
-            const userSubscriptionId = userSubscriptionResponse.data.userSubscriptionId;
-            console.log("userSubscriptionId: ", userSubscriptionId);
- 
-            if (userSubscriptionId) {
-              alert("Subscription successfully created.");
-              navigate(`/user/Home/${userSubscriptionId}`);
-            } else {
-              alert("Failed to create user subscription. Please try again.");
-            }
-          } catch (err) {
-            console.error("Error creating user subscription:", err);
-            setError("Failed to create subscription. Please try again.");
+          const userSubscriptionId = data.subscription?.id;
+          console.log("User SUbscription details:",userSubscriptionId)
+          if (userSubscriptionId) {
+            alert("Subscription successfully created.");
+            navigate(`/user/Home/${userSubscriptionId}`);
+          } else {
+            alert("Failed to create user subscription. Please try again.");
           }
         },
         prefill: {
-          name: "User Name",
-          email: "user@example.com",
-          contact: "9999999999",
+          name: formData.name || "User Name",
+          email: formData.email || "user@example.com",
+          contact: formData.phone_number || "9999999999",
         },
         theme: { color: "#3399cc" },
       };
  
+      // 4️⃣ Launch Razorpay Checkout
       const razor = new window.Razorpay(options);
+      razor.on("payment.failed", function (response) {
+        alert("Payment Failed. Please try again.");
+        console.error("Payment Failed:", response.error);
+      });
+ 
       razor.open();
     } catch (error) {
       console.error("Error during payment:", error);
@@ -162,10 +156,10 @@ const Payment = () => {
     }
   };
  
-  if (error) {
-    return <div>{error}</div>;
-  }
+  // Format Date Function
+  const formatDate = (date) => date.toLocaleDateString("en-GB");
  
+  // Calculate Validity and Dates
   const planName = subscription?.parentPlan1?.plan_name || "N/A";
   const mealType = subscription?.MealSub?.meal_type || "N/A";
   const tierType = subscription?.TierSub?.type || "N/A";
@@ -179,7 +173,6 @@ const Payment = () => {
   const endDate = new Date(startDate);
   endDate.setDate(startDate.getDate() + validity);
  
-  const formatDate = (date) => date.toLocaleDateString("en-GB");
  
   return (
     <div className="details-back">
@@ -313,3 +306,4 @@ const Payment = () => {
 };
  
 export default Payment;
+ 

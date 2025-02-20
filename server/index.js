@@ -28,6 +28,7 @@ const orderCriteriaRoutes = require('./routes/orderCriteria.routes')
 // const orderItemRoutes = require('./routes/orderItem.routes')
 const cartRoutes= require('./routes/cart.routes')
 const userFoodReportRoutes = require('./routes/userFoodReport.routes')
+const additionalRoutes = require('./routes/additionalItems.routes')
  
 const app = express();
 var morgan = require('morgan')
@@ -54,6 +55,7 @@ app.use(passport.session());
 app.use('/', authRoutes);
 app.use('/sub',subRoutes);
 app.use('/foodMenu',subscriptionFoodMenuRoutes)
+app.use('/extra',additionalRoutes)
 
 
 
