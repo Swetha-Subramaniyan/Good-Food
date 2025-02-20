@@ -199,7 +199,7 @@ const App = () => {
     <Route path='Skippedcart' element={<Skippedcart />} /> 
     <Route path='subscription' element={<Subscription />} />
     <Route path='Payment/:id' element={<Payment />} />
-    <Route path='Home' element={<Home />} />
+    <Route path='Home:id' element={<Home />} />
     <Route path='Navbar' element={<Navbar />} />
     <Route path='Order' element={<Order />} />
     <Route path='Account' element={<Account />} />
