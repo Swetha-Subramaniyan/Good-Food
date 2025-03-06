@@ -260,11 +260,19 @@ const getMenuWithSubID = async (req, res) => {
         subscription_id : true,
         Subscription : {
           select : {
+            meal_type_id:true,
             FoodSubscription : {
               select : {
                 FoodItems : {
                   select : {
-                    item_name : true
+                    id:true,
+                    item_name : true,
+                    price_id:true,
+                    SubscriptionPriceDetails : {
+                      select : {
+                        price:true 
+                      }
+                    }
                   }
                 }
               }
@@ -273,7 +281,19 @@ const getMenuWithSubID = async (req, res) => {
         }
       },
     });
-    res.status(200).json({ message: "Fetched succsessfully", getFood });
+
+    const transformedData = getFood.map((item) => ({
+      subscription_id: item.subscription_id,
+      meal_type_id:item.Subscription.meal_type_id,
+      FoodItems: item.Subscription.FoodSubscription.map((fs) => ({
+        id: fs.FoodItems.id,
+        item_name: fs.FoodItems.item_name,
+        price_id: fs.FoodItems.price_id,
+        price: fs.FoodItems.SubscriptionPriceDetails?.price || null,
+      })),
+    }));
+
+    res.status(200).json({ message: "Fetched successfully", data: transformedData });
   } catch (error) {
     console.log(error);
     res.status(404).json({ error: "FAiled to fetch the food items" });

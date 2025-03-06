@@ -85,35 +85,36 @@ const Payment = () => {
       setError(error.response?.data?.message || "Failed to submit address");
     }
   };
- 
+
+
   const handlePayment = async () => {
     if (!amount) {
       alert("Amount not available");
       return;
     }
- 
+  
     try {
       const token = localStorage.getItem("token");
- 
+  
       // 1️⃣ Get Razorpay Key
       const keyResponse = await axios.get(
         `${process.env.REACT_APP_BACKEND_SERVER_URL}/payment/getKey`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       const razorpayKey = keyResponse.data.key;
- 
+  
       // 2️⃣ Create Razorpay Order
       const { data } = await axios.post(
         `${process.env.REACT_APP_BACKEND_SERVER_URL}/payment/razorPay`,
         { subscription_id: id, amount },
         { headers: { Authorization: `Bearer ${token}` } }
       );
- 
+  
       if (!data.order) {
         alert("Failed to create order.");
         return;
       }
- 
+  
       // 3️⃣ Razorpay Options
       const options = {
         key: razorpayKey,
@@ -122,39 +123,53 @@ const Payment = () => {
         name: "Your Company",
         description: "Payment Transaction",
         order_id: data.order.id,
-        handler: async function (response) {
-          alert("Payment Successful!");
-          console.log("Payment Response:", response);
-          const userSubscriptionId = data.subscription?.id;
-          console.log("User SUbscription details:",userSubscriptionId)
-          if (userSubscriptionId) {
-            alert("Subscription successfully created.");
-            navigate(`/user/Home/${userSubscriptionId}`);
-          } else {
-            alert("Failed to create user subscription. Please try again.");
+        handler: async (response) => {
+          try {
+            await axios.post(
+              `${process.env.REACT_APP_BACKEND_SERVER_URL}/payment/update`,
+              {
+                payment_id: response.razorpay_payment_id,
+                order_id: response.razorpay_order_id,
+                subscription_id: id,
+                payment_status: "captured",
+                payment_info: JSON.stringify(response),
+              },
+              { headers: { Authorization: `Bearer ${token}` } }
+            );
+            const userSubscriptionId = data.subscription?.id;
+            if (userSubscriptionId) {
+              alert("Payment successful!");
+              navigate(`/user/Home/${userSubscriptionId}`);
+            } else {
+              alert("Failed to create user subscription. Please try again.");
+            }
+          } catch (err) {
+            console.error("Error updating payment status:", err);
+            alert("Payment success but failed to update status.");
           }
         },
+        
         prefill: {
-          name: formData.name || "User Name",
-          email: formData.email || "user@example.com",
-          contact: formData.phone_number || "9999999999",
+          name: "John Doe",
+          email: "johndoe@example.com",
+          contact: "9999999999",
         },
-        theme: { color: "#3399cc" },
+        theme: {
+          color: "#3399cc",
+        },
       };
- 
-      // 4️⃣ Launch Razorpay Checkout
-      const razor = new window.Razorpay(options);
-      razor.on("payment.failed", function (response) {
-        alert("Payment Failed. Please try again.");
-        console.error("Payment Failed:", response.error);
-      });
- 
-      razor.open();
+  
+      // 4️⃣ Initialize Razorpay
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+  
     } catch (error) {
-      console.error("Error during payment:", error);
-      alert("Payment failed. Please try again.");
+      console.error("Error in payment process:", error);
+      alert("Something went wrong with the payment.");
     }
   };
+  
+  
  
   // Format Date Function
   const formatDate = (date) => date.toLocaleDateString("en-GB");
@@ -214,13 +229,7 @@ const Payment = () => {
             </div>
           </div>
  
-          <button
-            type="button"
-            className="submit-color"
-            onClick={handlePayment}
-          >
-            Pay ₹{price || 0}
-          </button>
+         
  
           <h2>Food Delivery Details</h2>
  
@@ -299,11 +308,18 @@ const Payment = () => {
               <button> Next </button>
             </Link>
           </div>
+          
         </form>
+        <button
+            type="button"
+            className="submit-color"
+            onClick={handlePayment}
+          >
+            Pay ₹{price || 0}
+          </button>
       </div>
     </div>
   );
 };
  
 export default Payment;
- 

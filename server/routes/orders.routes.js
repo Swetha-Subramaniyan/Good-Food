@@ -1,21 +1,15 @@
-// const express = require('express')
-// const { getOrders, createOrders } = require('../controllers/orders.controller')
-// const router = express.Router()
-
-// router.get('/getAllOrder',getOrders)
-// router.post('/newOrder',createOrders)
-
-
-// module.exports = router;
+const express=require('express')
+const { createOrder, getAllOrders, updateOrder } = require('../controllers/orders.controller')
+const { addOrderItem } = require('../controllers/orderItem.controller')
+const { getOrderCriteria, createOrderCriteria } = require('../controllers/orderCriteria.controller')
+const router=express.Router()
 
 
+router.post('/create-order',createOrder)
+router.get('/orders',getAllOrders)
+router.post('/add-item',addOrderItem)
+router.get('/criteria',getOrderCriteria)
+router.post('/criteria',createOrderCriteria)
+router.put('/update',updateOrder)
 
-const express = require("express");
-const { addOrderItems } = require("../controllers/orderItem.controller");
-const { createOrder } = require("../controllers/orders.controller");
-const router = express.Router();
-
-router.post('/create',createOrder)
-router.post("/addOrderItems", addOrderItems); 
-
-module.exports = router;
+module.exports=router;

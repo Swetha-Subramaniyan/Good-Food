@@ -266,7 +266,7 @@ CREATE TABLE `Daily_Menu` (
 CREATE TABLE `Additional_Itemss` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `food_item_id` INTEGER NOT NULL,
-    `is_additional` BOOLEAN NOT NULL,
+    `is_additional` BOOLEAN NULL,
     `created_at` DATETIME(3) NOT NULL,
     `updatedAt` DATETIME(3) NOT NULL,
 
@@ -288,8 +288,6 @@ CREATE TABLE `Periodical` (
 CREATE TABLE `Item_Payment` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `payment_method` VARCHAR(191) NOT NULL,
-    `food_item_id` INTEGER NOT NULL,
-    `user_id` INTEGER NOT NULL,
     `customer_id` VARCHAR(191) NOT NULL,
     `user_subscription_id` INTEGER NOT NULL,
     `payment_status` VARCHAR(191) NOT NULL,
@@ -484,6 +482,15 @@ ALTER TABLE `Order_Item` ADD CONSTRAINT `Order_Item_price_id_fkey` FOREIGN KEY (
 
 -- AddForeignKey
 ALTER TABLE `User_Food_Report` ADD CONSTRAINT `User_Food_Report_user_subscription_id_fkey` FOREIGN KEY (`user_subscription_id`) REFERENCES `User_Subscription`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Additional_Itemss` ADD CONSTRAINT `Additional_Itemss_food_item_id_fkey` FOREIGN KEY (`food_item_id`) REFERENCES `Food_Items`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Item_Payment` ADD CONSTRAINT `Item_Payment_user_subscription_id_fkey` FOREIGN KEY (`user_subscription_id`) REFERENCES `User_Subscription`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Item_Payment` ADD CONSTRAINT `Item_Payment_customer_id_fkey` FOREIGN KEY (`customer_id`) REFERENCES `Users`(`customer_id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `User_Rating` ADD CONSTRAINT `User_Rating_customer_id_fkey` FOREIGN KEY (`customer_id`) REFERENCES `Users`(`customer_id`) ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -26,7 +26,7 @@ const getPaymentProcess = async(req,res) => {
     }
 }
 
-22
+
 const createSubscriptionPricing = async(req,res) => {
     try {
         const {subscription_id,pricing_id} = req.body;

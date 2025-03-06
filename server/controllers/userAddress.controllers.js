@@ -91,30 +91,6 @@ const getPhoneNumber = async (req,res) => {
     }
 }
 
-// const createPhoneNumber = async (req,res) => {
-//     try {
-//         const {name,email,phone_number,landmark,street,city,pincode,alternate_number}=req.body;
-//         const{customer_id} = req.user;
-// const createPhone = await prisma.user_Address.create({
-//     data : {
-//         name,
-//         customer_id,
-//         email,
-//         phone_number,
-//         alternate_number,
-//         landmark,
-//         street,
-//         city,
-//         pincode,
-//         created_at : new Date(),
-//         updatedAt : new Date()
-//     }
-// })
-// res.status(200).json({message : "Success",createPhone})
-//     } catch (error) {
-//         console.log(error)
-//     }
-// }
 
 const createAddress = async (req, res) => {
     try {
@@ -122,18 +98,13 @@ const createAddress = async (req, res) => {
         const { customer_id } = req.user;
 
  
-        if (!addresses || addresses.length === 0) {
-            return res.status(400).json({ error: "At least one address is required." });
-        }
+       
  
 
 
-        if (!addresses || addresses.length === 0) {
-            return res.status(400).json({ error: "At least one address is required." });
-        }
+        
 
 
-        // Map each address to the correct structure
         const addressData = addresses.map(addr => ({
             name,
             customer_id,
