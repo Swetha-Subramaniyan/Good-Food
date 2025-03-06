@@ -37,12 +37,13 @@ const getFoodMenuWithSubId = async(req,res) => {
 
 const createMenu = async(req,res) => {
     try {
-        const {subscription_id,food_item_id} = req.body;
+        const {subscription_id,food_item_id,meal_type_id} = req.body;
         const newMenu = await prisma.subscription_Food_Menu.create({
             data : {
                 
                 subscription_id,
                 food_item_id,
+                meal_type_id,
                 created_at : new Date(),
                 updatedAt : new Date()
             }

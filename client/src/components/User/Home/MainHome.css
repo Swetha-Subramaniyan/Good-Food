@@ -159,7 +159,63 @@ margin-left: 80rem;
   font-size: 1.2rem;
   padding: 0.5rem;
 }
+.menu-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
 
+h2 {
+  text-align: center;
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.menu-section {
+  background: white;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.period-title {
+  font-size: 22px;
+  color: #007bff;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.meal-section {
+  margin-top: 10px;
+}
+
+.meal-title {
+  font-size: 18px;
+  color: #28a745;
+  margin-bottom: 5px;
+}
+
+.food-list {
+  list-style: none;
+  padding: 0;
+  /* display: flex; */
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.food-item {
+  background: black;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 16px;
+}
 
 
  @media only screen and (max-width: 768px) {
@@ -350,7 +406,6 @@ margin-left: 80rem;
   flex-direction: column;
   text-align: center;
   background-color: #f9f9f9;
-  /* background-color: rgb(136, 125, 125); */
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
