@@ -404,7 +404,7 @@ const MainHome = () => {
   const [foodItems, setFoodItems] = useState({ Daily: {}, Weekly: {} });
 
   useEffect(() => {
-    const fetchDailyMenu = async () => {
+    const fetchMenu = async () => {
       try {
         const token = localStorage.getItem('token');
         const response = await axios.get(
@@ -416,29 +416,60 @@ const MainHome = () => {
 
         console.log('DAILY MENU:', response.data);
 
-        const dailyMenuData = response.data.formattedMenu || [];
+        const menuData = response.data.formattedMenu || [];
 
-        // Group items by period_name (Daily, Weekly) and then by meal type
-        const groupedMenu = dailyMenuData.reduce((acc, item) => {
+        // Group menu data by period_name (Daily/Weekly) and food_type (Breakfast/Lunch/Dinner)
+        const groupedMenu = menuData.reduce((acc, item) => {
           const period = item.period_name || 'Uncategorized';
           const mealType = item.food_type || 'Other';
 
           if (!acc[period]) acc[period] = {};
           if (!acc[period][mealType]) acc[period][mealType] = [];
 
-          acc[period][mealType].push(item.food_name);
+          acc[period][mealType].push({
+            food_name: item.food_name,
+            meal_type_id: item.meal_type_id, 
+            parent_plan_id: item.plan_id  
+          });
+          
+
           return acc;
         }, { Daily: {}, Weekly: {} });
+        console.log('Grouped Menu:', groupedMenu);
 
         setFoodItems(groupedMenu);
       } catch (error) {
-        console.error('Error fetching daily menu:', error);
+        console.error('Error fetching menu:', error);
       }
     };
 
-    fetchDailyMenu();
+    fetchMenu();
   }, []);
 
+
+  const handleAddToOrder = async (meal_type_id, parent_plan_id) => {
+    console.log('meal_type_id:', meal_type_id);
+    console.log('parent_plan_id:', parent_plan_id);
+  
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_SERVER_URL}/orders/checkOrderTiming`,
+        { meal_type_id, parent_plan_id },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      console.log('ORDER TYM: ', response.data);
+  
+      if (response.data.isOrderAllowed) {
+        alert('Order placed successfully!');
+      } else {
+        alert(response.data.message);
+      }
+    } catch (error) {
+      console.error('Failed to check order timing:', error);
+    }
+  };
+  
   return (
     <>
       <MainNavbar />
@@ -449,22 +480,22 @@ const MainHome = () => {
           <div key={period} className="menu-section">
             <h3 className="period-title">{period} Menu</h3>
 
-            {Object.keys(foodItems[period]).length > 0 ? (
-              Object.entries(foodItems[period]).map(([mealType, foods]) => (
-                <div key={mealType} className="meal-section">
-                  <h4 className="meal-title">{mealType}</h4>
-                  <ul className="food-list">
-                    {foods.map((food, index) => (
-                      <li key={index} className="food-item">
-                        {food}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))
-            ) : (
-              <p>No items available for {period} Menu.</p>
-            )}
+            {Object.entries(foodItems[period]).map(([mealType, foods]) => (
+  <div key={mealType} className="meal-section">
+    <h4 className="meal-title">{mealType}</h4>
+    <ul className="food-list">
+      {foods.map((food, index) => (
+        <li key={index} className="food-item">
+          {food.food_name}
+          <br />
+          <button>-</button>
+          <button onClick={() => handleAddToOrder(food.meal_type_id, food.parent_plan_id)}>+</button>
+        </li>
+      ))}
+    </ul>
+  </div>
+))}
+
           </div>
         ))}
       </div>

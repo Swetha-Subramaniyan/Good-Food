@@ -55,17 +55,31 @@ const getMenuwithPeriod = async(req,res) => {
                   }  
                 },
                 subFoodMenuu:{
+                    
                     select:{
-                        food_item_id:true,
+                        
+                        FoodSubscription:{
+                            select: {
+                                 parentPlan1: {
+                                    select : 
+                                    {
+                                        id:true,
+                                        plan_name:true
+                                    }
+                                 } 
+                            }
+                        },
+                        
                         FoodItems : {
                             select : {
+                                id:true,
                                item_name:true ,
                                item_type:true
                             }
                         },
-                       meal_type_id:true,
                        mealType:{
                         select:{
+                            id:true,
                             meal_type:true
                         }
                        } 
@@ -75,6 +89,10 @@ const getMenuwithPeriod = async(req,res) => {
         })
         const formattedMenu = getMenu.map(item => ({
             period_name : item.periods.period,
+            plan_id : item.subFoodMenuu.FoodSubscription.parentPlan1.id,
+            plan_name:item.subFoodMenuu.FoodSubscription.parentPlan1.plan_name,
+            meal_type_id : item.subFoodMenuu.mealType.id,
+            meal_type : item.subFoodMenuu.mealType.meal_type,
             food_name : item.subFoodMenuu.FoodItems.item_name,
             food_type:item.subFoodMenuu.mealType.meal_type,
             
