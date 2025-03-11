@@ -1,50 +1,107 @@
-
+.vision-container {
+  text-align: center;
+  height: 100vh;
+ 
+}
+ 
+.vision-container h2{
+  margin-top: 4rem;
+}
+ 
+.text-center {
+  font-size: 2rem;
+  color: white;
+  background-color: rgb(73, 26, 26);
+  padding: 0.5rem 1.5rem;
+  border-radius: 5px;
+  display: inline-block;
+ 
+}
+ 
+ 
 .vm-box {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 2rem;
-  padding: 2rem;
+ 
 }
-
+ 
+ 
 .vision-back {
   background-color: aliceblue;
-  padding: 1.5rem;
+  padding: 2rem;
   flex: 1;
-  border-radius: 8px;
+  border-radius: 10px;
+  text-align: left;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
 }
-
-.vision-head{
-  font-size: 1.5rem;
+ 
+ 
+.vision-head {
+  font-size: 1.8rem;
   color: rgb(39, 62, 62);
+  display: block;
+  margin-bottom: 0.8rem;  
 }
-
-.text-center{
-  display: flex;
-  justify-content: center;
-  background-color: rgb(73, 26, 26);
-  width: fit-content;
-  color: white;
-  box-sizing: 15rem;
-  border-radius: 5px;
-  padding: 0.3rem;
-  margin-left: 35rem;
-}
-
-@media (max-width: 768px) {
+ 
+@media (max-width: 1024px) {
   .vm-box {
-      flex-direction: column-reverse; 
-      align-items: center;
-      gap: 1rem;
-      padding: 1rem;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
   }
-
+ 
   .vision-back {
-      width: 100%;
-      text-align: center;
+    width: 100%;
+    text-align: center;
   }
-
+ 
   .vision-head {
-      font-size: 1.5rem;
+    font-size: 1.6rem;
   }
 }
+ 
+@media (max-width: 768px) {
+  .vision-container {
+    padding: 1rem;
+    margin-top: 4rem;
+  }
+ 
+  .text-center {
+    font-size: 1.6rem;
+    padding: 0.4rem 1rem;
+  }
+ 
+  .vm-box {
+    gap: 1rem;
+    padding: 1rem;
+  }
+ 
+  .vision-back {
+    padding: 1.5rem;
+    font-size: 1rem;
+  }
+ 
+  .vision-head {
+    font-size: 1.4rem;
+  }
+}
+ 
+@media (max-width: 480px) {
+  .text-center {
+    font-size: 1.4rem;
+    padding: 0.3rem 0.8rem;
+  }
+ 
+  .vision-back {
+    padding: 1.2rem;
+    font-size: 0.9rem;
+  }
+ 
+  .vision-head {
+    font-size: 1.3rem;
+  }
+}
+ 
+ 

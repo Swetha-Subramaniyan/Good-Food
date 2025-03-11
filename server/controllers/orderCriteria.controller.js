@@ -37,104 +37,124 @@
 
 
 
-
-
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-
-  
-
-// Get all meal time criteria
+// Get all order criteria
 const getOrderCriteria = async (req, res) => {
   try {
     const criteria = await prisma.order_Criteria.findMany();
-    res.status(200).json({ message: "Success", data: criteria });
+    res.status(200).json({ message: 'Success', data: criteria });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Failed to fetch order criteria" });
+    res.status(500).json({ error: 'Failed to fetch order criteria' });
   }
 };
 
-
-
+// Create new order criteria
 const createOrderCriteria = async (req, res) => {
   try {
-    const { meal_type_id, parent_plan_id,order_time, cutoff_time } = req.body;
+    const { meal_type_id, parent_plan_id, order_time, cutoff_time } = req.body;
 
-    // Validate time format (basic check for HH:mm)
     if (!/^\d{2}:\d{2}$/.test(order_time) || !/^\d{2}:\d{2}$/.test(cutoff_time)) {
-      return res.status(400).json({ error: "Invalid time format. Use HH:mm." });
+      return res.status(400).json({ error: 'Invalid time format. Use HH:mm.' });
     }
 
     const criteria = await prisma.order_Criteria.create({
       data: {
-        parent_plan_id,
         meal_type_id: parseInt(meal_type_id),
-        order_time: order_time, // store time as string
-        cutoff_time: cutoff_time, // store time as string
+        parent_plan_id: parseInt(parent_plan_id),
+        order_time,
+        cutoff_time,
         created_at: new Date(),
         updatedAt: new Date(),
       },
     });
 
-    res.status(201).json({ message: "Criteria created successfully", data: criteria });
+    res.status(201).json({ message: 'Criteria created successfully', data: criteria });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Failed to create criteria" });
+    res.status(500).json({ error: 'Failed to create criteria' });
   }
 };
 
-
-const validateOrderTime = async (meal_type_id) => {
+const checkOrderTiming = async (req, res) => {
   try {
-    console.log("Meal_TYPE_ID:", meal_type_id);
+    const { meal_type_id, parent_plan_id } = req.body;
 
-    // Get current time in decimal hours (e.g., 16.5 for 4:30 PM)
-    const now = new Date();
-    const currentHour = now.getHours() + now.getMinutes() / 60;
+    console.log('Received meal_type_id:', meal_type_id);
+    console.log('Received parent_plan_id:', parent_plan_id);
 
-    // Define meal type cutoffs (modify meal_type_id values based on your DB)
+    if (!meal_type_id || !parent_plan_id) {
+      return res.status(400).json({ error: 'meal_type_id and parent_plan_id are required.' });
+    }
+
+    const currentTime = new Date();
+    const currentHour = currentTime.getHours();
+    const currentMinute = currentTime.getMinutes();
+
+    // Calculate decimal time (e.g., 10:30 AM = 10.5)
+    const currentDecimalTime = currentHour + currentMinute / 60;
+
+    // Meal type mapping (adjust IDs as needed)
     const mealCutoffTimes = {
-      1: 22.00, // Breakfast (10 PM previous night)
-      2: 9.00,  // Lunch (9 AM same day)
-      3: 16.00  // Dinner (4 PM same day)
+      1: { label: 'Breakfast', cutoffTime: 22 }, // 10:00 PM (previous day)
+      2: { label: 'Lunch', cutoffTime: 9 },      // 9:00 AM (same day)
+      3: { label: 'Dinner', cutoffTime: 17 },    // 4:00 PM (same day)
     };
 
-    // Check if meal_type_id exists in the defined cutoffs
-    if (!mealCutoffTimes[meal_type_id]) {
-      throw new Error("Invalid meal type.");
+    const meal = mealCutoffTimes[meal_type_id];
+    if (!meal) {
+      return res.status(404).json({ error: 'Invalid meal type.' });
     }
 
-    const cutoffHour = mealCutoffTimes[meal_type_id];
+    // Find matching criteria
+    const mealPlanCriteria = await prisma.order_Criteria.findFirst({
+      where: {
+        meal_type_id: parseInt(meal_type_id),
+        parent_plan_id: parseInt(parent_plan_id),
+      },
+    });
 
-    console.log(`Current Time: ${currentHour.toFixed(2)}`);
-    console.log(`Order Cutoff Time: ${cutoffHour.toFixed(2)}`);
-
-    // Validate order time
-    if (currentHour > cutoffHour) {
-      throw new Error(
-        `Ordering for this meal type is closed. You must order before ${cutoffHour < 12 ? cutoffHour + ' AM' : (cutoffHour - 12) + ' PM'}.`
-      );
+    if (!mealPlanCriteria) {
+      return res.status(404).json({ error: 'No criteria found for this meal type and plan.' });
     }
 
-    console.log("Order is allowed.");
-    return true;
+    let cutoffTimeDecimal;
+
+    if (meal_type_id == 1) { // Breakfast (previous day's cutoff at 10 PM)
+      const yesterday = new Date();
+      yesterday.setDate(currentTime.getDate() - 1);
+      cutoffTimeDecimal = meal.cutoffTime;
+    } else { // Lunch or Dinner (same day cutoffs)
+      cutoffTimeDecimal = meal.cutoffTime;
+    }
+
+    console.log(`Current Time: ${currentDecimalTime}`);
+    console.log(`Cutoff Time for ${meal.label}: ${cutoffTimeDecimal}`);
+
+    if (currentDecimalTime > cutoffTimeDecimal) {
+      return res.json({ 
+        isOrderAllowed: false, 
+        message: `Cutoff time has passed. You can no longer order ${meal.label}.` 
+      });
+    }
+
+    res.json({ 
+      isOrderAllowed: true, 
+      message: `You can still place an order for ${meal.label}!` 
+    });
+
   } catch (error) {
-    console.error(error.message);
-    throw new Error(error.message);
+    console.error('Error checking order timing:', error);
+    res.status(500).json({ error: 'Failed to check order timing' });
   }
 };
-
-
-
-  
 
 module.exports = {
   getOrderCriteria,
   createOrderCriteria,
-  validateOrderTime,
+  checkOrderTiming,
 };
-
 
 

@@ -35,43 +35,45 @@
 
 
 
-
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const { validateOrderTime } = require('./orderCriteria.controller');
 
+// Get all orders
+const getAllOrders = async (req, res) => {
+  try {
+    const orders = await prisma.orders.findMany({
+      include: { orderss: true },
+    });
+    res.status(200).json({ message: "Orders fetched successfully", orders });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to fetch orders" });
+  }
+};
+
+// Create a new order
 const createOrder = async (req, res) => {
   try {
-    const {
-      subscription_id,
-      meal_type_id,
-      order_items, 
-    } = req.body;
+    const { subscription_id, meal_type_id, order_items } = req.body;
     const { customer_id } = req.user;
 
-    console.log("FIELDS :",req.body)
-    console.log("CUSTOMER ID :",customer_id)
-
-    // Validate required fields
     if (!meal_type_id || !subscription_id || !order_items?.length) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
-    // Validate order time
+    // Validate order time dynamically
     await validateOrderTime(meal_type_id);
 
-    // Fetch ordered address using customer_id
+    // Get user's address
     const userAddress = await prisma.user_Address.findFirst({
       where: { customer_id },
     });
-
-    console.log("USER ADDRESS :",userAddress)
 
     if (!userAddress) {
       return res.status(404).json({ error: "User address not found" });
     }
 
-    // Calculate total meals and charges
     let total_meal = 0;
     let charges = 0;
 
@@ -93,7 +95,7 @@ const createOrder = async (req, res) => {
       data: {
         customer_id,
         subscription_id: parseInt(subscription_id),
-        status: "PENDING", // Initially pending
+        status: "PENDING",
         meal_type_id: parseInt(meal_type_id),
         total_meal,
         charges,
@@ -122,30 +124,12 @@ const createOrder = async (req, res) => {
   }
 };
 
-
-
-// Get all orders
-const getAllOrders = async (req, res) => {
-  try {
-    const orders = await prisma.orders.findMany({
-      include: { orderss: true },
-    });
-    res.status(200).json({ message: "Orders fetched successfully", orders });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to fetch orders" });
-  }
-};
-
-
-
-
+// Update order status (e.g., confirm)
 const updateOrder = async (req, res) => {
-  const { order_id } = req.body; // Pass the order_id to confirm
+  const { order_id } = req.body;
   const { customer_id } = req.user;
 
   try {
-    // Find the order
     const order = await prisma.orders.findFirst({
       where: {
         id: order_id,
@@ -158,7 +142,6 @@ const updateOrder = async (req, res) => {
       return res.status(404).json({ error: "Pending order not found" });
     }
 
-    // Update order status to ACTIVE
     const updatedOrder = await prisma.orders.update({
       where: { id: order_id },
       data: { status: "ACTIVE", updatedAt: new Date() },
@@ -171,5 +154,5 @@ const updateOrder = async (req, res) => {
   }
 };
 
+module.exports = { createOrder, getAllOrders, updateOrder };
 
-module.exports = { createOrder, getAllOrders,updateOrder };

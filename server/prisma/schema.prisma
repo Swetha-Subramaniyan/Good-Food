@@ -301,6 +301,7 @@ model User_Address {
   orderedAddresss Orders[]
 }
 
+
 model User_Subscription {
   id               Int                  @id @default(autoincrement())
   subscription_id  Int
