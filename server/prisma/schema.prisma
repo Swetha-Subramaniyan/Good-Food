@@ -271,11 +271,14 @@ model Users {
   created_at          DateTime
   updatedAt           DateTime
   UserPosition        User_Position[]
-  SubscriptionPayment Subscription_Payment[]
   userAddress User_Address[]
   userSubscription User_Subscription[]
   usersFoodSubscription Subscription_Order[] 
   userRating User_Rating[]
+  usersItemPayment Item_Payment[]
+  ordersCustomer Orders[]
+  usersItems Order_Item[]
+  customerPayment Subscription_Payment[]
 }
 
 
@@ -305,7 +308,9 @@ model User_Address {
   created_at       DateTime
   updatedAt        DateTime
   userAddress Users @relation(fields: [customer_id],references: [customer_id])
+  orderedAddresss Orders[]
 }
+
 
 model User_Subscription {
   id               Int                  @id @default(autoincrement())
@@ -321,6 +326,7 @@ model User_Subscription {
   UserSubscription Subscription_Order[]
   UserSubscriptionOrders Order_Item[]
   userSubscriptionFood User_Food_Report[]
+  userSubItemPayment Item_Payment[]
   userSubscriptionDetails Users @relation(fields: [customer_id],references: [customer_id])
 }
 
@@ -380,18 +386,19 @@ model Parent_Plan {
   created_at    DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   subscriptions Subscription[]
+  orderCriteria Order_Criteria[]
 }
 
 model Subscription_Payment {
   id                       Int          @id @default(autoincrement())
   payment_method           String
   subscription_id          Int
-  user_id                  Int
+  customer_id              String
   payment_status           String
   created_at               DateTime     @default(now())
   updatedAt                DateTime     @updatedAt
+  customerPayment Users @relation(fields: [customer_id],references: [customer_id])
   SubscriptionPayment      Subscription @relation("SubscriptionToPayment", fields: [subscription_id], references: [id])
-  SubscriptionPaymentUsers Users        @relation(fields: [user_id], references: [id])
 }
 
 model Subscription_Pricing {
@@ -426,19 +433,22 @@ model Food_Items {
   updatedAt                DateTime
   SubscriptionPriceDetails Pricing_Details          @relation(fields: [price_id], references: [id])
   FoodItemsMenu            Subscription_Food_Menu[]
-  FoodItemsOrder Order_Item[]
   FoodItemsCart Cart[]
   additionalItems Additional_Itemss[]
+  orderItems Order_Item[]
 }
 
 model Subscription_Food_Menu {
   id               Int          @id @default(autoincrement())
   subscription_id  Int
   food_item_id     Int
+  meal_type_id Int
   created_at       DateTime
   updatedAt        DateTime
+  mealType Meal_type @relation(fields: [meal_type_id],references: [id])
   FoodSubscription Subscription @relation(fields: [subscription_id], references: [id])
   FoodItems        Food_Items   @relation(fields: [food_item_id], references: [id])
+  dailyMenu Daily_Menu[]
 }
 
 model Subscription_Order {
@@ -460,41 +470,55 @@ model Meal_type {
   updatedAt  DateTime
   MealSub    Subscription[]
   MealOrder Order_Criteria[]
+  MealOrderss Orders[]
+  subFoodMenu Subscription_Food_Menu[]
 }
 
 model Orders {
   id                 Int      @id @default(autoincrement())
+  customer_id String
   subscription_id Int
   status             String @default("PENDING")
-  total_meal         String
+  meal_type_id Int
+  total_meal         Int
   charges            Int
   ordered_address_id Int
   created_at         DateTime
   updatedAt          DateTime
+  OrdersCustomer Users @relation(fields: [customer_id],references: [customer_id])
   SubscriptionId Subscription @relation(fields: [subscription_id],references: [id])
+  orderedAddress User_Address @relation(fields: [ordered_address_id],references: [id])
+  mealType Meal_type @relation(fields: [meal_type_id],references: [id])
+  orderss Order_Item[]
 }
 
 model Order_Criteria {
   id            Int      @id @default(autoincrement())
+  parent_plan_id Int
   meal_type_id  Int
   order_time    String
   cutoff_time   String
   created_at    DateTime
   updatedAt     DateTime
+  parentPlan Parent_Plan @relation(fields: [parent_plan_id],references: [id])
   MealType Meal_type @relation(fields: [meal_type_id],references: [id])
 }
 
 model Order_Item {
   id           Int      @id @default(autoincrement())
+  customer_id String
   user_sub_id  Int
   food_item_id Int
   quantity     Int
   price_id     Int
+  order_id Int
   created_at   DateTime
   updatedAt    DateTime
+  foodItems Food_Items @relation(fields: [food_item_id],references: [id])
+  Orders Orders @relation(fields: [order_id],references: [id])
   UserSubscription User_Subscription @relation(fields: [user_sub_id],references: [id])
-  FoodItems Food_Items @relation(fields: [food_item_id],references: [id])
   Prices Pricing_Details @relation(fields: [price_id],references: [id])
+  Userss Users @relation(fields: [customer_id],references: [customer_id])
 
 }
 model Cart {
@@ -530,12 +554,13 @@ model Daily_Menu {
   subscription_food_menu_id Int
   created_at DateTime
   updatedAt DateTime
+  subFoodMenuu Subscription_Food_Menu @relation(fields: [subscription_food_menu_id],references: [id])
+  periods Periodical @relation(fields: [period],references: [id])
 }
 
 model Additional_Itemss {
   id Int @id @default(autoincrement())
   food_item_id Int
-  is_additional Boolean?
   created_at DateTime
   updatedAt DateTime
   additionalItems Food_Items @relation(fields: [food_item_id],references: [id])
@@ -547,19 +572,20 @@ model Periodical {
   comments String
   created_at DateTime
   updatedAt DateTime
+  dailyMenu Daily_Menu[]
 }
 
 model Item_Payment {
   id Int  @id @default(autoincrement())
   payment_method String
-  food_item_id Int
-  user_id Int
   customer_id String
   user_subscription_id Int
   payment_status String
   payment_info Json
   created_at DateTime
   updatedAt DateTime
+  userSubItem User_Subscription @relation(fields: [user_subscription_id],references: [id])
+  itemPaymentUsers Users @relation(fields: [customer_id],references: [customer_id]) 
 }
 
 model Order_Response {
@@ -654,15 +680,7 @@ model User_Wallet {
   updateAt DateTime
 }
 
-model cart {
-  id Int @id @default(autoincrement())
-  subscription_id Int
-  user_id Int
-  customer_id String
-  food_item_id Int
-  created_at DateTime
-  updatedAt DateTime
-}
+
 
 model User_Rating {
   id Int @id @default(autoincrement())

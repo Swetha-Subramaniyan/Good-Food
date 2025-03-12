@@ -2,26 +2,26 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./SubscriptionPlan.css";
-
+ 
 const SubscriptionPlan = () => {
   const navigate = useNavigate();
   const [groupedSubscriptions, setGroupedSubscriptions] = useState({});
   const [filteredPlans, setFilteredPlans] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState(null);
-
+ 
   useEffect(() => {
     const fetchSubscriptions = async () => {
       try {
         const response = await axios.get(
           `${process.env.REACT_APP_BACKEND_SERVER_URL}/sub/names`
         );
-
+ 
         console.log("Response:", response.data);
-
+ 
         const allSubscriptions = response.data.groupedSubscriptions || {};
         setGroupedSubscriptions(allSubscriptions);
-
+ 
         const relevantPlans = Object.entries(allSubscriptions).filter(
           ([planName]) =>
             planName === "Individual Plan Budget" ||
@@ -29,7 +29,7 @@ const SubscriptionPlan = () => {
             planName === "Combo Plan Budget" ||
             planName === "Combo Plan Elite"
         );
-
+ 
         const plans = relevantPlans.reduce((acc, [planName, details]) => {
           if (planName.includes("Individual Plan")) {
             acc["Individual"] = {
@@ -41,7 +41,7 @@ const SubscriptionPlan = () => {
           }
           return acc;
         }, {});
-
+ 
         setFilteredPlans(Object.keys(plans));
       } catch (error) {
         console.error(
@@ -50,10 +50,10 @@ const SubscriptionPlan = () => {
         );
       }
     };
-
+ 
     fetchSubscriptions();
   }, []);
-
+ 
   const handleModalItemClick = (meal, planType) => {
     const planDetails =
       groupedSubscriptions[`Individual Plan ${planType}`]?.[meal] || [];
@@ -62,7 +62,7 @@ const SubscriptionPlan = () => {
     });
     setShowModal(false);
   };
-
+ 
   const handleCardClick = (planName) => {
     if (planName === "Combo Plan Budget") {
       navigate("/user/BudgetCombo");
@@ -78,28 +78,28 @@ const SubscriptionPlan = () => {
         acc[subPlan] = value;
         return acc;
       }, {});
-
+ 
       setModalData(modalDetails);
       setShowModal(true);
     } else {
       console.log(`Unknown plan selected: ${planName}`);
     }
   };
-
+ 
   const closeModal = () => {
     setShowModal(false);
     setModalData(null);
   };
-
+ 
   return (
     <>
-      <div className="main-container">
+      <section className="subscription-container">
         <header className="header">
           <h1 style={{ fontSize: "2.5rem" }} className="choose">
             Choose Your Plan for Subscription!
           </h1>
         </header>
-
+ 
         <div className="plans-container">
           {filteredPlans.map((planName) => (
             <div
@@ -111,7 +111,7 @@ const SubscriptionPlan = () => {
             </div>
           ))}
         </div>
-
+ 
         {showModal && modalData && (
           <div className="modal-overlay">
             <div
@@ -119,7 +119,7 @@ const SubscriptionPlan = () => {
               style={{ width: "500rem", height: "30rem" }}
             >
               <h2 className="modal-heading">Individual Plan Details</h2>
-
+ 
               <div className="plan-container">
                 <div className="plan-column">
                   <h3 className="plan-title">Budget</h3>
@@ -142,7 +142,7 @@ const SubscriptionPlan = () => {
                     Dinner
                   </div>
                 </div>
-
+ 
                 <div className="plan-column">
                   <h3 className="plan-title">Elite</h3>
                   <div
@@ -171,9 +171,10 @@ const SubscriptionPlan = () => {
             </div>
           </div>
         )}
-      </div>
+      </section>
     </>
   );
 };
-
+ 
 export default SubscriptionPlan;
+ 
