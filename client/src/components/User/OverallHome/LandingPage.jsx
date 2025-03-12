@@ -18,9 +18,7 @@ const LandingPage = () => {
  
     const [isSignInVisible, setIsSignInVisible] = useState(false);
  
-  const handleSignInClick = () => {
-    setIsSignInVisible(true);
-  };
+ 
  
   const handleCloseSignIn = () => {
     setIsSignInVisible(false);

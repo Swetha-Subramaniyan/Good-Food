@@ -80,14 +80,11 @@ const createOrderCriteria = async (req, res) => {
 
 const checkOrderTiming = async (req, res) => {
   try {
-    const { meal_type_id, parent_plan_id } = req.body;
+    const { meal_type_id } = req.body;
 
     console.log('Received meal_type_id:', meal_type_id);
-    console.log('Received parent_plan_id:', parent_plan_id);
 
-    if (!meal_type_id || !parent_plan_id) {
-      return res.status(400).json({ error: 'meal_type_id and parent_plan_id are required.' });
-    }
+   
 
     const currentTime = new Date();
     const currentHour = currentTime.getHours();
@@ -112,7 +109,6 @@ const checkOrderTiming = async (req, res) => {
     const mealPlanCriteria = await prisma.order_Criteria.findFirst({
       where: {
         meal_type_id: parseInt(meal_type_id),
-        parent_plan_id: parseInt(parent_plan_id),
       },
     });
 
