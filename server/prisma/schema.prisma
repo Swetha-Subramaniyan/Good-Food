@@ -252,6 +252,16 @@ enum tier {
   Elite
 }
 
+
+enum NotificationStatus {
+  Pending
+  Sent
+  Failed
+}
+
+
+
+
 model Users {
   id                  Int                    @id @default(autoincrement())
   customer_id         String                 @unique
@@ -609,6 +619,30 @@ model Notification {
   notification_details_id Int
   created_at DateTime
   updatedAt DateTime
+
+  notificationResponses Notification_Response[]
+}
+
+model Notification_Type {
+  notification_type_id Int    @id @default(autoincrement())
+  type_name           String  @db.VarChar(255)
+  createdAt           DateTime @default(now())
+  updateAt            DateTime @updatedAt
+
+  notificationResponses Notification_Response[] 
+}
+
+model Notification_Response {
+  notification_response_id Int    @id @default(autoincrement())
+  notification_id          Int
+  notification_status      NotificationStatus
+  notification_type_id     Int
+  send_at                 DateTime
+  createdAt               DateTime @default(now())
+  updateAt                DateTime @updatedAt
+
+  notification      Notification      @relation(fields: [notification_id], references: [id], onDelete: Cascade)
+  notificationType Notification_Type  @relation(fields: [notification_type_id], references: [notification_type_id], onDelete: Cascade)
 }
 
 model User_Wallet {

@@ -29,6 +29,7 @@ const orderCriteriaRoutes = require('./routes/orderCriteria.routes')
 const cartRoutes= require('./routes/cart.routes')
 const userFoodReportRoutes = require('./routes/userFoodReport.routes')
 const additionalRoutes = require('./routes/additionalItems.routes')
+const smsRoutes = require('./routes/sms.routes')
  
 const app = express();
 var morgan = require('morgan')
@@ -56,8 +57,6 @@ app.use('/', authRoutes);
 app.use('/sub',subRoutes);
 app.use('/foodMenu',subscriptionFoodMenuRoutes)
 app.use('/extra',additionalRoutes)
-
-
 
 
 app.use(authentication);
@@ -97,6 +96,13 @@ app.use('/criteria',orderCriteriaRoutes)
 // app.use('/orderItem',orderItemRoutes)
 app.use('/cart',cartRoutes)
 app.use('/foodReport',userFoodReportRoutes)
+
+
+
+
+
+//sms routes
+app.use('/sms', smsRoutes);
  
 app.listen(port, () => {
     console.log("Server is Running on port " + port)
