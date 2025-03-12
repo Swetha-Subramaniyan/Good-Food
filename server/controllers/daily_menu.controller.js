@@ -58,17 +58,27 @@ const getMenuwithPeriod = async(req,res) => {
                     
                     select:{
                         
+                        
                         FoodSubscription:{
+                            
                             select: {
+                                
                                  parentPlan1: {
                                     select : 
                                     {
                                         id:true,
                                         plan_name:true
                                     }
-                                 } 
+                                 },
+                                 PricingDetails:{
+                                    select : {
+                                        id:true,
+                                        price:true
+                                    }
+                                 }
                             }
                         },
+                        
                         
                         FoodItems : {
                             select : {
@@ -95,6 +105,8 @@ const getMenuwithPeriod = async(req,res) => {
             meal_type : item.subFoodMenuu.mealType.meal_type,
             food_name : item.subFoodMenuu.FoodItems.item_name,
             food_type:item.subFoodMenuu.mealType.meal_type,
+            price_id:item.subFoodMenuu.FoodSubscription.PricingDetails.id,
+            price:item.subFoodMenuu.FoodSubscription.PricingDetails.price
             
 
         }))

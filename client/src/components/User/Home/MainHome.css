@@ -210,11 +210,12 @@ h2 {
 }
 
 .food-item {
-  background: black;
+  background: rgb(97, 61, 61);
   color: #fff;
-  padding: 8px 12px;
+  padding: 18px 22px 15px ;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 22px;
+  font-style: italic;
 }
 
 

@@ -447,28 +447,102 @@ const MainHome = () => {
   }, []);
 
 
-  const handleAddToOrder = async (meal_type_id, parent_plan_id) => {
-    console.log('meal_type_id:', meal_type_id);
-    console.log('parent_plan_id:', parent_plan_id);
+  // const handleAddToOrder = async (meal_type_id, parent_plan_id) => {
+  //   console.log('meal_type_id:', meal_type_id);
+  //   console.log('parent_plan_id:', parent_plan_id);
   
-    try {
-      const token = localStorage.getItem('token');
-      const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_SERVER_URL}/orders/checkOrderTiming`,
-        { meal_type_id, parent_plan_id },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      console.log('ORDER TYM: ', response.data);
+  //   try {
+  //     const token = localStorage.getItem('token');
+  //     const response = await axios.post(
+  //       `${process.env.REACT_APP_BACKEND_SERVER_URL}/orders/checkOrderTiming`,
+  //       { meal_type_id, parent_plan_id },
+  //       { headers: { Authorization: `Bearer ${token}` } }
+  //     );
+  //     console.log('ORDER TYM: ', response.data);
   
-      if (response.data.isOrderAllowed) {
-        alert('Order placed successfully!');
+  //     if (response.data.isOrderAllowed) {
+  //       alert('Order placed successfully!');
+  //     } else {
+  //       alert(response.data.message);
+  //     }
+  //   } catch (error) {
+  //     console.error('Failed to check order timing:', error);
+  //   }
+  // };
+
+
+  const handleAddToOrder = async (meal_type_id, parent_plan_id, food_name) => {
+  console.log('meal_type_id:', meal_type_id);
+  console.log('parent_plan_id:', parent_plan_id);
+
+  try {
+    const token = localStorage.getItem('token');
+    const response = await axios.post(
+      `${process.env.REACT_APP_BACKEND_SERVER_URL}/orders/checkOrderTiming`,
+      { meal_type_id, parent_plan_id },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    console.log('ORDER TYM: ', response.data);
+
+    if (response.data.isOrderAllowed) {
+      const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+      const existingItem = cartItems.find((item) => item.meal_type_id === meal_type_id);
+
+      if (existingItem) {
+        existingItem.quantity += 1;
+        existingItem.totalPrice = existingItem.quantity * existingItem.price;
       } else {
-        alert(response.data.message);
+        cartItems.push({
+          meal_type_id,
+          parent_plan_id,
+          name: food_name,
+          price: 50, // adjust price dynamically if needed
+          quantity: 1,
+          totalPrice: 50,
+        });
       }
-    } catch (error) {
-      console.error('Failed to check order timing:', error);
+
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+      updateSubscriptionCalendar();
+
+      alert('Meal added to cart!');
+    } else {
+      alert(response.data.message);
     }
-  };
+  } catch (error) {
+    console.error('Failed to check order timing:', error);
+  }
+};
+
+const updateSubscriptionCalendar = () => {
+  const reports = JSON.parse(localStorage.getItem('reports')) || [];
+  const today = new Date();
+  const tomorrow = new Date();
+  tomorrow.setDate(today.getDate() + 1);
+
+  // Increment tomorrow's quantity
+  const updatedReports = reports.map((report) => {
+    const reportDate = new Date(report.ordered_date);
+    if (reportDate.toDateString() === tomorrow.toDateString()) {
+      return {
+        ...report,
+        breakfast_qty: report.breakfast_qty + 1,
+      };
+    }
+    return report;
+  });
+
+  // Decrease last day's quantity
+  if (updatedReports.length > 0) {
+    const lastReport = updatedReports[updatedReports.length - 1];
+    lastReport.breakfast_qty = Math.max(0, lastReport.breakfast_qty - 1);
+  }
+
+  localStorage.setItem('reports', JSON.stringify(updatedReports));
+};
+
   
   return (
     <>
