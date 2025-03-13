@@ -395,49 +395,223 @@
 
 
 
+// import axios from 'axios';
+// import React, { useEffect, useState } from 'react';
+// import './MainHome.css';
+// import MainNavbar from '../Navbar/MainNavbar';
+
+// const MainHome = () => {
+//   const [foodItems, setFoodItems] = useState({ Daily: {}, Weekly: {} });
+
+//   useEffect(() => {
+//     const fetchMenu = async () => {
+//       try {
+//         const token = localStorage.getItem('token');
+//         const response = await axios.get(
+//           `${process.env.REACT_APP_BACKEND_SERVER_URL}/dailyPeriod/getMenuWithPeriod`,
+//           {
+//             headers: { Authorization: `Bearer ${token}` },
+//           }
+//         );
+
+//         console.log('DAILY MENU:', response.data);
+
+//         const menuData = response.data.formattedMenu || [];
+
+//         // Group menu data by period_name (Daily/Weekly) and food_type (Breakfast/Lunch/Dinner)
+//         const groupedMenu = menuData.reduce((acc, item) => {
+//           const period = item.period_name || 'Uncategorized';
+//           const mealType = item.food_type || 'Other';
+
+//           if (!acc[period]) acc[period] = {};
+//           if (!acc[period][mealType]) acc[period][mealType] = [];
+
+//           acc[period][mealType].push({
+//             food_name: item.food_name,
+//             meal_type_id: item.meal_type_id, 
+//             parent_plan_id: item.plan_id  
+//           });
+          
+
+//           return acc;
+//         }, { Daily: {}, Weekly: {} });
+//         console.log('Grouped Menu:', groupedMenu);
+
+//         setFoodItems(groupedMenu);
+//       } catch (error) {
+//         console.error('Error fetching menu:', error);
+//       }
+//     };
+
+//     fetchMenu();
+//   }, []);
+
+
+//   // const handleAddToOrder = async (meal_type_id, parent_plan_id) => {
+//   //   console.log('meal_type_id:', meal_type_id);
+//   //   console.log('parent_plan_id:', parent_plan_id);
+  
+//   //   try {
+//   //     const token = localStorage.getItem('token');
+//   //     const response = await axios.post(
+//   //       `${process.env.REACT_APP_BACKEND_SERVER_URL}/orders/checkOrderTiming`,
+//   //       { meal_type_id, parent_plan_id },
+//   //       { headers: { Authorization: `Bearer ${token}` } }
+//   //     );
+//   //     console.log('ORDER TYM: ', response.data);
+  
+//   //     if (response.data.isOrderAllowed) {
+//   //       alert('Order placed successfully!');
+//   //     } else {
+//   //       alert(response.data.message);
+//   //     }
+//   //   } catch (error) {
+//   //     console.error('Failed to check order timing:', error);
+//   //   }
+//   // };
+
+
+//   const handleAddToOrder = async (meal_type_id, parent_plan_id, food_name) => {
+//   console.log('meal_type_id:', meal_type_id);
+//   console.log('parent_plan_id:', parent_plan_id);
+
+//   try {
+//     const token = localStorage.getItem('token');
+//     const response = await axios.post(
+//       `${process.env.REACT_APP_BACKEND_SERVER_URL}/orders/checkOrderTiming`,
+//       { meal_type_id, parent_plan_id },
+//       { headers: { Authorization: `Bearer ${token}` } }
+//     );
+//     console.log('ORDER TYM: ', response.data);
+
+//     if (response.data.isOrderAllowed) {
+//       const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+//       const existingItem = cartItems.find((item) => item.meal_type_id === meal_type_id);
+
+//       if (existingItem) {
+//         existingItem.quantity += 1;
+//         existingItem.totalPrice = existingItem.quantity * existingItem.price;
+//       } else {
+//         cartItems.push({
+//           meal_type_id,
+//           parent_plan_id,
+//           name: food_name,
+//           price: 50, // adjust price dynamically if needed
+//           quantity: 1,
+//           totalPrice: 50,
+//         });
+//       }
+
+//       localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+//       updateSubscriptionCalendar();
+
+//       alert('Meal added to cart!');
+//     } else {
+//       alert(response.data.message);
+//     }
+//   } catch (error) {
+//     console.error('Failed to check order timing:', error);
+//   }
+// };
+
+// const updateSubscriptionCalendar = () => {
+//   const reports = JSON.parse(localStorage.getItem('reports')) || [];
+//   const today = new Date();
+//   const tomorrow = new Date();
+//   tomorrow.setDate(today.getDate() + 1);
+
+//   // Increment tomorrow's quantity
+//   const updatedReports = reports.map((report) => {
+//     const reportDate = new Date(report.ordered_date);
+//     if (reportDate.toDateString() === tomorrow.toDateString()) {
+//       return {
+//         ...report,
+//         breakfast_qty: report.breakfast_qty + 1,
+//       };
+//     }
+//     return report;
+//   });
+
+//   // Decrease last day's quantity
+//   if (updatedReports.length > 0) {
+//     const lastReport = updatedReports[updatedReports.length - 1];
+//     lastReport.breakfast_qty = Math.max(0, lastReport.breakfast_qty - 1);
+//   }
+
+//   localStorage.setItem('reports', JSON.stringify(updatedReports));
+// };
+
+  
+//   return (
+//     <>
+//       <MainNavbar />
+//       <div className="menu-container">
+//         <h2>Food Menu</h2>
+
+//         {['Daily', 'Weekly'].map((period) => (
+//           <div key={period} className="menu-section">
+//             <h3 className="period-title">{period} Menu</h3>
+
+//             {Object.entries(foodItems[period]).map(([mealType, foods]) => (
+//   <div key={mealType} className="meal-section">
+//     <h4 className="meal-title">{mealType}</h4>
+//     <ul className="food-list">
+//       {foods.map((food, index) => (
+//         <li key={index} className="food-item">
+//           {food.food_name}
+//           <br />
+//           <button>-</button>
+//           <button onClick={() => handleAddToOrder(food.meal_type_id, food.parent_plan_id)}>+</button>
+//         </li>
+//       ))}
+//     </ul>
+//   </div>
+// ))}
+
+//           </div>
+//         ))}
+//       </div>
+//     </>
+//   );
+// };
+
+// export default MainHome;
+
+
+
+
+
+
+
+
+
+
+
+
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './MainHome.css';
 import MainNavbar from '../Navbar/MainNavbar';
 
 const MainHome = () => {
-  const [foodItems, setFoodItems] = useState({ Daily: {}, Weekly: {} });
+  const [menu, setMenu] = useState({});
+  const [additionalItems, setAdditionalItems] = useState([]);
 
   useEffect(() => {
     const fetchMenu = async () => {
       try {
         const token = localStorage.getItem('token');
         const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_SERVER_URL}/dailyPeriod/getMenuWithPeriod`,
+          `${process.env.REACT_APP_BACKEND_SERVER_URL}/dailyPeriod/All`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
 
-        console.log('DAILY MENU:', response.data);
-
-        const menuData = response.data.formattedMenu || [];
-
-        // Group menu data by period_name (Daily/Weekly) and food_type (Breakfast/Lunch/Dinner)
-        const groupedMenu = menuData.reduce((acc, item) => {
-          const period = item.period_name || 'Uncategorized';
-          const mealType = item.food_type || 'Other';
-
-          if (!acc[period]) acc[period] = {};
-          if (!acc[period][mealType]) acc[period][mealType] = [];
-
-          acc[period][mealType].push({
-            food_name: item.food_name,
-            meal_type_id: item.meal_type_id, 
-            parent_plan_id: item.plan_id  
-          });
-          
-
-          return acc;
-        }, { Daily: {}, Weekly: {} });
-        console.log('Grouped Menu:', groupedMenu);
-
-        setFoodItems(groupedMenu);
+        console.log('Formatted Menu:', response.data.formattedMenu);
+        setMenu(response.data.formattedMenu || {});
       } catch (error) {
         console.error('Error fetching menu:', error);
       }
@@ -446,132 +620,120 @@ const MainHome = () => {
     fetchMenu();
   }, []);
 
+  useEffect(() => {
+    const fetchAdditionalItems = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get(
+          `${process.env.REACT_APP_BACKEND_SERVER_URL}/extra/getAllAdditional`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        setAdditionalItems(response.data.foodItems);
+      } catch (error) {
+        console.error('Error fetching additional items:', error);
+      }
+    };
 
-  // const handleAddToOrder = async (meal_type_id, parent_plan_id) => {
-  //   console.log('meal_type_id:', meal_type_id);
-  //   console.log('parent_plan_id:', parent_plan_id);
-  
-  //   try {
-  //     const token = localStorage.getItem('token');
-  //     const response = await axios.post(
-  //       `${process.env.REACT_APP_BACKEND_SERVER_URL}/orders/checkOrderTiming`,
-  //       { meal_type_id, parent_plan_id },
-  //       { headers: { Authorization: `Bearer ${token}` } }
-  //     );
-  //     console.log('ORDER TYM: ', response.data);
-  
-  //     if (response.data.isOrderAllowed) {
-  //       alert('Order placed successfully!');
-  //     } else {
-  //       alert(response.data.message);
-  //     }
-  //   } catch (error) {
-  //     console.error('Failed to check order timing:', error);
-  //   }
-  // };
-
+    fetchAdditionalItems();
+  }, []);
 
   const handleAddToOrder = async (meal_type_id, parent_plan_id, food_name) => {
-  console.log('meal_type_id:', meal_type_id);
-  console.log('parent_plan_id:', parent_plan_id);
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_SERVER_URL}/orders/checkOrderTiming`,
+        { meal_type_id, parent_plan_id },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
 
-  try {
-    const token = localStorage.getItem('token');
-    const response = await axios.post(
-      `${process.env.REACT_APP_BACKEND_SERVER_URL}/orders/checkOrderTiming`,
-      { meal_type_id, parent_plan_id },
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
-    console.log('ORDER TYM: ', response.data);
+      if (response.data.isOrderAllowed) {
+        const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        const existingItem = cartItems.find((item) => item.meal_type_id === meal_type_id);
 
-    if (response.data.isOrderAllowed) {
-      const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        if (existingItem) {
+          existingItem.quantity += 1;
+        } else {
+          cartItems.push({
+            meal_type_id,
+            parent_plan_id,
+            name: food_name,
+            price: 50,
+            quantity: 1,
+          });
+        }
 
-      const existingItem = cartItems.find((item) => item.meal_type_id === meal_type_id);
-
-      if (existingItem) {
-        existingItem.quantity += 1;
-        existingItem.totalPrice = existingItem.quantity * existingItem.price;
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        alert('Meal added to cart!');
       } else {
-        cartItems.push({
-          meal_type_id,
-          parent_plan_id,
-          name: food_name,
-          price: 50, // adjust price dynamically if needed
-          quantity: 1,
-          totalPrice: 50,
-        });
+        alert(response.data.message);
       }
-
-      localStorage.setItem('cartItems', JSON.stringify(cartItems));
-
-      updateSubscriptionCalendar();
-
-      alert('Meal added to cart!');
-    } else {
-      alert(response.data.message);
+    } catch (error) {
+      console.error('Failed to add order:', error);
     }
-  } catch (error) {
-    console.error('Failed to check order timing:', error);
-  }
-};
+  };
 
-const updateSubscriptionCalendar = () => {
-  const reports = JSON.parse(localStorage.getItem('reports')) || [];
-  const today = new Date();
-  const tomorrow = new Date();
-  tomorrow.setDate(today.getDate() + 1);
-
-  // Increment tomorrow's quantity
-  const updatedReports = reports.map((report) => {
-    const reportDate = new Date(report.ordered_date);
-    if (reportDate.toDateString() === tomorrow.toDateString()) {
-      return {
-        ...report,
-        breakfast_qty: report.breakfast_qty + 1,
-      };
-    }
-    return report;
-  });
-
-  // Decrease last day's quantity
-  if (updatedReports.length > 0) {
-    const lastReport = updatedReports[updatedReports.length - 1];
-    lastReport.breakfast_qty = Math.max(0, lastReport.breakfast_qty - 1);
-  }
-
-  localStorage.setItem('reports', JSON.stringify(updatedReports));
-};
-
-  
   return (
     <>
       <MainNavbar />
       <div className="menu-container">
-        <h2>Food Menu</h2>
+        <h2>Menu</h2>
 
-        {['Daily', 'Weekly'].map((period) => (
-          <div key={period} className="menu-section">
-            <h3 className="period-title">{period} Menu</h3>
-
-            {Object.entries(foodItems[period]).map(([mealType, foods]) => (
-  <div key={mealType} className="meal-section">
-    <h4 className="meal-title">{mealType}</h4>
-    <ul className="food-list">
-      {foods.map((food, index) => (
-        <li key={index} className="food-item">
-          {food.food_name}
-          <br />
-          <button>-</button>
-          <button onClick={() => handleAddToOrder(food.meal_type_id, food.parent_plan_id)}>+</button>
-        </li>
-      ))}
-    </ul>
-  </div>
-))}
-
+        {Object.entries(menu).map(([day, meals]) => (
+          <div key={day} className="day-section">
+            <h3>{day}</h3>
+            
+            {Object.entries(meals).map(([mealType, foods]) => (
+              <div key={mealType} className="meal-section">
+                <h4>{mealType}</h4>
+                <ul className="food-list">
+                  {foods.map((food, index) => (
+                    <li key={index} className="food-item">
+                      <img
+                        src={food.image || '/placeholder.jpg'}
+                        alt={food.food_name}
+                        className="food-image"
+                      />
+                      <span>{food.food_name}</span>
+                      <button
+                        onClick={() =>
+                          handleAddToOrder(food.meal_type_id, food.parent_plan_id, food.food_name)
+                        }
+                      >
+                        +
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         ))}
+
+        <div className="choose-menu">Choose more Delicious Foods</div>
+
+        <div className="additional-items">
+          <h2>Additional Items</h2>
+          {additionalItems.length > 0 ? (
+            <div className="food-items-container">
+              {additionalItems.map((item, index) => (
+                <div key={index} className="food-item">
+                  <img
+                    src={item.image_url || '/placeholder.jpg'}
+                    alt={item.name}
+                    className="food-image"
+                  />
+                  <span>{item.name}</span>
+                  <div className="food-item-actions">
+                    <button>-</button>
+                    <button>+</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p>No additional items available.</p>
+          )}
+        </div>
       </div>
     </>
   );
