@@ -29,6 +29,7 @@ const orderRoutes = require('./routes/orders.routes')
 // const cartRoutes= require('./routes/cart.routes')
 const userFoodReportRoutes = require('./routes/userFoodReport.routes')
 const additionalRoutes = require('./routes/additionalItems.routes')
+const smsRoutes = require('./routes/sms.routes')
 const {startMealSchedulers } = require('./utils/dailyScheduler')
 const orderCartRoutes=require('./routes/orderCart.routes')
 const dailyMenuRoutes = require('./routes/daily_menu.routes')
@@ -60,8 +61,6 @@ app.use('/', authRoutes);
 app.use('/sub',subRoutes);
 app.use('/foodMenu',subscriptionFoodMenuRoutes)
 app.use('/extra',additionalRoutes)
-
-
 
 
 app.use(authentication);
@@ -100,6 +99,10 @@ app.use('/orders',orderRoutes)
 // app.use('/orderItem',orderItemRoutes)
 // app.use('/cart',cartRoutes)
 app.use('/foodReport',userFoodReportRoutes)
+
+
+//sms routes
+app.use('/sms', smsRoutes);
 app.use('/dailyPeriod',dailyMenuRoutes)
 // app.use('/paymentInfo',paymentInfoRoutes)
  

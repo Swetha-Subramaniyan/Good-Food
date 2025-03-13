@@ -2,9 +2,6 @@ const express = require('express')
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-
-
-
 const createAdditionalFoodItems = async(req,res) => {
     try {
         const {food_item_id,is_additional} = req.body;
