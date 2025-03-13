@@ -117,12 +117,9 @@ const getMenuwithPeriod = async(req,res) => {
     }
 }
 
-
-  
-
 const getAllMenu = async (req, res) => {
     const { period } = req.body;
- 
+  
     try {
       const getDaily = await prisma.daily_Menu.findMany({
         where: { period },
@@ -132,21 +129,12 @@ const getAllMenu = async (req, res) => {
             select: {
               id: true,
               food_item_id: true,
-
               
               FoodItems: { select: { 
                 item_name: true,
                 image_url:true 
             } },
               
-
-             
-              FoodItems: { select: {
-                item_name: true,
-                image_url:true
-            } },
-             
-
               meal_type_id: true,
               mealType: { select: { meal_type: true } },
               FoodSubscription : {
@@ -162,7 +150,6 @@ const getAllMenu = async (req, res) => {
                             id:true,
                             type:true,
 
-
                         }
                     }
                 }
@@ -172,18 +159,6 @@ const getAllMenu = async (req, res) => {
         }
       });
   
-
- 
-                        }
-                    }
-                }
-              }
-            }
-          }
-        }
-      });
- 
-
       // Format the data into the desired structure
       const formattedMenu = getDaily.reduce((acc, item) => {
         const day = item.periods.period || 'Uncategorized';
@@ -194,15 +169,10 @@ const getAllMenu = async (req, res) => {
         const plan_name=item.subFoodMenuu.FoodSubscription.parentPlan1.plan_name;
         const tierId=item.subFoodMenuu.FoodSubscription.TierSub.id;
         const tier=item.subFoodMenuu.FoodSubscription.TierSub.type
-
   
-        
-  
-
- 
         if (!acc[day]) acc[day] = {};
         if (!acc[day][mealType]) acc[day][mealType] = [];
- 
+  
         acc[day][mealType].push({
           food_name: foodName,
           parent_plan_id:plan_id,
@@ -214,11 +184,10 @@ const getAllMenu = async (req, res) => {
           image:image,
          
         });
-
- 
+  
         return acc;
       }, {});
-
+  
       res.status(200).json({ message: "Success", formattedMenu });
     } catch (error) {
       console.error(error);
