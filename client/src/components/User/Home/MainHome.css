@@ -1,435 +1,165 @@
-
-.search {
-  display: flex;
-  border-radius: 15rem;
-  height: 5rem;
-  justify-content: center;
-  justify-items: center;
-  padding-left: 27rem;
-  padding-right: 27rem;
-}
-
-.search input{
-  border-radius: 20px;
-
-}
-.search span{
-  margin-left: 35rem;
-  margin-top: 1rem;
-  position: absolute;
-  
-}
-
-.footer{
-    display: flex;
-    gap: 20rem;
-    margin-top: 10rem;
-    margin-left: 3rem;
-    font-weight: bold;
-    font-size: 1.5rem;
-  }
-.break{
-    display: flex;
-    gap: 9rem;
-    justify-content: center;
-    margin-top: 3rem;
-    font-weight: bold;
-    color: aliceblue;
-    
-
-}
-.breakfast-out{
-  
-  background-color:  rgb(107, 56, 89);  
-  border-radius: 8px;
-  padding: 1rem;
-  min-width: 15rem;
-  text-align: center;
-}
-
-.add {
-  display: flex;
- justify-content: center;
-   
-}
-
-.add button{
-  font-weight: bold; 
-  width: 3.6rem; 
-  height: 2rem; 
-  border-radius: 2px;
-  font-size: 1.2rem;  
-  margin-left: 0.2rem;
-  margin-right: 0.2rem;
-}
-
-.add span{
-  margin-top: 1.25rem;
-  font-size: 1.5rem;
-}
-
-.add :hover{
-  background-color: rgb(243, 119, 17);
-  border: none;
-}
-
-img{
-  height: 6rem;
-  width: 10rem;
-}
-
-.photo{
-  display: flex;
-  flex-direction: row;
-  gap:0.5rem;
-  justify-content: space-between;
-}
-
-.fast{
-  color: rgb(31, 27, 248);
-  font-size: 1.3rem;
-  color: white;
-}
-.cart-button {
-background-color:red;
-height: 50px;
-color: whitesmoke;
-margin-left: 80rem;
-}
-
-.photo h4 {
-  font-size: 1rem;  
-  line-height: 1.5;
-  color: #333;
-  margin: 10px 0;
-}
-
-.days-align-center{
-  display: grid;
-  background-color: aquamarine;
-
-}
-.food-items {
-  margin-top: 3rem;
-}
-
-.food-items-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  justify-content: center;
-}
-
-.food-item {
-  background-color: #f0f0f0;
-  padding: 1rem;
-  border-radius: 8px;
-  width: 200px;
-  text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.food-item span {
-  display: block;
-  font-size: 1.1rem;
-  margin-bottom: 1rem;
-}
-
-.food-item-actions {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.food-item-actions button {
-  font-size: 1.5rem;
-  padding: 0.5rem;
-  background-color: rgb(243, 119, 17);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.food-item-actions button:hover {
-  background-color: rgb(220, 95, 0);
-}
-
-.food-item-actions span {
-  font-size: 1.2rem;
-  padding: 0.5rem;
-}
-.menu-container {
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 20px;
-  background: #f8f9fa;
-  border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
 }
 
 h2 {
   text-align: center;
+  font-size: 2rem;
   color: #333;
-  font-size: 24px;
-  margin-bottom: 15px;
+  margin-bottom: 1rem;
 }
 
-.menu-section {
-  background: white;
-  padding: 15px;
-  margin-bottom: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.period-title {
-  font-size: 22px;
+h3 {
+  font-size: 1.8rem;
   color: #007bff;
   border-bottom: 2px solid #007bff;
-  padding-bottom: 5px;
-  margin-bottom: 10px;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
-.meal-section {
-  margin-top: 10px;
-}
-
-.meal-title {
-  font-size: 18px;
+h4 {
+  font-size: 1.5rem;
   color: #28a745;
-  margin-bottom: 5px;
+  margin-bottom: 0.5rem;
 }
 
-.food-list {
+/* Menu Container */
+.menu-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Day Section */
+.day-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: #fafafa;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Meal Section */
+.meal-section {
+  margin-bottom: 1.5rem;
+}
+
+.meal-section h4 {
+  font-size: 1.6rem;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 0.5rem;
+}
+
+/* Food List */
+ul {
   list-style: none;
   padding: 0;
-  /* display: flex; */
-  flex-wrap: wrap;
-  gap: 8px;
+  margin: 0;
 }
 
-.food-item {
-  background: rgb(97, 61, 61);
-  color: #fff;
-  padding: 18px 22px 15px ;
-  border-radius: 5px;
-  font-size: 22px;
-  font-style: italic;
-}
-
-
- @media only screen and (max-width: 768px) {
- 
-  .search {
-    padding-left: 2rem;
-    padding-right: 2rem;
-    margin-top: 1rem;
-  }
-
-  .search input {
-    width: 100%; 
-  }
-
-  .search span {
-    position: absolute;
-    right: 1px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
- 
-  .break {
-    flex-direction: column;
-    gap: 1rem;
-    margin-top: 2rem;
-  }
-
-  .breakfast-out {
-    min-width: 12rem;
-    padding: 0.8rem;  
-  }
-
-  .photo {
-    flex-direction: row;
-    gap: 1rem;
-  }
-
-  .photo div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  img {
-    height: 5rem;
-    width: auto;
-  }
-
-  .add button {
-    width: 3rem;
-    height: 1.8rem;
-    font-size: 1rem;
-  }
-
-  .footer {
-    display: block;
-    text-align: center;
-    margin-top: 3rem;
-    font-size: 1.2rem;
-  }
-}
-
-
-
-
-
-
-@media only screen and (max-width: 480px) {
-  
-  .search {
-    padding-left: 1rem;
-    padding-right: 1rem;
-    margin-top: 1rem;
-  }
-
-  .search input {
-    font-size: 1rem;  
-    padding: 0.8rem;
-    min-width: 7rem;
-  }
-
-  .search span {
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.5rem; 
-  }
-
-  
-  .break {
-    flex-direction: row;
-    gap: 0.8rem;
-    gap: 1rem;
-    margin-top: 1.5rem;
-    flex-wrap: wrap;
-    
-  }
-
-  .break span{
-    font-size: 16px;
-  }
-
-  .breakfast-out { 
-    min-width: 10rem;
-    padding: 0.4rem;
-    font-size: 1rem;
-    font-size: 12px;
-  }
-
-  .photo {
-    flex-direction: column;
-    gap: 0.8rem;
-  }
-
-  .photo div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  img {
-    height: 4rem;
-    width: auto;
-  }
-
-  .add button {
-    width: 2.8rem;
-    height: 1.6rem;
-    font-size: 0.9rem;
-  }
-
-  
-  .footer {
-    display: block;
-    text-align: center;
-    margin-top: 2rem;
-    font-size: 1rem;
-  }
-
-  
-  .navbar {
-    font-size: 1rem;  
-  }
-}
-
-
-.addon-header{
-  margin-top: 2rem;
-  border-radius: 5rem;
-  height: 8rem;
-  width: 8rem;
-}
-
-.addon-headerr{
+li {
   display: flex;
-}
-
-.choose-menu{
-  display: flex;
-  justify-content: center;
-  margin-top: 4rem;
-  background-color:  rgb(77, 40, 64);
-  width: fit-content;
-  padding: 1.2rem;
-  color: white;
+  justify-content: space-between;
+  align-items: center;
+  background: #f0f0f0;
+  margin-bottom: 1rem;
+  padding: 1rem;
   border-radius: 8px;
-  margin-left: 36rem;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+/* Add to Cart Button */
+button {
+  background-color: rgb(243, 119, 17);
+  color: white;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: rgb(220, 95, 0);
+}
+
+/* Navbar */
+.navbar {
+  background-color: #333;
+  padding: 1rem;
+  color: white;
+  text-align: center;
   font-size: 1.5rem;
 }
 
-.addon-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 20px;
-  gap: 4.6rem;
-  margin: 30px 0;
-  padding-left: 2rem;
-  padding-right: 2rem;
-  
- 
+/* Footer */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem;
+  background-color: #333;
+  color: white;
+  font-size: 1.2rem;
 }
 
-.addon-item {
+.footer div {
   display: flex;
   flex-direction: column;
-  text-align: center;
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: fit-content;
-  gap: 2rem;
-
+  gap: 0.5rem;
 }
 
-.addon-image {  
-  border-radius: 10px;
-  width: 10rem;
-  height: 8rem;
-  border-radius: 4px;
+/* Responsive Styles */
+@media only screen and (max-width: 768px) {
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  .menu-container {
+    padding: 1.5rem;
+  }
+
+  li {
+    font-size: 1.1rem;
+    padding: 0.8rem;
+  }
+
+  button {
+    padding: 0.4rem 1rem;
+    font-size: 1rem;
+  }
 }
 
-.addon-label {
-  font-size: 16px;
-  font-weight: bold;
-  margin-top: 10px;
-  color: #333;
-}
+@media only screen and (max-width: 480px) {
+  h2 {
+    font-size: 1.5rem;
+  }
 
-.adddd{
-  margin-top: 2rem;
-}
+  .menu-container {
+    padding: 1rem;
+  }
 
+  li {
+    font-size: 1rem;
+    padding: 0.6rem;
+  }
+
+  button {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .footer {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+}

@@ -269,6 +269,7 @@ model Users {
   ordersCustomer Orders[]
   usersItems Order_Item[]
   customerPayment Subscription_Payment[]
+  cart Cart[]
 }
 
 
@@ -514,11 +515,11 @@ model Order_Item {
 model Cart {
   id Int @id @default(autoincrement())
   subscription_id Int
-  user_id Int
   customer_id String
   food_item_id Int
   created_at DateTime
   updatedAt DateTime
+  customer Users @relation(fields: [customer_id],references: [customer_id])
   Subscription Subscription @relation(fields: [subscription_id],references: [id])
   FoodItems Food_Items @relation(fields: [food_item_id],references: [id])
 }
