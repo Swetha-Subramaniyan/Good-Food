@@ -56,7 +56,7 @@ const LandingPage = () => {
   return (
     <>
     <section className="landing-header">
-        <nav className="navbar navbar-expand-lg navbar-light ">
+        <nav className="navbarrr navbar-expand-lg navbar-light ">
           <div className="container-fluid">
             <button
               className="navbar-toggler"
@@ -73,7 +73,7 @@ const LandingPage = () => {
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
                   <a className="nav-link active" href="#">
-                    Homeee
+                    Home
                   </a>
                 </li>
                 <li className="nav-item">
@@ -145,3 +145,4 @@ const LandingPage = () => {
 }
  
 export default LandingPage
+ 

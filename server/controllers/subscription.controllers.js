@@ -256,6 +256,7 @@ const getSubscriptionNames = async (req, res) => {
         id: sub.id,
         days: sub.DurationSubs.actual_days,
         price: sub.PricingDetails.price,
+        meal_type:mealType
       });
 
       return acc;

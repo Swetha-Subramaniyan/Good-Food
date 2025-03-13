@@ -1,14 +1,13 @@
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./SubscriptionPlan.css";
-
+ 
 const SubscriptionPlan = () => {
   const navigate = useNavigate();
   const [subscriptions, setSubscriptions] = useState({});
   const [selectedPlan, setSelectedPlan] = useState(null);
-
+ 
   useEffect(() => {
     const fetchSubscriptions = async () => {
       try {
@@ -20,18 +19,18 @@ const SubscriptionPlan = () => {
         console.error("Error fetching subscriptions:", error.message);
       }
     };
-
+ 
     fetchSubscriptions();
   }, []);
-
+ 
   const handlePlanClick = (planName) => {
     setSelectedPlan(planName);
   };
-
+ 
   const handleClosePopup = () => {
     setSelectedPlan(null);
   };
-
+ 
   const handleMealClick = (planName, planType, meal) => {
     if (planName === "Individual Plan") {
       navigate(`/user/IndividualPack${meal}${planType}`);
@@ -43,17 +42,17 @@ const SubscriptionPlan = () => {
       }
     }
   };
-
+ 
   return (
     <section className="subscription-container">
       <header className="header">
         <h1 className="choose">Choose Your Plan for Subscription!</h1>
       </header>
-
+ 
       {/* Individual Plan Section */}
       <div className="plan-section">
         <div className="description-card">
-
+ 
           <p> Individual Plan - You can subscribe to only one meal (Breakfast, Lunch, or Dinner).</p>
           {subscriptions["Individual Plan"] && (
           <div className="plan-card" onClick={() => handlePlanClick("Individual Plan")}>
@@ -62,7 +61,7 @@ const SubscriptionPlan = () => {
         )}
         </div>
       </div>
-
+ 
       {/* Combo Plan Section */}
       <div className="plan-section">
         <div className="description-card">
@@ -74,15 +73,15 @@ const SubscriptionPlan = () => {
           </div>
         )}
         </div>
-
+ 
       </div>
-
+ 
       {/* Popup for Plan Details */}
       {selectedPlan && subscriptions[selectedPlan] && (
         <div className="popup-overlay">
           <div className="popup">
             <button className="close-btn" onClick={handleClosePopup}>X</button>
-            <h2>{selectedPlan}</h2> 
+            <h2>{selectedPlan}</h2>
             <div className="plans-details">
               {Object.entries(subscriptions[selectedPlan]).map(([planType, meals]) => (
                 <div key={planType} className="plan-type">
@@ -107,5 +106,5 @@ const SubscriptionPlan = () => {
     </section>
   );
 };
-
+ 
 export default SubscriptionPlan;
