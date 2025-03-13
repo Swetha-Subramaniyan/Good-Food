@@ -254,7 +254,6 @@ const getSubscriptionNames = async (req, res) => {
 
       acc[planName][tierType].push({
         id: sub.id,
-        meal_type: mealType,
         days: sub.DurationSubs.actual_days,
         price: sub.PricingDetails.price,
       });
