@@ -174,7 +174,7 @@ import { IoPartlySunnyOutline } from "react-icons/io5";
 import StarRatings from '../Home/StarRatings';
 import SignIn from '../OverallHome/SignIn';
 import { useNavigate } from 'react-router-dom';
- 
+
 const IndividualPackBreakfastBudget = () => {
   const [error, setError] = useState('');
   const [plans, setPlans] = useState([]);
@@ -182,10 +182,11 @@ const IndividualPackBreakfastBudget = () => {
   const [loading, setLoading] = useState(true);
   const [selectedPlanId, setSelectedPlanId] = useState(null);
   const [isSignInVisible, setIsSignInVisible] = useState(false);
-  const [dailyMeals, setDailyMeals] = useState([]);
- 
+  const [additionalItems, setAdditionalItems] = useState([]);
+  const [menu, setMenu] = useState({});
+
   const navigate = useNavigate();
- 
+
   useEffect(() => {
     const fetchPlans = async () => {
       try {
@@ -193,11 +194,11 @@ const IndividualPackBreakfastBudget = () => {
           `${process.env.REACT_APP_BACKEND_SERVER_URL}/sub/names`
         );
         console.log("API Response:", response.data);
- 
+
         const budgetPlans = response.data.formattedSubscriptions["Individual Plan"]["Budget"].filter(
           (plan) => plan.meal_type === "Breakfast"
         );
- 
+
         setPlans(budgetPlans);
         setLoading(false);
       } catch (error) {
@@ -206,55 +207,45 @@ const IndividualPackBreakfastBudget = () => {
         setLoading(false);
       }
     };
- 
+
     fetchPlans();
   }, []);
- 
+
+
   useEffect(() => {
-    const fetchDailyMeals = async () => {
+    const fetchMenu = async () => {
       try {
-        const response = await axios.get("http://localhost:5001/dailyPeriod/All");
-        console.log("Daily Meals Response:", response.data);
-       
-        const breakfastMeals = response.data.filter(meal => meal.meal_type === "Breakfast");
-        setDailyMeals(breakfastMeals);
+        const token = localStorage.getItem('token');
+        const response = await axios.get(
+          `${process.env.REACT_APP_BACKEND_SERVER_URL}/dailyPeriod/All`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+
+        console.log('Formatted Menu:', response.data.formattedMenu);
+        setMenu(response.data.formattedMenu || {});
       } catch (error) {
-        console.error("Error fetching daily meals:", error.response?.data || error.message);
-        setDailyMeals([]);
+        console.error('Error fetching menu:', error);
       }
     };
- 
-    fetchDailyMeals();
+
+    fetchMenu();
   }, []);
- 
+
   const handlePlanClick = async (planId) => {
     setSelectedPlanId(planId);
     setFoodItems([]);
- 
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_SERVER_URL}/foodMenu/getWithID`,
-        { subscription_id: planId }
-      );
-      console.log('Food Items fetched:', response.data);
- 
-      const fetchedItems = response.data.menuWithID?.map((item) => item.FoodItems) || [];
-      setFoodItems(fetchedItems);
-    } catch (error) {
-      console.error('Error fetching food items:', error.response?.data || error.message);
-      setFoodItems([]);
-      setError('Failed to fetch food items. Please try again.');
-    }
   };
- 
+
   const handleSubscribe = async () => {
     if (!selectedPlanId) {
       alert('Please select a plan first.');
       return;
     }
- 
+
     const token = localStorage.getItem('token');
- 
+
     if (!token) {
       localStorage.setItem('pendingSubscription', selectedPlanId);
       setIsSignInVisible(true);
@@ -262,22 +253,22 @@ const IndividualPackBreakfastBudget = () => {
     }
     navigate(`/user/Payment/${selectedPlanId}`);
   };
- 
+
   const handleCloseSignIn = () => {
     setIsSignInVisible(false);
   };
- 
+
   return (
     <>
       <div className='backgrd'>
         <div className="listt">
           <h2> Choose Your Subscription Plans </h2>
         </div>
- 
+
         <div className="sub-add">
           <button onClick={handleSubscribe}>Subscribe</button>
         </div>
- 
+
         <div className="available-plans">
           <h3>Available Plans:</h3>
           {loading ? (
@@ -294,10 +285,10 @@ const IndividualPackBreakfastBudget = () => {
             ))
           )}
         </div>
- 
+
         {error && <div className="error">{error}</div>}
         {isSignInVisible && <SignIn isVisible={isSignInVisible} onClose={handleCloseSignIn} />}
- 
+
         {foodItems.length > 0 && (
           <div className="food-items">
             <h2>Food Items for Selected Plan:</h2>
@@ -308,28 +299,41 @@ const IndividualPackBreakfastBudget = () => {
             </ul>
           </div>
         )}
- 
+
         <div className='break'>
           <div className='breakfast-outt'>
             <IoPartlySunnyOutline />
             <span className='fastt'> Breakfast </span>Order before 11:00AM
           </div>
         </div>
- 
-        <div className='photo'>
-          {dailyMeals.map((meal) => (
-            <div key={meal.id}>
-              <div className='days-align'>{meal.day}</div>
-              <br />
-              <img src={meal.image_url} alt={meal.item_name} />
-              <br />
-              <h6>{meal.item_name} <br /><StarRatings /></h6>
+
+ <div className="additional-items">
+          <h2>Menu Items</h2>
+          {additionalItems.length > 0 ? (
+            <div className="food-items-container">
+              {additionalItems.map((item, index) => (
+                <div key={index} className="food-item">
+                  <img
+                    src={item.image_url || '/placeholder.jpg'}
+                    alt={item.name}
+                    className="food-image"
+                  />
+                  <span>{item.name}</span>
+                  <div className="food-item-actions">
+                    <button>-</button>
+                    <button>+</button>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          ) : (
+            <p>No additional items available.</p>
+          )}
+        </div> 
+
       </div>
     </>
   );
 };
- 
+
 export default IndividualPackBreakfastBudget;
