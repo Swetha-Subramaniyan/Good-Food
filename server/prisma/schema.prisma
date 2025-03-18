@@ -276,6 +276,7 @@ model Users {
   usersItems            Order_Item[]
   customerPayment       Subscription_Payment[]
   SkippedUser           Skipped_Cart[]
+
 }
 
 model User_Position {
@@ -529,6 +530,7 @@ model Cart {
   updatedAt       DateTime
   Subscription    Subscription @relation(fields: [subscription_id], references: [id])
   FoodItems       Food_Items   @relation(fields: [food_item_id], references: [id])
+
 }
 
 model User_Food_Report {

@@ -61,8 +61,9 @@ const LandingPage = () => {
 
   return (
     <>
-      <section className="landing-header">
-        <nav className="navbar navbar-expand-lg navbar-light ">
+
+    <section className="landing-header">
+        <nav className="navbarrr navbar-expand-lg navbar-light ">
           <div className="container-fluid">
             <button
               className="navbar-toggler"
@@ -155,7 +156,9 @@ const LandingPage = () => {
         {isUpdateVisible && <UpdateComponent onClose={closeUpdatePopup} />}
       </section>
     </>
-  );
-};
 
-export default LandingPage;
+  )
+}
+ 
+export default LandingPage
+ 
