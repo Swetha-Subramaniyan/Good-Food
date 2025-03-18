@@ -151,6 +151,7 @@ img{
 
 .days div{  
   background-color: rgb(238, 74, 24);
+  background: linear-gradient(135deg, #7a4648, #fad0c4);
   color: aliceblue;
   padding: 1rem;
   border-radius: 8px;

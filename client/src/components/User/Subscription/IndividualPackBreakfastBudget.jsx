@@ -168,6 +168,7 @@
 
 
 
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './IndividualPackBreakfastBudget.css';
@@ -183,7 +184,8 @@ const IndividualPackBreakfastBudget = () => {
   const [loading, setLoading] = useState(true);
   const [selectedPlanId, setSelectedPlanId] = useState(null);
   const [isSignInVisible, setIsSignInVisible] = useState(false);
-  const [dailyMeals, setDailyMeals] = useState([]);
+  const [additionalItems, setAdditionalItems] = useState([]);
+  const [menu, setMenu] = useState({});
 
   const navigate = useNavigate();
 
@@ -211,41 +213,31 @@ const IndividualPackBreakfastBudget = () => {
     fetchPlans();
   }, []);
 
+
   useEffect(() => {
-    const fetchDailyMeals = async () => {
+    const fetchMenu = async () => {
       try {
-        const response = await axios.get("http://localhost:5001/dailyPeriod/All");
-        console.log("Daily Meals Response:", response.data);
-        
-        const breakfastMeals = response.data.filter(meal => meal.meal_type === "Breakfast");
-        setDailyMeals(breakfastMeals);
+        const token = localStorage.getItem('token');
+        const response = await axios.get(
+          `${process.env.REACT_APP_BACKEND_SERVER_URL}/dailyPeriod/All`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+
+        console.log('Formatted Menu:', response.data.formattedMenu);
+        setMenu(response.data.formattedMenu || {});
       } catch (error) {
-        console.error("Error fetching daily meals:", error.response?.data || error.message);
-        setDailyMeals([]);
+        console.error('Error fetching menu:', error);
       }
     };
 
-    fetchDailyMeals();
+    fetchMenu();
   }, []);
 
   const handlePlanClick = async (planId) => {
     setSelectedPlanId(planId);
     setFoodItems([]);
-
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_SERVER_URL}/foodMenu/getWithID`,
-        { subscription_id: planId }
-      );
-      console.log('Food Items fetched:', response.data);
-
-      const fetchedItems = response.data.menuWithID?.map((item) => item.FoodItems) || [];
-      setFoodItems(fetchedItems);
-    } catch (error) {
-      console.error('Error fetching food items:', error.response?.data || error.message);
-      setFoodItems([]);
-      setError('Failed to fetch food items. Please try again.');
-    }
   };
 
   const handleSubscribe = async () => {
@@ -317,17 +309,30 @@ const IndividualPackBreakfastBudget = () => {
           </div>
         </div>
 
-        <div className='photo'>
-          {dailyMeals.map((meal) => (
-            <div key={meal.id}>
-              <div className='days-align'>{meal.day}</div>
-              <br />
-              <img src={meal.image_url} alt={meal.item_name} />
-              <br />
-              <h6>{meal.item_name} <br /><StarRatings /></h6>
+ <div className="additional-items">
+          <h2>Menu Items</h2>
+          {additionalItems.length > 0 ? (
+            <div className="food-items-container">
+              {additionalItems.map((item, index) => (
+                <div key={index} className="food-item">
+                  <img
+                    src={item.image_url || '/placeholder.jpg'}
+                    alt={item.name}
+                    className="food-image"
+                  />
+                  <span>{item.name}</span>
+                  <div className="food-item-actions">
+                    <button>-</button>
+                    <button>+</button>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          ) : (
+            <p>No additional items available.</p>
+          )}
+        </div> 
+
       </div>
     </>
   );

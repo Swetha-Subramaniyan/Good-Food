@@ -23,27 +23,32 @@ const EliteCombo = () => {
 
   const navigate = useNavigate();
 
+
   useEffect(() => {
     const fetchPlans = async () => {
       try {
         const response = await axios.get(
           `${process.env.REACT_APP_BACKEND_SERVER_URL}/sub/names`
         );
-        const plansData =
-          response.data.groupedSubscriptions?.["Combo Plan Elite"]?.Combo || [];
-        setPlans(plansData);
+        console.log("API Response:", response.data);
+  
+        // Extract Breakfast Budget plans
+        const budgetPlans = response.data.formattedSubscriptions["Combo Plan"]["Elite"].filter(
+          (plan) => plan.meal_type === "Combo"
+        );
+  
+        setPlans(budgetPlans);
         setLoading(false);
       } catch (error) {
-        console.error(
-          "Error fetching subscription plans:",
-          error.response?.data || error.message
-        );
+        console.error('Error fetching subscription plans:', error.response?.data || error.message);
         setPlans([]);
         setLoading(false);
       }
     };
+  
     fetchPlans();
   }, []);
+
 
   const handlePlanClick = async (planId) => {
     setSelectedPlanId(planId);
