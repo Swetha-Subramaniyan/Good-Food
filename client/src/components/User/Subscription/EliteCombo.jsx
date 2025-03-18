@@ -30,6 +30,7 @@ const EliteCombo = () => {
         const response = await axios.get(
           `${process.env.REACT_APP_BACKEND_SERVER_URL}/sub/names`
         );
+
         console.log("API Response:", response.data);
   
         // Extract Breakfast Budget plans
@@ -74,20 +75,7 @@ const EliteCombo = () => {
     }
   };
 
-  // const handleSubscribe = async () => {
-  //   if (!selectedPlanId) {
-  //     alert("Please select a plan first.");
-  //     return;
-  //   }
-  //   const token = localStorage.getItem("token");
 
-  //   if (!token) {
-  //     setIsSignInVisible(true);
-  //     return;
-  //   }
-  //   navigate(`/user/Payment/${selectedPlanId}`);
-    
-  // };
 
 
   const handleSubscribe = async () => {

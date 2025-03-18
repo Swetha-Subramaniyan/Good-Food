@@ -1,5 +1,6 @@
 
 
+ 
 /* Subscription Plan Container */
 .subscription-container {
   text-align: center;
@@ -10,7 +11,7 @@
   flex-direction: column;
   align-items: center;
 }
-
+ 
 /* Plan Sections */
 .plan-section {
   margin-top: 4rem;
@@ -19,7 +20,7 @@
   align-items: center;
   /* margin-bottom: 20px; */
 }
-
+ 
 /* Plan Description Cards */
 .description-card {
   background: #f8f9fa;
@@ -31,7 +32,7 @@
   width: 80rem;
   margin-bottom: 5px;
 }
-
+ 
 /* Plan Cards */
 .plan-card {
   background: linear-gradient(135deg, #7a4648, #fad0c4);
@@ -41,11 +42,11 @@
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease;
 }
-
+ 
 .plan-card:hover {
   transform: scale(1.05);
 }
-
+ 
 /* Popup Overlay */
 .popup-overlay {
   position: fixed;
@@ -60,7 +61,7 @@
   align-items: center;
   animation: fadeIn 0.3s ease-in-out;
 }
-
+ 
 /* Popup Box */
 .popup {
   background: white;
@@ -73,7 +74,7 @@
   animation: scaleIn 0.3s ease-in-out;
   position: relative;
 }
-
+ 
 /* Close Button */
 .close-btn {
   position: absolute;
@@ -84,21 +85,21 @@
   border: none;
   cursor: pointer;
   color: black;
-  
+ 
 }
-
+ 
 /* Plan Types */
 .plan-type {
   margin: 15px 0;
 }
-
+ 
 .meals-container {
   display: flex;
   /* flex-direction: column; */
   justify-content: center;
   gap: 10px;
 }
-
+ 
 .meal-card {
   
   background-color: #7a4648;
@@ -108,13 +109,13 @@
   transition: background 0.3s;
   color: white;
 }
-
+ 
 .meal-card:hover {
   background: #664042;
 }
-
-
-
+ 
+ 
+ 
 /* Animations */
 @keyframes fadeIn {
   from {
@@ -124,7 +125,7 @@
     opacity: 1;
   }
 }
-
+ 
 @keyframes scaleIn {
   from {
     transform: scale(0.8);
@@ -133,4 +134,6 @@
     transform: scale(1);
   }
 }
-
+ 
+ 
+ 

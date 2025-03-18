@@ -6,4 +6,4 @@ router.get('/getOrder',getSubscriptionOrders)
 router.post('/createOrder',createSubscriptionOrders)
 
 
-module.exports = router;
+module.exports = router; 
