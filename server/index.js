@@ -30,15 +30,18 @@ const orderRoutes = require('./routes/orders.routes')
 const userFoodReportRoutes = require('./routes/userFoodReport.routes')
 const additionalRoutes = require('./routes/additionalItems.routes')
 const smsRoutes = require('./routes/sms.routes')
-const {startMealSchedulers } = require('./utils/dailyScheduler')
+const {startMealSchedulers } = require('./utils/dailyScheduler');
 const orderCartRoutes=require('./routes/orderCart.routes')
 const dailyMenuRoutes = require('./routes/daily_menu.routes')
+const notificationRoutes = require('./routes/notification.routes');
+const cancellationRoutes = require('./routes/cancellation.routes');
+const SkippedCartRoutes = require('./routes/skippedCart.routes')
 // const paymentInfoRoutes = require('./routes/paymentInfo.routes')
  
 const app = express();
 var morgan = require('morgan')
 const port = 5001
- startMealSchedulers();
+startMealSchedulers();
  
 app.use(morgan('dev'))
 const corsOptions = {
@@ -66,24 +69,15 @@ app.use('/extra',additionalRoutes)
 app.use(authentication);
 app.use('/userSubscription',userSubscriptionRoutes)
 
-
-
-
-
-
-
-
-
-
-
-
-
 app.use('/api',userRoutes);
 app.use('/adrress',adrressRoutes)
 app.use('/foodItem',foodItemRoutes)
 app.use('/mealType',mealTypeRoutes)
 app.use('/phone', phoneRoutes)
 app.use('/subscription',subscriptionRoutes)
+app.use('/notification',notificationRoutes)
+app.use('/cancel',cancellationRoutes)
+app.use('/skipcart',SkippedCartRoutes);
 app.use('/subsPay',subscriptionPaymentRoutes)
 app.use('/parentPlan',parentPlanRoutes)
 app.use('/tier',tierRoutes)

@@ -48,15 +48,20 @@ const notificationTrigger = async ({
 
     console.log("Notification Created:", notification);
 
+    let notification_status;
+
     if (email && emailSubject && emailTemplate) {
       await EmailTransmitter(email, emailSubject, emailTemplate);
       console.log("Email Sent Successfully");
+      notification_status = "Sent";
     }
 
+    notification_status = "Failed"
+    
     await prisma.Notification_Response.create({
       data: {
         notification_id: notification.id,
-        notification_status: "Pending",
+        notification_status,
         notification_type_id: 1,
         send_at: new Date(),
         createdAt: new Date(),

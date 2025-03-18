@@ -5,10 +5,8 @@ import "./SubscriptionPlan.css";
  
 const SubscriptionPlan = () => {
   const navigate = useNavigate();
-  const [groupedSubscriptions, setGroupedSubscriptions] = useState({});
-  const [filteredPlans, setFilteredPlans] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const [modalData, setModalData] = useState(null);
+  const [subscriptions, setSubscriptions] = useState({});
+  const [selectedPlan, setSelectedPlan] = useState(null);
  
   useEffect(() => {
     const fetchSubscriptions = async () => {
@@ -16,165 +14,97 @@ const SubscriptionPlan = () => {
         const response = await axios.get(
           `${process.env.REACT_APP_BACKEND_SERVER_URL}/sub/names`
         );
- 
-        console.log("Response:", response.data);
- 
-        const allSubscriptions = response.data.groupedSubscriptions || {};
-        setGroupedSubscriptions(allSubscriptions);
- 
-        const relevantPlans = Object.entries(allSubscriptions).filter(
-          ([planName]) =>
-            planName === "Individual Plan Budget" ||
-            planName === "Individual Plan Elite" ||
-            planName === "Combo Plan Budget" ||
-            planName === "Combo Plan Elite"
-        );
- 
-        const plans = relevantPlans.reduce((acc, [planName, details]) => {
-          if (planName.includes("Individual Plan")) {
-            acc["Individual"] = {
-              ...(acc["Individual"] || {}),
-              [planName.split(" ")[2]]: details,
-            };
-          } else {
-            acc[planName] = details;
-          }
-          return acc;
-        }, {});
- 
-        setFilteredPlans(Object.keys(plans));
+        setSubscriptions(response.data.formattedSubscriptions || {});
       } catch (error) {
-        console.error(
-          "Error fetching subscriptions:",
-          error.response?.data || error.message
-        );
+        console.error("Error fetching subscriptions:", error.message);
       }
     };
  
     fetchSubscriptions();
   }, []);
  
-  const handleModalItemClick = (meal, planType) => {
-    const planDetails =
-      groupedSubscriptions[`Individual Plan ${planType}`]?.[meal] || [];
-    navigate(`/user/IndividualPack${meal}${planType}`, {
-      state: { meal, planDetails },
-    });
-    setShowModal(false);
+  const handlePlanClick = (planName) => {
+    setSelectedPlan(planName);
   };
  
-  const handleCardClick = (planName) => {
-    if (planName === "Combo Plan Budget") {
-      navigate("/user/BudgetCombo");
-    } else if (planName === "Combo Plan Elite") {
-      navigate("/user/EliteCombo");
-    } else if (planName === "Individual") {
-      const individualPlans = Object.entries(groupedSubscriptions).filter(
-        ([key]) =>
-          key === "Individual Plan Budget" || key === "Individual Plan Elite"
-      );
-      const modalDetails = individualPlans.reduce((acc, [key, value]) => {
-        const subPlan = key.split(" ")[2];
-        acc[subPlan] = value;
-        return acc;
-      }, {});
+  const handleClosePopup = () => {
+    setSelectedPlan(null);
+  };
  
-      setModalData(modalDetails);
-      setShowModal(true);
-    } else {
-      console.log(`Unknown plan selected: ${planName}`);
+  const handleMealClick = (planName, planType, meal) => {
+    if (planName === "Individual Plan") {
+      navigate(`/user/IndividualPack${meal}${planType}`);
+    } else if (planName === "Combo Plan") {
+      if (planType === "Budget") {
+        navigate("/user/BudgetCombo");
+      } else if (planType === "Elite") {
+        navigate("/user/EliteCombo");
+      }
     }
   };
  
-  const closeModal = () => {
-    setShowModal(false);
-    setModalData(null);
-  };
- 
   return (
-    <>
-      <section className="subscription-container">
-        <header className="header">
-          <h1 style={{ fontSize: "2.5rem" }} className="choose">
-            Choose Your Plan for Subscription!
-          </h1>
-        </header>
+    <section className="subscription-container">
+      <header className="header">
+        <h1 className="choose">Choose Your Plan for Subscription!</h1>
+      </header>
  
-        <div className="plans-container">
-          {filteredPlans.map((planName) => (
-            <div
-              key={planName}
-              className="plan-card"
-              onClick={() => handleCardClick(planName)}
-            >
-              <h2 className="plan-name">{planName}</h2>
-            </div>
-          ))}
-        </div>
+      {/* Individual Plan Section */}
+      <div className="plan-section">
+        <div className="description-card">
  
-        {showModal && modalData && (
-          <div className="modal-overlay">
-            <div
-              className="modal-content"
-              style={{ width: "500rem", height: "30rem" }}
-            >
-              <h2 className="modal-heading">Individual Plan Details</h2>
- 
-              <div className="plan-container">
-                <div className="plan-column">
-                  <h3 className="plan-title">Budget</h3>
-                  <div
-                    className="meal-card"
-                    onClick={() => handleModalItemClick("Breakfast", "Budget")}
-                  >
-                    Breakfast
-                  </div>
-                  <div
-                    className="meal-card"
-                    onClick={() => handleModalItemClick("Lunch", "Budget")}
-                  >
-                    Lunch
-                  </div>
-                  <div
-                    className="meal-card"
-                    onClick={() => handleModalItemClick("Dinner", "Budget")}
-                  >
-                    Dinner
-                  </div>
-                </div>
- 
-                <div className="plan-column">
-                  <h3 className="plan-title">Elite</h3>
-                  <div
-                    className="meal-card"
-                    onClick={() => handleModalItemClick("Breakfast", "Elite")}
-                  >
-                    Breakfast
-                  </div>
-                  <div
-                    className="meal-card"
-                    onClick={() => handleModalItemClick("Lunch", "Elite")}
-                  >
-                    Lunch
-                  </div>
-                  <div
-                    className="meal-card"
-                    onClick={() => handleModalItemClick("Dinner", "Elite")}
-                  >
-                    Dinner
-                  </div>
-                </div>
-              </div>
-              <button className="close-button" onClick={closeModal}>
-                X
-              </button>
-            </div>
+          <p> Individual Plan - You can subscribe to only one meal (Breakfast, Lunch, or Dinner).</p>
+          {subscriptions["Individual Plan"] && (
+          <div className="plan-card" onClick={() => handlePlanClick("Individual Plan")}>
+            <h2 className="plan-name">Individual Plan</h2>
           </div>
         )}
-      </section>
-    </>
+        </div>
+      </div>
+ 
+      {/* Combo Plan Section */}
+      <div className="plan-section">
+        <div className="description-card">
+         
+          <p>Combo Plan - This plan includes all three meals: Breakfast, Lunch, and Dinner.</p>
+          {subscriptions["Combo Plan"] && (
+          <div className="plan-card" onClick={() => handlePlanClick("Combo Plan")}>
+            <h2 className="plan-name">Combo Plan</h2>
+          </div>
+        )}
+        </div>
+ 
+      </div>
+ 
+      {/* Popup for Plan Details */}
+      {selectedPlan && subscriptions[selectedPlan] && (
+        <div className="popup-overlay">
+          <div className="popup">
+            <button className="close-btn" onClick={handleClosePopup}>X</button>
+            <h2>{selectedPlan}</h2>
+            <div className="plans-details">
+              {Object.entries(subscriptions[selectedPlan]).map(([planType, meals]) => (
+                <div key={planType} className="plan-type">
+                  <h3>{planType}</h3>
+                  <div className="meals-container">
+                    {[...new Set(meals.map(({ meal_type }) => meal_type))].map((meal_type) => (
+                      <div
+                        key={meal_type}
+                        className="meal-card"
+                        onClick={() => handleMealClick(selectedPlan, planType, meal_type)}
+                      >
+                        {meal_type}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </section>
   );
 };
  
 export default SubscriptionPlan;
- 
