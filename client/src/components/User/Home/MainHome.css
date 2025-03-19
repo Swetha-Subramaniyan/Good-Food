@@ -154,6 +154,23 @@ button:hover {
   gap: 0.5rem;
 }
 
+
+.logout-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  position: absolute;
+  right: 20px;
+  top: 10px;
+}
+
+.logout-btn:hover {
+  background-color: darkred;
+}
+
 /* Responsive Styles */
 @media only screen and (max-width: 768px) {
   h2 {

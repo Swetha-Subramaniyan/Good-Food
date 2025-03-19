@@ -1,131 +1,134 @@
 
-.order-summary {
-    background-color: #fff;
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-label{
-    color: rgb(15, 14, 14);
-    font-weight: bold;   
-}
-
-.button-pay  button {
-  padding: 10px 20px;
-  background-color: #007BFF;
-  color: white;
-  font-size: 1.1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  width: fit-content;
-  height: 2.5rem;
-  justify-content: center;
-}
-
-.form-container h2{
-  color: rgb(66, 66, 234); 
-  
-}
-
 .form-group span{
-  margin-left: 16rem;
-}
-.c-t-pay{
-  margin-left: 16rem;   
+  font-weight: lighter;  
 }
 
-.form-group div{
-  font-size: 1.2rem;
-}
 
-.kk{
+.foodd-container {
   display: flex;
   justify-content: space-between;
-  padding-left: 5rem;
-  padding-right: 5rem;
+  gap: 50px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 2rem;
 }
 
-
-.subscription-details {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f9f9f9;
+.foodd {
+  flex: 1;
+  background: #f9f9f9;
+  background-color: rgb(253, 255, 255);
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  font-family: 'Arial', sans-serif;
-  margin-top: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 3rem;
+}
+
+.foodd h2 {
+  font-size: 25px;
+  margin-bottom: 15px;
+  color: orangered;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 5px;
+  font-weight: bold;
+}
+
+.subscription-details, 
+.food-delivery-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .form-group {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  margin-bottom: 15px;
-  padding: 10px;
+  gap: 10px;
 }
 
 .form-group label {
-  font-size: 1.2rem;
+  font-size: 18px;
   font-weight: bold;
   color: #333;
+  flex: 1;
 }
 
-.form-group span {
-  font-size: 1.2rem;
-  color: #555;
-  text-align: right;
+.form-group input {
+  flex: 2;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
 }
 
-.submit-color:hover{
-  background-color: #007BFF;
+.address-box {
+  background: #fff;
+  padding: 10px;
+  margin-top: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.add-address-btn {
+  background-color: #714545;
   color: white;
+  padding: 4px 10px;
   border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
 }
 
-.address-container {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-
-@media (max-width: 768px) {
-  .subscription-details {
-    padding: 15px;
-  }
-
-  .form-group {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .form-group label {
-    margin-bottom: 5px;
-  }
-
+.submit-bttn {
+  background-color: #714545;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  
 }
 
 .submit-color {
-  background-color: #007BFF;
-  background-color:  rgb(77, 40, 64);
+  display: block;
+  width: 100%;
+  background-color: #ff4500;
+  background-color: #714545;
   color: white;
+  padding: 13px;
   border: none;
-  height: 2.5rem;
-  border-radius: 5PX;
-  margin-left: 1.6rem;
-  font-weight: bold;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  border-radius: 5px;
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 95px;
 }
 
+ 
+.delivery{
+  color: #ff4500;
+  font-size: 1.3rem;
 
-.form-group label{
-  width: 14rem;
+
 }
 
-.delivery-header{
-  margin-top: 2rem;
+@media (max-width: 768px) {
+  .foodd-container {
+    padding: 0.5rem;
+  }
+  .foodd {
+    padding: 1rem;
+  }
+
+}
+
+@media (max-width: 480px) {
+  .foodd-container {
+    padding: 0.5rem;
+  }
+  .foodd {
+    padding: 1rem;
+  }
+
 }
