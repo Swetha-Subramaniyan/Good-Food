@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './MainHome.css';
 import MainNavbar from '../Navbar/MainNavbar';
+import { IoMdLogOut } from "react-icons/io";
  
 const MainHome = () => {
   const [menu, setMenu] = useState({});
@@ -81,9 +82,12 @@ const MainHome = () => {
   };
  
   return (
-    <>
-      <MainNavbar />
+    <> 
+    <button className='logout'> <IoMdLogOut /> Logout</button>
+      <MainNavbar />  
+     
       <div className="menu-container">
+       
         <h2>Menu</h2>
  
         {Object.entries(menu).map(([day, meals]) => (
