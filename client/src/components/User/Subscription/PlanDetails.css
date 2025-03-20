@@ -1,0 +1,162 @@
+
+.backgrd {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* min-height: 100vh; */
+    background: linear-gradient(135deg, #d8e1ea, #e9ecef);
+    padding: 40px;
+  }
+  
+  .choose-plan h2 {
+    color: orangered;
+    font-size: 2.4rem;
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap; 
+    overflow: hidden;
+    display: inline-block;
+    position: relative;
+    /* animation: marquee 20s linear infinite; */
+    }
+  
+  @keyframes marquee {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  
+
+  .subscribe-button {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .subscribe-button button {
+    background-color: rgb(12, 12, 234); 
+    background-color: #007bff;
+    color: white;
+    padding: 16px 24px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    animation: blink 1s infinite alternate; 
+    font-size: 26px;
+    
+  }
+  
+  @keyframes blink {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  .subscribe-button button:hover {
+    animation: none; 
+    background-color: #1679e2;
+  }
+  
+  
+  .plan-item {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    font-weight: 600;
+    margin: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background 0.3s ease;
+    width: 250px;
+    transition: 0.3s;
+    text-align: center;
+    background-color: white;
+    font-size: 1.5rem;
+  }
+  
+  .plan-item:hover {
+    transform: scale(1.05);
+    background: #f1f1f1;
+  }
+  
+
+  .plan-item.selected {
+    background-color: #007bff;
+    color: white;
+    transform: scale(1.08);
+  }
+  
+  .error {
+    color: red;
+    font-size: 1rem;
+    margin-top: 10px;
+  }
+  
+   
+  .plans-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 75px;
+    margin-top: 20px;
+  }
+  
+  
+  .plan-item.selected {
+    background-color: #007bff;
+    color: white;
+  }
+
+  
+  .subscribe-section {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    width: 100%; 
+    padding: 0 50px;
+    
+  }
+
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+
+  @media (max-width: 768px) {
+    .choose-plan h2 {
+      font-size: 1.8rem;
+    }
+  
+    .plan-item {
+      width: 90%;
+      font-size: 1rem;
+    }
+  
+    .subscribe-button button {
+      font-size: 1rem;
+      padding: 10px 20px;
+    }
+  }
+  
+ 
+  
+  
+  

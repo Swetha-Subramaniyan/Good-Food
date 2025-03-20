@@ -25,8 +25,7 @@ const LicenseContent = () => {
         {/* <button onClick={handleSignInClick}> Sign In </button> <span> </span> */}
         <Link to={'/admin/addsubscription'}> 
         <button> Admin </button> </Link>
-      </div>
-  
+      </div>  
       <div className='home-header'>
         <h1 className='food-delivery'>Freshly Made Home Cuisine<br/> Food Delivery Platform!</h1>
       </div>   
