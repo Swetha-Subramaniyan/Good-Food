@@ -11,8 +11,8 @@ import logo from "../../../assets/Foodlogo.jpg";
 const ContactUs = () => {
   return (
     <>
-      <div className="contact-last">
-        <div id="contact-section">
+      <div id="contact-section" className="contact-last">
+        <div >
           <div className="contact-button">
             <h1>Contact Us</h1>
           </div>
