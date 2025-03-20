@@ -18,8 +18,8 @@ const MainOverallHome = () => {
     <ContactUs/>
     <IdeasToImprove />
 
-    </>   
   )
 }
  
 export default MainOverallHome;
+

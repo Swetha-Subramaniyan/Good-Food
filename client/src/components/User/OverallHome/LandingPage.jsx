@@ -1,5 +1,4 @@
 
-
 import React, { useState } from "react";
 import logo from "../../../assets/Foodlogo.jpg";
 import "./LandingPage.css";
@@ -9,13 +8,13 @@ import { PiCertificateBold } from "react-icons/pi";
 import { PiChefHatBold } from "react-icons/pi";
 import SignIn from "./SignIn";
 import { Link } from "react-router-dom";
-// import UpdateComponent from "./Update";
+
 
 const LandingPage = () => {
   const [isFeedbackVisible, setIsFeedbackVisible] = useState(false);
   const [isSignInVisible, setIsSignInVisible] = useState(false);
   const [isUpdateVisible, setIsUpdateVisible] = useState(false);
-
+ 
   const handleCloseSignIn = () => {
     setIsSignInVisible(false);
   };
@@ -23,11 +22,10 @@ const LandingPage = () => {
   const showUpdatePopup = () => {
     setIsUpdateVisible(true);
   };
-
+ 
   const closeUpdatePopup = () => {
     setIsUpdateVisible(false);
   };
-
 
   return (
     <>
@@ -80,13 +78,13 @@ const LandingPage = () => {
         <div className="logo-pic">
           <img className="header-img" src={logo} alt="food" />
         </div>
-
+ 
         <div className="signing-in">
           <Link to={"/admin/addsubscription"}>
             <button> Admin </button>
           </Link>
         </div>
-
+ 
         <div className="home-header">
           <h1 className="food-delivery">
             Freshly Made Home Cuisine
@@ -102,7 +100,7 @@ const LandingPage = () => {
             <FaDownload /> 3.5L+ <span> Registered Customers </span>
           </div>
         </div>
-        
+
         <div className="regi">
           <div>
             <PiCertificateBold size={25} /> 5.5L+{" "}
@@ -112,18 +110,16 @@ const LandingPage = () => {
             <PiChefHatBold size={25} /> 3.5L+ <span> Sellers </span>
           </div>
         </div>
-
+ 
         <SignIn isVisible={isSignInVisible} onClose={handleCloseSignIn} />
-
-        {/* {isUpdateVisible && <UpdateComponent onClose={closeUpdatePopup} />} */}
+ 
+        {isUpdateVisible && <UpdateComponent onClose={closeUpdatePopup} />}
       </section>
-
-    
+ 
     </>
   );
 };
-
+ 
 export default LandingPage;
 
-
-
+   

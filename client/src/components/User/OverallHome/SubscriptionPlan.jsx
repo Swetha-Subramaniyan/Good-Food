@@ -40,21 +40,20 @@ const SubscriptionPlan = () => {
   };
 
   return (
-    <> 
-    <div className="subscription-container"> 
+    <>
+    <div className="subscription-container">
+
     <header className="header">
         <h1 className="choose">Choose Your Plan for Subscription!</h1>
       </header>
     <section >
-      
-   
       {Object.keys(subscriptions).map((planName) => (
         <div className={`plan-section ${planName.toLowerCase()}`} key={planName}>
           <div className="description-card" id="individual-section">
             {planName === "Individual Plan" && (
               <p className="plann-description">
                {planName} - You can subscribe to only one meal (Breakfast, Lunch, or Dinner).
-              
+
               </p>
             )}
            
@@ -63,7 +62,7 @@ const SubscriptionPlan = () => {
                 {planName} - This plan includes all three meals: Breakfast, Lunch, and Dinner.
               </p>
             )}
-          
+
             <div className="plan-card" onClick={() => handlePlanClick(planName)}>
               <h2 className="plan-name">{planName}</h2>
             </div>
@@ -104,7 +103,7 @@ const SubscriptionPlan = () => {
     </section>
     </div>
 </>
-    
+
   );
 };
 
