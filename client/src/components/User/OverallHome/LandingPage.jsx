@@ -113,7 +113,7 @@ const LandingPage = () => {
  
         <SignIn isVisible={isSignInVisible} onClose={handleCloseSignIn} />
  
-        {isUpdateVisible && <UpdateComponent onClose={closeUpdatePopup} />}
+        {/* {isUpdateVisible && <UpdateComponent onClose={closeUpdatePopup} />} */}
       </section>
  
     </>

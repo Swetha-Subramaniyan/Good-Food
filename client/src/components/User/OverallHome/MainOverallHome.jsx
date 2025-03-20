@@ -17,9 +17,9 @@ const MainOverallHome = () => {
     <SubscriptionPlan/>
     <ContactUs/>
     <IdeasToImprove />
+    </>
 
   )
 }
- 
 export default MainOverallHome;
 
