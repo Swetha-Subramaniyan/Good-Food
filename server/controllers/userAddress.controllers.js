@@ -54,7 +54,7 @@ const prisma = new PrismaClient();
  
 const getPhoneNumber = async (req,res) => {
     try {
-        const {customer_id} = req.user;
+    const {customer_id} = req.user;
       const getPhone = await prisma.users.findMany({
         where : {customer_id},
         select : {
@@ -94,16 +94,9 @@ const getPhoneNumber = async (req,res) => {
 
 const createAddress = async (req, res) => {
     try {
+        console.log("ss", req.body)
         const { name, email, phone_number, alternate_number, addresses } = req.body;
         const { customer_id } = req.user;
-
- 
-       
- 
-
-
-        
-
 
         const addressData = addresses.map(addr => ({
             name,
@@ -120,8 +113,8 @@ const createAddress = async (req, res) => {
         }));
 
  
-        const createPhone = await prisma.user_Address.createMany({
-            data: addressData
+        const createPhone = await prisma.user_Address.create({
+            data: addressData[0]
         });
  
         res.status(200).json({ message: "Success", createPhone });
@@ -132,7 +125,6 @@ const createAddress = async (req, res) => {
         res.status(500).json({ error: "Failed to create addresses" });
     }
 };
-
 
 
 module.exports = {getPhoneNumber,createAddress}

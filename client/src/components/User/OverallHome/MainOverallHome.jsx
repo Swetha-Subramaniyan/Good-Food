@@ -1,3 +1,4 @@
+
 import React  from "react";
 import LandingPage from './LandingPage'
 import Vision from './Vision'
@@ -10,16 +11,15 @@ const MainOverallHome = () => {
  
   return (
     <>
- 
+
     <LandingPage/>
     <Vision/>
     <SubscriptionPlan/>
     <ContactUs/>
     <IdeasToImprove />
- 
-    </>  
+
   )
 }
  
 export default MainOverallHome;
- 
+

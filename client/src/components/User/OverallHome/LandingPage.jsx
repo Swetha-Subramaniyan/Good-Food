@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import logo from "../../../assets/Foodlogo.jpg";
 import "./LandingPage.css";
@@ -7,8 +8,8 @@ import { PiCertificateBold } from "react-icons/pi";
 import { PiChefHatBold } from "react-icons/pi";
 import SignIn from "./SignIn";
 import { Link } from "react-router-dom";
-import UpdateComponent from "./Update";
- 
+
+
 const LandingPage = () => {
   const [isFeedbackVisible, setIsFeedbackVisible] = useState(false);
   const [isSignInVisible, setIsSignInVisible] = useState(false);
@@ -17,7 +18,7 @@ const LandingPage = () => {
   const handleCloseSignIn = () => {
     setIsSignInVisible(false);
   };
- 
+
   const showUpdatePopup = () => {
     setIsUpdateVisible(true);
   };
@@ -25,8 +26,7 @@ const LandingPage = () => {
   const closeUpdatePopup = () => {
     setIsUpdateVisible(false);
   };
- 
- 
+
   return (
     <>
       <section className="landing-header">
@@ -74,7 +74,7 @@ const LandingPage = () => {
             </div>
           </div>
         </nav>
- 
+
         <div className="logo-pic">
           <img className="header-img" src={logo} alt="food" />
         </div>
@@ -91,7 +91,7 @@ const LandingPage = () => {
             <br /> Food Delivery Platform!
           </h1>
         </div>
- 
+
         <div className="register">
           <div style={{ backgroundColor: "coral" }}>
             <FaListCheck /> 5.5L+ <span> Successful Orders </span>
@@ -100,7 +100,7 @@ const LandingPage = () => {
             <FaDownload /> 3.5L+ <span> Registered Customers </span>
           </div>
         </div>
-       
+
         <div className="regi">
           <div>
             <PiCertificateBold size={25} /> 5.5L+{" "}
@@ -121,3 +121,5 @@ const LandingPage = () => {
 };
  
 export default LandingPage;
+
+   

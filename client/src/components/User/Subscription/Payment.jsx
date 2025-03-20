@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import "./Payment.css";
 import Alert from "@mui/material/Alert";
@@ -116,7 +115,7 @@ const Payment = () => {
         return;
       }
  
-    
+   
       const options = {
         key: razorpayKey,
         amount: data.order.amount,
@@ -172,7 +171,7 @@ const Payment = () => {
  
  
  
-
+ 
   const formatDate = (date) => date.toLocaleDateString("en-GB");
  
   const planName = subscription?.parentPlan1?.plan_name || "N/A";
@@ -190,11 +189,11 @@ const Payment = () => {
  
  
   return (
-    <div className="details-back">     
+    <div className="details-back">    
         <form onSubmit={handleFormSubmit}>
-
+ 
 <div className="foodd-container">
-
+ 
   <div className="foodd">
     <h2>Food Delivery Details</h2>
     <div className="food-delivery-details">
@@ -210,7 +209,7 @@ const Payment = () => {
         <label>Phone Number:</label>
         <input name="phone_number" value={formData.phone_number} onChange={handleInputChange} required />
       </div>
-
+ 
 {formData.addresses.map((address, index) => (
   <div key={index} className="address-box">
     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -225,14 +224,14 @@ const Payment = () => {
     <input name="pincode" value={address.pincode} onChange={(e) => handleAddressInputChange(index, e)} placeholder="Pincode" required />
   </div>
 ))}
-
+ 
       <button className="submit-bttn">Submit Address</button>
       {successMessage && <Alert severity="success">{successMessage}</Alert>}
     </div>
-    
+   
   </div>
-
-
+ 
+ 
   <div className="foodd">
     <h2>Subscription Details</h2>
     <div className="subscription-details">
@@ -262,7 +261,7 @@ const Payment = () => {
   Pay ₹{price || 0}
 </button>
   </div>
-
+ 
 </div>
        </form>      
       </div>

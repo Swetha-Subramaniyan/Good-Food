@@ -1,4 +1,5 @@
 
+
 import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -24,14 +25,15 @@ import { FaListAlt, FaHome } from 'react-icons/fa';
 import { SlBasketLoaded } from 'react-icons/sl';
 import { useNavigate } from 'react-router-dom';
 import { IoMdLogOut } from "react-icons/io";
+import axios from 'axios'
 
 const drawerWidth = 240;
 
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
+const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme }) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
+    transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
@@ -40,7 +42,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
       {
         props: ({ open }) => open,
         style: {
-          transition: theme.transitions.create('margin', {
+          transition: theme.transitions.create("margin", {
             easing: theme.transitions.easing.easeOut,
             duration: theme.transitions.duration.enteringScreen,
           }),
@@ -52,9 +54,9 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 );
 
 const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
+  shouldForwardProp: (prop) => prop !== "open",
 })(({ theme }) => ({
-  transition: theme.transitions.create(['margin', 'width'], {
+  transition: theme.transitions.create(["margin", "width"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
@@ -64,7 +66,7 @@ const AppBar = styled(MuiAppBar, {
       style: {
         width: `calc(100% - ${drawerWidth}px)`,
         marginLeft: `${drawerWidth}px`,
-        transition: theme.transitions.create(['margin', 'width'], {
+        transition: theme.transitions.create(["margin", "width"], {
           easing: theme.transitions.easing.easeOut,
           duration: theme.transitions.duration.enteringScreen,
         }),
@@ -73,18 +75,39 @@ const AppBar = styled(MuiAppBar, {
   ],
 }));
 
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
+const DrawerHeader = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
   padding: theme.spacing(0, 1),
   ...theme.mixins.toolbar,
-  justifyContent: 'flex-end',
+  justifyContent: "flex-end",
 }));
 
 const MainUserSidebar = () => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [notificationCount, setNotificationCount] = React.useState("");
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const getNotificationCount = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(
+          `${process.env.REACT_APP_BACKEND_SERVER_URL}/notification/getNotificationCount`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        console.log(notificationCount);
+        setNotificationCount(response.data.count);
+      } catch (error) {
+        console.error("Error fetching notifications:", error);
+      }
+    };
+
+    getNotificationCount();
+  }, []);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -96,56 +119,54 @@ const MainUserSidebar = () => {
 
   const handleNavigation = (menuItem) => {
     console.log(menuItem);
-    if (menuItem === 'Profile') {
-      navigate('/user/Account');
-    } else if (menuItem === 'Cart') {
-      navigate('/user/Cart');
-    } else if (menuItem === 'Subscription') {
-      navigate('/user/SubscriptionCalender');
-    } else if (menuItem === 'Order') {
-      navigate('/user/order');
-    } else if (menuItem === 'Admin') {
-      navigate('/admin/addsubscription');
-    } else if (menuItem === 'Log Out') {
-      navigate('/');
-    } else if (menuItem === 'Wallet') {
-      navigate('/user/Wallet');
-    } else if (menuItem === 'Home') {
-      navigate('/user/Home');
-    } else if (menuItem === 'Notification'){
-      navigate('/user/Notification')
-    } else if (menuItem=== 'Skippedcart'){
-      navigate('/user/Skippedcart')
+    if (menuItem === "Profile") {
+      navigate("/user/Account");
+    } else if (menuItem === "Cart") {
+      navigate("/user/Cart");
+    } else if (menuItem === "Subscription") {
+      navigate("/user/SubscriptionCalender");
+    } else if (menuItem === "Order") {
+      navigate("/user/order");
+    } else if (menuItem === "Admin") {
+      navigate("/admin/addsubscription");
+    } else if (menuItem === "Log Out") {
+      navigate("/");
+    } else if (menuItem === "Wallet") {
+      navigate("/user/Wallet");
+    } else if (menuItem === "Home") {
+      navigate("/user/Home");
+    } else if (menuItem === "Notification") {
+      navigate("/user/Notification");
+    } else if (menuItem === "Skippedcart") {
+      navigate("/user/Skippedcart");
     }
   };
 
   return (
     <>
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <AppBar position="fixed" open={open} sx={{ backgroundColor: ' rgb(104, 6, 104);' }}>
-<Toolbar>
-  <IconButton
-    color="inherit"
-    aria-label="open drawer"
-    onClick={handleDrawerOpen}
-    edge="start"
-    sx={[{ mr: 2 }, open && { display: 'none' }]}
-  >
-    <MenuIcon />
-  </IconButton>
-
-  <IconButton
-    color="inherit"
-    sx={{ marginLeft: 'auto' }}
-    onClick={() => {
-      localStorage.removeItem('token'); 
-      navigate('/'); 
-    }}
-  >
-    <IoMdLogOut size={24} /> 
-  </IconButton>
-</Toolbar>
+        <AppBar
+          position="fixed"
+          open={open}
+          sx={{ backgroundColor: " rgb(104, 6, 104);" }}
+        >
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              sx={[
+                {
+                  mr: 2,
+                },
+                open && { display: "none" },
+              ]}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Toolbar>
 
         </AppBar>
 
@@ -153,9 +174,9 @@ const MainUserSidebar = () => {
           sx={{
             width: drawerWidth,
             flexShrink: 0,
-            '& .MuiDrawer-paper': {
+            "& .MuiDrawer-paper": {
               width: drawerWidth,
-              boxSizing: 'border-box',
+              boxSizing: "border-box",
             },
           }}
           variant="persistent"
@@ -164,22 +185,44 @@ const MainUserSidebar = () => {
         >
           <DrawerHeader>
             <IconButton onClick={handleDrawerClose}>
-              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+              {theme.direction === "ltr" ? (
+                <ChevronLeftIcon />
+              ) : (
+                <ChevronRightIcon />
+              )}
             </IconButton>
           </DrawerHeader>
           <Divider />
           <List>
             {[
-              { text: 'Profile', icon: <IoPersonCircleOutline size={30} /> },
-              { text: 'Notification', icon: <FontAwesomeIcon icon={faBell} /> },
-              { text: 'Subscription', icon: <FaListAlt size={20} /> },
-              { text: 'Cart', icon: <SlBasketLoaded size={24} /> },
-              { text: 'Wallet', icon: <FontAwesomeIcon icon={faWallet} /> },
-              { text: 'Order', icon: <FontAwesomeIcon icon={faBell} size='1.4rem' /> },            
-              { text: 'Log Out', icon: <FaHome size={25} /> }, 
-              { text: 'Admin', icon: <IoPersonCircleOutline size={30} /> }, 
-              { text: 'Home', icon: <FaHome size={25} /> }, 
-              { text: 'Skippedcart', icon: <SlBasketLoaded size={24} />  }, 
+              { text: "Profile", icon: <IoPersonCircleOutline size={30} /> },
+              {
+                text: `Notification`,
+                icon: (
+                  <>
+                  <FontAwesomeIcon icon={faBell} />
+                    {notificationCount > 0 && (
+                      <div className="notification-icon-item">
+                        
+                        <p className="notification-bubble">
+                          {notificationCount}
+                        </p>
+                      </div>
+                    )}
+                  </>
+                ),
+              },
+              { text: "Subscription", icon: <FaListAlt size={20} /> },
+              { text: "Cart", icon: <SlBasketLoaded size={24} /> },
+              { text: "Wallet", icon: <FontAwesomeIcon icon={faWallet} /> },
+              {
+                text: "Order",
+                icon: <FontAwesomeIcon icon={faBell} size="1.4rem" />,
+              },
+              { text: "Log Out", icon: <FaHome size={25} /> },
+              { text: "Admin", icon: <IoPersonCircleOutline size={30} /> },
+              { text: "Home", icon: <FaHome size={25} /> },
+              { text: "Skippedcart", icon: <SlBasketLoaded size={24} /> },
             ].map(({ text, icon }) => (
               <ListItem key={text} disablePadding>
                 <ListItemButton onClick={() => handleNavigation(text)}>
@@ -200,4 +243,3 @@ const MainUserSidebar = () => {
 };
 
 export default MainUserSidebar;
-

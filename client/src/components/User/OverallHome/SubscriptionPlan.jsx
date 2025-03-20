@@ -1,14 +1,16 @@
+
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./SubscriptionPlan.css";
 import { AiFillCloseSquare } from "react-icons/ai";
- 
+
 const SubscriptionPlan = () => {
   const navigate = useNavigate();
   const [subscriptions, setSubscriptions] = useState({});
   const [selectedPlan, setSelectedPlan] = useState(null);
- 
+
   useEffect(() => {
     const fetchSubscriptions = async () => {
       try {
@@ -21,38 +23,37 @@ const SubscriptionPlan = () => {
         console.error("Error fetching subscriptions:", error.message);
       }
     };
- 
+
     fetchSubscriptions();
   }, []);
- 
+
   const handlePlanClick = (planName) => {
     setSelectedPlan(planName);
   };
- 
+
   const handleClosePopup = () => {
     setSelectedPlan(null);
   };
- 
+
   const handleMealClick = (planName, planType, mealType) => {
     navigate(`/user/${planName}/${planType}/${mealType}`);
   };
- 
+
   return (
     <>
     <div className="subscription-container">
+
     <header className="header">
         <h1 className="choose">Choose Your Plan for Subscription!</h1>
       </header>
     <section >
-     
-   
       {Object.keys(subscriptions).map((planName) => (
         <div className={`plan-section ${planName.toLowerCase()}`} key={planName}>
           <div className="description-card" id="individual-section">
             {planName === "Individual Plan" && (
               <p className="plann-description">
                {planName} - You can subscribe to only one meal (Breakfast, Lunch, or Dinner).
-             
+
               </p>
             )}
            
@@ -61,14 +62,14 @@ const SubscriptionPlan = () => {
                 {planName} - This plan includes all three meals: Breakfast, Lunch, and Dinner.
               </p>
             )}
-         
+
             <div className="plan-card" onClick={() => handlePlanClick(planName)}>
               <h2 className="plan-name">{planName}</h2>
             </div>
           </div>
         </div>
       ))}
- 
+
       {selectedPlan && subscriptions[selectedPlan] && (
         <div className="popup-overlay">
           <div className="popup">
@@ -102,8 +103,8 @@ const SubscriptionPlan = () => {
     </section>
     </div>
 </>
-   
+
   );
 };
- 
+
 export default SubscriptionPlan;
