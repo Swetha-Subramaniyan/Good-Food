@@ -677,14 +677,15 @@ model Notification {
   customer_id              String
   admin_id                 Int
   notifier_type            String
-  notofication_description String
+  notofication_description String   @db.VarChar(255) 
   notification_details_id  Int
   created_at               DateTime
   updatedAt                DateTime
+  viewed                   Boolean  @default(false)
 
   notificationResponses Notification_Response[]
 }
-
+    
 model Notification_Type {
   notification_type_id Int      @id @default(autoincrement())
   type_name            String   @db.VarChar(255)

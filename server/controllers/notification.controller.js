@@ -107,7 +107,7 @@ const sendEmailOnUserMultipleAddressUpdate = async (req, res, next) => {
       email,
       notificationDescription,
       emailSubject: "Delivery Address Updated",
-      emailTemplate: MultipleAddressUpdateTemplateHTML(),
+      emailTemplate: MultipleAddressUpdateTemplateHTML(updatedAddresses),
       whatsappNumber,
       whatsappMessage: notificationDescription,
     });
@@ -228,7 +228,6 @@ const sendNotificationOnOrderProcessing = async (req, res, next) => {
       new Date().toISOString().split("T")[0]
     } is being prepared! You can modify your future meals or skip upcoming ones if needed.`;
 
-
     const userAddress = await prisma.user_Address.findFirst({
       where: { customer_id: customer_id },
     });
@@ -252,11 +251,170 @@ const sendNotificationOnOrderProcessing = async (req, res, next) => {
       whatsappMessage: notificationDescription,
     });
 
-
     res.status(200).json({ msg: "Success" });
   } catch (error) {
     console.log(error);
     return next(error);
+  }
+};
+
+const getAllNotificationsWithDetails = async (req, res, next) => {
+  try {
+    const { customer_id } = req.user;
+
+    const notifications = await prisma.notification.findMany({
+      where: {
+        customer_id: customer_id,
+      },
+      orderBy: {
+        created_at: "desc",
+      },
+    });
+
+    if (!notifications || notifications.length === 0) {
+      return res.status(202).json({
+        msg: "No notifications found for this customer",
+        notifications: [],
+      });
+    }
+
+    const notificationDetails = await prisma.Notication_Details.findMany({
+      where: {
+        id: {
+          in: notifications.map((notif) => notif.notification_details_id),
+        },
+      },
+      orderBy: {
+        created_at: "desc",
+      },
+    });
+
+    if (!notificationDetails || notificationDetails.length === 0) {
+      return res.status(202).json({
+        msg: "No notification details found for these notifications",
+        notifications: [],
+      });
+    }
+
+    const notificationsWithDetails = await Promise.all(
+      notifications.map(async (notification) => {
+        const notificationDetail = notificationDetails.find(
+          (detail) => detail.id === notification.notification_details_id
+        );
+
+        if (!notificationDetail) {
+          return {
+            ...notification,
+            notificationDetails: null,
+            details: null,
+          };
+        }
+
+        let details = null;
+
+        switch (notificationDetail.entity_type) {
+          case "Subscription":
+            details = await prisma.subscription.findUnique({
+              where: { id: notificationDetail.entity_id },
+              include: {
+                parentPlan1: true,
+                TierSub: true,
+                DurationSubs: true,
+                MealSub: true,
+                PricingDetails: true,
+              },
+            });
+            break;
+
+          case "user_address":
+            details = await prisma.User_Address.findMany({
+              where: { customer_id: customer_id },
+            });
+            break;
+
+          case "CANCELLATION":
+            details = await prisma.cancellation.findUnique({
+              where: { id: notificationDetail.entity_id },
+              include: {
+                Cancellation_Criteria: true,
+                Subscription: true,
+                User_Subscription: true,
+              },
+            });
+            break;
+
+          case "SKIPPED_CART":
+            details = await prisma.skipped_Cart.findUnique({
+              where: { id: notificationDetail.entity_id },
+              include: {
+                skippedMealItem: true,
+                userSubscriptionSkippedCart: true,
+                SkippedUser: true,
+              },
+            });
+            break;
+
+          default:
+            details = null;
+        }
+
+        return {
+          ...notification,
+          notificationDetails: notificationDetail, 
+          details, 
+        };
+      })
+    );
+
+    res.status(200).json({ notifications: notificationsWithDetails });
+  } catch (error) {
+    console.error("Error fetching notifications with details:", error);
+    return next(error);
+  }
+};
+
+const markNotificationAsViewed = async (req, res) => {
+  try {
+    const { notifications } = req.body;
+
+    if (!Array.isArray(notifications) || notifications.length === 0) {
+      return res
+        .status(400)
+        .json({ message: "Notification IDs array is required" });
+    }
+
+    const updatedNotifications = await prisma.notification.updateMany({
+      where: { id: { in: notifications.map(Number) } },
+      data: { viewed: true },
+    });
+
+    return res.status(200).json({
+      message: "Notifications marked as viewed",
+      updatedCount: updatedNotifications.count,
+    });
+  } catch (error) {
+    console.error("Error updating notifications:", error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+const getNotificationCount = async (req, res) => {
+  try {
+    const userId = req.user.user_id;
+
+    let notificationCount = await prisma.notification.count({
+      where: {
+        user_id: userId,
+        viewed: false,
+      },
+    });
+
+    return res.status(200).json({ count: notificationCount });
+  } catch (error) {
+    console.error("Error fetching notification count:", error);
+    return res.status(500).json({
+      error: "An error occurred while fetching the notification count",
+    });
   }
 };
 
@@ -265,4 +423,7 @@ module.exports = {
   sendEmailOnUserMultipleAddressUpdate,
   sendNotificationOnSubscription,
   sendNotificationOnOrderProcessing,
+  getAllNotificationsWithDetails,
+  markNotificationAsViewed,
+  getNotificationCount,
 };

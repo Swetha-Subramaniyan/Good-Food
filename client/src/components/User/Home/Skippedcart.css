@@ -1,13 +1,101 @@
-.skipped-head{
-    margin-top: 3rem;
+.skipped-cart {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
-.info-text{
-    margin-left: 10rem;
-    border: 1px solid black;
-    width: 14rem;
-    padding: 0.5rem;
-    font-weight: bold;
-    margin-left: 72.4rem;
+.subscription-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+  width: 80%;
 }
 
+.subscription-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.subscription-card h3 {
+  color: #4a90e2;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.subscription-card p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.subscription-card ul {
+  padding-left: 20px;
+  margin: 10px 0;
+}
+
+.subscription-card ul li {
+  list-style-type: disc;
+  font-size: 1rem;
+  color: #555;
+}
+
+.subscription-card .skipped-details {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f1f1f1;
+  border-radius: 8px;
+}
+
+.subscription-card .skipped-details h4 {
+  color: #e74c3c;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+.skipped-item {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 15px;
+}
+
+.skipped-item:last-child {
+  border-bottom: none;
+}
+
+.skipped-item p {
+  font-size: 1rem;
+  color: #333;
+}
+
+.reorder-button {
+  background-color: #27ae60;
+  color: #fff;
+  font-size: 1rem;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.reorder-button:hover {
+  background-color: #2ecc71;
+}
+
+.reorder-button:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
