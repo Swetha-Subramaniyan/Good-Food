@@ -30,6 +30,7 @@
       font-weight: bold;
       background-color: rgb(113, 69, 69);
       color: white;  
+      background-color: #714545;
     }
    
    
@@ -96,6 +97,7 @@
    
 @media (max-width: 768px) {
      
+
 .home-header{
             display: flex;
             justify-content: start;

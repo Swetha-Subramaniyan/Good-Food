@@ -20,26 +20,6 @@ const LandingPage = () => {
     setIsSignInVisible(false);
   };
 
-  useEffect(() => {
-    const fetchSubscriptions = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_SERVER_URL}/sub/names`,
-          {}
-        );
-        console.log("Response :", response.data);
-        setGroupedSubscriptions(response.data.groupedSubscriptions);
-      } catch (error) {
-        console.error(
-          "Error fetching subscriptions:",
-          error.response?.data || error.message
-        );
-      }
-    };
-
-    fetchSubscriptions();
-  }, []);
-
   const showFeedbackForm = () => {
     setIsFeedbackVisible(true);
   };
@@ -79,14 +59,10 @@ const LandingPage = () => {
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="#planss-section">
-                    Combo Budget
+                    Combo Plan
                   </a>
                 </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#plansss-section">
-                    Combo Elite
-                  </a>
-                </li>
+             
                 <li className="nav-item">
                   <a className="nav-link" href="#contact-section">
                     Contact Us

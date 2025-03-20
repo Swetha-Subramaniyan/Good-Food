@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import "./Payment.css";
 import Alert from "@mui/material/Alert";
@@ -126,35 +127,46 @@ const Payment = () => {
     }
   };
 
+ 
+ 
+
   const handlePayment = async () => {
     if (!amount) {
       alert("Amount not available");
       return;
     }
 
+ 
     try {
       const token = localStorage.getItem("token");
+ 
+     
 
-      // 1️⃣ Get Razorpay Key
       const keyResponse = await axios.get(
         `${process.env.REACT_APP_BACKEND_SERVER_URL}/payment/getKey`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       const razorpayKey = keyResponse.data.key;
 
-      // 2️⃣ Create Razorpay Order
+ 
+     
+
       const { data } = await axios.post(
         `${process.env.REACT_APP_BACKEND_SERVER_URL}/payment/razorPay`,
         { subscription_id: id, amount },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
+ 
+
       if (!data.order) {
         alert("Failed to create order.");
         return;
       }
 
-      // 3️⃣ Razorpay Options
+ 
+    
+
       const options = {
         key: razorpayKey,
         amount: data.order.amount,
@@ -196,6 +208,8 @@ const Payment = () => {
           }
         },
 
+       
+
         prefill: {
           name: "John Doe",
           email: "johndoe@example.com",
@@ -206,19 +220,25 @@ const Payment = () => {
         },
       };
 
-      // 4️⃣ Initialize Razorpay
+ 
+     
       const razorpay = new window.Razorpay(options);
       razorpay.open();
+ 
+
     } catch (error) {
       console.error("Error in payment process:", error);
       alert("Something went wrong with the payment.");
     }
   };
 
-  // Format Date Function
-  const formatDate = (date) => date.toLocaleDateString("en-GB");
+ 
+ 
+ 
 
-  // Calculate Validity and Dates
+  const formatDate = (date) => date.toLocaleDateString("en-GB");
+ 
+
   const planName = subscription?.parentPlan1?.plan_name || "N/A";
   const mealType = subscription?.MealSub?.meal_type || "N/A";
   const tierType = subscription?.TierSub?.type || "N/A";
@@ -239,11 +259,7 @@ const Payment = () => {
   console.log(hasAddress)
 
   return (
-    <div className="details-back">
-      <div className="form-container">
-        <h2>Subscription Details</h2>
-        {error && <Alert severity="error">{error}</Alert>}
-        {successMessage && <Alert severity="success">{successMessage}</Alert>}
+    <div className="details-back">     
         <form onSubmit={handleFormSubmit}>
           <div className="subscription-details">
             <div className="form-group">
@@ -381,7 +397,46 @@ const Payment = () => {
         </button>
       </div>
       {showModal && <WhatsappQr onClose={() => setShowModal(false)} />}
+
     </div>
+    
+  </div>
+
+
+  <div className="foodd">
+    <h2>Subscription Details</h2>
+    <div className="subscription-details">
+      <div className="form-group">
+        <label>Subscription Plan: <span>{planName}-{tierType}</span></label>
+      </div>
+      <div className="form-group">
+        <label>Meal Type: <span>{mealType}</span></label>
+      </div>
+      <div className="form-group">
+        <label>Subscription Price: <span>₹{price}</span></label>
+      </div>
+      <div className="form-group">
+        <label>Subscription Days: <span>{days} Days</span></label>
+      </div>
+      <div className="form-group">
+        <label>Starting Date: <span>{formatDate(startDate)}</span></label>
+      </div>
+      <div className="form-group">
+        <label>Ending Date: <span>{formatDate(endDate)}</span></label>
+      </div>
+      <div className="form-group">
+        <label>Subscription Validity: <span>{validity} Days</span></label>
+      </div>
+    </div>
+    <button type="button" className="submit-color" onClick={handlePayment}>
+  Pay ₹{price || 0}
+</button>
+  </div>
+
+</div>
+       </form>      
+      </div>
+   
   );
 };
 
