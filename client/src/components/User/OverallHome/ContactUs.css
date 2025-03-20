@@ -1,10 +1,12 @@
 .contact-last {
   padding: 2rem;
-  /* background-color: #f8f9fa; */
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
+  margin-top: 3rem;  
  
 }
+ 
+ 
  
 #contact-section {
   max-width: 1200px;
@@ -73,7 +75,7 @@
  
 .copyright-section {
   text-align: center;
-  margin-top: 20rem;
+  margin-top: 13rem;
   padding: 10px;
   background-color: #f8f8f8;
   font-size: 14px;
@@ -120,4 +122,6 @@
  
  
  
- 
+/* .copyright-section {
+  margin-top: 5rem;
+} */
