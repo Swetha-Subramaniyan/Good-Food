@@ -9,7 +9,7 @@ import { PiCertificateBold } from "react-icons/pi";
 import { PiChefHatBold } from "react-icons/pi";
 import SignIn from "./SignIn";
 import { Link } from "react-router-dom";
-import UpdateComponent from "./Update";
+// import UpdateComponent from "./Update";
 
 const LandingPage = () => {
   const [isFeedbackVisible, setIsFeedbackVisible] = useState(false);
@@ -115,7 +115,7 @@ const LandingPage = () => {
 
         <SignIn isVisible={isSignInVisible} onClose={handleCloseSignIn} />
 
-        {isUpdateVisible && <UpdateComponent onClose={closeUpdatePopup} />}
+        {/* {isUpdateVisible && <UpdateComponent onClose={closeUpdatePopup} />} */}
       </section>
 
     

@@ -25,6 +25,7 @@ import { FaListAlt, FaHome } from 'react-icons/fa';
 import { SlBasketLoaded } from 'react-icons/sl';
 import { useNavigate } from 'react-router-dom';
 import { IoMdLogOut } from "react-icons/io";
+import axios from 'axios'
 
 const drawerWidth = 240;
 
