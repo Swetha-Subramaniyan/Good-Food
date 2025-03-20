@@ -10,14 +10,11 @@ import { PiChefHatBold } from "react-icons/pi";
 import SignIn from "./SignIn";
 import { Link } from "react-router-dom";
 
-import UpdateComponent from "./Update";
-
 const LandingPage = () => {
   const [isFeedbackVisible, setIsFeedbackVisible] = useState(false);
   const [groupedSubscriptions, setGroupedSubscriptions] = useState({});
 
   const [isSignInVisible, setIsSignInVisible] = useState(false);
-  const [isUpdateVisible, setIsUpdateVisible] = useState(false);
 
   const handleCloseSignIn = () => {
     setIsSignInVisible(false);
@@ -29,14 +26,6 @@ const LandingPage = () => {
 
   const closeFeedbackForm = () => {
     setIsFeedbackVisible(false);
-  };
-
-  const showUpdatePopup = () => {
-    setIsUpdateVisible(true);
-  };
-
-  const closeUpdatePopup = () => {
-    setIsUpdateVisible(false);
   };
 
   return (
@@ -84,12 +73,6 @@ const LandingPage = () => {
                     Ideas to Improve!
                   </a>
                 </li>
-
-                <li className="nav-item">
-                  <a className="nav-link" onClick={showUpdatePopup}>
-                    Update
-                  </a>
-                </li>
               </ul>
             </div>
           </div>
@@ -129,7 +112,6 @@ const LandingPage = () => {
         </div>
         <SignIn isVisible={isSignInVisible} onClose={handleCloseSignIn} />
 
-        {isUpdateVisible && <UpdateComponent onClose={closeUpdatePopup} />}
       </section>
     </>
 

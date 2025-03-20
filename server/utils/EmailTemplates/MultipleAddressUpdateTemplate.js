@@ -1,4 +1,4 @@
-const MultipleAddressUpdateTemplateHTML = (
+const MultipleAddressUpdateTemplateHTML = (updatedAddresses
 ) => `
 <!DOCTYPE html>
 <html lang="en">
@@ -64,16 +64,12 @@ const MultipleAddressUpdateTemplateHTML = (
         <h2>New Address Added Successfully!</h2>
         <p>You have successfully added a new delivery address to your account. Here’s a summary of your saved addresses:</p>
 
-        <!-- Example Address Blocks -->
-        <div class="address-box">
-            <strong>Home Address:</strong>
-            <p>123 Main Street, Cityville, State, 12345</p>
-        </div>
-
-        <div class="address-box">
-            <strong>Work Address:</strong>
-            <p>456 Business Road, Office Park, State, 67890</p>
-        </div>
+         ${updatedAddresses.map(address => `
+            <div class="address-box">
+                <strong>${address.label || 'Address'}:</strong>
+                <p>${address.street}, ${address.city} - ${address.pincode}</p>
+            </div>
+        `).join('')}
 
         <p>You can manage or update your saved addresses at any time.</p>
         

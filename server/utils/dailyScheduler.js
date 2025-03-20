@@ -4,15 +4,23 @@ const prisma = new PrismaClient();
 const axios = require("axios");
 
 const startMealSchedulers = async (req, res) => {
-  
   const cutoffTimes = await prisma.Order_Criteria.findMany();
 
   console.log("cut off time", cutoffTimes);
 
   cutoffTimes.forEach(({ meal_type_id, cutoff_time }) => {
-    const [hour, minute] = cutoff_time.split(":");
+    let hour, minute;
+
+    if (cutoff_time.startsWith("-")) {
+      const [negativeHours, minutes] = cutoff_time.slice(1).split(":");
+      hour = 24 - parseInt(negativeHours);
+      minute = parseInt(minutes);
+    } else {
+      [hour, minute] = cutoff_time.split(":");
+    }
+
     console.log("hour", hour);
-    console.log("minute", minute); 
+    console.log("minute", minute);
 
     cron.schedule(`${minute} ${hour} * * *`, async () => {
       console.log(
@@ -55,8 +63,21 @@ async function generateOrders(mealTypeId) {
     const activeSubscriptions = await fetchActiveSubscriptions(mealTypeId);
 
     for (const subscription of activeSubscriptions) {
-      await createOrder(subscription);
-      console.log("Order created for subscription:", subscription.id);
+      const skippedItems = subscription.skippedCart.map(
+        (skipped) => skipped.skipped_meal_item_id
+      );
+
+      const foodItemsToOrder =
+        subscription.Subscription.FoodSubscription.filter(
+          (foodItem) => !skippedItems.includes(foodItem.food_item_id)
+        );
+
+      if (foodItemsToOrder.length > 0) {
+        await createOrder(subscription, foodItemsToOrder);
+        console.log("Order created for subscription:", subscription.id);
+      } else {
+        console.log("No items to order for subscription:", subscription.id);
+      }
     }
   } catch (error) {
     console.error("Error generating orders:", error);
@@ -133,7 +154,7 @@ async function createOrder(subscription) {
       updatedAt: new Date(),
     },
   });
-  console.log("User_Food_Report created:", userFoodReport); 
+  console.log("User_Food_Report created:", userFoodReport);
 
   /* try {
     const response = await axios.post("http://localhost:5001/notification/sendNotificationOnOrderProcessing", {
