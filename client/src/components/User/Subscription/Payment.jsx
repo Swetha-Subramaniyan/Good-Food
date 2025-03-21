@@ -3,16 +3,13 @@ import "./Payment.css";
 import Alert from "@mui/material/Alert";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import WhatsappQr from "./WhatsappQr";
-
+ 
 const Payment = () => {
   const { id } = useParams();
   const [subscription, setSubscription] = useState({});
   const [amount, setAmount] = useState(null);
   const [error, setError] = useState(null);
-  const [AddressData, setAddressData] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-
+ 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -21,7 +18,7 @@ const Payment = () => {
   });
   const [successMessage, setSuccessMessage] = useState(null);
   const navigate = useNavigate();
-
+ 
   useEffect(() => {
     const fetchSubscriptionDetails = async () => {
       try {
@@ -56,25 +53,25 @@ const Payment = () => {
         );
       }
     };
-
+ 
     if (id) {
       fetchSubscriptionDetails();
-      fetchUserAddressDetails();
     }
   }, [id]);
-
+ 
+ 
   const handleInputChange = (e) => {
-    let { name, value } = e.target;
+    const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
-
+ 
   const handleAddressInputChange = (index, e) => {
     const { name, value } = e.target;
     const updatedAddresses = [...formData.addresses];
     updatedAddresses[index][name] = value;
     setFormData((prevData) => ({ ...prevData, addresses: updatedAddresses }));
   };
-
+ 
   const handleAddAddress = () => {
     setFormData((prevData) => ({
       ...prevData,
@@ -84,19 +81,10 @@ const Payment = () => {
       ],
     }));
   };
-
+ 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (formData && formData.phone_number) {
-        if (
-          !formData.phone_number.startsWith("+91") ||
-          !formData.phone_number.startsWith("91")
-        ) {
-          formData.phone_number = `91${formData.phone_number}`;
-        }
-      }
-
       const token = localStorage.getItem("token");
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_SERVER_URL}/adrress/createPhone`,
@@ -104,7 +92,6 @@ const Payment = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       console.log("Form Submitted:", response.data);
-
       setSuccessMessage(response.data.message);
 
       const responseForNotification = await axios.post(
@@ -116,6 +103,7 @@ const Payment = () => {
       alert("Addresses Updated successfully!");
 
       setShowModal(true);
+
       setFormData({
         name: "",
         email: "",
@@ -127,6 +115,7 @@ const Payment = () => {
     }
   };
 
+
   const handlePayment = async () => {
     if (!amount) {
       alert("Amount not available");
@@ -136,11 +125,13 @@ const Payment = () => {
     try {
       const token = localStorage.getItem("token");
 
+
       const keyResponse = await axios.get(
         `${process.env.REACT_APP_BACKEND_SERVER_URL}/payment/getKey`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       const razorpayKey = keyResponse.data.key;
+
 
       const { data } = await axios.post(
         `${process.env.REACT_APP_BACKEND_SERVER_URL}/payment/razorPay`,
@@ -148,10 +139,12 @@ const Payment = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
+
       if (!data.order) {
         alert("Failed to create order.");
         return;
       }
+
 
       const options = {
         key: razorpayKey,
@@ -173,7 +166,6 @@ const Payment = () => {
               },
               { headers: { Authorization: `Bearer ${token}` } }
             );
-
             const userSubscriptionId = data.subscription?.id;
 
             const responseForNotification = await axios.post(
@@ -181,6 +173,7 @@ const Payment = () => {
               { entity_id: userSubscriptionId },
               { headers: { Authorization: `Bearer ${token}` } }
             );
+
 
             if (userSubscriptionId) {
               alert("Payment successful!");
@@ -194,6 +187,7 @@ const Payment = () => {
           }
         },
 
+
         prefill: {
           name: "John Doe",
           email: "johndoe@example.com",
@@ -206,6 +200,7 @@ const Payment = () => {
 
       const razorpay = new window.Razorpay(options);
       razorpay.open();
+
     } catch (error) {
       console.error("Error in payment process:", error);
       alert("Something went wrong with the payment.");
@@ -214,6 +209,7 @@ const Payment = () => {
 
   const formatDate = (date) => date.toLocaleDateString("en-GB");
 
+
   const planName = subscription?.parentPlan1?.plan_name || "N/A";
   const mealType = subscription?.MealSub?.meal_type || "N/A";
   const tierType = subscription?.TierSub?.type || "N/A";
@@ -221,11 +217,12 @@ const Payment = () => {
   const days = subscription?.DurationSubs?.actual_days || 0;
   const addonDays = subscription?.DurationSubs?.addon_days || 0;
   const validity = days + addonDays;
-
+ 
   const startDate = new Date();
   startDate.setHours(0, 0, 0, 0);
   const endDate = new Date(startDate);
   endDate.setDate(startDate.getDate() + validity);
+
 
   const isIndividualPlan = planName === "Individual Plan";
   const showAddAddressButton = !(isIndividualPlan && AddressData.length >= 2);
@@ -421,10 +418,13 @@ const Payment = () => {
         <button type="button" className="submit-color" onClick={handlePayment}>
           Pay ₹{price || 0}
         </button>
+
       </div>
       </div>
+
+    
       </div>
   );
 };
-
+ 
 export default Payment;

@@ -195,6 +195,9 @@ const getAllMenu = async (req, res) => {
     }
   };
 
+
+  
+
 module.exports={createDailyMenu,createPeriodical,getMenuwithPeriod,getAllMenu}
 
 
