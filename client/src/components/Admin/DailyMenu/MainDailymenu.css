@@ -1,0 +1,81 @@
+
+
+.day-dropdown{
+    background-color: aliceblue;
+    width: fit-content;
+    padding: 1.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 10px;
+    background-color: rgb(79, 9, 79);
+    /* background-color: chocolate; */
+    color: white;
+    background-color: rgb(61, 115, 216);
+}
+
+select {
+    margin-left: 1rem;
+    font-size: 1rem;
+}
+
+.day-position{
+    display: flex;
+    justify-content: space-around;
+}
+.day-save{
+    background-color: rgb(59, 48, 255);
+    height: 2.5rem;
+    width: 6rem;
+    padding: 0.2rem;
+    color: white;
+    border-radius: 8px;
+    margin-top: 1rem;
+    background-color: rgb(79, 9, 79);
+}
+.days-section{
+    display: flex;
+    justify-content: space-around;
+    
+}
+.days-section h3{
+    background-color: rgb(223, 223, 236);
+    background-color: coral;
+    border-radius: 8px;
+    padding: 1.2rem;
+}
+
+.days-section h3:hover{
+    background-color: coral;
+    background-color: rgb(79, 9, 79) ;
+    color: white;
+
+}
+
+
+/* .dayy-dropdownn{
+    background-color: aliceblue;
+    width: fit-content;
+    padding: 1.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 10px;
+    background-color: rgb(79, 9, 79);
+    color: white;
+    display: flex;
+    justify-content: space-around;
+} */
+
+
+.dayy-dropdownn{
+    display: flex;
+    justify-content: center;
+    padding: 1.3rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 10px;
+    background-color: rgb(79, 9, 79);
+    color: white;
+    margin-left: 37rem;
+    margin-right: 37rem;
+   
+}

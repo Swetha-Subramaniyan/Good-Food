@@ -1,0 +1,61 @@
+/* Modal Overlay */
+.WhatsappQr-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Align modal to the top */
+  z-index: 1000;
+}
+
+/* Modal Content */
+.WhatsappQr-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  margin-top: 20px; /* Add margin from the top */
+  animation: slideDown 0.3s ease-out; /* Slide-down animation */
+}
+
+/* Slide-down animation */
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* QR Code Image */
+.qr-code {
+  width: 100%;
+  height: 100%;
+}
+
+/* Close Button */
+.close-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.close-button:hover {
+  background-color: #0056b3;
+}

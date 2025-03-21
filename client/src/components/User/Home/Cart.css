@@ -1,0 +1,53 @@
+
+.order-header {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+.cart-checkout button{
+  padding: 0.5rem;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: white;
+  background-color:  rgb(107, 56, 89); 
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+  
+}
+
+.cart-checkout{
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-left: 10rem;
+  margin-top: 3rem;
+}
+
+.cart-checkout button:hover{
+  background-color: rgb(104, 6, 104);
+  text-decoration: none;
+}
+
+
+.addon-options div{
+  display: flex;
+  flex-direction: row;
+  
+}
+
+.waterbottle{
+  margin-left: 10rem;
+
+}
+
+
+
+
+
+
+
+
+
+
+
