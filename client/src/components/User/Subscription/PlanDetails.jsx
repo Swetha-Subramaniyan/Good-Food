@@ -107,18 +107,7 @@ const PlanDetails = () => {
         <p>No meal details found for the selected option.</p>
       )}
  
-<div className="food-items-container">
-        <h3>Food Items in this Plan:</h3>
-        {foodItems.length > 0 ? (
-          <ul>
-            {foodItems.map((food) => (
-              <li >{food.item_name} </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No food items available for this plan.</p>
-        )}
-      </div>
+ 
     </div>
  
     <div className="subscribe-button">
