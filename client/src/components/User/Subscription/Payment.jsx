@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import "./Payment.css";
 import Alert from "@mui/material/Alert";
@@ -41,6 +40,7 @@ const Payment = () => {
       }
     };
 
+    //fetching Address
     const fetchUserAddressDetails = async () => {
       try {
         const token = localStorage.getItem("token");
@@ -104,12 +104,12 @@ const Payment = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       console.log("Form Submitted:", response.data);
-      
+
       setSuccessMessage(response.data.message);
 
       const responseForNotification = await axios.post(
         `${process.env.REACT_APP_BACKEND_SERVER_URL}/notification/sendEmailOnUserMultipleAddressUpdate`,
-        {entity_id: response.data.createPhone.id},
+        { entity_id: response.data.createPhone.id },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -127,20 +127,14 @@ const Payment = () => {
     }
   };
 
- 
- 
-
   const handlePayment = async () => {
     if (!amount) {
       alert("Amount not available");
       return;
     }
 
- 
     try {
       const token = localStorage.getItem("token");
- 
-     
 
       const keyResponse = await axios.get(
         `${process.env.REACT_APP_BACKEND_SERVER_URL}/payment/getKey`,
@@ -148,24 +142,16 @@ const Payment = () => {
       );
       const razorpayKey = keyResponse.data.key;
 
- 
-     
-
       const { data } = await axios.post(
         `${process.env.REACT_APP_BACKEND_SERVER_URL}/payment/razorPay`,
         { subscription_id: id, amount },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
- 
-
       if (!data.order) {
         alert("Failed to create order.");
         return;
       }
-
- 
-    
 
       const options = {
         key: razorpayKey,
@@ -192,7 +178,7 @@ const Payment = () => {
 
             const responseForNotification = await axios.post(
               `${process.env.REACT_APP_BACKEND_SERVER_URL}/notification/sendNotificationOnSubscription`,
-              {entity_id: userSubscriptionId},
+              { entity_id: userSubscriptionId },
               { headers: { Authorization: `Bearer ${token}` } }
             );
 
@@ -208,8 +194,6 @@ const Payment = () => {
           }
         },
 
-       
-
         prefill: {
           name: "John Doe",
           email: "johndoe@example.com",
@@ -220,24 +204,15 @@ const Payment = () => {
         },
       };
 
- 
-     
       const razorpay = new window.Razorpay(options);
       razorpay.open();
- 
-
     } catch (error) {
       console.error("Error in payment process:", error);
       alert("Something went wrong with the payment.");
     }
   };
 
- 
- 
- 
-
   const formatDate = (date) => date.toLocaleDateString("en-GB");
- 
 
   const planName = subscription?.parentPlan1?.plan_name || "N/A";
   const mealType = subscription?.MealSub?.meal_type || "N/A";
@@ -256,10 +231,12 @@ const Payment = () => {
   const showAddAddressButton = !(isIndividualPlan && AddressData.length >= 2);
 
   const hasAddress = AddressData.length > 0;
-  console.log(hasAddress)
+  console.log(hasAddress);
 
   return (
-    <div className="details-back">     
+      <div className="details-back">
+        <div className="form-container">
+        <h2>Subscription Details</h2>
         <form onSubmit={handleFormSubmit}>
           <div className="subscription-details">
             <div className="form-group">
@@ -391,52 +368,62 @@ const Payment = () => {
           style={{
             cursor: hasAddress ? "pointer" : "not-allowed",
           }}
-          title={!hasAddress ? "You need to add at least 1 delivery address" : ""}
+          title={
+            !hasAddress ? "You need to add at least 1 delivery address" : ""
+          }
         >
           Pay ₹{price || 0}
         </button>
-      </div>
+      
       {showModal && <WhatsappQr onClose={() => setShowModal(false)} />}
-
-    </div>
-    
-  </div>
-
-
-  <div className="foodd">
-    <h2>Subscription Details</h2>
-    <div className="subscription-details">
-      <div className="form-group">
-        <label>Subscription Plan: <span>{planName}-{tierType}</span></label>
+      <div className="foodd">
+        <h2>Subscription Details</h2>
+        <div className="subscription-details">
+          <div className="form-group">
+            <label>
+              Subscription Plan:{" "}
+              <span>
+                {planName}-{tierType}
+              </span>
+            </label>
+          </div>
+          <div className="form-group">
+            <label>
+              Meal Type: <span>{mealType}</span>
+            </label>
+          </div>
+          <div className="form-group">
+            <label>
+              Subscription Price: <span>₹{price}</span>
+            </label>
+          </div>
+          <div className="form-group">
+            <label>
+              Subscription Days: <span>{days} Days</span>
+            </label>
+          </div>
+          <div className="form-group">
+            <label>
+              Starting Date: <span>{formatDate(startDate)}</span>
+            </label>
+          </div>
+          <div className="form-group">
+            <label>
+              Ending Date: <span>{formatDate(endDate)}</span>
+            </label>
+          </div>
+          <div className="form-group">
+            <label>
+              Subscription Validity: <span>{validity} Days</span>
+            </label>
+          </div>
+        </div>
+        <button type="button" className="submit-color" onClick={handlePayment}>
+          Pay ₹{price || 0}
+        </button>
       </div>
-      <div className="form-group">
-        <label>Meal Type: <span>{mealType}</span></label>
       </div>
-      <div className="form-group">
-        <label>Subscription Price: <span>₹{price}</span></label>
       </div>
-      <div className="form-group">
-        <label>Subscription Days: <span>{days} Days</span></label>
-      </div>
-      <div className="form-group">
-        <label>Starting Date: <span>{formatDate(startDate)}</span></label>
-      </div>
-      <div className="form-group">
-        <label>Ending Date: <span>{formatDate(endDate)}</span></label>
-      </div>
-      <div className="form-group">
-        <label>Subscription Validity: <span>{validity} Days</span></label>
-      </div>
-    </div>
-    <button type="button" className="submit-color" onClick={handlePayment}>
-  Pay ₹{price || 0}
-</button>
-  </div>
-
-</div>
-       </form>      
-      </div>
-   
   );
 };
 

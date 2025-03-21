@@ -25,6 +25,8 @@ import { FaListAlt, FaHome } from 'react-icons/fa';
 import { SlBasketLoaded } from 'react-icons/sl';
 import { useNavigate } from 'react-router-dom';
 import { IoMdLogOut } from "react-icons/io";
+import axios from 'axios';
+import "./MainUserSidebar.css"
 
 const drawerWidth = 240;
 
