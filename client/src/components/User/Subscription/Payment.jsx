@@ -182,10 +182,10 @@ const Payment = () => {
   const addonDays = subscription?.DurationSubs?.addon_days || 0;
   const validity = days + addonDays;
  
-  const startDate = new Date();
-  startDate.setHours(0, 0, 0, 0);
-  const endDate = new Date(startDate);
-  endDate.setDate(startDate.getDate() + validity);
+  const start_date=new Date()
+  start_date.setDate(start_date.getDate()+1)
+  const end_date=new Date(start_date)
+  end_date.setDate(end_date.getDate()+ days-1)
  
  
   return (
@@ -248,10 +248,10 @@ const Payment = () => {
         <label>Subscription Days: <span>{days} Days</span></label>
       </div>
       <div className="form-group">
-        <label>Starting Date: <span>{formatDate(startDate)}</span></label>
+        <label>Starting Date: <span>{formatDate(start_date)}</span></label>
       </div>
       <div className="form-group">
-        <label>Ending Date: <span>{formatDate(endDate)}</span></label>
+        <label>Ending Date: <span>{formatDate(end_date)}</span></label>
       </div>
       <div className="form-group">
         <label>Subscription Validity: <span>{validity} Days</span></label>

@@ -1,28 +1,9 @@
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // import React, { useState, useEffect } from "react";
 // import "./SubscriptionCalender.css";
-// import Checkbox from "@mui/material/Checkbox";
-// import { pink } from "@mui/material/colors";
 // import axios from "axios";
-
-// const label = { inputProps: { "aria-label": "Checkbox demo" } };
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faSquareXmark, faCircleCheck, faClock } from "@fortawesome/free-solid-svg-icons";
 
 // const SubscriptionCalender = () => {
 //   const [reports, setReports] = useState([]);
@@ -33,66 +14,35 @@
 //       try {
 //         const token = localStorage.getItem("token");
 
-//         // Fetch the latest user subscription details
-//         const subResponse = await axios.get(
-//           `${process.env.REACT_APP_BACKEND_SERVER_URL}/userSubscription/getUserDetails`,
+//         const response = await axios.get(
+//           `${process.env.REACT_APP_BACKEND_SERVER_URL}/foodReport/getUserFoodReport`,
 //           {
-//             headers: { Authorization: `Bearer ${token}` },
+//             headers: { Authorization: `Bearer ${token}` }
 //           }
 //         );
 
-//         const latestSubscription =
-//           subResponse.data.userSubscriptions?.slice(-1)[0]; // Get last subscription
-
-//         if (!latestSubscription) {
-//           setError("No active subscription found.");
-//           return;
-//         }
-
-//         const user_subscription_id = latestSubscription.id;
-
-//         // Fetch user food reports based on user_subscription_id
-//         const reportResponse = await axios.post(
-//           `${process.env.REACT_APP_BACKEND_SERVER_URL}/foodReport/createReport`,
-//           { user_subscription_id },
-//           { headers: { Authorization: `Bearer ${token}` } }
-//         );
-
-//         setReports(reportResponse.data.reports);
+//         console.log("Fetched Reports:", response.data);
+//         setReports(response.data);
 //       } catch (err) {
-//         setError(err.response?.data?.message || "Failed to fetch reports.");
+//         setError(err.response?.data?.error || "Failed to fetch reports.");
 //       }
 //     };
 
 //     fetchUserReports();
 //   }, []);
 
+ 
+
 //   return (
 //     <>
 //       <div className="order-header">Subscription Details</div>
 
-//       {error ? <p style={{ color: "red" }}>{error}</p> : null}
+//       {error && <p style={{ color: "red" }}>{error}</p>}
 
 //       <div className="sub-status">
-//         <div>
-//           <Checkbox {...label} defaultChecked /> Pending
-//         </div>
-//         <div>
-//           <Checkbox {...label} /> Cancelled
-//         </div>
-//         <div>
-//           <Checkbox
-//             {...label}
-//             defaultChecked
-//             sx={{
-//               color: pink[800],
-//               "&.Mui-checked": {
-//                 color: pink[600],
-//               },
-//             }}
-//           />
-//           Delivered
-//         </div>
+//         <div><FontAwesomeIcon icon={faClock} size="lg" /> Pending</div>
+//         <div><FontAwesomeIcon icon={faSquareXmark} color="red" size="lg" /> Cancelled</div>
+//         <div><FontAwesomeIcon icon={faCircleCheck} color="green" size="lg" /> Delivered</div>
 //       </div>
 //       <br />
 
@@ -107,28 +57,7 @@
 //             </tr>
 //           </thead>
 //           <tbody>
-//             {reports.length > 0 ? (
-//               reports.map((report, index) => (
-//                 <tr key={index}>
-//                   <td>{new Date(report.created_at).toLocaleDateString()}</td>
-//                   <td>
-//                     <Checkbox {...label} defaultChecked={report.breakfast_qty > 0} />
-//                   </td>
-//                   <td>
-//                     <Checkbox {...label} defaultChecked={report.lunch_qty > 0} />
-//                   </td>
-//                   <td>
-//                     <Checkbox {...label} defaultChecked={report.dinner_qty > 0} />
-//                   </td>
-//                 </tr>
-//               ))
-//             ) : (
-//               <tr>
-//                 <td colSpan="4" style={{ textAlign: "center" }}>
-//                   No reports found.
-//                 </td>
-//               </tr>
-//             )}
+           
 //           </tbody>
 //         </table>
 //       </div>
@@ -138,18 +67,6 @@
 
 // export default SubscriptionCalender;
 
-
-
-
-
-
-
-
-
-
-
-
-
 import React, { useState, useEffect } from "react";
 import "./SubscriptionCalender.css";
 import axios from "axios";
@@ -157,23 +74,58 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareXmark, faCircleCheck, faClock } from "@fortawesome/free-solid-svg-icons";
 
 const SubscriptionCalender = () => {
-  const [reports, setReports] = useState([]);
+  const [subscription, setSubscription] = useState(null);
+  const [foodData, setFoodData] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchUserReports = async () => {
       try {
         const token = localStorage.getItem("token");
-
         const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_SERVER_URL}/foodReport/getUserReport`,
-          {
-            headers: { Authorization: `Bearer ${token}` }
-          }
+          `${process.env.REACT_APP_BACKEND_SERVER_URL}/foodReport/getUserFoodReport`,
+          { headers: { Authorization: `Bearer ${token}` } }
         );
 
-        console.log("Fetched Reports:", response.data.reports);
-        setReports(response.data.reports);
+        console.log("Fetched Reports:", response.data);
+        const { getReport } = response.data;
+
+        // Get the latest subscription
+        const latestSubscription = getReport.userSubscription[getReport.userSubscription.length - 1];
+        setSubscription(latestSubscription);
+        console.log("Latest Subscription:", latestSubscription);
+
+        // Extract subscription details
+        const startDate = new Date(latestSubscription.start_date);
+        const endDate = new Date(latestSubscription.end_date);
+
+        // Extract food details (or set default values)
+        const foodDetails = latestSubscription.userSubscriptionFood?.[0] || { 
+          breakfast_qty: 0, 
+          lunch_qty: 0, 
+          dinner_qty: 0 
+        };
+
+        // Generate rows from start_date to end_date
+        const daysList = [];
+        let currentDate = new Date(startDate);
+
+        while (currentDate <= endDate) {
+          const formattedDate = currentDate.toISOString().split("T")[0];
+
+          daysList.push({
+            date: formattedDate,
+            breakfast: foodDetails.breakfast_qty,
+            lunch: foodDetails.lunch_qty,
+            dinner: foodDetails.dinner_qty
+          });
+
+          // Move to the next day
+          currentDate.setDate(currentDate.getDate() + 1);
+        }
+
+        setFoodData(daysList);
+
       } catch (err) {
         setError(err.response?.data?.error || "Failed to fetch reports.");
       }
@@ -182,26 +134,22 @@ const SubscriptionCalender = () => {
     fetchUserReports();
   }, []);
 
-  const formatQuantity = (breakfast, lunch, dinner, type) => {
-    switch (type) {
-      case "breakfast": return breakfast > 0 ? 1 : 0;
-      case "lunch": return lunch > 0 ? 1 : 0;
-      case "dinner": return dinner > 0 ? 1 : 0;
-      default: return 0;
-    }
-  };
-
   return (
     <>
       <div className="order-header">Subscription Details</div>
 
       {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <div className="sub-status">
-        <div><FontAwesomeIcon icon={faClock} size="lg" /> Pending</div>
-        <div><FontAwesomeIcon icon={faSquareXmark} color="red" size="lg" /> Cancelled</div>
-        <div><FontAwesomeIcon icon={faCircleCheck} color="green" size="lg" /> Delivered</div>
-      </div>
+      {subscription && (
+        <div className="sub-status">
+          <div><FontAwesomeIcon icon={faClock} size="lg" /> Pending</div>
+          <div><FontAwesomeIcon icon={faSquareXmark} color="red" size="lg" /> Cancelled</div>
+          <div><FontAwesomeIcon icon={faCircleCheck} color="green" size="lg" /> Delivered</div>
+          <div>Validity Days : {subscription.validity_days}</div>
+          <div>Customer ID: {subscription.customer_id}</div>
+        </div>
+      )}
+
       <br />
 
       <div>
@@ -215,18 +163,18 @@ const SubscriptionCalender = () => {
             </tr>
           </thead>
           <tbody>
-            {reports.length > 0 ? (
-              reports.map((report, index) => (
+            {foodData.length > 0 ? (
+              foodData.map((day, index) => (
                 <tr key={index}>
-                  <td>{new Date(report.ordered_date).toLocaleDateString()}</td>
-                  <td>{formatQuantity(report.breakfast_qty, 0, 0, "breakfast")}</td>
-                  <td>{formatQuantity(0, report.lunch_qty, 0, "lunch")}</td>
-                  <td>{formatQuantity(0, 0, report.dinner_qty, "dinner")}</td>
+                  <td>{day.date}</td>
+                  <td>{day.breakfast}</td>
+                  <td>{day.lunch}</td>
+                  <td>{day.dinner}</td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="4" style={{ textAlign: "center" }}>No reports found.</td>
+                <td colSpan="4">No subscription data available</td>
               </tr>
             )}
           </tbody>
@@ -237,8 +185,5 @@ const SubscriptionCalender = () => {
 };
 
 export default SubscriptionCalender;
-
-
-
 
 

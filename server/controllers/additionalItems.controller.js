@@ -28,7 +28,14 @@ const getAllAdditionalItems = async(req,res) => {
                 food_item_id : true,
                 additionalItems : {
                     select : {
-                        item_name : true
+                        item_name : true,
+                        image_url:true,
+                        SubscriptionPriceDetails : {
+                            select : {
+                                id:true,
+                                price:true
+                            }
+                        }
                     }
                 }
             }
@@ -36,6 +43,8 @@ const getAllAdditionalItems = async(req,res) => {
         const foodItems = getAllItems.map(item => ({
             id: item.food_item_id,
             name: item.additionalItems.item_name,
+            image_url : item.additionalItems.image_url,
+            price:item.additionalItems.SubscriptionPriceDetails.price
           }));
       
         res.status(200).json({message : "Additional Items Fetched",foodItems})
