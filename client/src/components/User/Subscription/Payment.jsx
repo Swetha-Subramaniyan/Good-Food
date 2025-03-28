@@ -3,12 +3,16 @@ import "./Payment.css";
 import Alert from "@mui/material/Alert";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import WhatsappQr from "./WhatsappQr";
  
 const Payment = () => {
   const { id } = useParams();
   const [subscription, setSubscription] = useState({});
   const [amount, setAmount] = useState(null);
   const [error, setError] = useState(null);
+  const [AddressData, setAddressData] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+
  
   const [formData, setFormData] = useState({
     name: "",
@@ -56,6 +60,8 @@ const Payment = () => {
  
     if (id) {
       fetchSubscriptionDetails();
+      fetchUserAddressDetails();
+
     }
   }, [id]);
  
@@ -226,15 +232,17 @@ const Payment = () => {
 
   const isIndividualPlan = planName === "Individual Plan";
   const showAddAddressButton = !(isIndividualPlan && AddressData.length >= 2);
+  console.log(showAddAddressButton,AddressData )
 
   const hasAddress = AddressData.length > 0;
   console.log(hasAddress);
 
   return (
       <div className="details-back">
+        <form onSubmit={handleFormSubmit}>
         <div className="form-container">
         <h2>Subscription Details</h2>
-        <form onSubmit={handleFormSubmit}>
+        
           <div className="subscription-details">
             <div className="form-group">
               <label>Subscription Plan:</label>
@@ -356,7 +364,7 @@ const Payment = () => {
               </div>
             </div>
           )}
-        </form>
+        
         <button
           type="button"
           className="submit-color"
@@ -421,6 +429,7 @@ const Payment = () => {
 
       </div>
       </div>
+      </form>
 
     
       </div>

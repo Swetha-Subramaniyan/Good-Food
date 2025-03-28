@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import logo from "../../../assets/Foodlogo.jpg";
 import "./LandingPage.css";
@@ -9,20 +8,25 @@ import { PiChefHatBold } from "react-icons/pi";
 import SignIn from "./SignIn";
 import { Link } from "react-router-dom";
 
-
 const LandingPage = () => {
   const [isFeedbackVisible, setIsFeedbackVisible] = useState(false);
   const [isSignInVisible, setIsSignInVisible] = useState(false);
   const [isUpdateVisible, setIsUpdateVisible] = useState(false);
- 
+  const [role, setRole]= useState("");
+
   const handleCloseSignIn = () => {
     setIsSignInVisible(false);
+  };
+
+  const handleLogin = (roles) => {
+    setIsSignInVisible(true);
+    setRole(roles)
   };
 
   const showUpdatePopup = () => {
     setIsUpdateVisible(true);
   };
- 
+
   const closeUpdatePopup = () => {
     setIsUpdateVisible(false);
   };
@@ -51,7 +55,7 @@ const LandingPage = () => {
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#individual-section" >
+                  <a className="nav-link" href="#individual-section">
                     Individual Plan
                   </a>
                 </li>
@@ -78,13 +82,19 @@ const LandingPage = () => {
         <div className="logo-pic">
           <img className="header-img" src={logo} alt="food" />
         </div>
- 
+
         <div className="signing-in">
-          <Link to={"/admin/addsubscription"}>
-            <button> Admin </button>
-          </Link>
+          <button className="login-button user-button" onClick={()=>handleLogin("USER")}>
+            User Login
+          </button>
+          <button className="login-button admin-button" onClick={()=>handleLogin("ADMIN")}>
+            Admin Login
+          </button>
+          {isSignInVisible && (
+            <SignIn isVisible={isSignInVisible} onClose={handleCloseSignIn} role={role}  />
+          )}
         </div>
- 
+
         <div className="home-header">
           <h1 className="food-delivery">
             Freshly Made Home Cuisine
@@ -110,16 +120,13 @@ const LandingPage = () => {
             <PiChefHatBold size={25} /> 3.5L+ <span> Sellers </span>
           </div>
         </div>
- 
-        <SignIn isVisible={isSignInVisible} onClose={handleCloseSignIn} />
- 
+
+        <SignIn isVisible={isSignInVisible} onClose={handleCloseSignIn} role={role}  />
+
         {/* {isUpdateVisible && <UpdateComponent onClose={closeUpdatePopup} />} */}
       </section>
- 
     </>
   );
 };
- 
-export default LandingPage;
 
-   
+export default LandingPage;
