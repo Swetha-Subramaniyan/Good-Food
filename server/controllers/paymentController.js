@@ -35,7 +35,7 @@ const createOrderAndSubscription = async (req, res) => {
       return res.status(500).json({ error: "Failed to create Razorpay order" });
     }
 
-    const { customer_id } = req.user;
+    const { customer_id,user_id } = req.user;
 
     const subscription = await prisma.subscription.findUnique({
       where: { id: Number(subscription_id) },
@@ -65,8 +65,28 @@ const createOrderAndSubscription = async (req, res) => {
     const validity = actual_days + addon_days;
 
     const start_date = new Date();
+    start_date.setDate(start_date.getDate() + 1);
     const end_date = new Date(start_date);
-    end_date.setDate(start_date.getDate() + quantity);
+    end_date.setDate(start_date.getDate() + quantity-1);
+
+    
+const mealType = subscriptionData.MealSub?.meal_type || "";
+
+let breakfast_qty = 0;
+let lunch_qty = 0;
+let dinner_qty = 0;
+
+if (mealType === "Breakfast") {
+  breakfast_qty = 1;
+} else if (mealType === "Lunch") {
+  lunch_qty = 1;
+} else if (mealType === "Dinner") {
+  dinner_qty = 1;
+} else if (mealType === "Combo") {
+  breakfast_qty = 1;
+  lunch_qty = 1;
+  dinner_qty = 1;
+}
 
     const userSubscription = await prisma.user_Subscription.create({
       data: {
@@ -78,6 +98,18 @@ const createOrderAndSubscription = async (req, res) => {
         validity_days: validity,
         created_at: new Date(),
         updatedAt: new Date(),
+        userSubscriptionFood: {
+          create: {
+            ordered_date:new Date(),
+            breakfast_qty,
+            lunch_qty,
+            dinner_qty,
+            customer_id,
+            user_id,
+            created_at:new Date(),
+            updatedAt:new Date()
+          }
+        }
       },
     });
 
