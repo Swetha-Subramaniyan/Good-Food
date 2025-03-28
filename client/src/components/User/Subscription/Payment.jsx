@@ -189,11 +189,9 @@ const Payment = () => {
  
  
   return (
-    <div className="details-back">    
+    <div className="detailss-back">    
         <form onSubmit={handleFormSubmit}>
- 
 <div className="foodd-container">
- 
   <div className="foodd">
     <h2>Food Delivery Details</h2>
     <div className="food-delivery-details">
@@ -264,7 +262,7 @@ const Payment = () => {
  
 </div>
        </form>      
-      </div>
+    </div>
    
   );
 };

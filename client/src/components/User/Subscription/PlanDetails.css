@@ -1,505 +1,152 @@
-/* .plan-container {
-    max-width: 90%;
-    margin: auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f8f8f8;
-  }
-  
 
-  .heading {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-
-  .menu-container {
-    display: flex;
-    flex-wrap: wrap;  
-    justify-content: center;
-    gap: 20px;
-    margin-top: 20px;
-  }
-  
-
-  .menu-day {
-    background: white;
-    border-radius: 12px;
-    padding: 15px;
-    border: 2px solid #ddd;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 250px;  
-    text-align: center;
-    transition: 0.3s ease-in-out;
-  }
-  
-  .menu-day:hover {
-    transform: scale(1.05);
-  }
-  
-  
-  .menu-day h4 {
-    font-size: 20px;
-    margin-bottom: 10px;
-    color: #333;
-    text-transform: uppercase;
-    font-weight: bold;
-  }
-  
-
-  .meal-section {
-    margin-bottom: 10px;
-    text-align: left;
-  }
-  
- 
-  .meal-section h5 {
-    font-size: 18px;
-    color: #555;
-    margin-bottom: 5px;
-    text-transform: capitalize;
-  }
-  
-
-  .meal-list {
-    list-style: none;
-    padding: 0;
-  }
-  
-
-  .meal-item {
-    font-size: 16px;
-    background: #f2f2f2;
-    padding: 8px;
-    border-radius: 5px;
-    margin-bottom: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-
-  .meal-image {
-    width: 50px;
-    height: 50px;
-    border-radius: 5px;
-    object-fit: cover;
-    margin-left: 10px;
-  }
-  
-  @media (max-width: 768px) {
-    .menu-container {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .menu-day {
-      width: 90%;
-    }
-  }
-
-
-
-   .backgrd {
+  .backgrd {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, #d8e1ea, #e9ecef);
     padding: 40px;
+    min-height: 100vh;
   }
- 
- 
-  @keyframes marquee {
-    0% {
-      transform: translateX(100%);
-    }
-    100% {
-      transform: translateX(-100%);
-    }
-  }
- 
- 
-  .subscribe-button {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
-  }
- 
-  .subscribe-button button {
-    background-color: rgb(12, 12, 234);
-    background-color: #007bff;
-    color: white;
-    padding: 16px 24px;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    animation: blink 1s infinite alternate;
-    font-size: 26px;
-   
-  }
- 
-  @keyframes blink {
-    0% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.5;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
- 
-  .subscribe-button button:hover {
-    animation: none;
-    background-color: #1679e2;
-  }
- 
- 
-  .plan-item {
-    background: white;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    font-weight: 600;
-    margin: 10px;
-    cursor: pointer;
-    transition: transform 0.3s ease, background 0.3s ease;
-    width: 250px;
-    transition: 0.3s;
-    text-align: center;
-    background-color: white;
-    font-size: 1.5rem;
-  }
- 
-  .plan-item:hover {
-    transform: scale(1.05);
-    background: #f1f1f1;
-  }
- 
- 
-  .plan-item.selected {
-    background-color: #007bff;
-    color: white;
-    transform: scale(1.08);
-  }
- 
-  .error {
-    color: red;
-    font-size: 1rem;
-    margin-top: 10px;
-  }
- 
-   
-  .plans-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 75px;
-    margin-top: 20px;
-  }
- 
- 
-  .plan-item.selected {
-    background-color: #007bff;
-    color: white;
-  }
- 
- 
-  .subscribe-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 0 50px;
-   
-  }
- 
-  @keyframes fadeInDown {
-    from {
-      opacity: 0;
-      transform: translateY(-30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
- 
- 
-  @media (max-width: 768px) {
-    .choose-plan h2 {
-      font-size: 1.8rem;
-    }
- 
-    .plan-item {
-      width: 90%;
-      font-size: 1rem;
-    }
- 
-    .subscribe-button button {
-      font-size: 1rem;
-      padding: 10px 20px;
-    }
-  }
-  */
 
 
 
+ .menu-container {
+  display: flex;
+  gap: 15px;
+  padding: 20px;
+  justify-content: center;
+  min-width: 100%;
+}
 
-  .plan-container {
-    max-width: 90%;
-    margin: auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f8f8f8;
-  }
+.menu-day {
+
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 12rem;
+  padding: 2rem;
+
+}
+
+.menu-day h3 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.meal-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.meal-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.meal-image {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.meal-item p {
+  font-size: 16px;
+  font-weight: bold;
+  color: #555;
+}
+
+
+
+.plans-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 75px;
+  margin-top: 20px;
+}
+
+
+.plan-item.selected {
+  background-color: #007bff;
+  color: white;
+}
+
+.subscribe-button button:hover {
+  animation: none;
+  background-color: #1679e2;
+}
+
+
+
+.subscribe-button {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.subscribe-button button {
+
+  background-color: #007bff;
+  color: white;
+  padding: 16px 24px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  animation: blink 1s infinite alternate;
+  font-size: 26px;
  
-  /* Header styling */
-  .heading {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #333;
-  }
+}
+
+.subscribe-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 50px;
  
-  /* Flex container for menu cards */
-  .menu-container {
-    display: flex;
-    flex-wrap: wrap;  /* Allows wrapping if the screen is small */
-    justify-content: center;
-    gap: 20px;
-    margin-top: 20px;
-  }
- 
-  /* Card shape for each day */
-  .menu-day {
-    background: white;
-    border-radius: 12px;
-    padding: 15px;
-    border: 2px solid #ddd;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 250px;  /* Fixed width */
-    text-align: center;
-    transition: 0.3s ease-in-out;
-  }
- 
-  .menu-day:hover {
-    transform: scale(1.05);
-  }
- 
-  /* Day name */
-  .menu-day h4 {
-    font-size: 20px;
-    margin-bottom: 10px;
-    color: #333;
-    text-transform: uppercase;
-    font-weight: bold;
-  }
- 
-  /* Meal type section */
-  .meal-section {
-    margin-bottom: 10px;
-    text-align: left;
-  }
- 
-  /* Meal type heading */
-  .meal-section h5 {
-    font-size: 18px;
-    color: #555;
-    margin-bottom: 5px;
-    text-transform: capitalize;
-  }
- 
-  /* Food list */
-  .meal-list {
-    list-style: none;
-    padding: 0;
-  }
- 
-  /* Food items */
-  .meal-item {
-    font-size: 16px;
-    background: #f2f2f2;
-    padding: 8px;
-    border-radius: 5px;
-    margin-bottom: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
- 
-  /* Food item images */
-  .meal-image {
-    width: 50px;
-    height: 50px;
-    border-radius: 5px;
-    object-fit: cover;
-    margin-left: 10px;
-  }
- 
-  /* Responsive: Stack cards on smaller screens */
-  @media (max-width: 768px) {
-    .menu-container {
-      flex-direction: column;
-      align-items: center;
-    }
- 
-    .menu-day {
-      width: 90%;
-    }
-  }
- 
- 
- 
-   .backgrd {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    /* min-height: 100vh; */
-    background: linear-gradient(135deg, #d8e1ea, #e9ecef);
-    padding: 40px;
-  }
- 
- 
-  @keyframes marquee {
-    0% {
-      transform: translateX(100%);
-    }
-    100% {
-      transform: translateX(-100%);
-    }
-  }
- 
- 
-  .subscribe-button {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
-  }
- 
-  .subscribe-button button {
-    background-color: rgb(12, 12, 234);
-    background-color: #007bff;
-    color: white;
-    padding: 16px 24px;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    animation: blink 1s infinite alternate;
-    font-size: 26px;
-   
-  }
- 
-  @keyframes blink {
-    0% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.5;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
- 
-  .subscribe-button button:hover {
-    animation: none;
-    background-color: #1679e2;
-  }
- 
- 
-  .plan-item {
-    background: white;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    font-weight: 600;
-    margin: 10px;
-    cursor: pointer;
-    transition: transform 0.3s ease, background 0.3s ease;
-    width: 250px;
-    transition: 0.3s;
-    text-align: center;
-    background-color: white;
-    font-size: 1.5rem;
-  }
- 
-  .plan-item:hover {
-    transform: scale(1.05);
-    background: #f1f1f1;
-  }
- 
- 
-  .plan-item.selected {
-    background-color: #007bff;
-    color: white;
-    transform: scale(1.08);
-  }
- 
-  .error {
-    color: red;
-    font-size: 1rem;
-    margin-top: 10px;
-  }
- 
-   
-  .plans-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 75px;
-    margin-top: 20px;
-  }
- 
- 
-  .plan-item.selected {
-    background-color: #007bff;
-    color: white;
-  }
- 
- 
-  .subscribe-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 0 50px;
-   
-  }
- 
-  @keyframes fadeInDown {
-    from {
-      opacity: 0;
-      transform: translateY(-30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
- 
- 
-  @media (max-width: 768px) {
-    .choose-plan h2 {
-      font-size: 1.8rem;
-    }
- 
-    .plan-item {
-      width: 90%;
-      font-size: 1rem;
-    }
- 
-    .subscribe-button button {
-      font-size: 1rem;
-      padding: 10px 20px;
-    }
-  }
+}
+
+
+.plan-item {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  font-weight: 600;
+  margin: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s ease;
+  width: 250px;
+  transition: 0.3s;
+  text-align: center;
+  background-color: white;
+  font-size: 1.5rem;
+}
+
+.plan-item:hover {
+  transform: scale(1.05);
+  background: #f1f1f1;
+}
+
+
+.plan-item.selected {
+  background-color: #007bff;
+  color: white;
+  transform: scale(1.08);
+}
+
+
+.menu-section{
+  /* background-color: brown; */
+  min-width: 100%;
+} 
