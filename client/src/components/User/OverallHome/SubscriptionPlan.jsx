@@ -36,7 +36,7 @@ const SubscriptionPlan = () => {
   };
 
   const handleMealClick = (planName, planType, mealType) => {
-    navigate(`/user/${planName}/${planType}/${mealType}`);
+    navigate(`/${planName}/${planType}/${mealType}`);
   };
 
   return (

@@ -15,6 +15,9 @@ passport.use(
       try {
         const email = profile.email;
 
+        const role = request.session.role || "user";
+        console.log("Role from session:", role);
+
         const user = await prisma.users.upsert({
           where: { email: email },
           update: {
@@ -28,9 +31,20 @@ passport.use(
             display_picture: profile.photos[0]?.value || null,
             created_at: new Date(),
             updatedAt: new Date(),
-            customer_id: "", 
+            customer_id: "",
+            UserPosition: {
+              create: {
+                position: role, 
+                created_at: new Date(),
+                updatedAt: new Date()
+              }
+            }
           },
+          include: {
+            UserPosition: true
+          }
         });
+        console.log(user,"user")
 
         const customerId = `GF${String(user.id).padStart(3, "0")}`;
 
@@ -46,6 +60,7 @@ passport.use(
           customer_id: customerId,
           username: user.username,
           email: user.email,
+          role:user.UserPosition[0].position
         });
       } catch (error) {
         console.error("Error in GoogleStrategy:", error);

@@ -25,7 +25,10 @@ import { FaListAlt, FaHome } from 'react-icons/fa';
 import { SlBasketLoaded } from 'react-icons/sl';
 import { useNavigate } from 'react-router-dom';
 import { IoMdLogOut } from "react-icons/io";
-import axios from 'axios'
+
+import axios from 'axios';
+import "./MainUserSidebar.css"
+
 
 const drawerWidth = 240;
 
@@ -127,8 +130,6 @@ const MainUserSidebar = () => {
       navigate("/user/SubscriptionCalender");
     } else if (menuItem === "Order") {
       navigate("/user/order");
-    } else if (menuItem === "Admin") {
-      navigate("/admin/addsubscription");
     } else if (menuItem === "Log Out") {
       navigate("/");
     } else if (menuItem === "Wallet") {
@@ -220,7 +221,6 @@ const MainUserSidebar = () => {
                 icon: <FontAwesomeIcon icon={faBell} size="1.4rem" />,
               },
               { text: "Log Out", icon: <FaHome size={25} /> },
-              { text: "Admin", icon: <IoPersonCircleOutline size={30} /> },
               { text: "Home", icon: <FaHome size={25} /> },
               { text: "Skippedcart", icon: <SlBasketLoaded size={24} /> },
             ].map(({ text, icon }) => (

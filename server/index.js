@@ -31,11 +31,15 @@ const {startMealSchedulers } = require('./utils/dailyScheduler');
 const orderCartRoutes=require('./routes/orderCart.routes')
 const notificationRoutes = require('./routes/notification.routes');
 const cancellationRoutes = require('./routes/cancellation.routes');
+
 const SkippedCartRoutes = require('./routes/skippedCart.routes')
 const dailyMenuRoutes = require('./routes/daily_menu.routes')
 
 
 
+
+
+const adminorderDetailsRoutes = require('./routes/admin.orderDetails.routes')
 
 // const paymentInfoRoutes = require('./routes/paymentInfo.routes')
 // const orderCriteriaRoutes = require('./routes/orderCriteria.routes')
@@ -98,6 +102,13 @@ app.use('/payment',paymentRoutes)
 app.use('/subscriptionOrder',subscriptionOrderRoutes)
 app.use('/order',orderCartRoutes)
 app.use('/orders',orderRoutes)
+
+
+
+// app.use('/criteria',orderCriteriaRoutes)
+// app.use('/orderItem',orderItemRoutes)
+// app.use('/cart',cartRoutes)
+
 app.use('/foodReport',userFoodReportRoutes)
 
 
@@ -109,9 +120,18 @@ app.use('/dailyPeriod',dailyMenuRoutes)
 
 
 // app.use('/paymentInfo',paymentInfoRoutes)
+
 // app.use('/criteria',orderCriteriaRoutes)
 // app.use('/orderItem',orderItemRoutes)
 // app.use('/cart',cartRoutes)
+
+
+
+
+
+//admin Routes
+app.use('/admin',adminorderDetailsRoutes);
+
  
 
 

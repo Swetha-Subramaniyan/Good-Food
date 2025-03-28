@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Notification.css";
 import MainNavbar from "../Navbar/MainNavbar";
-
+ 
 const Notification = () => {
   const [notifications, setNotifications] = useState([]);
   const [filter, setFilter] = useState("all"); // "all", "read", "unread"
