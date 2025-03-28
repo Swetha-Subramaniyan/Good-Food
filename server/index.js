@@ -35,7 +35,8 @@ const orderCartRoutes=require('./routes/orderCart.routes')
 const dailyMenuRoutes = require('./routes/daily_menu.routes')
 const notificationRoutes = require('./routes/notification.routes');
 const cancellationRoutes = require('./routes/cancellation.routes');
-const SkippedCartRoutes = require('./routes/skippedCart.routes')
+const SkippedCartRoutes = require('./routes/skippedCart.routes');
+const adminorderDetailsRoutes = require('./routes/admin.orderDetails.routes')
 // const paymentInfoRoutes = require('./routes/paymentInfo.routes')
  
 const app = express();
@@ -89,6 +90,7 @@ app.use('/payment',paymentRoutes)
 app.use('/subscriptionOrder',subscriptionOrderRoutes)
 app.use('/order',orderCartRoutes)
 app.use('/orders',orderRoutes)
+
 // app.use('/criteria',orderCriteriaRoutes)
 // app.use('/orderItem',orderItemRoutes)
 // app.use('/cart',cartRoutes)
@@ -99,6 +101,12 @@ app.use('/foodReport',userFoodReportRoutes)
 app.use('/sms', smsRoutes);
 app.use('/dailyPeriod',dailyMenuRoutes)
 // app.use('/paymentInfo',paymentInfoRoutes)
+
+
+
+
+//admin Routes
+app.use('/admin',adminorderDetailsRoutes);
  
 app.listen(port, () => {
     console.log("Server is Running on port " + port)

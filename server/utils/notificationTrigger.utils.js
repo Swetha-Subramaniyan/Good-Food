@@ -69,7 +69,7 @@ const notificationTrigger = async ({
       },
     });
 
-    if (whatsappMessage) {
+    /* if (whatsappMessage) {
       const nexmoResponse = await axios.post(
         "https://messages-sandbox.nexmo.com/v1/messages",
         {
@@ -92,7 +92,7 @@ const notificationTrigger = async ({
       );
 
       console.log("WhatsApp Notification Sent:", nexmoResponse.data);
-    }
+    } */
 
     return { success: true };
   } catch (error) {

@@ -1,9 +1,9 @@
-
+ 
 .form-group span{
   font-weight: lighter;  
 }
-
-
+ 
+ 
 .foodd-container {
   display: flex;
   justify-content: space-between;
@@ -12,7 +12,7 @@
   flex-wrap: wrap;
   padding: 2rem;
 }
-
+ 
 .foodd {
   flex: 1;
   background: #f9f9f9;
@@ -21,7 +21,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 3rem;
 }
-
+ 
 .foodd h2 {
   font-size: 25px;
   margin-bottom: 15px;
@@ -30,28 +30,28 @@
   padding-bottom: 5px;
   font-weight: bold;
 }
-
-.subscription-details, 
+ 
+.subscription-details,
 .food-delivery-details {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
-
+ 
 .form-group {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
 }
-
+ 
 .form-group label {
   font-size: 18px;
   font-weight: bold;
   color: #333;
   flex: 1;
 }
-
+ 
 .form-group input {
   flex: 2;
   padding: 8px;
@@ -59,7 +59,7 @@
   border-radius: 5px;
   font-size: 14px;
 }
-
+ 
 .address-box {
   background: #fff;
   padding: 10px;
@@ -68,7 +68,7 @@
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
+ 
 .add-address-btn {
   background-color: #714545;
   background-color: dodgerblue;
@@ -83,9 +83,9 @@
   background-color: rgb(12, 96, 179);
  
 }
-
+ 
 .submit-bttn {
-  
+ 
   background-color: dodgerblue;
   color: white;
   padding: 10px 15px;
@@ -93,12 +93,12 @@
   border-radius: 5px;
   cursor: pointer;
   margin-top: 10px;
-  
+ 
 }
 .submit-bttn:hover{
   background-color: rgb(12, 96, 179);
 }
-
+ 
 .submit-color {
   display: block;
   width: 100%;
@@ -113,7 +113,7 @@
   cursor: pointer;
   margin-top: 95px;
 }
-
+ 
 .submit-color:hover{
   background-color: rgb(12, 96, 179);
 }
@@ -121,10 +121,10 @@
 .delivery{
   color: #ff4500;
   font-size: 1.3rem;
-
-
+ 
+ 
 }
-
+ 
 @media (max-width: 768px) {
   .foodd-container {
     padding: 0.5rem;
@@ -132,9 +132,9 @@
   .foodd {
     padding: 1rem;
   }
-
+ 
 }
-
+ 
 @media (max-width: 480px) {
   .foodd-container {
     padding: 0.5rem;
@@ -142,5 +142,7 @@
   .foodd {
     padding: 1rem;
   }
-
+ 
 }
+ 
+ 

@@ -100,8 +100,6 @@ const MainSidebar = () => {
       navigate('/admin/listitem')
     }else if (menuItem==='Orders'){
       navigate('/admin/orderlist')
-    }else if (menuItem === 'Users') {
-      navigate('/');  
     }else if (menuItem==='Daily Menu'){
       navigate('/admin/dailymenu')
     }else if (menuItem==='Subscription Menu List'){
@@ -154,7 +152,7 @@ const MainSidebar = () => {
           </DrawerHeader>
           <Divider />
           <List>
-            {['Subscription Plan', 'Add Items', 'Subscription Menu List', 'List of Items', 'Daily Menu', 'Orders',  'Subscribed Users', 'Users'].map((text, index) => (
+            {['Subscription Plan', 'Add Items', 'Subscription Menu List', 'List of Items', 'Daily Menu', 'Orders',  'Subscribed Users'].map((text, index) => (
               <ListItem key={text} disablePadding>
                 <ListItemButton onClick={() => handleNavigation(text)}>
                   <ListItemIcon>

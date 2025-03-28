@@ -20,7 +20,7 @@ const scheduleOrders = async (subscription) => {
       data: {
         customer_id: subscription.customer_id,
         subscription_id: subscription.id,
-        meal_type_id: 1, // Default meal, can be customized
+        meal_type_id: 1, 
         status: 'PENDING',
         order_date: today,
         created_at: today,

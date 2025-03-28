@@ -6,84 +6,71 @@ const axios = require("axios");
 const startMealSchedulers = async (req, res) => {
   const cutoffTimes = await prisma.Order_Criteria.findMany();
 
-  console.log("cut off time", cutoffTimes);
-
   cutoffTimes.forEach(({ meal_type_id, cutoff_time }) => {
-    let hour, minute;
-
     if (cutoff_time.startsWith("-")) {
-      const [negativeHours, minutes] = cutoff_time.slice(1).split(":");
-      hour = 24 - parseInt(negativeHours);
-      minute = parseInt(minutes);
+      const [_, hours, minutes] = cutoff_time.match(/-(\d+):(\d+)/);
+      const hour = parseInt(hours);
+      const minute = parseInt(minutes);
+      
+      cron.schedule(`${minute} ${hour} * * *`, async () => {
+        console.log(`[TOMORROW'S ORDERS] Running at ${hour}:${minute} for meal type ${meal_type_id}`);
+        await generateOrders(meal_type_id, true); 
+      });
+      
+      console.log(`Scheduled TOMORROW'S orders for meal ${meal_type_id} to run daily at ${hour}:${minute}`);
     } else {
-      [hour, minute] = cutoff_time.split(":");
+      const [hour, minute] = cutoff_time.split(":").map(Number);
+      
+      cron.schedule(`${minute} ${hour} * * *`, async () => {
+        console.log(`[TODAY'S ORDERS] Running at ${hour}:${minute} for meal type ${meal_type_id}`);
+        await generateOrders(meal_type_id, false); 
+      });
+      
+      console.log(`Scheduled TODAY'S orders for meal ${meal_type_id} to run daily at ${hour}:${minute}`);
     }
-
-    console.log("hour", hour);
-    console.log("minute", minute);
-
-    cron.schedule(`${minute} ${hour} * * *`, async () => {
-      console.log(
-        `Running order generation for meal type ${meal_type_id} at ${cutoff_time}...`
-      );
-      await generateOrders(meal_type_id);
-    });
-
-    console.log(
-      `Scheduled cron job for meal type ${meal_type_id} at ${cutoff_time}`
-    );
   });
 };
 
-async function fetchActiveSubscriptions(mealTypeId) {
-  return await prisma.user_Subscription.findMany({
+async function generateOrders(mealTypeId, isForTomorrow) {
+
+  const targetDate = new Date();
+  if (isForTomorrow) {
+    targetDate.setDate(targetDate.getDate() + 1); 
+  }
+
+ 
+  const activeSubscriptions = await prisma.user_Subscription.findMany({
     where: {
-      status: "ACTIVE",
-      start_date: { lte: new Date() },
-      end_date: { gte: new Date() },
-      Subscription: {
-        meal_type_id: mealTypeId,
-      },
+      status: "Active",
+      start_date: { lte: targetDate },
+      end_date: { gte: targetDate },
+      Subscription: { meal_type_id: mealTypeId }
     },
     include: {
       Subscription: {
         include: {
           MealSub: true,
           DurationSubs: true,
-          FoodSubscription: { include: { FoodItems: true } },
-        },
+          FoodSubscription: { include: { FoodItems: true } }
+        }
       },
       userSubscriptionDetails: true,
-    },
+      userSubscriptionSkippedCart: true
+    } 
   });
-}
 
-async function generateOrders(mealTypeId) {
-  try {
-    const activeSubscriptions = await fetchActiveSubscriptions(mealTypeId);
+  for (const sub of activeSubscriptions) {
+    const skippedIds = sub.userSubscriptionSkippedCart.map(item => item.skipped_meal_item_id);
+    const itemsToOrder = sub.Subscription.FoodSubscription.filter(
+      item => !skippedIds.includes(item.food_item_id)
+    );  
 
-    for (const subscription of activeSubscriptions) {
-      const skippedItems = subscription.skippedCart.map(
-        (skipped) => skipped.skipped_meal_item_id
-      );
-
-      const foodItemsToOrder =
-        subscription.Subscription.FoodSubscription.filter(
-          (foodItem) => !skippedItems.includes(foodItem.food_item_id)
-        );
-
-      if (foodItemsToOrder.length > 0) {
-        await createOrder(subscription, foodItemsToOrder);
-        console.log("Order created for subscription:", subscription.id);
-      } else {
-        console.log("No items to order for subscription:", subscription.id);
-      }
+    if (itemsToOrder.length > 0) {
+      await createOrder(sub);
     }
-  } catch (error) {
-    console.error("Error generating orders:", error);
-  }
+  } 
 }
-
+ 
 async function createOrder(subscription) {
   const { Subscription, userSubscriptionDetails } = subscription;
   const { MealSub, DurationSubs, FoodSubscription } = Subscription;
