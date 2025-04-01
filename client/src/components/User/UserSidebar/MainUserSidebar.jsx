@@ -150,7 +150,7 @@ const MainUserSidebar = () => {
         <AppBar
           position="fixed"
           open={open}
-          sx={{ backgroundColor: " rgb(104, 6, 104);" }}
+          sx={{ backgroundColor: " dodgerblue" }}
         >
           <Toolbar>
             <IconButton
