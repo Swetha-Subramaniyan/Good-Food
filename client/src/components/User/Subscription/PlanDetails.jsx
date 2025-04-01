@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import SignIn from "../OverallHome/SignIn";
-import "./PlanDetails.css"; // Import CSS for styling
+import "./PlanDetails.css";
  
 const PlanDetails = () => {
   const { planName, planType, mealType } = useParams();
@@ -132,15 +132,18 @@ const PlanDetails = () => {
  
                     <ul className="meal-list">
                       {items.map((item, index) => (
-                        <li key={index} className="meal-item">
-                          {item.food_name}
+                        <li key={index} className="meal-item">                          
                           {item.image && (
                             <img
                               src={item.image}
                               alt={item.food_name}
                               className="meal-image"
-                            />
+                            />                            
                           )}
+                          {item.food_name}
+
+                        
+
                         </li>
                       ))}
                     </ul>
@@ -153,7 +156,7 @@ const PlanDetails = () => {
           )}
         </div>
       </div>
- 
+
       {isSignInVisible && (
         <SignIn isVisible={isSignInVisible} onClose={handleCloseSignIn} role={"USER"} />
       )}
