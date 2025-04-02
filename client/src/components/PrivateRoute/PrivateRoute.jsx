@@ -11,6 +11,7 @@ const PrivateRoute = () => {
   };
 
   const token = localStorage.getItem("token");
+  console.log("Sss", token)
   const pendingSubscription = "";
   
 
@@ -18,6 +19,7 @@ const PrivateRoute = () => {
     localStorage.setItem("Redirect_Link", location.pathname);
     localStorage.setItem("pendingSubscription", pendingSubscription);
   }
+
 
   return token ? (
     <Outlet />

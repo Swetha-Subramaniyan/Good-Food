@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import SignIn from "../OverallHome/SignIn";
 import "./PlanDetails.css";
- 
 const PlanDetails = () => {
   const { planName, planType, mealType } = useParams();
   const [mealDetails, setMealDetails] = useState([]);

@@ -15,7 +15,7 @@ const googleCallback = (req, res) => {
   res.redirect(`${process.env.CLIENT_URL}/?token=${token}`)
   }
   else{
-    res.redirect(`${process.env.CLIENT_URL}/admin/addsubscription?token=${token}`)
+    res.redirect(`${process.env.CLIENT_URL}/?token=${token}`)
   }
 
   // const redirectUrl = req.query.redirectUrl ;

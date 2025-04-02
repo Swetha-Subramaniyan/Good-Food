@@ -6,7 +6,7 @@ import SubscriptionPlan from './SubscriptionPlan'
 import ContactUs from './ContactUs'
 import IdeasToImprove from './IdeasToImprove';
  
- 
+  
 const MainOverallHome = () => {
  
   return (
