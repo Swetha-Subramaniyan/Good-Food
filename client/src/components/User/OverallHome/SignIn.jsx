@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./SignIn.css";
 import { FaGoogle } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
-
+ 
 const SignIn = ({ isVisible, onClose, role }) => {
   console.log(isVisible);
   const navigate = useNavigate();
@@ -57,7 +57,11 @@ const SignIn = ({ isVisible, onClose, role }) => {
         localStorage.removeItem("Redirect_Link"); 
         navigate(redirectTo);
         }else{
+          if(role === "USER"){
           navigate('/user/SubscriptionCalender')
+          }else{
+            navigate('/admin/addsubscription')
+          }
         }
       }
     }

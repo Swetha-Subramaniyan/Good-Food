@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -94,9 +93,7 @@ const MainSidebar = () => {
     console.log(menuItem);
     if (menuItem === 'Subscription Plan') {
       navigate('/admin/addsubscription');  
-    } else if (menuItem === 'Add Items') {
-      navigate('/admin/addmenuitems');  
-    }else if (menuItem==='List of Items') {
+    } else if (menuItem==='List of Items') {
       navigate('/admin/listitem')
     }else if (menuItem==='Orders'){
       navigate('/admin/orderlist')
@@ -152,7 +149,7 @@ const MainSidebar = () => {
           </DrawerHeader>
           <Divider />
           <List>
-            {['Subscription Plan', 'Add Items', 'Subscription Menu List', 'List of Items', 'Daily Menu', 'Orders',  'Subscribed Users'].map((text, index) => (
+            {['Subscription Plan', 'Subscription Menu List', 'List of Items', 'Daily Menu', 'Orders',  'Subscribed Users'].map((text, index) => (
               <ListItem key={text} disablePadding>
                 <ListItemButton onClick={() => handleNavigation(text)}>
                   <ListItemIcon>
