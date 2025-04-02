@@ -23,23 +23,28 @@ const createPeriodical = async(req,res) => {
 }
 
 
-const createDailyMenu = async(req,res) => {
+const createDailyMenu = async (req, res) => {
     try {
-        const {period,subscription_food_menu_id}=req.body;
-        const newMenu = await prisma.daily_Menu.create({
-            data:{
+        const { period, subscription_food_menu_ids } = req.body;
+
+      
+
+        const newMenus = await prisma.daily_Menu.createMany({
+            data: subscription_food_menu_ids.map(subscription_food_menu_id => ({
                 period,
                 subscription_food_menu_id,
-                created_at:new Date(),
+                created_at: new Date(),
                 updatedAt: new Date()
-            }
-        })
-        res.status(200).json({message : "Daily Menu Created",newMenu})
+            })),
+            
+        });
+
+        res.status(200).json({ message: "Daily Menus Created", newMenus });
     } catch (error) {
-        console.log(error)
-        res.status(404).json({error:"No menu created"})
+        console.error("Error creating daily menus:", error);
+        res.status(500).json({ error: "Failed to create daily menus" });
     }
-}
+};
 
 
 const getMenuwithPeriod = async(req,res) => {

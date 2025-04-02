@@ -2,8 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import SignIn from "../OverallHome/SignIn";
-import "./PlanDetails.css"; // Import CSS for styling
- 
+import "./PlanDetails.css";
 const PlanDetails = () => {
   const { planName, planType, mealType } = useParams();
   const [mealDetails, setMealDetails] = useState([]);
@@ -13,7 +12,9 @@ const PlanDetails = () => {
   const [selectedPlanId, setSelectedPlanId] = useState(null);
   const [isSignInVisible, setIsSignInVisible] = useState(false);
   const navigate = useNavigate();
-
+  const [isComboPlan, setIsComboPlan] = useState(false);
+ 
+  
   useEffect(() => {
     const fetchPlans = async () => {
       try {
@@ -22,7 +23,7 @@ const PlanDetails = () => {
         );
         console.log("API Response:", response.data);
         const subscriptions = response.data.formattedSubscriptions;
-
+ 
         if (
           subscriptions &&
           subscriptions[planName] &&
@@ -37,10 +38,10 @@ const PlanDetails = () => {
         setLoading(false);
       }
     };
-
+ 
     fetchPlans();
   }, [planName, planType, mealType]);
-
+ 
   useEffect(() => {
     const fetchFoodItems = async () => {
       try {
@@ -56,20 +57,20 @@ const PlanDetails = () => {
         console.error("Error fetching food items:", error);
       }
     };
-
+ 
     fetchFoodItems();
   }, [planName, mealType, planType]);
-
+ 
   const handlePlanClick = (planId) => {
     setSelectedPlanId(planId);
   };
-
+ 
   const handleSubscribe = async () => {
     if (!selectedPlanId) {
       alert("Please select a plan first.");
       return;
     }
-
+ 
     const token = localStorage.getItem("token");
     if (!token) {
       localStorage.setItem("pendingSubscription", selectedPlanId);
@@ -78,17 +79,17 @@ const PlanDetails = () => {
     }
     navigate(`/user/Payment/${selectedPlanId}`);
   };
-
+ 
   const handleCloseSignIn = () => {
     setIsSignInVisible(false);
   };
-
+ 
   return (
     <div className="backgrd">
       <div className="choose-plan">
         <h2> Choose Your Subscription Plans </h2>
       </div>
-
+ 
       <div className="subscribe-section">
         <div className="plans-container">
           {loading ? (
@@ -109,12 +110,12 @@ const PlanDetails = () => {
             <p>No meal details found for the selected option.</p>
           )}
         </div>
-
+ 
         <div className="subscribe-button">
           <button onClick={handleSubscribe}>Subscribe</button>
         </div>
       </div>
-
+ 
       {/* Display the formatted menu */}
       <div className="menu-section">
         {/* Flex container for menu cards */}
@@ -122,21 +123,26 @@ const PlanDetails = () => {
           {Object.keys(formattedMenu).length > 0 ? (
             Object.entries(formattedMenu).map(([day, meals]) => (
               <div key={day} className="menu-day">
-                <h4>{day}</h4>{" "}
-                {/* Displays Monday, Tuesday, etc. in its own card */}
+                <h3>{day}</h3> {/* Displays Monday, Tuesday, etc. */}
                 {Object.entries(meals).map(([mealType, items]) => (
                   <div key={mealType} className="meal-section">
+                    {isComboPlan && <h3>{mealType}</h3>}
+                    {/* Add Meal Type Heading (Breakfast, Lunch, Dinner) */}
+ 
                     <ul className="meal-list">
                       {items.map((item, index) => (
-                        <li key={index} className="meal-item">
-                          {item.food_name}
+                        <li key={index} className="meal-item">                          
                           {item.image && (
                             <img
                               src={item.image}
                               alt={item.food_name}
                               className="meal-image"
-                            />
+                            />                            
                           )}
+                          {item.food_name}
+
+                        
+
                         </li>
                       ))}
                     </ul>
@@ -156,5 +162,5 @@ const PlanDetails = () => {
     </div>
   );
 };
-
+ 
 export default PlanDetails;

@@ -1,10 +1,26 @@
 
 .sub-status{
     display: flex;
-    /* flex-direction: column; */
     margin-left: 10rem;
     gap: 2rem;
+    margin-top: 2rem;
 
+}
+
+.sub-details{
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-align: center;
+    color: rgb(24, 123, 222);
+}
+
+.pagination{
+    justify-content: center;
+}
+
+span{
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
 @media screen and (max-width: 768px) {
@@ -17,3 +33,4 @@
 
 
 }
+

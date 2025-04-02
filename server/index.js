@@ -24,17 +24,14 @@ const subscriptionFoodMenuRoutes = require('./routes/subscriptionFoodMenu.routes
 const paymentRoutes = require('./routes/payment.routes')
 const subscriptionOrderRoutes = require('./routes/subscriptionOrder.routes')
 const orderRoutes = require('./routes/orders.routes')
-// const orderCriteriaRoutes = require('./routes/orderCriteria.routes')
-// const orderItemRoutes = require('./routes/orderItem.routes')
-// const cartRoutes= require('./routes/cart.routes')
 const userFoodReportRoutes = require('./routes/userFoodReport.routes')
 const additionalRoutes = require('./routes/additionalItems.routes')
 const smsRoutes = require('./routes/sms.routes')
 const {startMealSchedulers } = require('./utils/dailyScheduler');
 const orderCartRoutes=require('./routes/orderCart.routes')
-const dailyMenuRoutes = require('./routes/daily_menu.routes')
 const notificationRoutes = require('./routes/notification.routes');
 const cancellationRoutes = require('./routes/cancellation.routes');
+
 const SkippedCartRoutes = require('./routes/skippedCart.routes');
 const adminorderDetailsRoutes = require('./routes/admin.orderDetails.routes');
 const adminDurationRoutes = require('./routes/admin.duration.routes');
@@ -44,8 +41,16 @@ const adminParentPlanRoutes = require('./routes/admin.parentPlan.routes');
 const adminSubscriptionPlanRoutes = require('./routes/admin.subscriptionPlan.routes')
 const adminTierRoutes = require('./routes/admin.tier.routes')
 const adminQuantityRoutes = require('./routes/admin.quantity.routes')
+const dailyMenuRoutes = require('./routes/daily_menu.routes')
+
 // const paymentInfoRoutes = require('./routes/paymentInfo.routes')
+// const orderCriteriaRoutes = require('./routes/orderCriteria.routes')
+// const orderItemRoutes = require('./routes/orderItem.routes')
+// const cartRoutes= require('./routes/cart.routes')
  
+
+
+
 const app = express();
 var morgan = require('morgan')
 const port = 5001
@@ -64,10 +69,11 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(session({ secret: process.env.SECRET, resave: false, saveUninitialized: true }));
- 
+
 app.use(passport.initialize());
 app.use(passport.session());
  
+
 app.use('/', authRoutes);
 app.use('/sub',subRoutes);
 app.use('/foodMenu',subscriptionFoodMenuRoutes)
@@ -75,8 +81,9 @@ app.use('/extra',additionalRoutes)
 
 
 app.use(authentication);
-app.use('/userSubscription',userSubscriptionRoutes)
 
+
+app.use('/userSubscription',userSubscriptionRoutes)
 app.use('/api',userRoutes);
 app.use('/adrress',adrressRoutes)
 app.use('/foodItem',foodItemRoutes)
@@ -98,16 +105,28 @@ app.use('/subscriptionOrder',subscriptionOrderRoutes)
 app.use('/order',orderCartRoutes)
 app.use('/orders',orderRoutes)
 
+
+
 // app.use('/criteria',orderCriteriaRoutes)
 // app.use('/orderItem',orderItemRoutes)
 // app.use('/cart',cartRoutes)
+
 app.use('/foodReport',userFoodReportRoutes)
 
 
 //sms routes
 app.use('/sms', smsRoutes);
 app.use('/dailyPeriod',dailyMenuRoutes)
+
+
+
+
 // app.use('/paymentInfo',paymentInfoRoutes)
+
+// app.use('/criteria',orderCriteriaRoutes)
+// app.use('/orderItem',orderItemRoutes)
+// app.use('/cart',cartRoutes)
+
 
 
 

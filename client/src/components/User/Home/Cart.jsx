@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './Cart.css';
 import { Link } from 'react-router-dom';
+import MainUserSidebar from '../UserSidebar/MainUserSidebar';
 
 
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
-
-
-  
-
-
 
   useEffect(() => {
     const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
@@ -30,6 +26,7 @@ const Cart = () => {
     
   return (
     <>
+    <MainUserSidebar/> 
       <div className='order-header'>Added Items</div>
       <br />
       <div>

@@ -9,6 +9,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import MainUserSidebar from '../UserSidebar/MainUserSidebar';
 
 const Wallet = () => {
  
@@ -18,20 +19,21 @@ const Wallet = () => {
   const [subscribedPlan, setSubscribedPlan] = useState('');
 
   return (
+    <>
+    <MainUserSidebar/> 
     <div> 
-
 <div> 
      </div>
-      <h2 style={{ marginTop: '2rem' }}>Wallet & Refunds</h2> 
-      <div className='refund-price'>  
+      <h2 >Wallet & Refunds</h2> 
+      {/* <div className='refund-price'>  
        <img src={refund} alt='refundpolicy' /> 
-      </div> 
+      </div>  */}
 
-      {/* <div className="wallet-dashboard">
+      <div className="wallet-dashboard">
         <div className="wallet-section">
           <h4>Terms and Conditions for Refund Policy</h4>
         </div> 
-      </div> */}
+      </div>
       
        <div className='accordion-header'> 
       <Accordion>
@@ -135,7 +137,7 @@ Meal subscription plans have to be used during the period of validity. In case o
         </div> */}
       </div>
     </div>
-
+    </>
   );
 };
 
