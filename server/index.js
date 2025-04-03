@@ -61,11 +61,8 @@ console.log(process.env.CLIENT_URL)
 console.log(process.env.REACT_APP_BACKEND_SERVER_URL)
 const corsOptions = {
 
-    origin: [
+    origin: 
       `${process.env.CLIENT_URL}`,
-      // `${process.env.REACT_APP_BACKEND_SERVER_URL}`,
-    
-    ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   };
