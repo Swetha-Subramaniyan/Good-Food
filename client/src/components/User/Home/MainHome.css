@@ -1,7 +1,4 @@
 
-
-
-
  /* 🌟 Global Styles */
 * {
   margin: 0;
@@ -53,6 +50,7 @@ body {
   background: white;
   border-radius: 12px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+ 
 }
 
 /* 🌟 Section Headings */
@@ -64,34 +62,25 @@ h2 {
   font-weight: 600;
 }
 
-/* .food-items-container,
-.additional-items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-} */
+
 
 .food-items-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 150px; /* Added decent space between food items */
+  gap: 150px; 
   padding: 10px 0;
   justify-content: center;
+  /* justify-content: space-evenly; */
 }
+
 
 .food-items-section {
   text-align: center;
 }
 
-
-
-
-
 .food-list {
   display: flex;
   flex-wrap: wrap;
-  
   gap: 20px;
   justify-content: center;
 }
@@ -101,7 +90,6 @@ h2 {
   padding: 15px;
   border: 1px solid #ddd;
   background: #fff;
-
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease-in-out;
@@ -124,9 +112,9 @@ h2 {
 
 /* 🌟 Food Image */
 .food-image {
-  width: 100px;
+  width: 140px;
   height: 100px;
-  border-radius: 10px;
+  border-radius: 5px;
   object-fit: cover;
   margin-bottom: 10px;
 }
@@ -147,6 +135,7 @@ h2 {
 
 .food-item-actions button {
   background-color:  rgb(99, 97, 97);
+  background-color: dodgerblue;
   color: whitesmoke;
   font-size: 1rem;
   padding: 1px 6px ;
@@ -164,6 +153,9 @@ h2 {
 }
 .day-title{
   text-align: center;
+  color: rgb(17, 118, 218);
+  font-weight: bold;
+ 
 }
 
 .food-item-actions button:hover {
@@ -172,10 +164,15 @@ h2 {
 
 .food-item-actions button:first-child {
   background-color: rgb(99, 97, 97);
+  background-color: dodgerblue;
+  width: 4rem;
+  height: 2rem;
+  
 }
 
 .food-item-actions button:first-child:hover {
   background-color: #cc0000;
+  background-color: rgb(13, 92, 172);
 }
 
 /* 🌟 Additional Items Section */
@@ -232,6 +229,7 @@ h2 {
   flex-direction: column; 
   gap: 20px;
   padding-bottom: 10px;
+  flex-wrap: wrap;
 }
 
 
@@ -241,4 +239,12 @@ h2 {
   gap: 20px;
   padding-bottom: 10px;
 }
+
+.week{
+  margin-top: 3rem;
+  
+}
+
+
+
 

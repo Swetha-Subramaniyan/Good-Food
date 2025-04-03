@@ -10,11 +10,6 @@
     
     
 }
-/* .notify{
-    margin-left: 80rem;
-    font-size: 1.7rem;
-    margin-top: 0.2rem;
-} */
 
 
 
@@ -24,12 +19,8 @@
         flex-wrap: wrap;
         margin-top: 2rem;
         justify-content: space-between;
-        font-size: 1.3rem;
-        
+        font-size: 1.3rem;       
     }
-    
-
-
 }
 
 

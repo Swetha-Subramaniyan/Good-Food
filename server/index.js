@@ -57,10 +57,14 @@ const port = 5001
 startMealSchedulers();
  
 app.use(morgan('dev'))
+console.log(process.env.CLIENT_URL)
+console.log(process.env.REACT_APP_BACKEND_SERVER_URL)
 const corsOptions = {
+
     origin: [
       `${process.env.CLIENT_URL}`,
-      `${process.env.REACT_APP_BACKEND_SERVER_URL}`,
+      // `${process.env.REACT_APP_BACKEND_SERVER_URL}`,
+    
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
