@@ -7,37 +7,6 @@ const SignIn = ({ isVisible, onClose, role }) => {
   console.log(isVisible);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const params = new URLSearchParams(window.location.search);
-  //   const token = params.get('token');
-
-  //   if (token) {
-  //     localStorage.setItem('token', token);
-  //     navigate('/');
-
-  //   }
-  // }, [navigate]);
-
-  // useEffect(() => {
-  //   const params = new URLSearchParams(window.location.search);
-  //   const token = params.get('token');
-
-  //   if (token) {
-  //     localStorage.setItem('token', token);
-
-  //     // Check if a pending subscription exists
-  //     const pendingSubscription = localStorage.getItem('pendingSubscription');
-
-  //     if (pendingSubscription) {
-  //       // Navigate to the payment page and clear pendingSubscription
-  //       localStorage.removeItem('pendingSubscription');
-  //       navigate(`/user/Payment/${pendingSubscription}`);
-  //     } else {
-  //       navigate('/');
-  //     }
-  //   }
-  // }, [navigate]);
-
   useEffect(() => {
     
     const params = new URLSearchParams(window.location.search);
@@ -45,9 +14,7 @@ const SignIn = ({ isVisible, onClose, role }) => {
 
     if (token) {
       localStorage.setItem("token", token);
-
       const pendingSubscription = localStorage.getItem("pendingSubscription");
-
       if (pendingSubscription) {
         localStorage.removeItem("pendingSubscription");
         navigate(`/user/Payment/${pendingSubscription}`);
@@ -84,10 +51,10 @@ const SignIn = ({ isVisible, onClose, role }) => {
   return (
     <div className="sign-in-modal">
       <div className="sign-in-content">
-        <button className="close-btn" onClick={onClose}>
+        <button className="close-bttnn" onClick={onClose}>
           X
         </button>
-        <h2> Please Sign In to Subscribe </h2>
+        <h3 className="sigin"> Please Sign In to Subscribe </h3>
         <div className="sign-google">
           <button onClick={handleGoogleSignIn}>
             <FaGoogle /> Sign In with Google

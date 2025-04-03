@@ -124,7 +124,7 @@ const PlanDetails = () => {
           <h3>{day}</h3> 
           {Object.entries(meals).map(([mealType, items]) => (
             <div key={mealType} className="meal-section">
-              {/* <h4 className="meal-type-heading">{mealType}</h4>  */}
+              <h4 className="meal-type-heading">{mealType}</h4> 
               <ul className="meal-list">
                 {items.map((item, index) => (
                   <li key={index} className="meal-item">

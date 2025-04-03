@@ -69,7 +69,7 @@ const Vision = () => {
             We aim to create a "home-away-from-home" dining experience by
             prioritizing health, convenience, and personalization while
             ensuring timely service and uncompromised quality in every bite.
-            Every meal we serve is more than just food—it's a promise of love,
+            Every meal we serve is more than just food it's a promise of love,
             comfort, and nourishment, designed to bring a smile to your face
             and warmth to your heart.
           </p>
