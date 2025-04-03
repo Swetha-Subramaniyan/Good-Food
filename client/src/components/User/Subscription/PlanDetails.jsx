@@ -39,7 +39,7 @@ const PlanDetails = () => {
         setLoading(false);
       }
     };
- 
+
     fetchPlans();
   }, [planName, planType, mealType]);
  
@@ -71,7 +71,7 @@ const PlanDetails = () => {
       alert("Please select a plan first.");
       return;
     }
- 
+    
     const token = localStorage.getItem("token");
     if (!token) {
       localStorage.setItem("pendingSubscription", selectedPlanId);
@@ -89,9 +89,8 @@ const PlanDetails = () => {
     <div className="backgrd">
       <div className="choose-plan">
         <h2> Choose Your Subscription Plans </h2>
-      </div>
- 
-      <div className="subscribe-section">
+  </div> 
+  <div className="subscribe-section">
         <div className="plans-container">
           {loading ? (
             <p>Loading...</p>
@@ -110,58 +109,50 @@ const PlanDetails = () => {
           ) : (
             <p>No meal details found for the selected option.</p>
           )}
-        </div>
- 
+        </div> 
         <div className="subscribe-button">
           <button onClick={handleSubscribe}>Subscribe</button>
         </div>
       </div>
- 
+
       {/* Display the formatted menu */}
-      <div className="menu-section">
-        {/* Flex container for menu cards */}
-        <div className="menu-container">
-          {Object.keys(formattedMenu).length > 0 ? (
-            Object.entries(formattedMenu).map(([day, meals]) => (
-              <div key={day} className="menu-day">
-                <h3>{day}</h3> {/* Displays Monday, Tuesday, etc. */}
-                {Object.entries(meals).map(([mealType, items]) => (
-                  <div key={mealType} className="meal-section">
-                    {isComboPlan && <h3>{mealType}</h3>}
-                    {/* Add Meal Type Heading (Breakfast, Lunch, Dinner) */}
- 
-                    <ul className="meal-list">
-                      {items.map((item, index) => (
-                        <li key={index} className="meal-item">                          
-                          {item.image && (
-                            <img
-                              src={item.image}
-                              alt={item.food_name}
-                              className="meal-image"
-                            />                            
-                          )}
-                          {item.food_name}
-
-                        
-
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+<div className="menu-section">
+  <div className="menu-container">
+    {Object.keys(formattedMenu).length > 0 ? (
+      Object.entries(formattedMenu).map(([day, meals]) => (
+        <div key={day} className="menu-day">
+          <h3>{day}</h3> 
+          {Object.entries(meals).map(([mealType, items]) => (
+            <div key={mealType} className="meal-section">
+              {/* <h4 className="meal-type-heading">{mealType}</h4>  */}
+              <ul className="meal-list">
+                {items.map((item, index) => (
+                  <li key={index} className="meal-item">
+                    {item.image && (
+                      <img
+                        src={item.image}
+                        alt={item.food_name}
+                        className="meal-image"
+                      />
+                    )}
+                    {item.food_name}
+                  </li>
                 ))}
-              </div>
-            ))
-          ) : (
-            <p>No menu available.</p>
-          )}
+              </ul>
+            </div>
+          ))}
         </div>
-      </div>
-
-      {isSignInVisible && (
+      ))
+    ) : (
+      <p>No menu available.</p>
+    )}
+  </div>
+</div>
+     {isSignInVisible && (
         <SignIn isVisible={isSignInVisible} onClose={handleCloseSignIn} role={"USER"} />
       )}
     </div>
   );
 };
  
-export default PlanDetails;
+export default PlanDetails;                                                                      

@@ -72,14 +72,17 @@ const SubscriptionCalender = () => {
       {error && <p style={{ color: "red" }}>{error}</p>}
       {subscription && (
         <div className="sub-status">
-          <div><FontAwesomeIcon icon={faClock} size="lg" /> Pending</div>
+          {/* <div><FontAwesomeIcon icon={faClock} size="lg" /> Pending</div>
           <div><FontAwesomeIcon icon={faSquareXmark} color="red" size="lg" /> Cancelled</div>
-          <div><FontAwesomeIcon icon={faCircleCheck} color="green" size="lg" /> Delivered</div>
-          <div>Validity Days: {subscription.validity_days}</div>
+          <div><FontAwesomeIcon icon={faCircleCheck} color="green" size="lg" /> Delivered</div> */}
+          <div >Validity Days: {subscription.validity_days}</div>
           {/* <div>Customer ID: {subscription.customer_id}</div> */}
+         
         </div>
       )}
       <br />
+
+
 
       <table className="styled-table">
         <thead>
@@ -100,7 +103,7 @@ const SubscriptionCalender = () => {
                 {day.lunch > 0 && <td>{day.lunch}</td>}
                 {day.dinner > 0 && <td>{day.dinner}</td>}
                 <td>
-                   
+                  
                 <Tooltip title="Cancel" placement="left">
             <button style={{backgroundColor:'red'}} > <FontAwesomeIcon icon={faTrash} /> </button>
           </Tooltip> <span> 

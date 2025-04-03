@@ -2,9 +2,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "./MainHome.css";
-import MainNavbar from "../Navbar/MainNavbar";
 import { IoMdLogOut } from "react-icons/io";
 import { useParams } from "react-router-dom";
+import MainUserSidebar from "../UserSidebar/MainUserSidebar";
 
 const MainHome = () => {
   const [additionalItems, setAdditionalItems] = useState([]);
@@ -58,54 +58,19 @@ const MainHome = () => {
       <button className="logout">
         <IoMdLogOut /> Logout
       </button>
-      <MainNavbar />
+      <MainUserSidebar/>
 
       <div className="menu-containerr">
         {/* Display Food Items Day-wise */}
         <div className="food-items-section">
-  <h2>Weekly Food Menu</h2>
+  <h2 className="week">Weekly Food Menu</h2>
 <br />
-  {/* <div className="weekly-menu">
-    {foodItems.length > 0 ? (
-      foodItems.map((day, index) => (
-        <div key={index} className="day-card">
-          <h3 className="day-title">{day.day_name}</h3>
-
-          <div className="food-items-container">
-            {day.FoodItems && day.FoodItems.length > 0 ? (
-              day.FoodItems.map((food, i) => (
-                <div key={i} className="food-item">
-                  <img
-                    src={food.image_url || "/placeholder.jpg"}
-                    alt={food.item_name}
-                    className="food-image"
-                  />
-                  {isComboPlan && <h4 className="meal-type">{food.food_meal_type}</h4>}
-
-                  <span>{food.item_name}</span>
-
-                  <div className="food-item-actions">
-                    <button>-</button> Add
-                    <button>+</button>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <p>No food items available for this day.</p>
-            )}
-          </div>
-        </div>
-      ))
-    ) : (
-      <p>No food items available.</p>
-    )}
-  </div> */}
 
 <div className="weekly-menu">
   {foodItems.length > 0 ? (
     foodItems.map((day, index) => (
       <div key={index} className="day-card">
-        <h3 className="day-title">{day.day_name}</h3>
+        <h5 className="day-title">{day.day_name}</h5>
 
         {/* Make Food Items Scroll Horizontally */}
         <div className="food-items-container">
@@ -119,9 +84,9 @@ const MainHome = () => {
 
                 <span>{food.item_name}</span>
 
-                <div className="food-item-actions">
-                  <button>-</button> Add
-                  <button>+</button>
+                <div className="food-item-actions"><button>                  
+                   Add                 
+                  </button>
                 </div>
               </div>
             ))
@@ -135,11 +100,8 @@ const MainHome = () => {
     <p>No food items available.</p>
   )}
 </div>
-
 </div>
-
-
-        {/* Display Additional Items */}
+       {/* Display Additional Items */}
         <div className="additional-items">
           <h2>Additional Items</h2>
           {additionalItems.length > 0 ? (
@@ -153,11 +115,17 @@ const MainHome = () => {
                   />
                   <span>{item.name}</span>
                   <span>Price: ₹{item.price}</span>
+                  {/* <div className="food-item-actions">
+                    <button> 
+                    <button>-</button> Add
+                    <button>+</button> 
+                    </button>
+                  </div> */}
 
-                  <div className="food-item-actions">
-                    <button>-</button>
-                    <button>+</button>
+<div className="food-item-actions">
+  <button> Add </button>
                   </div>
+                  
                 </div>
               ))}
             </div>
@@ -171,4 +139,5 @@ const MainHome = () => {
 };
 
 export default MainHome;
+
 

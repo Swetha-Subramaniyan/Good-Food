@@ -4,7 +4,6 @@ import "bootstrap/dist/js/bootstrap.js";
 import { Routes, Route, BrowserRouter, Outlet } from "react-router-dom";
 import Payment from "./components/User/Subscription/Payment";
 import Order from "./components/User/Home/Order";
-import Account from "./components/User/Home/Account";
 import SubscriptionCalender from "./components/User/Home/SubscriptionCalender";
 import Navbar from "./Pages/User/Navbar";
 import Home from "./Pages/User/Home";
@@ -35,8 +34,8 @@ import Notification from "./components/User/Home/Notification";
 import Skippedcart from "./components/User/Home/Skippedcart";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import PlanDetails from "./components/User/Subscription/PlanDetails";
-
 import UnprotectedController from "./components/Controller/UnprotectedController";
+import Profile from "./components/User/Home/Profile";
 
 const App = () => {
   return (
@@ -48,13 +47,10 @@ const App = () => {
           <Route path='/' element={<OverallHome />} />
           <Route path="/LoginPopup" element={<LoginPopup />} />
           <Route path="/SignIn" element={<SignIn />} />
-          <Route
-              path=":planName/:planType/:mealType"
-              element={<PlanDetails />}
-            />
+          <Route path=":planName/:planType/:mealType" element={<PlanDetails />} />
         </Route>
 
-          <Route path="user" element={<PrivateRoute />}>
+        <Route path="user" element={<PrivateRoute />}>
             <Route path="PaymentCart" element={<PaymentCart />} />
             <Route path="IdeasToImprove" element={<IdeasToImprove />} />
             <Route path="MoneyTransfer" element={<MoneyTransfer />} />
@@ -67,31 +63,27 @@ const App = () => {
             <Route path="Home/:id" element={<Home />} />
             <Route path="Navbar" element={<Navbar />} />
             <Route path="Order" element={<Order />} />
-            <Route path="Account" element={<Account />} />
+            <Route path="Profile" element={<Profile/>} />
             <Route path="Cart" element={<Cart />} />
-            <Route
-              path="SubscriptionCalender"
-              element={<SubscriptionCalender />}
-            />
+            <Route path="SubscriptionCalender" element={<SubscriptionCalender />}/>
             <Route path="MenuAddon" element={<MenuAddon />} />
-          </Route>
-          <Route path="admin" element={<Outlet />}>
+        </Route>
+
+        <Route path="admin" element={<Outlet />}>
             <Route path="addsubscription" element={<AddSubscription />} />
             <Route path="addmenuitems" element={<AddMenuItems />} />
             <Route path="adminsidebar" element={<AdminSidebar />} />
             <Route path="listitem" element={<ListItem />} />
             <Route path="orderlist" element={<OrderList />} />
             <Route path="dailymenu" element={<DailyMenu />} />
-            <Route
-              path="subscriptionmenulist"
-              element={<SubscriptionMenuList />}
-            />
+            <Route path="subscriptionmenulist" element={<SubscriptionMenuList />}/>
             <Route path="subscribedusers" element={<SubscribedUsers />} />
             <Route path="cheforderlist" element={<ChefOrderList />} />
             <Route path="adminorderlist" element={<AdminOrderList />} />
             <Route path="feeditem" element={<FeedItems />} />
             <Route path="feeditemoption" element={<FeedItemsOption />} />
-          </Route>
+        </Route>
+        
         </Routes>
       </BrowserRouter>
     </>

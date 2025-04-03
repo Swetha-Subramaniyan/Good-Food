@@ -17,7 +17,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-
 import { IoPersonCircleOutline } from 'react-icons/io5';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faWallet } from '@fortawesome/free-solid-svg-icons';
@@ -25,63 +24,40 @@ import { FaListAlt, FaHome } from 'react-icons/fa';
 import { SlBasketLoaded } from 'react-icons/sl';
 import { useNavigate } from 'react-router-dom';
 import { IoMdLogOut } from "react-icons/io";
-
 import axios from 'axios';
 import "./MainUserSidebar.css"
-
 
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
-  ({ theme }) => ({
+  ({ theme, open }) => ({
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(0), 
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: `-${drawerWidth}px`,
-    variants: [
-      {
-        props: ({ open }) => open,
-        style: {
-          transition: theme.transitions.create("margin", {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
-          }),
-          marginLeft: 0,
-        },
-      },
-    ],
+    marginLeft: open ? 0 : `-${drawerWidth}px`,
   })
 );
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
-})(({ theme }) => ({
+})(({ theme, open }) => ({
   transition: theme.transitions.create(["margin", "width"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  variants: [
-    {
-      props: ({ open }) => open,
-      style: {
-        width: `calc(100% - ${drawerWidth}px)`,
-        marginLeft: `${drawerWidth}px`,
-        transition: theme.transitions.create(["margin", "width"], {
-          easing: theme.transitions.easing.easeOut,
-          duration: theme.transitions.duration.enteringScreen,
-        }),
-      },
-    },
-  ],
+  width: open ? `calc(100% - ${drawerWidth}px)` : "100%",
+  marginLeft: open ? `${drawerWidth}px` : 0,
+  minHeight: "auto", 
+  backgroundColor: "dodgerblue",
 }));
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  padding: theme.spacing(0, 1),
+  padding: theme.spacing(0.5, 0), 
   ...theme.mixins.toolbar,
   justifyContent: "flex-end",
 }));
@@ -123,7 +99,7 @@ const MainUserSidebar = () => {
   const handleNavigation = (menuItem) => {
     console.log(menuItem);
     if (menuItem === "Profile") {
-      navigate("/user/Account");
+      navigate("/user/Profile");
     } else if (menuItem === "Cart") {
       navigate("/user/Cart");
     } else if (menuItem === "Subscription") {
@@ -236,6 +212,8 @@ const MainUserSidebar = () => {
         </Drawer>
         <Main open={open}>
           <DrawerHeader />
+          {/* <h1>Main Content Here</h1>
+           <p>Your page content...</p>. */}
         </Main>
       </Box>
     </>
