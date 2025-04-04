@@ -12,9 +12,8 @@ const PlanDetails = () => {
   const [selectedPlanId, setSelectedPlanId] = useState(null);
   const [isSignInVisible, setIsSignInVisible] = useState(false);
   const navigate = useNavigate();
-  const [isComboPlan, setIsComboPlan] = useState(false);
+  const [uniqueMealTypes, setUniqueMealTypes] = useState([]);
  
-  
   useEffect(() => {
     const fetchPlans = async () => {
       try {
@@ -38,7 +37,7 @@ const PlanDetails = () => {
         setLoading(false);
       }
     };
-
+ 
     fetchPlans();
   }, [planName, planType, mealType]);
  
@@ -53,6 +52,14 @@ const PlanDetails = () => {
         console.log("Food Items Response:", response.data);
         setFoodItems(response.data.foodItems || []);
         setFormattedMenu(response.data.formattedMenu || {});
+ 
+        // Extract unique meal types
+        const mealTypesSet = new Set();
+        Object.values(response.data.formattedMenu || {}).forEach((meals) => {
+          Object.keys(meals).forEach((type) => mealTypesSet.add(type));
+        });
+ 
+        setUniqueMealTypes([...mealTypesSet]); // Convert Set to Array
       } catch (error) {
         console.error("Error fetching food items:", error);
       }
@@ -70,7 +77,7 @@ const PlanDetails = () => {
       alert("Please select a plan first.");
       return;
     }
-    
+ 
     const token = localStorage.getItem("token");
     if (!token) {
       localStorage.setItem("pendingSubscription", selectedPlanId);
@@ -87,9 +94,10 @@ const PlanDetails = () => {
   return (
     <div className="backgrd">
       <div className="choose-plan">
-        <h2> Choose Your Subscription Plans </h2>
-  </div> 
-  <div className="subscribe-section">
+        <h2>Choose Your Subscription Plans</h2>
+      </div>
+ 
+      <div className="subscribe-section">
         <div className="plans-container">
           {loading ? (
             <p>Loading...</p>
@@ -97,9 +105,7 @@ const PlanDetails = () => {
             mealDetails.map((plan) => (
               <div
                 key={plan.id}
-                className={`plan-item ${
-                  selectedPlanId === plan.id ? "selected" : ""
-                }`}
+                className={`plan-item ${selectedPlanId === plan.id ? "selected" : ""}`}
                 onClick={() => handlePlanClick(plan.id)}
               >
                 {plan.days} Days - ₹{plan.price}
@@ -108,50 +114,65 @@ const PlanDetails = () => {
           ) : (
             <p>No meal details found for the selected option.</p>
           )}
-        </div> 
+        </div>
         <div className="subscribe-button">
           <button onClick={handleSubscribe}>Subscribe</button>
         </div>
       </div>
-
-      {/* Display the formatted menu */}
-<div className="menu-section">
-  <div className="menu-container">
-    {Object.keys(formattedMenu).length > 0 ? (
-      Object.entries(formattedMenu).map(([day, meals]) => (
-        <div key={day} className="menu-day">
-          <h3>{day}</h3> 
-          {Object.entries(meals).map(([mealType, items]) => (
-            <div key={mealType} className="meal-section">
-              <h4 className="meal-type-heading">{mealType}</h4> 
-              <ul className="meal-list">
-                {items.map((item, index) => (
-                  <li key={index} className="meal-item">
-                    {item.image && (
-                      <img
-                        src={item.image}
-                        alt={item.food_name}
-                        className="meal-image"
-                      />
-                    )}
-                    {item.food_name}
-                  </li>
-                ))}
-              </ul>
+ 
+      {/* Display Meal Type Headings ABOVE Menu Container */}
+      <div className="meal-type-section">
+        {uniqueMealTypes.length > 0 && (
+          <>
+           
+            <div className="meal-type-list">
+              {uniqueMealTypes.map((type) => (
+                <h4 key={type} className="meal-type-heading">{type}</h4>
+              ))}
             </div>
-          ))}
+          </>
+        )}
+      </div>
+ 
+      {/* Display the formatted menu */}
+      <div className="menu-section">
+        <div className="menu-container">
+          {Object.keys(formattedMenu).length > 0 ? (
+            Object.entries(formattedMenu).map(([day, meals]) => (
+              <div key={day} className="menu-day">
+                <h3>{day}</h3>
+                {Object.entries(meals).map(([mealType, items]) => (
+                  <div key={mealType} className="meal-section">
+                    {/* <h4 className="meal-type-heading">{mealType}</h4> */}
+                    <ul className="meal-list">
+                      {items.map((item, index) => (
+                        <li key={index} className="meal-item">
+                          {item.image && (
+                            <img
+                              src={item.image}
+                              alt={item.food_name}
+                              className="meal-image"
+                            />
+                          )}
+                          {item.food_name}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            ))
+          ) : (
+            <p>No menu available.</p>
+          )}
         </div>
-      ))
-    ) : (
-      <p>No menu available.</p>
-    )}
-  </div>
-</div>
-     {isSignInVisible && (
+      </div>
+ 
+      {isSignInVisible && (
         <SignIn isVisible={isSignInVisible} onClose={handleCloseSignIn} role={"USER"} />
       )}
     </div>
   );
 };
  
-export default PlanDetails;                                                                      
+export default PlanDetails;

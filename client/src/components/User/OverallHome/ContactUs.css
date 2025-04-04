@@ -7,9 +7,6 @@
 }
 
 
- 
- 
- 
 #contact-section {
   max-width: 1200px;
   margin: auto;
@@ -35,6 +32,7 @@
   justify-content: space-between;
   flex-wrap: wrap;  
   gap: 1rem;
+ 
  
 }
  
@@ -121,12 +119,6 @@
   }
 }
  
-
-
-
-/* .copyright-section {
-  margin-top: 5rem; 
-} */
 
  
 

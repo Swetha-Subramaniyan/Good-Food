@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import logo from "../../../assets/Foodlogo.jpg";
+// import logo from "../../../assets/Foodlogo.jpg";
+import logo from '../../../assets/Goodfood.png'
 import "./LandingPage.css";
 import { FaListCheck } from "react-icons/fa6";
 import { FaDownload } from "react-icons/fa";

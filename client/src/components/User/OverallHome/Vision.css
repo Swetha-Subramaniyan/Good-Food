@@ -10,12 +10,16 @@
  
 .text-center {
   font-size: 2rem;
-  color: white;
+  /* color: white; */
   background-color: rgb(73, 26, 26);
   padding: 0.5rem 1.5rem;
   border-radius: 5px;
   display: inline-block;
- 
+  background-color: orangered;
+  background: linear-gradient(135deg, #dee4e8, #f78c28);
+  background: linear-gradient(135deg, #abd5ec, #f78c28);
+  box-shadow: 2px 4px 10px #5d89a1;
+
 }
  
  
@@ -37,6 +41,10 @@
   border-radius: 10px;
   text-align: left;
   box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #f7f8f9, #d6def0);
+  font-size: 1.1rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
 }
  
 .vision-head {
