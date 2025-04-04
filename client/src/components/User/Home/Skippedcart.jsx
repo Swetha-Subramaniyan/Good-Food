@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Skippedcart.css";
-import MainNavbar from "../Navbar/MainNavbar";
+import { useSidebar } from "../../Sidebar/SidebarContext";
 
 const SkippedCart = () => {
+  const { isOpen } = useSidebar();
+
   const [skippedCartDetails, setSkippedCartDetails] = useState([]);
 
   useEffect(() => {
@@ -37,11 +39,11 @@ const SkippedCart = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-  
+
       if (response.status === 200) {
         alert("Order placed successfully");
       }
-      console.log(response.data)
+      console.log(response.data);
     } catch (error) {
       console.error("Error reordering item:", error);
       alert("Failed to place order");
@@ -59,9 +61,7 @@ const SkippedCart = () => {
   );
 
   return (
-    <div>
-      <MainNavbar />
-
+    <div className={`main-content ${isOpen ? "shifted" : ""}`}>
       <h2>Skipped Cart Items</h2>
       <div className="skipped-cart">
         {filteredSkippedCartDetails.map((subscription) => (
@@ -71,19 +71,16 @@ const SkippedCart = () => {
           >
             <h3>Subscription: {subscription.subscription_details.meal_type}</h3>
             <p>Duration: {subscription.subscription_details.duration} days</p>
-            {subscription.subscription_details.food_items.length >
-              0 && (
-                <>
-                  <p>Food Items:</p>
-                  <ul>
-                    {subscription.subscription_details.food_items.map(
-                      (item) => (
-                        <li key={item.id}>{item.name}</li>
-                      )
-                    )}
-                  </ul>
-                </>
-              )}
+            {subscription.subscription_details.food_items.length > 0 && (
+              <>
+                <p>Food Items:</p>
+                <ul>
+                  {subscription.subscription_details.food_items.map((item) => (
+                    <li key={item.id}>{item.name}</li>
+                  ))}
+                </ul>
+              </>
+            )}
 
             {subscription.skipped_details.length > 0 && (
               <div className="skipped-details">

@@ -11,19 +11,8 @@ const googleCallback = (req, res) => {
 
   console.log(token)
 
-  if(role === "USER"){
-  res.redirect(`${process.env.CLIENT_URL}/?token=${token}`)
-  }
-  else{
-    res.redirect(`${process.env.CLIENT_URL}/?token=${token}`)
-  }
+  res.redirect(`${process.env.CLIENT_URL}/?token=${token}&role=${role}`)
 
-  // const redirectUrl = req.query.redirectUrl ;
-  // console.log("Redirect URL", redirectUrl)
-
-  // res.redirect(`${process.env.CLIENT_URL}${redirectUrl}?token=${token}`);
-
-  
 };
 
 const failure = (req, res) => {

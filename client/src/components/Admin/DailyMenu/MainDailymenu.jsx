@@ -1,11 +1,9 @@
 import React from 'react'
-import MainSidebar from '../AdminSidebar/MainSidebar'
 import './MainDailymenu.css'
 
 const MainDailymenu = () => {
   return (
     <> 
-    <div> <MainSidebar/></div>
 
     <h2> Daily Food Items </h2>
     <br/>

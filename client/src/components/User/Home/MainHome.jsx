@@ -1,14 +1,15 @@
-
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "./MainHome.css";
-import MainNavbar from "../Navbar/MainNavbar";
 import { IoMdLogOut } from "react-icons/io";
 import { useParams } from "react-router-dom";
+import { useSidebar } from "../../Sidebar/SidebarContext";
 
 const MainHome = () => {
+  const { isOpen } = useSidebar();
+
   const [additionalItems, setAdditionalItems] = useState([]);
-  const [foodItems, setFoodItems] = useState([]);  
+  const [foodItems, setFoodItems] = useState([]);
   const [isComboPlan, setIsComboPlan] = useState(false);
   const { id } = useParams();
 
@@ -40,8 +41,6 @@ const MainHome = () => {
         if (data.length > 0) {
           const firstItem = data[0];
           setIsComboPlan(firstItem.subscription_meal_type === "Combo");
-
-          // Store data by days
           setFoodItems(firstItem.days || []);
         }
       } catch (error) {
@@ -54,92 +53,55 @@ const MainHome = () => {
   }, [id]);
 
   return (
-    <>
+    <div className={`main-content ${isOpen ? "shifted" : ""}`}>
       <button className="logout">
-        <IoMdLogOut /> Logout
+        <IoMdLogOut /> Logoutttttt
       </button>
-      <MainNavbar />
-
       <div className="menu-containerr">
-        {/* Display Food Items Day-wise */}
         <div className="food-items-section">
-  <h2>Weekly Food Menu</h2>
-<br />
-  {/* <div className="weekly-menu">
-    {foodItems.length > 0 ? (
-      foodItems.map((day, index) => (
-        <div key={index} className="day-card">
-          <h3 className="day-title">{day.day_name}</h3>
+          <h2>Weekly Food Menu</h2>
+          <br />
 
-          <div className="food-items-container">
-            {day.FoodItems && day.FoodItems.length > 0 ? (
-              day.FoodItems.map((food, i) => (
-                <div key={i} className="food-item">
-                  <img
-                    src={food.image_url || "/placeholder.jpg"}
-                    alt={food.item_name}
-                    className="food-image"
-                  />
-                  {isComboPlan && <h4 className="meal-type">{food.food_meal_type}</h4>}
+          <div className="weekly-menu">
+            {foodItems.length > 0 ? (
+              foodItems.map((day, index) => (
+                <div key={index} className="day-card">
+                  <h3 className="day-title">{day.day_name}</h3>
 
-                  <span>{food.item_name}</span>
+                  <div className="food-items-container">
+                    {day.FoodItems && day.FoodItems.length > 0 ? (
+                      day.FoodItems.map((food, i) => (
+                        <div key={i} className="food-item">
+                          <img
+                            src={food.image_url || "/placeholder.jpg"}
+                            alt={food.item_name}
+                            className="food-image"
+                          />
 
-                  <div className="food-item-actions">
-                    <button>-</button> Add
-                    <button>+</button>
+                          {isComboPlan && (
+                            <h4 className="meal-type">{food.food_meal_type}</h4>
+                          )}
+
+                          <span>{food.item_name}</span>
+
+                          <div className="food-item-actions">
+                            <button>-</button> Add
+                            <button>+</button>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <p>No food items available for this day.</p>
+                    )}
                   </div>
                 </div>
               ))
             ) : (
-              <p>No food items available for this day.</p>
+              <p>No food items available.</p>
             )}
           </div>
         </div>
-      ))
-    ) : (
-      <p>No food items available.</p>
-    )}
-  </div> */}
 
-<div className="weekly-menu">
-  {foodItems.length > 0 ? (
-    foodItems.map((day, index) => (
-      <div key={index} className="day-card">
-        <h3 className="day-title">{day.day_name}</h3>
-
-        {/* Make Food Items Scroll Horizontally */}
-        <div className="food-items-container">
-          {day.FoodItems && day.FoodItems.length > 0 ? (
-            day.FoodItems.map((food, i) => (
-              <div key={i} className="food-item">
-                <img src={food.image_url || "/placeholder.jpg"} alt={food.item_name} className="food-image" />
-
-                {/* Show meal type only if isComboPlan is true */}
-                {isComboPlan && <h4 className="meal-type">{food.food_meal_type}</h4>}
-
-                <span>{food.item_name}</span>
-
-                <div className="food-item-actions">
-                  <button>-</button> Add
-                  <button>+</button>
-                </div>
-              </div>
-            ))
-          ) : (
-            <p>No food items available for this day.</p>
-          )}
-        </div>
-      </div>
-    ))
-  ) : (
-    <p>No food items available.</p>
-  )}
-</div>
-
-</div>
-
-
-        {/* Display Additional Items */}
         <div className="additional-items">
           <h2>Additional Items</h2>
           {additionalItems.length > 0 ? (
@@ -166,9 +128,8 @@ const MainHome = () => {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
 export default MainHome;
-

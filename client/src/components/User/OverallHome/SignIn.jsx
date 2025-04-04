@@ -2,49 +2,21 @@ import React, { useEffect } from "react";
 import "./SignIn.css";
 import { FaGoogle } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
- 
+
 const SignIn = ({ isVisible, onClose, role }) => {
   console.log(isVisible);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const params = new URLSearchParams(window.location.search);
-  //   const token = params.get('token');
-
-  //   if (token) {
-  //     localStorage.setItem('token', token);
-  //     navigate('/');
-
-  //   }
-  // }, [navigate]);
-
-  // useEffect(() => {
-  //   const params = new URLSearchParams(window.location.search);
-  //   const token = params.get('token');
-
-  //   if (token) {
-  //     localStorage.setItem('token', token);
-
-  //     // Check if a pending subscription exists
-  //     const pendingSubscription = localStorage.getItem('pendingSubscription');
-
-  //     if (pendingSubscription) {
-  //       // Navigate to the payment page and clear pendingSubscription
-  //       localStorage.removeItem('pendingSubscription');
-  //       navigate(`/user/Payment/${pendingSubscription}`);
-  //     } else {
-  //       navigate('/');
-  //     }
-  //   }
-  // }, [navigate]);
-
   useEffect(() => {
-    
     const params = new URLSearchParams(window.location.search);
     const token = params.get("token");
+    const role = params.get("role");
+
+    console.log("roleeeeeeeeeee", role)
 
     if (token) {
       localStorage.setItem("token", token);
+      localStorage.setItem("role", role)
 
       const pendingSubscription = localStorage.getItem("pendingSubscription");
 
@@ -53,14 +25,14 @@ const SignIn = ({ isVisible, onClose, role }) => {
         navigate(`/user/Payment/${pendingSubscription}`);
       } else {
         const redirectTo = localStorage.getItem("Redirect_Link");
-        if(redirectTo){
-        localStorage.removeItem("Redirect_Link"); 
-        navigate(redirectTo);
-        }else{
-          if(role === "USER"){
-          navigate('/user/SubscriptionCalender')
-          }else{
-            navigate('/admin/addsubscription')
+        if (redirectTo) {
+          localStorage.removeItem("Redirect_Link");
+          navigate(redirectTo);
+        } else {
+          if (role === "USER") {
+            navigate("/user/SubscriptionCalender");
+          } else {
+            navigate("/admin/addsubscription");
           }
         }
       }

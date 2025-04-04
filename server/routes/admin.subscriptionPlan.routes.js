@@ -1,6 +1,6 @@
 const express = require("express");
 const {
-  createSubscriptionPlan,
+  getUserSubscriptions,
   getAllSubscriptionPlans,
   getSubscriptionPlanById,
   updateSubscriptionPlan,
@@ -18,9 +18,9 @@ router.get("/food-items/meal-type/:mealTypeId", getFoodItemsByMealType);
 
 router.post("/with-food", createSubscriptionWithFood);
 
-router.post("/createplan", createSubscriptionPlan);
-
 router.get("/getplan", getAllSubscriptionPlans);
+
+router.get("/user-subscriptions", getUserSubscriptions);
 
 router.get("/:id", getSubscriptionPlanById);
 

@@ -591,7 +591,6 @@ model Order_Response {
   id                   Int      @id @default(autoincrement())
   status               String
   address_id           Int
-  user_id              Int
   customer_id          Int
   delivery_user_id     Int
   user_subscription_id Int
@@ -602,8 +601,7 @@ model Order_Response {
 model Delivery {
   id                Int      @id @default(autoincrement())
   oredr_id          Int
-  user_position_id  Int
-  user_id           Int
+  delivery_user_id           Int
   customer_id       String
   delivery_status   String
   delivery_response String

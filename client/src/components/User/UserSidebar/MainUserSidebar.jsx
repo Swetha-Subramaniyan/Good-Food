@@ -1,34 +1,33 @@
+import * as React from "react";
+import { styled, useTheme } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
+import CssBaseline from "@mui/material/CssBaseline";
+import MuiAppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 
-
-import * as React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import CssBaseline from '@mui/material/CssBaseline';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-
-import { IoPersonCircleOutline } from 'react-icons/io5';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faWallet } from '@fortawesome/free-solid-svg-icons';
-import { FaListAlt, FaHome } from 'react-icons/fa';
-import { SlBasketLoaded } from 'react-icons/sl';
-import { useNavigate } from 'react-router-dom';
+import { IoPersonCircleOutline } from "react-icons/io5";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBell, faWallet } from "@fortawesome/free-solid-svg-icons";
+import { FaListAlt, FaHome } from "react-icons/fa";
+import { SlBasketLoaded } from "react-icons/sl";
+import { useNavigate } from "react-router-dom";
 import { IoMdLogOut } from "react-icons/io";
 
-import axios from 'axios';
-import "./MainUserSidebar.css"
+import axios from "axios";
+import "./MainUserSidebar.css";
 
+import { useSidebar } from "../../Sidebar/SidebarContext";
 
 const drawerWidth = 240;
 
@@ -86,11 +85,17 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 
+
+
 const MainUserSidebar = () => {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const [notificationCount, setNotificationCount] = React.useState("");
   const navigate = useNavigate();
+
+  const { toggleSidebar } = useSidebar();
+
+  
 
   React.useEffect(() => {
     const getNotificationCount = async () => {
@@ -156,7 +161,10 @@ const MainUserSidebar = () => {
             <IconButton
               color="inherit"
               aria-label="open drawer"
-              onClick={handleDrawerOpen}
+              onClick={() => {
+                handleDrawerOpen();
+                toggleSidebar();
+              }}
               edge="start"
               sx={[
                 {
@@ -168,7 +176,6 @@ const MainUserSidebar = () => {
               <MenuIcon />
             </IconButton>
           </Toolbar>
-
         </AppBar>
 
         <Drawer
@@ -185,7 +192,10 @@ const MainUserSidebar = () => {
           open={open}
         >
           <DrawerHeader>
-            <IconButton onClick={handleDrawerClose}>
+            <IconButton onClick={() => {
+                handleDrawerClose();
+                toggleSidebar();
+              }}>
               {theme.direction === "ltr" ? (
                 <ChevronLeftIcon />
               ) : (
@@ -201,10 +211,9 @@ const MainUserSidebar = () => {
                 text: `Notification`,
                 icon: (
                   <>
-                  <FontAwesomeIcon icon={faBell} />
+                    <FontAwesomeIcon icon={faBell} />
                     {notificationCount > 0 && (
                       <div className="notification-icon-item">
-                        
                         <p className="notification-bubble">
                           {notificationCount}
                         </p>

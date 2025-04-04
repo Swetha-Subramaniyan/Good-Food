@@ -1,15 +1,20 @@
-
 import React, { useState, useEffect } from "react";
 import "./SubscriptionCalender.css";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSquareXmark, faCircleCheck, faClock } from "@fortawesome/free-solid-svg-icons";
-import MainUserSidebar from "../UserSidebar/MainUserSidebar";
-import Tooltip from '@mui/material/Tooltip';
-import { faTrash, faForward } from '@fortawesome/free-solid-svg-icons';
-
+import {
+  faSquareXmark,
+  faCircleCheck,
+  faClock,
+} from "@fortawesome/free-solid-svg-icons";
+import Tooltip from "@mui/material/Tooltip";
+import { faTrash, faForward } from "@fortawesome/free-solid-svg-icons";
+import { useSidebar } from "../../Sidebar/SidebarContext";
 
 const SubscriptionCalender = () => {
+
+  const { isOpen } = useSidebar();
+
   const [subscription, setSubscription] = useState(null);
   const [foodData, setFoodData] = useState([]);
   const [error, setError] = useState(null);
@@ -26,7 +31,8 @@ const SubscriptionCalender = () => {
         );
 
         const { getReport } = response.data;
-        const latestSubscription = getReport.userSubscription[getReport.userSubscription.length - 1];
+        const latestSubscription =
+          getReport.userSubscription[getReport.userSubscription.length - 1];
         setSubscription(latestSubscription);
 
         const startDate = new Date(latestSubscription.start_date);
@@ -66,15 +72,22 @@ const SubscriptionCalender = () => {
   const totalPages = Math.ceil(foodData.length / rowsPerPage);
 
   return (
-    <>
-      <MainUserSidebar />    
+    <div className={`main-content ${isOpen ? "shifted" : ""}`}>
       <div className="sub-details">Subscription Details</div>
       {error && <p style={{ color: "red" }}>{error}</p>}
       {subscription && (
         <div className="sub-status">
-          <div><FontAwesomeIcon icon={faClock} size="lg" /> Pending</div>
-          <div><FontAwesomeIcon icon={faSquareXmark} color="red" size="lg" /> Cancelled</div>
-          <div><FontAwesomeIcon icon={faCircleCheck} color="green" size="lg" /> Delivered</div>
+          <div>
+            <FontAwesomeIcon icon={faClock} size="lg" /> Pending
+          </div>
+          <div>
+            <FontAwesomeIcon icon={faSquareXmark} color="red" size="lg" />{" "}
+            Cancelled
+          </div>
+          <div>
+            <FontAwesomeIcon icon={faCircleCheck} color="green" size="lg" />{" "}
+            Delivered
+          </div>
           <div>Validity Days: {subscription.validity_days}</div>
           {/* <div>Customer ID: {subscription.customer_id}</div> */}
         </div>
@@ -85,9 +98,9 @@ const SubscriptionCalender = () => {
         <thead>
           <tr>
             <th>Date</th>
-            {foodData.some(day => day.breakfast > 0) && <th>Breakfast</th>}
-            {foodData.some(day => day.lunch > 0) && <th>Lunch</th>}
-            {foodData.some(day => day.dinner > 0) && <th>Dinner</th>}
+            {foodData.some((day) => day.breakfast > 0) && <th>Breakfast</th>}
+            {foodData.some((day) => day.lunch > 0) && <th>Lunch</th>}
+            {foodData.some((day) => day.dinner > 0) && <th>Dinner</th>}
             <th> Actions</th>
           </tr>
         </thead>
@@ -100,13 +113,20 @@ const SubscriptionCalender = () => {
                 {day.lunch > 0 && <td>{day.lunch}</td>}
                 {day.dinner > 0 && <td>{day.dinner}</td>}
                 <td>
-                   
-                <Tooltip title="Cancel" placement="left">
-            <button style={{backgroundColor:'red'}} > <FontAwesomeIcon icon={faTrash} /> </button>
-          </Tooltip> <span> 
-          <Tooltip title="Skip" placement="right" >
-              <button style={{backgroundColor:'dodgerblue'}} > <FontAwesomeIcon icon={faForward} /> </button>
-            </Tooltip></span>
+                  <Tooltip title="Cancel" placement="left">
+                    <button style={{ backgroundColor: "red" }}>
+                      {" "}
+                      <FontAwesomeIcon icon={faTrash} />{" "}
+                    </button>
+                  </Tooltip>{" "}
+                  <span>
+                    <Tooltip title="Skip" placement="right">
+                      <button style={{ backgroundColor: "dodgerblue" }}>
+                        {" "}
+                        <FontAwesomeIcon icon={faForward} />{" "}
+                      </button>
+                    </Tooltip>
+                  </span>
                 </td>
               </tr>
             ))
@@ -120,22 +140,25 @@ const SubscriptionCalender = () => {
 
       {/* Pagination Controls */}
       <div className="pagination">
-        <button 
-          onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} 
+        <button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
         >
           Previous
         </button>
-        <span>Page {currentPage} of {totalPages}</span>
-        <button 
-          onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} 
+        <span>
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          onClick={() =>
+            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+          }
           disabled={currentPage === totalPages}
         >
           Next
         </button>
       </div>
-    
-    </>
+    </div>
   );
 };
 
