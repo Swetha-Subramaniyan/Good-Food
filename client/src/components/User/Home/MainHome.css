@@ -68,9 +68,13 @@ h2 {
   display: flex;
   flex-wrap: wrap;
   gap: 150px; 
-  padding: 10px 0;
   justify-content: center;
-  /* justify-content: space-evenly; */
+  background-color: rgb(215, 227, 244);
+  margin-left: 5rem;
+  padding: 2rem;
+  width: 90%;
+  border-radius: 8px;
+
 }
 
 
@@ -154,7 +158,9 @@ h2 {
 .day-title{
   text-align: center;
   color: rgb(17, 118, 218);
+  color: rgb(243, 37, 37);
   font-weight: bold;
+  font-size: 1.5rem;
  
 }
 
@@ -168,6 +174,17 @@ h2 {
   width: 4rem;
   height: 2rem;
   
+}
+
+
+.day-card{
+  
+  background-color: rgb(242, 244, 245);
+  background-color: rgb(215, 227, 244);
+  margin-left: 5rem;
+  padding: 2rem;
+  width: 90%;
+  border-radius: 8px;
 }
 
 .food-item-actions button:first-child:hover {

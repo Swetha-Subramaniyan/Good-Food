@@ -1,166 +1,262 @@
-
 .backgrd {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #d8e1ea, #e9ecef);
-    padding: 40px;
-    min-height: 100vh;
-}
-
-.menu-container {
-  display: flex;
-  gap: 15px;
-  padding: 20px;
-  justify-content: center;
-  min-width: 100%;
-}
-
-.menu-day {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  width: 12rem;
-  padding: 2rem;
-
-
-}
-
-.menu-day h3 {
-  font-size: 18px;
-  font-size: 1.3rem;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 10px;
-  color: #1679e2;
-  
-  
-}
-
-.meal-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.meal-item {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background: linear-gradient(135deg, #d8e1ea, #e9ecef);
+  padding: 40px;
+  min-height: 100vh;
+}
+
+.menu-container {
+display: flex;
+flex-direction: column;
+gap: 15px;
+padding: 2rem;
+justify-content: center;
+min-width: 100%;
+background-color: #b2d0f0;
+}
+
+.menu-day {
+background-color: #fff;
+border-radius: 10px;
+box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+text-align: center;
+width: 12rem;
+padding: 2rem;
+
+}
+
+/* .menu-day h3 {
+font-size: 18px;
+font-size: 1.3rem;
+font-weight: bold;
+color: #333;
+margin-bottom: 10px;
+color: #1679e2;
+} */
+
+/* .meal-list {
+list-style: none;
+padding: 0;
+margin: 0;
+} */
+
+.meal-item {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
 }
 
 .meal-image {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 10px;
+width: 120px;
+height: 120px;
+object-fit: cover;
+border-radius: 10px;
+margin-bottom: 10px;
 }
 
 .meal-item p {
-  font-size: 16px;
-  font-weight: bold;
-  color: #555;
+font-size: 16px;
+font-weight: bold;
+color: #555;
 }
 
 .plans-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 75px;
-  margin-top: 20px;
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+gap: 75px;
+margin-top: 20px;
 }
 
 .plan-item.selected {
-  background-color: #007bff;
-  color: white;
+background-color: #007bff;
+color: white;
 }
 
 .subscribe-button button:hover {
-  animation: none;
-  background-color: #1679e2;
+animation: none;
+background-color: #1679e2;
 }
 
-
-
 .subscribe-button {
-  display: flex;
-  justify-content: center;
-  margin: 20px 0;
+display: flex;
+justify-content: center;
+margin: 20px 0;
 }
 
 .subscribe-button button {
-  background-color: #007bff;
-  color: white;
-  padding: 16px 24px;
-  font-weight: bold;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  animation: blink 1s infinite alternate;
-  font-size: 26px;
- 
+background-color: #007bff;
+color: white;
+padding: 16px 24px;
+font-weight: bold;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+animation: blink 1s infinite alternate;
+font-size: 26px;
+
 }
 
 .subscribe-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 0 50px;
- 
+display: flex;
+justify-content: space-between;
+align-items: center;
+width: 100%;
+padding: 0 50px;
+
 }
 
 
 .plan-item {
-  background: white;
-  padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  font-weight: 600;
-  margin: 10px;
-  cursor: pointer;
-  transition: transform 0.3s ease, background 0.3s ease;
-  width: 250px;
-  transition: 0.3s;
-  text-align: center;
-  background-color: white;
-  font-size: 1.5rem;
+background: white;
+padding: 25px;
+border-radius: 10px;
+box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+font-weight: 600;
+margin: 10px;
+cursor: pointer;
+transition: transform 0.3s ease, background 0.3s ease;
+width: 250px;
+transition: 0.3s;
+text-align: center;
+background-color: white;
+font-size: 1.5rem;
 }
 
 .plan-item:hover {
-  transform: scale(1.05);
-  background: #f1f1f1;
+transform: scale(1.05);
+background: #f1f1f1;
+background-color: #a2c6ed;
 }
 
 .plan-item.selected {
-  background-color: #007bff;
-  color: white;
-  transform: scale(1.08);
+background-color: #007bff;
+color: white;
+transform: scale(1.08);
 }
 
 .menu-section{
-  min-width: 100%;
-  margin-top: 2.5rem; 
-} 
+min-width: 100%;
+
+}
 
 .choose-plan h2{
-  text-decoration: underline;
-  color: #1875d8;  
-  
+text-decoration: underline;
+color: #1875d8;  
+
 }
 
 .meal-type-heading {
-  text-align: center;
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin: 10px 0;
+text-align: center;
+font-size: 1.5rem;
+font-weight: bold;
+margin-top: 3rem;
 }
 
 .meal-section {
-  margin-bottom: 3rem; 
+margin-bottom: 3rem;
 }
 
+
+.menu-container {
+display: flex;
+flex-direction: column; /* Stack days vertically */
+flex-direction: row;
+align-items: center;
+padding: 2rem;
+background-color: #b2d0f0;
+width: 100%;
+
+}
+
+.menu-day {
+background-color: #fff;
+border-radius: 10px;
+box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+text-align: center;
+padding: 2rem;
+margin-bottom: 1.5rem;
+/* width: 80%; */
+max-width: 500px;
+}
+
+.menu-day h3 {
+font-size: 1.4rem;
+font-weight: bold;
+color: #1679e2;
+margin-bottom: 15px;
+border-bottom: 2px solid #1679e2;
+padding-bottom: 5px;
+text-transform: uppercase;
+}
+
+.meal-section {
+margin-bottom: 2rem;
+}
+
+.meal-type-heading {
+font-size: 1.6rem;
+font-weight: bold;
+color: #333;
+margin-top: 1rem;
+text-decoration: underline;
+}
+
+.meal-list {
+list-style: none;
+padding: 0;
+margin-top: 10px;
+}
+
+.meal-item {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+font-size: 1.2rem;
+color: #555;
+font-weight: 600;
+padding: 10px;
+}
+
+.meal-image {
+width: 100px;
+height: 100px;
+object-fit: cover;
+border-radius: 10px;
+margin-bottom: 8px;
+border: 2px solid #1679e2;
+}
+
+@media (max-width: 768px) {
+.menu-day {
+  width: 95%;
+  padding: 1.5rem;
+}
+
+.meal-type-heading {
+  font-size: 1.4rem;
+}
+
+.meal-item {
+  font-size: 1rem;
+}
+
+.meal-image {
+  width: 80px;
+  height: 80px;
+}
+}
+
+
+.meal-section {
+margin-bottom: 3rem; /* Default spacing */
+}
+
+.meal-section:nth-child(2n) { /* Add extra space after breakfast and lunch */
+margin-bottom: 5rem;
+}

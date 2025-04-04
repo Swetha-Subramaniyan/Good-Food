@@ -6,7 +6,7 @@ import { FaInstagramSquare } from "react-icons/fa";
 import { GrLinkedin } from "react-icons/gr";
 import { FaTwitterSquare } from "react-icons/fa";
 import { FaYoutubeSquare } from "react-icons/fa";
-import logo from "../../../assets/Foodlogo.jpg";
+import logo from '../../../assets/Goodfood.png'
  
 const ContactUs = () => {
   return (
