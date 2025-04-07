@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./MainOrder.css";
-import MainSidebar from "../AdminSidebar/MainSidebar";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import PaginationControls from "../AddSubscription/PaginationControls";
+import { useSidebar } from "../../Sidebar/SidebarContext";
+
 
 const MainAddSubscription = () => {
+
+  const token = localStorage.getItem("token");
+
+  const { isOpen } = useSidebar();
+
   const [orderDetails, setOrderDetails] = useState({
     orders: [],
     grouped_by_meal_type: {},
@@ -13,6 +22,12 @@ const MainAddSubscription = () => {
   const [isDelivery, setIsDelivery] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    entriesPerPage: 10,
+    totalEntries: 0,
+  });
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -51,42 +66,42 @@ const MainAddSubscription = () => {
     verifyUserPosition();
   }, []);
 
-  const filteredOrders =
-    selectedMealType === "all"
-      ? orderDetails.orders
-      : orderDetails.orders.filter(
-          (order) => order.subscription.meal_type.name === selectedMealType
-        );
 
-  const totalFilteredOrders = filteredOrders.length;
-  const pendingCount = filteredOrders.filter(
-    (o) => o.order_status === "PENDING"
-  ).length;
-  const preparingCount = filteredOrders.filter(
-    (o) => o.order_status === "PREPARING"
-  ).length;
-  const deliveredCount = filteredOrders.filter(
-    (o) => o.order_status === "DELIVERED"
-  ).length;
+const handleChefStatusChange = async (orderId, newStatus) => {
+  try {
+    const response = await axios.post(
+      "/api/orders/chef-status",
+      { order_id: orderId, status: newStatus },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+  } catch (error) {
+    console.error("Error updating status:", error);
+  }
+};
 
-  const handleStatusChange = async (orderId, newStatus) => {
-    try {
-      const token = localStorage.getItem("token");
-      await axios.post(
-        `${process.env.REACT_APP_BACKEND_SERVER_URL}/admin/updateOrderStatus`,
-        { order_id: orderId, status: newStatus },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      // Refresh orders after status update
-      const response = await axios.get(
-        `${process.env.REACT_APP_BACKEND_SERVER_URL}/admin/getOrderDetails`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      setOrderDetails(response.data.data);
-    } catch (error) {
-      console.error("Error updating order status:", error);
-    }
-  };
+const handleAdminStatusChange = async (orderId, newStatus, deliveryUserId) => {
+  try {
+    const response = await axios.post(
+      "/api/orders/admin-status",
+      { order_id: orderId, status: newStatus, delivery_user_id: deliveryUserId },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+  } catch (error) {
+    console.error("Error updating status:", error);
+  }
+};
+
+const handleDeliveryStatusChange = async (orderId, deliveryProof) => {
+  try {
+    const response = await axios.post(
+      "/api/orders/delivery-status",
+      { order_id: orderId, status: "DELIVERED", delivery_proof: deliveryProof },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+  } catch (error) {
+    console.error("Error updating status:", error);
+  }
+};
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -112,7 +127,6 @@ const MainAddSubscription = () => {
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      // Refresh orders after submission
       const response = await axios.get(
         `${process.env.REACT_APP_BACKEND_SERVER_URL}/admin/getOrderDetails`,
         { headers: { Authorization: `Bearer ${token}` } }
@@ -125,25 +139,141 @@ const MainAddSubscription = () => {
     }
   };
 
-  return (
-    <>
-      <MainSidebar />
+  const requestSort = (key) => {
+    let direction = "asc";
+    if (sortConfig.key === key && sortConfig.direction === "asc") {
+      direction = "desc";
+    }
+    setSortConfig({ key, direction });
+  };
 
+  const getSortIcon = (key) => {
+    if (sortConfig.key !== key) return null;
+    return sortConfig.direction === "asc" ? (
+      <ArrowUpwardIcon fontSize="small" />
+    ) : (
+      <ArrowDownwardIcon fontSize="small" />
+    );
+  };
+
+  const getSortedData = () => {
+    if (!sortConfig.key) return filteredOrders;
+
+    return [...filteredOrders].sort((a, b) => {
+      const getValue = (obj, key) => {
+        if (key.includes(".")) {
+          return key.split(".").reduce((o, i) => o?.[i], obj);
+        }
+        return obj[key];
+      };
+
+      const aValue = getValue(a, sortConfig.key);
+      const bValue = getValue(b, sortConfig.key);
+
+      if (aValue < bValue) {
+        return sortConfig.direction === "asc" ? -1 : 1;
+      }
+      if (aValue > bValue) {
+        return sortConfig.direction === "asc" ? 1 : -1;
+      }
+      return 0;
+    });
+  };
+  const handlePageChange = (page) => {
+    setPagination((prev) => ({ ...prev, currentPage: page }));
+  };
+
+  const handleEntriesPerPageChange = (size) => {
+    setPagination((prev) => ({
+      ...prev,
+      entriesPerPage: size,
+      currentPage: 1,
+    }));
+  };
+
+  const getPaginatedData = () => {
+    const sortedData = getSortedData();
+    const { currentPage, entriesPerPage } = pagination;
+    const startIndex = (currentPage - 1) * entriesPerPage;
+    const endIndex = startIndex + entriesPerPage;
+    return sortedData.slice(startIndex, endIndex);
+  };
+
+  const filteredOrders =
+    selectedMealType === "all"
+      ? orderDetails.orders
+      : orderDetails.orders.filter(
+          (order) => order.subscription.meal_type.name === selectedMealType
+        );
+
+  const totalFilteredOrders = filteredOrders.length;
+  const pendingCount = filteredOrders.filter(
+    (o) => o.order_status === "PENDING"
+  ).length;
+  const preparingCount = filteredOrders.filter(
+    (o) => o.order_status === "PREPARING"
+  ).length;
+  const deliveredCount = filteredOrders.filter(
+    (o) => o.order_status === "DELIVERED"
+  ).length;
+
+  const currentPageOrders = getPaginatedData();
+  const currentPagePending = currentPageOrders.filter(
+    (o) => o.order_status === "PENDING"
+  ).length;
+  const currentPagePreparing = currentPageOrders.filter(
+    (o) => o.order_status === "PREPARING"
+  ).length;
+  const currentPageDelivered = currentPageOrders.filter(
+    (o) => o.order_status === "DELIVERED"
+  ).length;
+
+
+  useEffect(() => {
+    setPagination((prev) => ({
+      ...prev,
+      totalEntries: filteredOrders.length,
+    }));
+  }, [filteredOrders]);
+
+  return (
+    <div className={`main-content ${isOpen ? "shifted" : ""}`}>
       {isDelivery ? (
         <div className="delivery-management-container">
           <h1 className="page-title">Delivery Management</h1>
 
-          <div className="filter-section">
-            <select
-              value={selectedMealType}
-              onChange={(e) => setSelectedMealType(e.target.value)}
-            >
-              <option value="all">All Meal Types</option>
-              <option value="Breakfast">Breakfast</option>
-              <option value="Lunch">Lunch</option>
-              <option value="Dinner">Dinner</option>
-              <option value="Combo">Combo</option>
-            </select>
+          <div className="pagination-header">
+            <div className="entries-per-page">
+              <span>Show:</span>
+              <select
+                value={pagination.entriesPerPage}
+                onChange={(e) =>
+                  handleEntriesPerPageChange(Number(e.target.value))
+                }
+              >
+                {[5, 10, 20, 50, 100].map((size) => (
+                  <option key={size} value={size}>
+                    {size}
+                  </option>
+                ))}
+              </select>
+              <span>entries</span>
+            </div>
+            <div className="filter-section">
+              <select
+                value={selectedMealType}
+                onChange={(e) => {
+                  setSelectedMealType(e.target.value);
+                  setPagination((prev) => ({ ...prev, currentPage: 1 }));
+                }}
+              >
+                <option value="all">All Meal Types</option>
+                <option value="Breakfast">Breakfast</option>
+                <option value="Lunch">Lunch</option>
+                <option value="Dinner">Dinner</option>
+                <option value="Combo">Combo</option>
+              </select>
+            </div>
           </div>
 
           {selectedOrder ? (
@@ -214,7 +344,7 @@ const MainAddSubscription = () => {
                         ...selectedOrder,
                         order_status: newStatus,
                       });
-                      handleStatusChange(selectedOrder.order_id, newStatus);
+                      handleDeliveryStatusChange(selectedOrder.order_id, newStatus);
                     }}
                   >
                     <option value="OUT_FOR_DELIVERY">Out for Delivery</option>
@@ -262,16 +392,31 @@ const MainAddSubscription = () => {
               <table>
                 <thead>
                   <tr>
-                    <th>Order ID</th>
+                    <th
+                      className="sortable-header"
+                      onClick={() => requestSort("order_id")}
+                    >
+                      Order ID {getSortIcon("order_id")}
+                    </th>
                     <th>Customer</th>
-                    <th>Meal Type</th>
+                    <th
+                      className="sortable-header"
+                      onClick={() => requestSort("subscription.meal_type.name")}
+                    >
+                      Meal Type {getSortIcon("subscription.meal_type.name")}
+                    </th>
                     <th>Delivery Address</th>
-                    <th>Status</th>
+                    <th
+                      className="sortable-header"
+                      onClick={() => requestSort("order_status")}
+                    >
+                      Status {getSortIcon("order_status")}
+                    </th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredOrders.map((order) => (
+                  {getPaginatedData().map((order) => (
                     <tr key={order.order_id}>
                       <td>{order.order_id}</td>
                       <td>
@@ -307,6 +452,16 @@ const MainAddSubscription = () => {
                   ))}
                 </tbody>
               </table>
+              <PaginationControls
+                currentPage={pagination.currentPage}
+                totalPages={Math.ceil(
+                  pagination.totalEntries / pagination.entriesPerPage
+                )}
+                onPageChange={handlePageChange}
+                entriesPerPage={pagination.entriesPerPage}
+                totalEntries={pagination.totalEntries}
+                onEntriesPerPageChange={handleEntriesPerPageChange}
+              />
             </div>
           )}
 
@@ -349,17 +504,38 @@ const MainAddSubscription = () => {
             </div>
           </div>
 
-          <div className="filter-section">
-            <select
-              value={selectedMealType}
-              onChange={(e) => setSelectedMealType(e.target.value)}
-            >
-              <option value="all">All Meal Types</option>
-              <option value="Breakfast">Breakfast</option>
-              <option value="Lunch">Lunch</option>
-              <option value="Dinner">Dinner</option>
-              <option value="Combo">Combo</option>
-            </select>
+          <div className="pagination-header">
+            <div className="entries-per-page">
+              <span>Show:</span>
+              <select
+                value={pagination.entriesPerPage}
+                onChange={(e) =>
+                  handleEntriesPerPageChange(Number(e.target.value))
+                }
+              >
+                {[5, 10, 20, 50, 100].map((size) => (
+                  <option key={size} value={size}>
+                    {size}
+                  </option>
+                ))}
+              </select>
+              <span>entries</span>
+            </div>
+            <div className="filter-section">
+              <select
+                value={selectedMealType}
+                onChange={(e) => {
+                  setSelectedMealType(e.target.value);
+                  setPagination((prev) => ({ ...prev, currentPage: 1 }));
+                }}
+              >
+                <option value="all">All Meal Types</option>
+                <option value="Breakfast">Breakfast</option>
+                <option value="Lunch">Lunch</option>
+                <option value="Dinner">Dinner</option>
+                <option value="Combo">Combo</option>
+              </select>
+            </div>
           </div>
 
           {viewMode === "chef" ? (
@@ -369,16 +545,38 @@ const MainAddSubscription = () => {
                 <table>
                   <thead>
                     <tr>
-                      <th>Order ID</th>
-                      <th>Meal Type</th>
+                      <th
+                        className="sortable-header"
+                        onClick={() => requestSort("order_id")}
+                      >
+                        Order ID {getSortIcon("order_id")}
+                      </th>
+                      <th
+                        className="sortable-header"
+                        onClick={() =>
+                          requestSort("subscription.meal_type.name")
+                        }
+                      >
+                        Meal Type {getSortIcon("subscription.meal_type.name")}
+                      </th>
                       <th>Items</th>
-                      <th>Quantity</th>
+                      <th
+                        className="sortable-header"
+                        onClick={() => requestSort("meta.total_items")}
+                      >
+                        Quantity {getSortIcon("meta.total_items")}
+                      </th>
                       <th>Special Instructions</th>
-                      <th>Status</th>
+                      <th
+                        className="sortable-header"
+                        onClick={() => requestSort("order_status")}
+                      >
+                        Status {getSortIcon("order_status")}
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredOrders.map((order) => (
+                    {getPaginatedData().map((order) => (
                       <tr key={order.order_id}>
                         <td>{order.order_id}</td>
                         <td>{order.subscription.meal_type.name}</td>
@@ -415,6 +613,16 @@ const MainAddSubscription = () => {
                     ))}
                   </tbody>
                 </table>
+                <PaginationControls
+                  currentPage={pagination.currentPage}
+                  totalPages={Math.ceil(
+                    pagination.totalEntries / pagination.entriesPerPage
+                  )}
+                  onPageChange={handlePageChange}
+                  entriesPerPage={pagination.entriesPerPage}
+                  totalEntries={pagination.totalEntries}
+                  onEntriesPerPageChange={handleEntriesPerPageChange}
+                />
               </div>
             </div>
           ) : (
@@ -424,16 +632,33 @@ const MainAddSubscription = () => {
                 <table>
                   <thead>
                     <tr>
-                      <th>Order ID</th>
+                      <th
+                        className="sortable-header"
+                        onClick={() => requestSort("order_id")}
+                      >
+                        Order ID {getSortIcon("order_id")}
+                      </th>
                       <th>Customer</th>
-                      <th>Meal Type</th>
+                      <th
+                        className="sortable-header"
+                        onClick={() =>
+                          requestSort("subscription.meal_type.name")
+                        }
+                      >
+                        Meal Type {getSortIcon("subscription.meal_type.name")}
+                      </th>
                       <th>Delivery Address</th>
-                      <th>Contact</th>
-                      <th>Items Count</th>
+                      <th
+                        className="sortable-header"
+                        onClick={() => requestSort("order_status")}
+                      >
+                        Status {getSortIcon("order_status")}
+                      </th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredOrders.map((order) => (
+                    {getPaginatedData().map((order) => (
                       <tr key={order.order_id}>
                         <td>{order.order_id}</td>
                         <td>
@@ -473,31 +698,45 @@ const MainAddSubscription = () => {
                     ))}
                   </tbody>
                 </table>
+                <PaginationControls
+                  currentPage={pagination.currentPage}
+                  totalPages={Math.ceil(
+                    pagination.totalEntries / pagination.entriesPerPage
+                  )}
+                  onPageChange={handlePageChange}
+                  entriesPerPage={pagination.entriesPerPage}
+                  totalEntries={pagination.totalEntries}
+                  onEntriesPerPageChange={handleEntriesPerPageChange}
+                />
               </div>
             </div>
           )}
 
           <div className="stats-section">
             <div className="stat-card">
-              <h3>Showing</h3>
-              <p>{totalFilteredOrders} orders</p>
+              <h3>Total Orders</h3>
+              <p>{totalFilteredOrders}</p>
+              <span>{pagination.entriesPerPage} per page</span>
             </div>
             <div className="stat-card">
               <h3>Pending</h3>
               <p>{pendingCount}</p>
+              <span>({currentPagePending} on this page)</span>
             </div>
             <div className="stat-card">
-              <h3>In Progress</h3>
+              <h3>Out for Delivery</h3>
               <p>{preparingCount}</p>
+              <span>({currentPagePreparing} on this page)</span>
             </div>
             <div className="stat-card">
-              <h3>Completed</h3>
+              <h3>Delivered</h3>
               <p>{deliveredCount}</p>
+              <span>({currentPageDelivered} on this page)</span>
             </div>
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

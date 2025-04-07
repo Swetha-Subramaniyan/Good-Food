@@ -34,7 +34,7 @@
 }
 
 .toggle-btn.active {
-  background: #1976D2 !important;
+  background: dodgerblue !important;
   color: black;
 }
 
@@ -76,7 +76,7 @@
 }
 
 .orders-table th {
-  background-color: #1976D2;
+  background-color: dodgerblue;
   color: white;
   font-weight: 600;
 }
@@ -133,29 +133,7 @@
   margin-top: 30px;
 }
 
-.stat-card {
-  flex: 1;
-  padding: 15px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  text-align: center;
-}
 
-.stat-card h3 {
-  margin: 0 0 10px 0;
-  color: #666;
-  font-size: 16px;
-}
-
-.stat-card p {
-  margin: 0;
-  font-size: 24px;
-  font-weight: bold;
-  color: #1976D2;
-}
-
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .order-management-container {
     margin-left: 0;
@@ -167,20 +145,14 @@
     align-items: flex-start;
     gap: 10px;
   }
-  
-  .stats-section {
-    flex-direction: column;
-  }
 }
 
-/* Delivery Management Container */
 .delivery-management-container {
   padding: 20px;
   background-color: #f5f7fa;
   min-height: 100vh;
 }
 
-/* Delivery Detail View */
 .delivery-detail-view {
   background: white;
   border-radius: 10px;
@@ -243,7 +215,6 @@
   margin-top: 3px;
 }
 
-/* Status Controls */
 .status-controls select {
   padding: 10px 15px;
   border-radius: 5px;
@@ -254,7 +225,6 @@
   max-width: 300px;
 }
 
-/* Delivery Proof */
 .image-upload {
   text-align: center;
   padding: 20px;
@@ -302,7 +272,6 @@
   color: white;
 }
 
-/* Back Button */
 .back-button {
   display: block;
   margin: 20px auto 0;
@@ -315,7 +284,6 @@
   font-size: 16px;
 }
 
-/* Delivery Orders List */
 .delivery-orders-list {
   background: white;
   border-radius: 10px;
@@ -355,7 +323,6 @@
   margin-right: 10px;
 }
 
-/* Status Badges */
 .status-badge {
   display: inline-block;
   padding: 4px 8px;
@@ -380,7 +347,6 @@
   color: white;
 }
 
-/* View Details Button */
 .view-details-btn {
   padding: 6px 12px;
   background-color: #2196F3;
@@ -395,7 +361,6 @@
   background-color: #0b7dda;
 }
 
-/* Stats Section */
 .stats-section {
   display: flex;
   justify-content: space-between;
@@ -433,7 +398,13 @@
   color: #333;
 }
 
-/* Responsive Adjustments */
+.stat-card span {
+  margin: 0;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
 @media (max-width: 768px) {
   .delivery-management-container {
     margin-left: 0;
@@ -463,4 +434,26 @@
     display: block;
     overflow-x: auto;
   }
+}
+
+.sortable-header {
+  cursor: pointer;
+  gap: 4px;
+}
+
+.pagination-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.entries-per-page {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.entries-per-page select {
+  padding: 5px;
 }
