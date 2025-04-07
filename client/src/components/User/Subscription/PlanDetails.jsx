@@ -124,12 +124,13 @@ const PlanDetails = () => {
       <div className="meal-type-section">
         {uniqueMealTypes.length > 0 && (
           <>
-           
+          
             <div className="meal-type-list">
               {uniqueMealTypes.map((type) => (
                 <h4 key={type} className="meal-type-heading">{type}</h4>
               ))}
             </div>
+
           </>
         )}
       </div>

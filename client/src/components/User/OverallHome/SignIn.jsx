@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
-import "./SignIn.css";
-import { FaGoogle } from "react-icons/fa6";
+import { FaGoogle, FaTimes } from "react-icons/fa";
+import { Dialog, DialogActions, DialogTitle, Button, Typography, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
- 
+import "./SignIn.css";
+import goodfood from '../../../../src/assets/Goodfood.png';
+
 const SignIn = ({ isVisible, onClose, role }) => {
-  console.log(isVisible);
   const navigate = useNavigate();
 
   useEffect(() => {
-    
     const params = new URLSearchParams(window.location.search);
     const token = params.get("token");
 
@@ -20,21 +20,19 @@ const SignIn = ({ isVisible, onClose, role }) => {
         navigate(`/user/Payment/${pendingSubscription}`);
       } else {
         const redirectTo = localStorage.getItem("Redirect_Link");
-        if(redirectTo){
-        localStorage.removeItem("Redirect_Link"); 
-        navigate(redirectTo);
-        }else{
-          if(role === "USER"){
-          navigate('/user/SubscriptionCalender')
-          }else{
-            navigate('/admin/addsubscription')
+        if (redirectTo) {
+          localStorage.removeItem("Redirect_Link");
+          navigate(redirectTo);
+        } else {
+          if (role === "USER") {
+            navigate("/user/SubscriptionCalender");
+          } else {
+            navigate("/admin/addsubscription");
           }
         }
       }
     }
-  }, [navigate]);
-
-  if (!isVisible) return null;
+  }, [navigate, role]);
 
   const handleGoogleSignIn = () => {
     const backendUrl = process.env.REACT_APP_BACKEND_SERVER_URL;
@@ -44,6 +42,7 @@ const SignIn = ({ isVisible, onClose, role }) => {
       alert("Configuration error: Backend URL is missing.");
       return;
     }
+
     try {
       window.location.href = `${backendUrl}/auth/google?role=${role}`;
     } catch (error) {
@@ -53,19 +52,55 @@ const SignIn = ({ isVisible, onClose, role }) => {
   };
 
   return (
-    <div className="sign-in-modal">
+    <Dialog open={isVisible} onClose={onClose} maxWidth="xs" fullWidth className="dialog-width">
+      <DialogTitle style={{ position: 'relative' }}>
+        <IconButton
+          onClick={onClose}   
+          style={{
+            position: 'absolute',
+            right: '10px',
+            top: '10px',
+            color: 'red',
+            fontSize:'1rem'
+          }}
+        >
+          <FaTimes /> 
+        </IconButton>
+      </DialogTitle>
+
       <div className="sign-in-content">
-        <button className="close-bttnn" onClick={onClose}>
-          X
-        </button>
-        <h3 className="sigin"> Please Sign In to Subscribe </h3>
-        <div className="sign-google">
-          <button onClick={handleGoogleSignIn}>
-            <FaGoogle /> Sign In with Google
-          </button>
+        <div className="image-container">
+          <img src={goodfood} alt="Good Food" className="sign-in-image" />
+        </div>
+
+        <div className="text-content">
+          <Typography variant="h5" gutterBottom style={{ marginBottom: '5px', marginTop: '1rem', fontWeight: 'bold', marginLeft:'2rem' }}>
+            Please Sign In to Subscribe
+          </Typography>
+          <Typography variant="body2" color="textSecondary" style={{ fontSize: '0.9rem', marginBottom: '15px' }}>
+            Welcome user, please sign in to continue.
+          </Typography>
         </div>
       </div>
-    </div>
+
+      <DialogActions>
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          startIcon={<FaGoogle />}
+          onClick={handleGoogleSignIn}
+          style={{
+            textTransform: 'none',
+            fontWeight: 'bold',
+            fontSize: '18px',
+            marginTop: '20px', 
+          }}
+        >
+          Sign in with Google
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 
