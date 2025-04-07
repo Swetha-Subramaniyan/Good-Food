@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Notification.css";
-import MainNavbar from "../Navbar/MainNavbar";
+import { useSidebar } from "../../Sidebar/SidebarContext";
+
  
 const Notification = () => {
+
+  const { isOpen } = useSidebar();
+
   const [notifications, setNotifications] = useState([]);
-  const [filter, setFilter] = useState("all"); // "all", "read", "unread"
+  const [filter, setFilter] = useState("all"); 
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -31,7 +35,7 @@ const Notification = () => {
       const token = localStorage.getItem("token");
       await axios.post(
         `${process.env.REACT_APP_BACKEND_SERVER_URL}/notification/markNotificationAsViewed`,
-        { notifications: [notificationId] }, // Send as an array
+        { notifications: [notificationId] }, 
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -60,7 +64,7 @@ const Notification = () => {
 
       await axios.post(
         `${process.env.REACT_APP_BACKEND_SERVER_URL}/notification/markNotificationAsViewed`,
-        { notifications: unreadIds }, // Send all unread IDs
+        { notifications: unreadIds }, 
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -92,12 +96,11 @@ const Notification = () => {
   const filteredNotifications = notifications.filter((notification) => {
     if (filter === "read") return notification.viewed;
     if (filter === "unread") return !notification.viewed;
-    return true; // "all"
+    return true; 
   });
 
   return (
-    <>
-      <MainNavbar />
+    <div className={`main-content ${isOpen ? "shifted" : ""}`}>
       <div className="notification-container">
         <h3>Notifications</h3>
         <div className="notification-controls">
@@ -177,7 +180,7 @@ const Notification = () => {
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

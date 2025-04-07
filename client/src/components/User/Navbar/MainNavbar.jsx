@@ -1,11 +1,8 @@
-
-import React from 'react'
-import MainUserSidebar from '../UserSidebar/MainUserSidebar'
+import React from "react";
+import MainUserSidebar from "../UserSidebar/MainUserSidebar";
 
 const MainNavbar = () => {
-  return (
-    < MainUserSidebar />  
-  )
-}
+  return <MainUserSidebar />;
+};
 
-export default MainNavbar
+export default MainNavbar;

@@ -20,9 +20,10 @@ const LoginPopup = ({ onClose }) => {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get("token");
     const role = urlParams.get("role");
-    console.log("Token : ", token);
     localStorage.setItem("token", token);
     localStorage.setItem("role", role);
+    
+    console.log("Token : ", role, token);
   }, []);
 
   useEffect(() => {

@@ -4,6 +4,8 @@ const prisma = new PrismaClient();
 
 const createTier = async (req, res) => {
   try {
+
+    console.log("te", req.body)
     const { type } = req.body;
     
     const tier = await prisma.tier.create({
