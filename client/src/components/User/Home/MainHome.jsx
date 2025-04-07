@@ -57,7 +57,6 @@ const MainHome = () => {
       <button className="logout">
         <IoMdLogOut /> Logoutttttt
       </button>
-      <MainNavbar />
 
       <div className="menu-containerr">
         <div className="food-items-section">
