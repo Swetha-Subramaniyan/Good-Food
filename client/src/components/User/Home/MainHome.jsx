@@ -1,14 +1,15 @@
-
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "./MainHome.css";
 import { IoMdLogOut } from "react-icons/io";
 import { useParams } from "react-router-dom";
-import MainUserSidebar from "../UserSidebar/MainUserSidebar";
+import { useSidebar } from "../../Sidebar/SidebarContext";
 
 const MainHome = () => {
+  const { isOpen } = useSidebar();
+
   const [additionalItems, setAdditionalItems] = useState([]);
-  const [foodItems, setFoodItems] = useState([]);  
+  const [foodItems, setFoodItems] = useState([]);
   const [isComboPlan, setIsComboPlan] = useState(false);
   const { id } = useParams();
 
@@ -40,8 +41,6 @@ const MainHome = () => {
         if (data.length > 0) {
           const firstItem = data[0];
           setIsComboPlan(firstItem.subscription_meal_type === "Combo");
-
-          // Store data by days
           setFoodItems(firstItem.days || []);
         }
       } catch (error) {
@@ -54,14 +53,12 @@ const MainHome = () => {
   }, [id]);
 
   return (
-    <>
+    <div className={`main-content ${isOpen ? "shifted" : ""}`}>
       <button className="logout">
-        <IoMdLogOut /> Logout
+        <IoMdLogOut /> Logoutttttt
       </button>
-      <MainUserSidebar/>
 
       <div className="menu-containerr">
-        {/* Display Food Items Day-wise */}
         <div className="food-items-section">
   <h2 className="week">Weekly Food Menu</h2>
 <br />
@@ -134,10 +131,9 @@ const MainHome = () => {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
 export default MainHome;
-
 

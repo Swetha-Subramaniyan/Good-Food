@@ -9,9 +9,11 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import MainUserSidebar from '../UserSidebar/MainUserSidebar';
+import { useSidebar } from '../../Sidebar/SidebarContext';
 
 const Wallet = () => {
+
+  const { isOpen } = useSidebar();
  
   const [refundedPrice, setRefundedPrice] = useState('');
   const [reason, setReason] = useState('');
@@ -19,16 +21,9 @@ const Wallet = () => {
   const [subscribedPlan, setSubscribedPlan] = useState('');
 
   return (
-    <>
-    <MainUserSidebar/> 
-    <div> 
-<div> 
-     </div>
-      <h2 >Wallet & Refunds</h2> 
-      {/* <div className='refund-price'>  
-       <img src={refund} alt='refundpolicy' /> 
-      </div>  */}
+    <div className={`main-content ${isOpen ? "shifted" : ""}`}> 
 
+      <h2 >Wallet & Refunds</h2> 
       <div className="wallet-dashboard">
         <div className="wallet-section">
           <h4>Terms and Conditions for Refund Policy</h4>
@@ -137,7 +132,6 @@ Meal subscription plans have to be used during the period of validity. In case o
         </div> */}
       </div>
     </div>
-    </>
   );
 };
 

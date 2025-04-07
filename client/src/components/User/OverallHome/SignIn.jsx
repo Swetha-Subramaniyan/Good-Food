@@ -2,8 +2,10 @@ import React, { useEffect } from "react";
 import { FaGoogle, FaTimes } from "react-icons/fa";
 import { Dialog, DialogActions, DialogTitle, Button, Typography, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+
 import "./SignIn.css";
 import goodfood from '../../../../src/assets/Goodfood.png';
+
 
 const SignIn = ({ isVisible, onClose, role }) => {
   const navigate = useNavigate();
@@ -11,9 +13,14 @@ const SignIn = ({ isVisible, onClose, role }) => {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const token = params.get("token");
+    const role = params.get("role");
+
+    console.log("roleeeeeeeeeee", role)
 
     if (token) {
       localStorage.setItem("token", token);
+      localStorage.setItem("role", role)
+
       const pendingSubscription = localStorage.getItem("pendingSubscription");
       if (pendingSubscription) {
         localStorage.removeItem("pendingSubscription");

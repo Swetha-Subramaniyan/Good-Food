@@ -1,0 +1,43 @@
+.sidebar-container {
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  left: -250px;
+  top: 0;
+  color: white;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.sidebar-container.open {
+  left: 0;
+}
+
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.sidebar-overlay.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: none;
+}
+
+.main-content {
+  transition: margin-left 0.3s ease;
+  margin-left: 0;
+  margin-top: 5rem;
+}
+
+.main-content.shifted {
+  margin-left: 250px;
+}
