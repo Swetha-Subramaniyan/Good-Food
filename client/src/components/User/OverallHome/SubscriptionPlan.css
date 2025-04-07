@@ -1,45 +1,144 @@
- 
-.choose{
+/* Basic styling and centering for the header */
+.choose {
   color: orangered;
-  font-size: 2.4rem;
+  font-size: 2.5rem;
   font-weight: bold;
   text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  display: inline-block;
-  position: relative;
+  margin-top: 5vh;
   animation: blink 1s infinite alternate;
-  padding: 1rem;
-  border-radius: 8px;
- 
 }
- 
-@keyframes blink {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 1;
-  }
-}
- 
- 
+
+/* Styling for the main container */
 .subscription-container {
-  text-align: center;
-  padding: 20px;
-  min-height: 200vh;
-  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
- 
+  padding: 20px;
 }
- 
- 
- 
+
+/* Styles for the plan cards */
+.plan-section {
+  margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Description card styles with full height */
+.description-card {
+  background: #f8f9fa;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  /* width: 100%; */
+  min-height: 100vh;
+  width: 80rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Styling for the individual plan images */
+.images-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.plan-image {
+  width: 25%;
+  height: 15rem;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-top: 3rem;
+}
+
+/* Plan card button */
+.plan-card {
+  background: linear-gradient(135deg, #a9c2f1, #e39a47);
+  padding: 25px 30px;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  margin-top: 2rem;
+}
+
+.plan-card:hover {
+  transform: scale(1.05);
+}
+
+/* Popup styling */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.popup {
+  background: white;
+  padding: 40px 60px;
+  border-radius: 15px;
+  text-align: center;
+  width: 50%;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
+  animation: scaleIn 0.3s ease-in-out;
+}
+
+.close--btnn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 25px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgb(236, 19, 19);
+}
+
+/* Flex container for different plan types */
+.plan-types-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.plann-description {
+ font-size: 1.3rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+
+
+
+
+
+
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -124,12 +223,7 @@
  
 }
  
- 
-.meals-container {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
+
  
 .heading-head{
   color: orangered;
@@ -139,65 +233,90 @@
 }
  
  
- 
- 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
- 
-@keyframes scaleIn {
-  from {
-    transform: scale(0.8);
-  }
-  to {
-    transform: scale(1);
-  }
-}
- 
- 
- .description-card {
-  background: #f8f9fa;
-  padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  width: 90rem;
-  margin-bottom: 5px;
-  height: 100vh;
-  /* background: linear-gradient(135deg, #a9c2f1, #e39a47); */
-}
- 
- 
-.plan-card {
-  /* background: linear-gradient(135deg, #7a4648, #fad0c4); */
-  background: linear-gradient(135deg, #a9c2f1, #e39a47);
-  padding: 35px 40px;
-  border-radius: 12px;
-  cursor: pointer;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease;  
-  margin-top: 5rem; 
-   
-}
- 
-.plan-card:hover {
-  transform: scale(1.05);
-}
- 
- 
 .plann-description{
   font-size: 1.6rem;
-  /* margin-top: 5rem; */
-  /* background: linear-gradient(135deg, #7a4648, #fad0c4);
-  padding: 35px 40px;
-  border-radius: 12px;
-  cursor: pointer;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease;  */
+  padding: 2rem;
+ 
  
 }  
+ 
+ 
+
+
+ 
+@media screen and (max-width: 768px) {
+  .description-card {
+    padding: 20px;
+    width: 100%;
+    height: auto; /* Allow height to be auto on smaller screens */
+    min-height: 100vh;
+  }
+ 
+  .plann-description {
+    font-size: 1.4rem; /* Adjust font size on smaller screens */
+  }
+ 
+  .plan-card {
+    padding: 20px 25px; /* Smaller padding for better fit */
+  }
+ 
+  .plan-card h2 {
+    font-size: 1.8rem; /* Adjust text size */
+  }
+ 
+  .popup {
+    width: 80%; /* Ensure popup takes up 80% of screen */
+    padding: 40px;
+  }
+}
+ 
+@media screen and (max-width: 480px) {
+  .description-card {
+    padding: 10px;
+    height: auto; /* Allow height to be auto on smaller screens */
+  }
+ 
+  .plann-description {
+    font-size: 1.2rem; /* Smaller font size on very small screens */
+  }
+ 
+  .plan-card {
+    padding: 15px 20px; 
+    margin-left: 2rem;
+    margin-right: 2rem;
+   
+  }
+ 
+  .plan-card h2 {
+    font-size: 1.5rem; /* Smaller text size */
+  }
+ 
+  .popup {
+    width: 90%; /* Popup takes up 90% of screen */
+    padding: 30px;
+  }
+ 
+  .meal-card {
+    padding: 8px 12px;
+  }
+  .plan-image {
+    width: 45%;
+    height: 10rem;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-top: 3rem;
+  }
+  .images-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+  .choose{
+    margin-top: 15rem;
+    font-size: 1.5rem;
+
+  }
+}
