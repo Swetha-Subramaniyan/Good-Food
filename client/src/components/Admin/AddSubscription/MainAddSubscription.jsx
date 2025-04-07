@@ -401,6 +401,8 @@ const MainAddSubscription = () => {
       console.error("Error saving duration:", error);
     }
   };
+
+  //this is updated one
  
   const handleFoodItemsSubmit = async (itemData) => {
     try {
@@ -420,6 +422,7 @@ const MainAddSubscription = () => {
 
   return (
     <div className={`main-content ${isOpen ? "shifted" : ""}`}>
+
 
       <div className="subscriptions-container">
         <div className="subscriptions-header">
