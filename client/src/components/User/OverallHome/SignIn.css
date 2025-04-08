@@ -1,32 +1,38 @@
 
-
-
 .sign-in-content {
   display: flex;
   align-items: center; 
+  flex-direction: row;
+  gap: 0.9rem;
   padding: 1rem;
-  flex-direction: row; 
 }
+
 
 .image-container {
-  margin-right: 0rem; 
   display: flex;
-  align-items: center; 
+  align-items: center;
+  justify-content: center;
 }
+
 
 .sign-in-image {
-  width: 70px; 
-  height: auto;
+  width: 70px;
   height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
+
 .text-content {
-  flex: 1; 
+  flex: 1;
+  text-align: left;
 }
+
 
 .MuiDialogTitle-root {
   text-align: center;
 }
+
 
 .MuiTypography-body2 {
   text-align: center;
@@ -34,15 +40,18 @@
   margin-bottom: 20px;
 }
 
+
 .MuiButton-root svg {
   margin-right: 8px;
 }
 
+
 .MuiButton-root {
   font-size: 16px;
-  padding: 12px 20px;
+  padding: 10px;
   text-transform: none;
 }
+
 
 .Typography {
   font-weight: bold;
@@ -50,13 +59,68 @@
 
 
 .MuiTypography-h5 {
-  white-space: nowrap; 
-  overflow: hidden;    
+  white-space: nowrap;
+  overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: bold;  
-  font-size: 1.2rem;  
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
-.dislog-width{
-  width: 30rem;
+
+@media (max-width: 768px) {
+  .sign-in-content {
+    flex-direction: column; 
+    align-items: center; 
+    gap: 1rem; 
+    padding: 1rem; 
+  }
+
+  .image-container {
+    margin-bottom: 1rem; 
+  }
+
+  .sign-in-image {
+    width: 50px; 
+    height: 50px;
+  }
+
+  .text-content {
+    text-align: center; 
+    margin-left: 0; 
+  }
+
+  .MuiTypography-h5 {
+    font-size: 1rem; 
+  }
+
+  .MuiTypography-body2 {
+    font-size: 0.9rem; 
+  }
+
+  .MuiButton-root {
+    font-size: 14px; 
+    padding: 8px; 
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .sign-in-image {
+    width: 40px; 
+    height: 40px;
+  }
+
+  .MuiTypography-h5 {
+    font-size: 0.9rem; 
+  }
+
+  .MuiTypography-body2 {
+    font-size: 0.8rem; 
+  }
+
+  .MuiButton-root {
+    font-size: 12px; 
+    padding: 6px; 
+  }
 }

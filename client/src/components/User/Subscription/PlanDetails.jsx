@@ -120,7 +120,7 @@ const PlanDetails = () => {
         </div>
       </div>
  
-      {/* Display Meal Type Headings ABOVE Menu Container */}
+    
       <div className="meal-type-section">
         {uniqueMealTypes.length > 0 && (
           <>
@@ -135,7 +135,7 @@ const PlanDetails = () => {
         )}
       </div>
  
-      {/* Display the formatted menu */}
+
       <div className="menu-section">
         <div className="menu-container">
           {Object.keys(formattedMenu).length > 0 ? (

@@ -52,7 +52,8 @@ const SignIn = ({ isVisible, onClose, role }) => {
   };
 
   return (
-    <Dialog open={isVisible} onClose={onClose} maxWidth="xs" fullWidth className="dialog-width">
+    <Dialog open={isVisible} onClose={onClose} maxWidth="xs" fullWidth     
+    >
       <DialogTitle style={{ position: 'relative' }}>
         <IconButton
           onClick={onClose}   
@@ -68,17 +69,17 @@ const SignIn = ({ isVisible, onClose, role }) => {
         </IconButton>
       </DialogTitle>
 
-      <div className="sign-in-content">
+      <div className="sign-in-content" style={{padding:'1rem', paddingLeft:'2rem'}}>
         <div className="image-container">
           <img src={goodfood} alt="Good Food" className="sign-in-image" />
         </div>
 
         <div className="text-content">
-          <Typography variant="h5" gutterBottom style={{ marginBottom: '5px', marginTop: '1rem', fontWeight: 'bold', marginLeft:'2rem' }}>
-            Please Sign In to Subscribe
+          <Typography variant="h5" gutterBottom style={{ marginBottom: '5px', marginTop: '0rem', fontWeight: 'bold',  }}>
+             Welcome to Good Foods
           </Typography>
-          <Typography variant="body2" color="textSecondary" style={{ fontSize: '0.9rem', marginBottom: '15px' }}>
-            Welcome user, please sign in to continue.
+          <Typography variant="body2" color="textSecondary" style={{ fontSize: '0.95rem', marginBottom: '15px' }}>
+          Please Sign In to Subscribe
           </Typography>
         </div>
       </div>
@@ -94,7 +95,10 @@ const SignIn = ({ isVisible, onClose, role }) => {
             textTransform: 'none',
             fontWeight: 'bold',
             fontSize: '18px',
-            marginTop: '20px', 
+            marginBottom:'1.5rem',
+            marginLeft:'1rem',
+            marginRight:'1rem'
+           
           }}
         >
           Sign in with Google

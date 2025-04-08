@@ -7,14 +7,15 @@ import { GrLinkedin } from "react-icons/gr";
 import { FaTwitterSquare } from "react-icons/fa";
 import { FaYoutubeSquare } from "react-icons/fa";
 import logo from '../../../assets/Goodfood.png'
+import Footer from "./Footer";
  
 const ContactUs = () => {
   return (
     <>
       <div id="contact-section" className="contact-last">
         <div >
-          <div className="contact-button">
-            <h1>Contact Us</h1>
+       
+            <h1 className="contact-button">Contact Us</h1>
           </div>
           <br /> <br />
           <div className="footer-down">
@@ -45,21 +46,25 @@ const ContactUs = () => {
               <div className="bold-word">Follow us on</div>
               <div className="icon-footer">
                 <div>
-                  <ImFacebook2 size={24} /> <FaWhatsappSquare size={27} />
-                  <FaInstagramSquare size={27} />
+                  <ImFacebook2 size={24} /> <FaWhatsappSquare size={27} /> 
+                
                 </div>
                 <div>
-                  <GrLinkedin size={24} /> <FaTwitterSquare size={27} />
-                  <FaYoutubeSquare size={27} />
+                <GrLinkedin size={24} /> <FaYoutubeSquare size={27} />
+                 
+                </div>
+                <div>
+                <FaInstagramSquare size={27} /> <FaTwitterSquare size={27} />
+                 
                 </div>
               </div>
             </div>
           </div>
-          <div className="copyright-section">
-            <p> Copyright &copy; Good Foods - 2025  All rights Reserved. </p>
-          </div>
+         
+          <Footer/>
         </div>
-      </div>
+     
+  
     </>
   );
 };
