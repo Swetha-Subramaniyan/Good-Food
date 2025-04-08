@@ -16,6 +16,8 @@ const DurationModal = ({ onClose, onSubmit, initialData }) => {
     }
   }, [initialData]);
 
+  //handle
+
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit({ 
