@@ -1,6 +1,6 @@
 import React from "react";
 import './Header.css';  
-
+import { Menu as MenuIcon } from "@mui/icons-material";
 const Header = ({ showUpdatePopup }) => {
   return (
     <nav className="navbarrr navbar-expand-lg navbar-light ">
@@ -14,7 +14,7 @@ const Header = ({ showUpdatePopup }) => {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span className="navbar-toggler-icon"></span>
+          <span> <MenuIcon /></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">

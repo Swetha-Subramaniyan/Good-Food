@@ -7,6 +7,8 @@ import { PiCertificateBold } from "react-icons/pi";
 import { PiChefHatBold } from "react-icons/pi";
 import SignIn from "./SignIn";
 import Header from "./Header";
+import Button from '@mui/material/Button';
+import { Stack } from '@mui/material';
 
 const LandingPage = () => {
 
@@ -34,12 +36,22 @@ const LandingPage = () => {
         </div>
 
         <div className="signing-in">
-          <button className="login-button user-button" onClick={()=>handleLogin("USER")}>
-            User Login
-          </button>
-          <button className="login-button admin-button" onClick={()=>handleLogin("ADMIN")}>
-            Admin Login
-          </button>
+            <Stack direction="row" spacing={2}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => handleLogin("USER")}
+            >
+              User Login
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => handleLogin("ADMIN")}
+            >
+              Admin Login
+            </Button>
+          </Stack>
           {isSignInVisible && (
             <SignIn isVisible={isSignInVisible} onClose={handleCloseSignIn} role={role}  />
           )}
@@ -53,7 +65,7 @@ const LandingPage = () => {
         </div>
 
         <div className="register">
-          <div style={{ backgroundColor: "coral" }}>
+          <div style={{ backgroundColor: "rgb(241, 102, 52)" }}>
             <FaListCheck /> 5.5L+ <span> Successful Orders </span>
           </div>
           <div>
@@ -66,7 +78,7 @@ const LandingPage = () => {
             <PiCertificateBold size={25} /> 5.5L+{" "}
             <span> Certified License </span>
           </div>
-          <div style={{ backgroundColor: "orange" }}>
+          <div style={{ backgroundColor: "#6b3135" }}>
             <PiChefHatBold size={25} /> 3.5L+ <span> Sellers </span>
           </div>
         </div>

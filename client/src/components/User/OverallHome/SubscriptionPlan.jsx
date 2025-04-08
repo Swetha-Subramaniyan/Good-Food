@@ -4,11 +4,10 @@ import { useNavigate } from "react-router-dom";
 import "./SubscriptionPlan.css";
 import { AiFillCloseSquare } from "react-icons/ai";
 
-import breakfastImage from '../../../../src/assets/breakfast.jpeg'
-import lunchImage from '../../../../src/assets/lunch.jpg'
-import dinnerImage from '../../../../src/assets/dinner.webp'
-import comboImage from '../../../../src/assets/varietyrice.jpg'
-
+import breakfastImage from "../../../../src/assets/breakfast.jpeg";
+import lunchImage from "../../../../src/assets/lunch.jpg";
+import dinnerImage from "../../../../src/assets/dinner.webp";
+import comboImage from "../../../../src/assets/varietyrice.jpg";
 
 const SubscriptionPlan = () => {
   const navigate = useNavigate();
@@ -45,42 +44,92 @@ const SubscriptionPlan = () => {
   return (
     <>
       <div className="subscription-container">
-        <header className="header">
+      
           <h1 className="choose">Choose Your Plan for Subscription!</h1>
-        </header>
+     
 
         <section className="plans-section">
           {Object.keys(subscriptions).map((planName) => (
-            <div className={`plan-section ${planName.toLowerCase()}`} key={planName}>
+            <div
+              className={`plan-section ${planName.toLowerCase()}`}
+              key={planName}
+            >
               <div className="description-card" id="individual-section">
                 {planName === "Individual Plan" && (
                   <>
+
                     <p className="plann-description">
-                      {planName} - You can subscribe to only one meal (Breakfast, Lunch, or Dinner).
+                      {planName} - You can subscribe to only one meal:
+                      (Breakfast, Lunch, or Dinner).
                     </p>
-                    <div className="plan-card" onClick={() => handlePlanClick(planName)}>
+                    <div
+                      className="plan-card"
+                      onClick={() => handlePlanClick(planName)}
+                    >
                       <h2 className="plan-name">{planName}</h2>
                     </div>
+                    
                     <div className="images-container">
-                      <img src={breakfastImage} alt="Breakfast" className="plan-image" />
-                      <img src={lunchImage} alt="Lunch" className="plan-image" />
-                      <img src={dinnerImage} alt="Dinner" className="plan-image" />
-                    </div>
+  <div className="image-with-label">
+    <img
+      src={breakfastImage}
+      alt="Breakfast"
+      className="plan-image"
+    />
+    <div>Breakfast</div>
+  </div>
+
+  <div className="image-with-label">
+    <img
+      src={lunchImage}
+      alt="Lunch"
+      className="plan-image"
+    />
+    <div>Lunch</div>
+  </div>
+
+  <div className="image-with-label">
+    <img
+      src={dinnerImage}
+      alt="Dinner"
+      className="plan-image"
+    />
+    <div>Dinner</div>
+  </div>
+</div>
+
                   </>
                 )}
 
                 {planName === "Combo Plan" && (
                   <>
-                   <div id="combo-section"> 
-                    <p  className="plann-description" >
-                      {planName} - This plan includes all three meals: Breakfast, Lunch, and Dinner.
-                    </p>
+                    <div id="combo-section">
                    
-                    <div className="plan-card" onClick={() => handlePlanClick(planName)}>
-                      <h2 className="plan-name">{planName}</h2>
-                    </div>
-                    <img src={comboImage} alt="Combo Plan" className="plan-image" style={{marginLeft:'0rem', marginTop:'4rem', width:'20rem', height:'20rem'}} />
-                    </div> </>
+                      <p className="plann-description">
+                        {planName} - This plan includes all three meals:
+                        (Breakfast, Lunch, and Dinner).
+                      </p>
+                      <div
+                        className="plan-card"
+                        onClick={() => handlePlanClick(planName)}
+                      >
+                        <h2 className="plan-name">{planName}</h2>
+                      </div>
+
+                   
+                      <img
+                        src={comboImage}
+                        alt="Combo Plan"
+                        className="plan-image"
+                        style={{
+                          marginLeft: "0rem",
+                          marginTop: "5rem",
+                          
+                        }}
+                      />
+                      <div style={{marginRight:'6rem', fontSize:'1.2rem'}}> Combo</div>
+                    </div>{" "}
+                  </>
                 )}
               </div>
             </div>
@@ -95,22 +144,30 @@ const SubscriptionPlan = () => {
                 <h2 className="heading-head">{selectedPlan}</h2>
                 <div className="plans-details">
                   <div className="plan-types-container">
-                    {Object.entries(subscriptions[selectedPlan]).map(([planType, meals]) => (
-                      <div key={planType} className="plan-type">
-                        <h3>{planType}</h3>
-                        <div className="meals-container">
-                          {Object.keys(meals).map((mealType) => (
-                            <div
-                              key={mealType}
-                              className="meal-card"
-                              onClick={() => handleMealClick(selectedPlan, planType, mealType)}
-                            >
-                              {mealType}
-                            </div>
-                          ))}
+                    {Object.entries(subscriptions[selectedPlan]).map(
+                      ([planType, meals]) => (
+                        <div key={planType} className="plan-type">
+                          <h3>{planType}</h3>
+                          <div className="meals-container">
+                            {Object.keys(meals).map((mealType) => (
+                              <div
+                                key={mealType}
+                                className="meal-card"
+                                onClick={() =>
+                                  handleMealClick(
+                                    selectedPlan,
+                                    planType,
+                                    mealType
+                                  )
+                                }
+                              >
+                                {mealType}
+                              </div>
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      )
+                    )}
                   </div>
                 </div>
               </div>

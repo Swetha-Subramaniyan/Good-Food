@@ -2,123 +2,110 @@
   padding: 2rem;
   min-height: 100vh;
   width: 100%;
-  margin-top: 3rem;  
- 
+  margin-top: 3rem;
 }
-
 
 #contact-section {
   max-width: 1200px;
   margin: auto;
 }
- 
-.contact-button h1 {
+
+.contact-button  {
   text-align: center;
   color: #f55c36;
   font-weight: bold;
- 
+  margin-bottom: 5rem;
 }
- 
+
 .name-foot .bold-word {
   font-weight: bold;
   font-size: 1.2rem;
   color: #222;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
 }
- 
- 
+
 .footer-down {
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;  
+  flex-wrap: wrap;
   gap: 1rem;
- 
- 
+  margin-bottom: 3rem;
 }
- 
+
 .name-foot {
   flex: 1 1 calc(25% - 1rem);
   text-align: center;
   min-width: 200px;
   background-color: #f9f8f8;
-  padding: 3rem;
- 
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
- 
- 
-.name-foot {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+.bold-word{
+  text-decoration: underline;
+
 }
- 
-.foot {
- 
+
+.name-foot img {
   height: 5rem;
   width: 5rem;
-  margin-bottom: 10px;
-  border-radius: 8px;
- 
+  margin-bottom: 1rem;
+  border-radius: 50%;
 }
- 
-.icon-footer{
+
+.icon-footer {
   margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.icon-footer div {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
- 
- 
- 
- 
- 
-.copyright-section {
-  text-align: center;
-  margin-top: 13rem;
-  padding: 10px;
-  background-color: #f8f8f8;
-  font-size: 14px;
-  color: #555;
-  width: 100%;
-  font-weight: bold;
-}
- 
-@media screen and (max-width: 768px) {
-  .copyright-section {
-    font-size: 12px;
-    padding: 8px;
-  }
-}
- 
+
+
+
 @media (max-width: 1024px) {
   .footer-down {
-      flex-wrap: wrap;
-      justify-content: center;
+    flex-wrap: wrap;
+    justify-content: center;
   }
   .name-foot {
-      flex: 1 1 calc(50% - 1rem);
+    flex: 1 1 calc(50% - 1rem);
+    padding: 1.5rem;
   }
 }
- 
+
 @media (max-width: 768px) {
   .footer-down {
-      flex-direction: column;
-      align-items: center;
+    flex-direction: column;
+    align-items: center;
   }
- 
+
   .name-foot {
     flex: 1 1 100%;
+    padding: 2rem;
   }
- 
-  .name-foot img{
-    display: flex;
+
+  .name-foot img {
     height: 4rem;
-    margin-left: 0rem;
- 
+    width: 4rem;
+    margin-bottom: 1rem;
   }
+
+  .icon-footer {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .icon-footer div {
+    margin-top: 1rem;
+  }
+
+
 }
- 
-
- 
-

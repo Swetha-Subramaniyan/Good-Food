@@ -1,237 +1,119 @@
 .vision-container {
-  text-align: center;
-  height: 100vh;
- 
-}
- 
-.vision-container h2{
-  margin-top: 4rem;
-}
- 
-.text-center {
-  font-size: 2rem;
-  /* color: white; */
-  background-color: rgb(73, 26, 26);
-  padding: 0.5rem 1.5rem;
-  border-radius: 5px;
-  display: inline-block;
-  background-color: orangered;
-  background: linear-gradient(135deg, #dee4e8, #f78c28);
-  background: linear-gradient(135deg, #abd5ec, #f78c28);
-  box-shadow: 2px 4px 10px #5d89a1;
-
-}
- 
- 
-.vm-box {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 2rem;
- 
-}
- 
- 
-.vision-back {
-  background-color: aliceblue;  
-  /* background-color: #FF7F50;
-  background-color: #2f4f4f; */
-  padding: 2rem;
-  flex: 1;
-  border-radius: 10px;
-  text-align: left;
-  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
-  background: linear-gradient(135deg, #f7f8f9, #d6def0);
-  font-size: 1.1rem;
-  margin-left: 2rem;
-  margin-right: 2rem;
-}
- 
-.vision-head {
-  font-size: 1.8rem;
-  color: rgb(39, 62, 62);
-  display: block;
-  margin-bottom: 0.8rem;  
-}
- 
-@media (max-width: 1024px) {
-  .vm-box {
-    flex-direction: column;
-    align-items: center;
-    padding: 1.5rem;
-  }
- 
-  .vision-back {
-    width: 100%;
-    text-align: center;
-  }
- 
-  .vision-head {
-    font-size: 1.6rem;
-  }
-}
- 
-@media (max-width: 768px) {
-  .vision-container {
-    padding: 1rem;
-    margin-top: 4rem;
-  }
- 
-  .text-center {
-    font-size: 1.6rem;
-    padding: 0.4rem 1rem;
-  }
- 
-  .vm-box {
-    gap: 1rem;
-    padding: 1rem;
-  }
- 
-  .vision-back {
-    padding: 1.5rem;
-    font-size: 1rem;
-  }
- 
-  .vision-head {
-    font-size: 1.4rem;
-  }
-}
- 
-@media (max-width: 480px) {
-  .text-center {
-    font-size: 1.4rem;
-    padding: 0.3rem 0.8rem;
-  }
- 
-  .vision-back {
-    padding: 1.2rem;
-    font-size: 0.9rem;
-  }
- 
-  .vision-head {
-    font-size: 1.3rem;
-  }
-}
- 
- 
-
-.vision-container {
-  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 1rem;
   height: 100vh;
-  padding: 2rem;
+  /* background-color: #555; */
 }
 
-.vision-container h2 {
-  margin-top: 4rem;
-}
-
-.text-center {
+.vision-header h2 {
+  text-align: center;
   font-size: 2rem;
-  background-color: orangered;
-  background: linear-gradient(135deg, #abd5ec, #f78c28);
-  box-shadow: 2px 4px 10px #5d89a1;
-  padding: 0.5rem 1.5rem;
-  border-radius: 5px;
-  display: inline-block;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 2rem;
 }
 
 .vm-box {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  width: 98%;
   gap: 2rem;
-  margin-top: 2rem;
+  margin-bottom: 3rem;
 }
 
-.vision-back {
-  background: linear-gradient(135deg, #f7f8f9, #d6def0);
-  padding: 2rem;
+.vm-box b {
+  color: #0e5398;
+  text-decoration: underline;
+  font-size: 1.3rem;
+}
+
+.vision-left {
+  flex: 0 1 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.vision-right {
+  flex: 1; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.blue-box {
+  background-color: #0066cc; 
+  background-image: url(../../../assets/mi.jpg);
+  width: 92%; 
+  height: 200px;
+  border-radius: 8px;
+  background-size: cover;
+  object-fit: contain;
+}
+
+.blue-box {
+  background-color: #0066cc; 
+  background-image: url('https://www.slideegg.com/image/catalog/10904-mission-vision-powerpoint-template.png');
+  background-size: cover; 
+  background-position: center; 
+  width: 93%;
+  height: 220px;
+  border-radius: 8px;
+}
+
+
+.vm-box .vision-left-content,
+.vm-box .mission-right-content {
   flex: 1;
-  border-radius: 10px;
-  text-align: left;
-  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
-  font-size: 1.1rem;
-  margin-left: 2rem;
-  margin-right: 2rem;
+  padding: 2rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin: 2.5rem;
 }
 
 .vision-head {
-  font-size: 1.8rem;
-  color: rgb(39, 62, 62);
-  display: block;
-  margin-bottom: 0.8rem;
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #333;
+  margin-right: 3rem;
 }
 
-@media (max-width: 1024px) {
-  .vm-box {
-    flex-direction: column;
-    align-items: center;
-    padding: 1.5rem;
-  }
-
-  .vision-back {
-    width: 100%;
-    text-align: center;
-    margin-left: 0;
-    margin-right: 0;
-  }
-
-  .vision-head {
-    font-size: 1.6rem;
-  }
+.vision-left-content p,
+.mission-right-content p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
 }
 
 @media (max-width: 768px) {
   .vision-container {
-    padding: 1rem;
-    margin-top: 4rem;
-  }
-
-  .text-center {
-    font-size: 1.6rem;
-    padding: 0.4rem 1rem;
+    padding: 2rem 1rem;
   }
 
   .vm-box {
-    gap: 1rem;
-    padding: 1rem;
+    flex-direction: column;
+    align-items: center;
   }
 
-  .vision-back {
-    padding: 1.5rem;
-    font-size: 1rem;
+  .vision-left,
+  .vision-right {
+    flex: 1 1 100%;
+    justify-content: flex-start;
+  }
+
+  .blue-box {
+    height: 150px;
   }
 
   .vision-head {
     font-size: 1.4rem;
   }
-}
 
-@media (max-width: 480px) {
-  .vision-container {
-    padding: 0.5rem;
-  }
-
-  .vision-container h2{
-    padding: 1.5rem;
-    font-size: 1.5rem;
-  }
-  .text-center {
-    font-size: 1.4rem;
-    padding: 0.3rem 0.8rem;
-  }
-
-  .vm-box {
-    gap: 1rem;
-    padding: 1rem;
-  }
-
-  .vision-back {
-    padding: 1.2rem;
-    font-size: 0.9rem;
-  }
-
-  .vision-head {
-    font-size: 1.3rem;
+  .vision-left-content p,
+  .mission-right-content p {
+    font-size: 0.95rem;
   }
 }
