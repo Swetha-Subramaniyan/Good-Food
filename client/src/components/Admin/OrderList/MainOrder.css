@@ -30,12 +30,11 @@
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s ease;
-  color:black;
 }
 
 .toggle-btn.active {
   background: dodgerblue !important;
-  color: black;
+  color: white;
 }
 
 
@@ -334,11 +333,23 @@
 
 .status-badge.pending {
   background-color: #FFC107;
-  color: #333;
+  color: #000;
 }
 
-.status-badge.out-for-delivery {
-  background-color: #2196F3;
+
+.status-badge.ready {
+  background-color: #EF6C00;
+  color: #fff;
+}
+
+
+.status-badge.preparing {
+  background-color: #FF9800;
+  color: #fff;
+}
+
+.status-badge.out_for_delivery {
+  background-color: #8BC34A;
   color: white;
 }
 

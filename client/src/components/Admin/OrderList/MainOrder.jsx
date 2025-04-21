@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "./MainOrder.css";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import PaginationControls from "../AddSubscription/PaginationControls";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import Button from "@mui/material/Button";
+import PaginationControls from "../../Utils/PaginationControls";
 import { useSidebar } from "../../Sidebar/SidebarContext";
-
+import { AiOutlineConsoleSql } from "react-icons/ai";
 
 const MainAddSubscription = () => {
-
-  const token = localStorage.getItem("token");
-
+  const fileInputRef = useRef(null);
   const { isOpen } = useSidebar();
 
   const [orderDetails, setOrderDetails] = useState({
@@ -28,6 +28,7 @@ const MainAddSubscription = () => {
     entriesPerPage: 10,
     totalEntries: 0,
   });
+  const [selectedFile, setSelectedFile] = useState(null);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -44,6 +45,7 @@ const MainAddSubscription = () => {
           `${process.env.REACT_APP_BACKEND_SERVER_URL}/admin/getOrderDetails`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
+        console.log("S", response.data);
         setOrderDetails(response.data.data);
       } catch (error) {
         console.error("Error fetching order details:", error);
@@ -66,76 +68,73 @@ const MainAddSubscription = () => {
     verifyUserPosition();
   }, []);
 
+  const handleStatusUpdate = async (order, newStatus, imageFile = null) => {
+    try {
+      const token = localStorage.getItem("token");
+      const formData = new FormData();
+      console.log("order", order);
 
-const handleChefStatusChange = async (orderId, newStatus) => {
-  try {
-    const response = await axios.post(
-      "/api/orders/chef-status",
-      { order_id: orderId, status: newStatus },
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
-  } catch (error) {
-    console.error("Error updating status:", error);
-  }
-};
+      formData.append("order_id", order.order_id);
+      formData.append("status", newStatus);
+      formData.append("customer_id", order.customer.id);
+      formData.append("address_id", order.delivery_details.address_id);
+      formData.append("subscription_id", order.subscription.id);
 
-const handleAdminStatusChange = async (orderId, newStatus, deliveryUserId) => {
-  try {
-    const response = await axios.post(
-      "/api/orders/admin-status",
-      { order_id: orderId, status: newStatus, delivery_user_id: deliveryUserId },
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
-  } catch (error) {
-    console.error("Error updating status:", error);
-  }
-};
+      if (imageFile) {
+        formData.append("image", imageFile);
+      }
 
-const handleDeliveryStatusChange = async (orderId, deliveryProof) => {
-  try {
-    const response = await axios.post(
-      "/api/orders/delivery-status",
-      { order_id: orderId, status: "DELIVERED", delivery_proof: deliveryProof },
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
-  } catch (error) {
-    console.error("Error updating status:", error);
-  }
-};
+      await axios.post(
+        `${process.env.REACT_APP_BACKEND_SERVER_URL}/admin/updateOrderStatus`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": imageFile
+              ? "multipart/form-data"
+              : "application/json",
+          },
+        }
+      );
+
+      setOrderDetails((prev) => ({
+        ...prev,
+        orders: prev.orders.map((o) =>
+          o.order_id === order.order_id ? { ...o, order_status: newStatus } : o
+        ),
+      }));
+
+      if (newStatus === "DELIVERED") {
+        setImagePreview(null);
+        setSelectedOrder(null);
+        setSelectedFile(null);
+      }
+    } catch (error) {
+      console.error("Error updating order status:", error);
+    }
+  };
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
+      setSelectedFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImagePreview(reader.result);
+        setSelectedOrder((prev) => ({
+          ...prev,
+          imagePreview: reader.result,
+        }));
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleSubmitDeliveryProof = async () => {
-    if (!imagePreview || !selectedOrder) return;
-
+  const triggerFileInput = () => {
     try {
-      const token = localStorage.getItem("token");
-      await axios.post(
-        `${process.env.REACT_APP_BACKEND_SERVER_URL}/admin/submitDeliveryProof`,
-        {
-          order_id: selectedOrder.order_id,
-          image: imagePreview,
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      const response = await axios.get(
-        `${process.env.REACT_APP_BACKEND_SERVER_URL}/admin/getOrderDetails`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      setOrderDetails(response.data.data);
-      setImagePreview(null);
-      setSelectedOrder(null);
+      fileInputRef.current.click();
     } catch (error) {
-      console.error("Error submitting delivery proof:", error);
+      console.error("Error accessing camera:", error);
+      alert("Could not access camera. Please check permissions.");
     }
   };
 
@@ -213,6 +212,12 @@ const handleDeliveryStatusChange = async (orderId, deliveryProof) => {
   const preparingCount = filteredOrders.filter(
     (o) => o.order_status === "PREPARING"
   ).length;
+  const readyCount = filteredOrders.filter(
+    (o) => o.order_status === "READY"
+  ).length;
+  const outForDeliveryCount = filteredOrders.filter(
+    (o) => o.order_status === "OUT_FOR_DELIVERY"
+  ).length;
   const deliveredCount = filteredOrders.filter(
     (o) => o.order_status === "DELIVERED"
   ).length;
@@ -224,10 +229,50 @@ const handleDeliveryStatusChange = async (orderId, deliveryProof) => {
   const currentPagePreparing = currentPageOrders.filter(
     (o) => o.order_status === "PREPARING"
   ).length;
+  const currentPageReady = currentPageOrders.filter(
+    (o) => o.order_status === "READY"
+  ).length;
+  const currentPageOutForDelivery = currentPageOrders.filter(
+    (o) => o.order_status === "OUT_FOR_DELIVERY"
+  ).length;
   const currentPageDelivered = currentPageOrders.filter(
     (o) => o.order_status === "DELIVERED"
   ).length;
 
+  const renderChefStatusDropdown = (order) => {
+    return (
+      <select
+        value={order.order_status}
+        onChange={(e) => handleStatusUpdate(order, e.target.value)}
+      >
+        <option value="PENDING">Pending</option>
+        <option value="PREPARING">Preparing</option>
+        <option value="READY">Ready</option>
+      </select>
+    );
+  };
+
+  const renderDeliveryStatusDropdown = (order) => {
+    return (
+      <select
+        value={order.order_status}
+        onChange={(e) => {
+          if (e.target.value === "DELIVERED") {
+            if (!selectedOrder?.imagePreview) {
+              alert("Please upload delivery proof first");
+              return;
+            }
+            handleStatusUpdate(order, e.target.value, selectedFile);
+          } else {
+            handleStatusUpdate(order, e.target.value);
+          }
+        }}
+      >
+        <option value="OUT_FOR_DELIVERY">Out for Delivery</option>
+        <option value="DELIVERED">Delivered</option>
+      </select>
+    );
+  };
 
   useEffect(() => {
     setPagination((prev) => ({
@@ -236,253 +281,280 @@ const handleDeliveryStatusChange = async (orderId, deliveryProof) => {
     }));
   }, [filteredOrders]);
 
+  const getImage = (imageName) => {
+    try {
+      const images = require.context("../../../assets", true);
+      return images(`./${imageName}`);
+    } catch (e) {
+      console.error(`Error loading image ${imageName}:`, e);
+      return require("../../../assets/idly.jpg").default;
+    }
+  };
+
+  console.log("sess", selectedOrder);
+
   return (
     <div className={`main-content ${isOpen ? "shifted" : ""}`}>
       {isDelivery ? (
         <div className="delivery-management-container">
-          <h1 className="page-title">Delivery Management</h1>
-
-          <div className="pagination-header">
-            <div className="entries-per-page">
-              <span>Show:</span>
-              <select
-                value={pagination.entriesPerPage}
-                onChange={(e) =>
-                  handleEntriesPerPageChange(Number(e.target.value))
-                }
-              >
-                {[5, 10, 20, 50, 100].map((size) => (
-                  <option key={size} value={size}>
-                    {size}
-                  </option>
-                ))}
-              </select>
-              <span>entries</span>
-            </div>
-            <div className="filter-section">
-              <select
-                value={selectedMealType}
-                onChange={(e) => {
-                  setSelectedMealType(e.target.value);
-                  setPagination((prev) => ({ ...prev, currentPage: 1 }));
-                }}
-              >
-                <option value="all">All Meal Types</option>
-                <option value="Breakfast">Breakfast</option>
-                <option value="Lunch">Lunch</option>
-                <option value="Dinner">Dinner</option>
-                <option value="Combo">Combo</option>
-              </select>
-            </div>
-          </div>
-
           {selectedOrder ? (
-            <div className="delivery-detail-view">
-              <div className="customer-info-card">
-                <div className="customer-header">
-                  <img
-                    src={selectedOrder.customer.profile_picture}
-                    alt={selectedOrder.customer.name}
-                    className="customer-avatar-large"
-                  />
-                  <div>
-                    <h2>{selectedOrder.customer.name}</h2>
-                    <p>{selectedOrder.customer.email}</p>
+            <>
+              <Button
+                variant="contained"
+                startIcon={<ArrowBackIcon />}
+                onClick={() => setSelectedOrder(null)}
+                sx={{ mb: 2 }}
+              />
+              <div className="delivery-detail-view">
+                <div className="customer-info-card">
+                  <div className="customer-header">
+                    <img
+                      src={selectedOrder.customer.profile_picture}
+                      alt={selectedOrder.customer.name}
+                      className="customer-avatar-large"
+                    />
+                    <div>
+                      <h2>{selectedOrder.customer.name}</h2>
+                      <p>{selectedOrder.customer.email}</p>
+                    </div>
                   </div>
-                </div>
 
-                <div className="delivery-info">
-                  <h3>Delivery Information</h3>
-                  <p>
-                    <strong>Recipient:</strong>{" "}
-                    {selectedOrder.delivery_details.recipient_name}
-                  </p>
-                  <p>
-                    <strong>Address:</strong>{" "}
-                    {selectedOrder.delivery_details.full_address}
-                  </p>
-                  <p>
-                    <strong>Phone:</strong>{" "}
-                    {selectedOrder.delivery_details.phone}
-                  </p>
-                  {selectedOrder.delivery_details.alternate_phone && (
+                  <div className="delivery-info">
+                    <h3>Delivery Information</h3>
                     <p>
-                      <strong>Alternate Phone:</strong>{" "}
-                      {selectedOrder.delivery_details.alternate_phone}
+                      <strong>Recipient:</strong>{" "}
+                      {selectedOrder.delivery_details.recipient_name}
                     </p>
-                  )}
-                  <p>
-                    <strong>Special Instructions:</strong>{" "}
-                    {selectedOrder.delivery_details.special_instructions ||
-                      "None"}
-                  </p>
-                </div>
+                    <p>
+                      <strong>Address:</strong>{" "}
+                      {selectedOrder.delivery_details.full_address}
+                    </p>
+                    <p>
+                      <strong>Phone:</strong>{" "}
+                      {selectedOrder.delivery_details.phone}
+                    </p>
+                    {selectedOrder.delivery_details.alternate_phone && (
+                      <p>
+                        <strong>Alternate Phone:</strong>{" "}
+                        {selectedOrder.delivery_details.alternate_phone}
+                      </p>
+                    )}
+                    <p>
+                      <strong>Special Instructions:</strong>{" "}
+                      {selectedOrder.delivery_details.special_instructions ||
+                        "None"}
+                    </p>
+                  </div>
 
-                <div className="order-items">
-                  <h3>Order Items</h3>
-                  <ul>
-                    {selectedOrder.items.map((item) => (
-                      <li key={item.id}>
-                        {item.name} ({item.type}) - Qty: {item.quantity || 1}
-                        {item.description && (
-                          <div className="item-description">
-                            {item.description}
-                          </div>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                  <div className="order-items">
+                    <h3>Order Items</h3>
+                    <ul>
+                      {selectedOrder.items.map((item) => (
+                        <li key={item.id}>
+                          {item.name} ({item.type}) - Qty: {item.quantity || 1}
+                          {item.description && (
+                            <div className="item-description">
+                              {item.description}
+                            </div>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
-                <div className="status-controls">
-                  <h3>Update Status</h3>
-                  <select
-                    value={selectedOrder.order_status}
-                    onChange={(e) => {
-                      const newStatus = e.target.value;
-                      setSelectedOrder({
-                        ...selectedOrder,
-                        order_status: newStatus,
-                      });
-                      handleDeliveryStatusChange(selectedOrder.order_id, newStatus);
-                    }}
-                  >
-                    <option value="OUT_FOR_DELIVERY">Out for Delivery</option>
-                    <option value="DELIVERED">Delivered</option>
-                  </select>
-                </div>
-
-                {selectedOrder.order_status === "DELIVERED" && (
                   <div className="delivery-proof">
                     <h3>Delivery Proof</h3>
-                    {imagePreview ? (
-                      <div className="image-preview">
-                        <img src={imagePreview} alt="Delivery proof" />
-                        <button onClick={handleSubmitDeliveryProof}>
-                          Submit Proof
-                        </button>
-                        <button onClick={() => setImagePreview(null)}>
-                          Change Image
-                        </button>
-                      </div>
+
+                    {selectedOrder.delivery?.image_url ? (
+                      <img
+                        src={getImage(selectedOrder.delivery.image_url)}
+                        style={{
+                          width: "15rem",
+                          height: "10rem",
+                          objectFit: "cover",
+                        }}
+                      />
                     ) : (
-                      <div className="image-upload">
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={handleImageUpload}
-                          capture="environment"
-                        />
-                        <p>Take a photo of the food at the doorstep</p>
-                      </div>
+                      <>
+                        {selectedOrder?.imagePreview ? (
+                          <div className="image-preview">
+                            <img
+                              src={selectedOrder.imagePreview}
+                              alt="Delivery proof preview"
+                            />
+                            <div className="proof-actions">
+                              <Button
+                                variant="outlined"
+                                onClick={() => {
+                                  setSelectedFile(null);
+                                  setSelectedOrder((prev) => ({
+                                    ...prev,
+                                    imagePreview: null,
+                                  }));
+                                }}
+                              >
+                                Retake Photo
+                              </Button>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="image-upload">
+                            <input
+                              type="file"
+                              accept="image/*"
+                              ref={fileInputRef}
+                              onChange={handleImageUpload}
+                              capture="environment"
+                              style={{ display: "none" }}
+                            />
+                            <p onClick={triggerFileInput}>
+                              Take a photo of the food at the doorstep
+                            </p>
+                          </div>
+                        )}
+                      </>
                     )}
                   </div>
-                )}
 
-                <button
-                  className="back-button"
-                  onClick={() => setSelectedOrder(null)}
-                >
-                  Back to Orders
-                </button>
+                  <div className="status-controls">
+                    <h3>Update Status</h3>
+                    {renderDeliveryStatusDropdown(selectedOrder)}
+                  </div>
+                </div>
               </div>
-            </div>
+            </>
           ) : (
-            <div className="delivery-orders-list">
-              <table>
-                <thead>
-                  <tr>
-                    <th
-                      className="sortable-header"
-                      onClick={() => requestSort("order_id")}
-                    >
-                      Order ID {getSortIcon("order_id")}
-                    </th>
-                    <th>Customer</th>
-                    <th
-                      className="sortable-header"
-                      onClick={() => requestSort("subscription.meal_type.name")}
-                    >
-                      Meal Type {getSortIcon("subscription.meal_type.name")}
-                    </th>
-                    <th>Delivery Address</th>
-                    <th
-                      className="sortable-header"
-                      onClick={() => requestSort("order_status")}
-                    >
-                      Status {getSortIcon("order_status")}
-                    </th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {getPaginatedData().map((order) => (
-                    <tr key={order.order_id}>
-                      <td>{order.order_id}</td>
-                      <td>
-                        <div className="customer-info">
-                          <img
-                            src={order.customer.profile_picture}
-                            alt={order.customer.name}
-                            className="customer-avatar"
-                          />
-                          <span>{order.customer.name}</span>
-                        </div>
-                      </td>
-                      <td>{order.subscription.meal_type.name}</td>
-                      <td>{order.delivery_details.full_address}</td>
-                      <td>
-                        <span
-                          className={`status-badge ${order.order_status
-                            .toLowerCase()
-                            .replace("_", "-")}`}
-                        >
-                          {order.order_status.replace("_", " ")}
-                        </span>
-                      </td>
-                      <td>
-                        <button
-                          className="view-details-btn"
-                          onClick={() => setSelectedOrder(order)}
-                        >
-                          View Details
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              <PaginationControls
-                currentPage={pagination.currentPage}
-                totalPages={Math.ceil(
-                  pagination.totalEntries / pagination.entriesPerPage
-                )}
-                onPageChange={handlePageChange}
-                entriesPerPage={pagination.entriesPerPage}
-                totalEntries={pagination.totalEntries}
-                onEntriesPerPageChange={handleEntriesPerPageChange}
-              />
-            </div>
-          )}
+            <>
+              <h1 className="page-title">Delivery Management</h1>
+              <div className="pagination-header">
+                <div className="entries-per-page">
+                  <span>Show:</span>
+                  <select
+                    value={pagination.entriesPerPage}
+                    onChange={(e) =>
+                      handleEntriesPerPageChange(Number(e.target.value))
+                    }
+                  >
+                    {[5, 10, 20, 50, 100].map((size) => (
+                      <option key={size} value={size}>
+                        {size}
+                      </option>
+                    ))}
+                  </select>
+                  <span>entries</span>
+                </div>
+                <div className="filter-section">
+                  <select
+                    value={selectedMealType}
+                    onChange={(e) => {
+                      setSelectedMealType(e.target.value);
+                      setPagination((prev) => ({ ...prev, currentPage: 1 }));
+                    }}
+                  >
+                    <option value="all">All Meal Types</option>
+                    <option value="Breakfast">Breakfast</option>
+                    <option value="Lunch">Lunch</option>
+                    <option value="Dinner">Dinner</option>
+                    <option value="Combo">Combo</option>
+                  </select>
+                </div>
+              </div>
 
-          <div className="stats-section">
-            <div className="stat-card">
-              <h3>Total Orders</h3>
-              <p>{totalFilteredOrders}</p>
-            </div>
-            <div className="stat-card">
-              <h3>Pending</h3>
-              <p>{pendingCount}</p>
-            </div>
-            <div className="stat-card">
-              <h3>Out for Delivery</h3>
-              <p>{preparingCount}</p>
-            </div>
-            <div className="stat-card">
-              <h3>Delivered</h3>
-              <p>{deliveredCount}</p>
-            </div>
-          </div>
+              <div className="delivery-orders-list">
+                <table>
+                  <thead>
+                    <tr>
+                      <th
+                        className="sortable-header"
+                        onClick={() => requestSort("order_id")}
+                      >
+                        Order ID {getSortIcon("order_id")}
+                      </th>
+                      <th>Customer</th>
+                      <th
+                        className="sortable-header"
+                        onClick={() =>
+                          requestSort("subscription.meal_type.name")
+                        }
+                      >
+                        Meal Type {getSortIcon("subscription.meal_type.name")}
+                      </th>
+                      <th>Delivery Address</th>
+                      <th
+                        className="sortable-header"
+                        onClick={() => requestSort("order_status")}
+                      >
+                        Status {getSortIcon("order_status")}
+                      </th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {getPaginatedData().map((order) => (
+                      <tr key={order.order_id}>
+                        <td>{order.order_id}</td>
+                        <td>
+                          <div className="customer-info">
+                            <img
+                              src={order.customer.profile_picture}
+                              alt={order.customer.name}
+                              className="customer-avatar"
+                            />
+                            <span>{order.customer.name}</span>
+                          </div>
+                        </td>
+                        <td>{order.subscription.meal_type.name}</td>
+                        <td>{order.delivery_details.full_address}</td>
+                        <td>
+                          <span
+                            className={`status-badge ${order.order_status
+                              .toLowerCase()}`}
+                          >
+                            {order.order_status.replace("_", " ")}
+                          </span>
+                        </td>
+                        <td>
+                          <button
+                            className="view-details-btn"
+                            onClick={() => setSelectedOrder(order)}
+                          >
+                            View Details
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <PaginationControls
+                  currentPage={pagination.currentPage}
+                  totalPages={Math.ceil(
+                    pagination.totalEntries / pagination.entriesPerPage
+                  )}
+                  onPageChange={handlePageChange}
+                  entriesPerPage={pagination.entriesPerPage}
+                  totalEntries={pagination.totalEntries}
+                  onEntriesPerPageChange={handleEntriesPerPageChange}
+                />
+              </div>
+
+              <div className="stats-section">
+                <div className="stat-card">
+                  <h3>Total Orders</h3>
+                  <p>{totalFilteredOrders}</p>
+                </div>
+                <div className="stat-card">
+                  <h3>Out for Delivery</h3>
+                  <p>{outForDeliveryCount}</p>
+                  <span>({currentPageOutForDelivery} on this page)</span>
+                </div>
+                <div className="stat-card">
+                  <h3>Delivered</h3>
+                  <p>{deliveredCount}</p>
+                  <span>({currentPageDelivered} on this page)</span>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       ) : (
         <div className="order-management-container">
@@ -567,6 +639,7 @@ const handleDeliveryStatusChange = async (orderId, deliveryProof) => {
                         Quantity {getSortIcon("meta.total_items")}
                       </th>
                       <th>Special Instructions</th>
+
                       <th
                         className="sortable-header"
                         onClick={() => requestSort("order_status")}
@@ -602,13 +675,7 @@ const handleDeliveryStatusChange = async (orderId, deliveryProof) => {
                           )}
                         </td>
                         <td>{order.delivery_details.special_instructions}</td>
-                        <td>
-                          <select defaultValue={order.order_status}>
-                            <option value="PENDING">Pending</option>
-                            <option value="PREPARING">Preparing</option>
-                            <option value="READY">Ready</option>
-                          </select>
-                        </td>
+                        <td>{renderChefStatusDropdown(order)}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -716,7 +783,6 @@ const handleDeliveryStatusChange = async (orderId, deliveryProof) => {
             <div className="stat-card">
               <h3>Total Orders</h3>
               <p>{totalFilteredOrders}</p>
-              <span>{pagination.entriesPerPage} per page</span>
             </div>
             <div className="stat-card">
               <h3>Pending</h3>
@@ -724,14 +790,14 @@ const handleDeliveryStatusChange = async (orderId, deliveryProof) => {
               <span>({currentPagePending} on this page)</span>
             </div>
             <div className="stat-card">
-              <h3>Out for Delivery</h3>
+              <h3>Preparing</h3>
               <p>{preparingCount}</p>
               <span>({currentPagePreparing} on this page)</span>
             </div>
             <div className="stat-card">
-              <h3>Delivered</h3>
-              <p>{deliveredCount}</p>
-              <span>({currentPageDelivered} on this page)</span>
+              <h3>Ready</h3>
+              <p>{readyCount}</p>
+              <span>({currentPageReady} on this page)</span>
             </div>
           </div>
         </div>

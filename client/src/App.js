@@ -30,6 +30,7 @@ import DurationManagement from "./components/Admin/AddSubscription/DurationsMana
 import ParentPlanManagement from "./components/Admin/AddSubscription/ParentPlansManagement";
 import TierManagement from "./components/Admin/AddSubscription/TiersManagement";
 import FoodItemsManagement from "./components/Admin/AddSubscription/FoodItemsManagement";
+import CancelledSubscriptions from "./components/Admin/AddSubscription/CancelSubscription";
 
 import UnprotectedController from "./components/Controller/UnprotectedController";
 import UserSidebar from "./Pages/User/UserSidebar";
@@ -67,7 +68,6 @@ const App = () => {
               <Route path="Home/:id" element={<Home />} />
               <Route path="Navbar" element={<Navbar />} />
               <Route path="Order" element={<Order />} />
-              {/* <Route path="Account" element={<Account />} /> */}
               <Route path="Cart" element={<Cart />} />
               <Route
                 path="SubscriptionCalender"
@@ -88,6 +88,7 @@ const App = () => {
               <Route path="duration" element={<DurationManagement />} />
               <Route path="quantity" element={<QuantityManagement />} />
               <Route path="fooditems" element={<FoodItemsManagement />} />
+              <Route path="cancelSubscription" element={<CancelledSubscriptions />} />
             </Route>
           </Route>
         </Routes>

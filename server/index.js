@@ -50,7 +50,7 @@ const dailyMenuRoutes = require('./routes/daily_menu.routes')
  
 
 
-
+ 
 const app = express();
 var morgan = require('morgan')
 const port = 5001
@@ -105,8 +105,6 @@ app.use('/payment',paymentRoutes)
 app.use('/subscriptionOrder',subscriptionOrderRoutes)
 app.use('/order',orderCartRoutes)
 app.use('/orders',orderRoutes)
-
-
 
 // app.use('/criteria',orderCriteriaRoutes)
 // app.use('/orderItem',orderItemRoutes)

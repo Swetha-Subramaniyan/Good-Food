@@ -34,7 +34,7 @@ const SignIn = ({ isVisible, onClose, role }) => {
           if (role === "USER") {
             navigate("/user/SubscriptionCalender");
           } else {
-            navigate("/admin/addsubscription");
+            navigate("/admin/orderlist");
           }
         }
       }

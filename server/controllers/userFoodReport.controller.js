@@ -144,20 +144,33 @@ const getUserFoodReport = async (req, res) => {
                         end_date: true,
                         validity_days: true,
                         created_at: true,
-                        userSubscriptionFood: {
-                            select: {
-                                ordered_date: true,
-                                breakfast_qty: true,
-                                lunch_qty: true,
-                                dinner_qty: true
+                        Subscription:{
+                            include:{
+                                parentPlan1:true,
+                                TierSub:true,
+                                MealSub:true,
+                                FoodSubscription:true,
+                                FoodSubscription:{
+                                    include:{
+                                        FoodItems:{
+                                            include:{
+                                                SubscriptionPriceDetails:true
+                                            }
+                                        }
+                                    }
+                                },
                             }
-                        }
+                        },
+                        userSubscriptionSkippedCart:true
                     }
                 }
             }
         });
 
-        res.status(200).json({ message: "Food Report Success", getReport });
+        const Meal_types = await prisma.Meal_type.findMany();
+
+
+        res.status(200).json({ message: "Food Report Success", getReport, Meal_types });
     } catch (error) {
         console.log(error);
         res.status(404).json({ error: "No report found" });

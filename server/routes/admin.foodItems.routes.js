@@ -11,6 +11,6 @@ const router=express.Router()
 router.post('/createFoodItem', upload.single('image'), createFoodItem);
 router.get('/getFoodItem', getAllFoodItems);
 router.get('/:id', getFoodItemById);
-router.put('/:id', updateFoodItem);
+router.put('/:id', upload.single('image'),  updateFoodItem);
 router.delete('/:id', deleteFoodItem);
 module.exports = router;

@@ -16,7 +16,7 @@ const startMealSchedulers = async (req, res) => {
         console.log(`[TOMORROW'S ORDERS] Running at ${hour}:${minute} for meal type ${meal_type_id}`);
         await generateOrders(meal_type_id, true); 
       });
-      
+       
       console.log(`Scheduled TOMORROW'S orders for meal ${meal_type_id} to run daily at ${hour}:${minute}`);
     } else {
       const [hour, minute] = cutoff_time.split(":").map(Number);
@@ -37,8 +37,7 @@ async function generateOrders(mealTypeId, isForTomorrow) {
   if (isForTomorrow) {
     targetDate.setDate(targetDate.getDate() + 1); 
   }
-
- 
+  
   const activeSubscriptions = await prisma.user_Subscription.findMany({
     where: {
       status: "Active",

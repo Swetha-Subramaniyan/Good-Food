@@ -42,15 +42,15 @@ const LandingPage = () => {
               color="primary"
               onClick={() => handleLogin("USER")}
             >
-              User Login
+              Login
             </Button>
-            <Button
+            {/* <Button
               variant="contained"
               color="primary"
               onClick={() => handleLogin("ADMIN")}
             >
               Admin Login
-            </Button>
+            </Button> */}
           </Stack>
           {isSignInVisible && (
             <SignIn isVisible={isSignInVisible} onClose={handleCloseSignIn} role={role}  />

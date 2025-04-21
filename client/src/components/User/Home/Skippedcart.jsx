@@ -20,7 +20,9 @@ const SkippedCart = () => {
         );
         console.log(response.data.skippedCartDetails);
 
-        setSkippedCartDetails(response.data.skippedCartDetails);
+        if (response.data.skippedCartDetails) {
+          setSkippedCartDetails(response.data.skippedCartDetails);
+        }
       } catch (error) {
         console.error("Error fetching skipped cart details:", error);
       }
@@ -56,7 +58,7 @@ const SkippedCart = () => {
     return currentDate <= validity;
   };
 
-  const filteredSkippedCartDetails = skippedCartDetails.filter(
+  const filteredSkippedCartDetails = skippedCartDetails?.filter(
     (subscription) => subscription.skipped_details.length > 0
   );
 

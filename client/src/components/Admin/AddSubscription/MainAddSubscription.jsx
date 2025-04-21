@@ -12,7 +12,7 @@ import DurationModal from "./DurationModal";
 import ParentPlanModal from "./ParentPlanModal";
 import QuantityModal from "./QuantityModal";
 import FoodItemModal from "./FoodItemModal";
-import PaginationControls from "./PaginationControls";
+import PaginationControls from "../../Utils/PaginationControls";
 import { Checkbox, FormControlLabel } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 

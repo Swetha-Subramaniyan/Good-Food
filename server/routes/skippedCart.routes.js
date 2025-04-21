@@ -1,6 +1,10 @@
 const express = require('express')
-const { skipCart, getSkippedMeals, reorderSkippedItem  } = require('../controllers/skippedCart.controller')
+const { skipCart, getSkippedMeals, reorderSkippedItem, getSkipCriteria  } = require('../controllers/skippedCart.controller')
 const router = express.Router()
+
+
+
+router.get("/getSkipCriteria", getSkipCriteria);
 
 // SEND EMAIL ON SUCESSFULL ADDRESS UPDATE
 // METHOD : POST

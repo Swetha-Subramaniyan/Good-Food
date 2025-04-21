@@ -4,11 +4,10 @@ const prisma = new PrismaClient();
 
 const createFoodItem = async (req, res) => {
   try {
-    console.log("req.boy", req.body, req.file)
+    console.log("req.boy", req.body, req.file);
     const { item_name, item_type, description, price } = req.body;
 
     const image_url = req.file ? req.file.filename : null;
-    
 
     const pricingDetails = await prisma.pricing_Details.create({
       data: {
@@ -80,8 +79,11 @@ const getFoodItemById = async (req, res) => {
 
 const updateFoodItem = async (req, res) => {
   try {
+    console.log("req.boy", req.body, req.file);
+
     const { id } = req.params;
     const { item_name, item_type, description, price } = req.body;
+    const image_url = req.file ? req.file.filename : null;
 
     const foodItem = await prisma.food_Items.findUnique({
       where: { id: parseInt(id) },
@@ -91,7 +93,7 @@ const updateFoodItem = async (req, res) => {
       return res.status(404).json({ error: "Food item not found" });
     }
 
-    await prisma.pricing_Details.update({
+    const pricingDetails = await prisma.pricing_Details.update({
       where: { id: foodItem.price_id },
       data: {
         price: parseFloat(price),
@@ -104,6 +106,8 @@ const updateFoodItem = async (req, res) => {
         item_name,
         item_type,
         description,
+        price_id: pricingDetails.id,
+        image_url,
       },
     });
 

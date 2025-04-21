@@ -17,10 +17,8 @@ import ListItemText from "@mui/material/ListItemText";
 import { useNavigate } from "react-router-dom";
 import { useSidebar } from "../../Sidebar/SidebarContext";
 import LogoutIcon from "@mui/icons-material/Logout";
-import Tooltip from "@mui/material/Tooltip";
 import {
   Inbox as InboxIcon,
-  Mail as MailIcon,
   ListAlt as SubscriptionIcon,
   People as UsersIcon,
   Restaurant as MenuIcon,
@@ -30,6 +28,7 @@ import {
   Straighten as QuantityIcon,
   Fastfood as FoodIcon,
 } from "@mui/icons-material";
+import { Typography } from "@mui/material";
 
 const drawerWidth = 240;
 
@@ -77,19 +76,25 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 
+const role = localStorage.getItem("role");
+
 const menuItems = [
+  { text: "Orders", icon: <InboxIcon />, path: "/admin/orderlist" },
   {
     text: "Subscription Plan",
     icon: <SubscriptionIcon />,
     path: "/admin/addsubscription",
   },
-  { text: "Orders", icon: <InboxIcon />, path: "/admin/orderlist" },
   {
     text: "Subscribed Users",
     icon: <UsersIcon />,
     path: "/admin/subscribedusers",
   },
-  { text: "Daily Menu (In-Progress)", icon: <MenuIcon />, path: "/admin/dailymenu" },
+  {
+    text: "Daily Menu (In-Progress)",
+    icon: <MenuIcon />,
+    path: "/admin/dailymenu",
+  },
   {
     text: "Parent Plan Management",
     icon: <ParentPlanIcon />,
@@ -107,11 +112,21 @@ const menuItems = [
     path: "/admin/quantity",
   },
   {
-    text: "Food Items Management",
+    text: "Food Items Managem ent",
     icon: <FoodIcon />,
     path: "/admin/fooditems",
   },
+  {
+    text: "Cancelled Subscription",
+    icon: <FoodIcon />,
+    path: "/admin/cancelSubscription",
+  },
 ];
+
+const filteredMenuItems =
+  role === "DELIVERY"
+    ? menuItems.filter((item) => item.text === "Orders")
+    : menuItems;
 
 const MainSidebar = () => {
   const theme = useTheme();
@@ -142,19 +157,70 @@ const MainSidebar = () => {
         open={open}
         sx={{ backgroundColor: "primary.main" }}
       >
-        <Toolbar sx={{ justifyContent: "space-between" }}>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ mr: 2, ...(open && { display: "none" }) }}
+        <Toolbar
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              paddingLeft:"0.5rem",
+              "&:hover": {
+                backgroundColor: "rgba(255, 255, 255, 0.1)",
+                borderRadius: 1,
+               
+              },
+            }}
           >
-            <MenuIcon />
-          </IconButton>
-          <IconButton color="inherit" onClick={handleLogout}>
-            <LogoutIcon />
-          </IconButton>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              sx={{
+                mr: 2,
+                ...(open && { display: "none" }),
+                "&:hover": {
+                  backgroundColor: "transparent", 
+                },
+              }}
+            >
+              <MenuIcon />
+              <Typography variant="body1" component="span" sx={{ ml: 1 }}>
+                Menu
+              </Typography>
+            </IconButton>
+          </Box>
+
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              "&:hover": {
+                backgroundColor: "rgba(255, 255, 255, 0.1)",
+                borderRadius: 1,
+              },
+            }}
+          >
+            <IconButton
+              color="inherit"
+              onClick={handleLogout}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "transparent", 
+                },
+              }}
+            >
+              <Typography variant="body1" component="span" sx={{ mr: 1 }}>
+                Logout
+              </Typography>
+              <LogoutIcon />
+            </IconButton>
+          </Box>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -181,7 +247,7 @@ const MainSidebar = () => {
         </DrawerHeader>
         <Divider />
         <List>
-          {menuItems.map((item) => (
+          {filteredMenuItems.map((item) => (
             <ListItem key={item.text} disablePadding>
               <ListItemButton
                 onClick={() => navigate(item.path)}

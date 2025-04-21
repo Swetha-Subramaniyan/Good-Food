@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import PaginationControls from '../AddSubscription/PaginationControls';
+import PaginationControls from '../../Utils/PaginationControls';
 import './MainSubscribedUsers.css';
 import { useSidebar } from '../../Sidebar/SidebarContext';
 

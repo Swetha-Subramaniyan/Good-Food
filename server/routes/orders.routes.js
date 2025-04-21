@@ -1,5 +1,5 @@
 const express=require('express')
-const { createOrder, getAllOrders, updateOrder } = require('../controllers/orders.controller')
+const { createOrder, getAllOrders, updateOrder, getUserOrders } = require('../controllers/orders.controller')
 const { addOrderItem } = require('../controllers/orderItem.controller')
 const { getOrderCriteria, createOrderCriteria, checkOrderTiming } = require('../controllers/orderCriteria.controller')
 const router=express.Router()
@@ -7,6 +7,8 @@ const router=express.Router()
 
 router.post('/create-order',createOrder)
 router.get('/orders',getAllOrders)
+router.get('/userorders',getUserOrders)
+
 router.post('/add-item',addOrderItem)
 router.get('/criteria',getOrderCriteria) 
 router.post('/criteria',createOrderCriteria)

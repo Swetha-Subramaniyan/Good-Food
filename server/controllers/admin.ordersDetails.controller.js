@@ -26,7 +26,13 @@ const getOrderDetails = async (req, res) => {
       },
     });
 
-    const formattedOrders = orders.map((order) => {
+    const formattedOrders = await Promise.all (orders.map(async(order) => {
+
+      const delivery = await prisma.Delivery.findFirst({
+        where: {
+          order_id: order.id,
+        },
+      });
       const subscriptionItems = order.SubscriptionId.FoodSubscription.map(
         (item) => ({
           id: item.FoodItems.id,
@@ -83,6 +89,7 @@ const getOrderDetails = async (req, res) => {
           recipient_name: order.orderedAddress.name,
           phone: order.orderedAddress.phone_number,
           alternate_phone: order.orderedAddress.alternate_number,
+          image_url:order,
           full_address: [
             order.orderedAddress.street,
             order.orderedAddress.landmark,
@@ -102,13 +109,14 @@ const getOrderDetails = async (req, res) => {
           quantity: item.quantity || 1,
           source: item.from,
         })),
+        delivery,
         meta: {
           total_items: allItems.length,
           is_combo: order.SubscriptionId.MealSub.meal_type === "Combo",
           charges: order.charges,
         },
       };
-    });
+    }));
 
     const ordersByMealType = formattedOrders.reduce((acc, order) => {
       const mealType = order.subscription.meal_type.name;
@@ -153,8 +161,6 @@ const verifyUserPosition = async (req, res) => {
       return res.status(404).json({ success: false, message: "User not found" });
     }
 
-    console.log("user", user)
-
     const isDelivery = user[0].position === "DELIVERY";
 
     return res.status(200).json({ 
@@ -171,63 +177,139 @@ const verifyUserPosition = async (req, res) => {
 
 const updateOrderStatus = async (req, res) => {
   try {
-    const { order_id, status } = req.body;
-    const user_id = req.user.user_id; 
-    const user_position = req.user.position; 
+    const { order_id, status, customer_id, address_id, subscription_id } = req.body;
+    const {user_id} = req.user;
+    const image_url = req.file ? req.file.filename : null;
+
+
+    const position = await prisma.User_Position.findMany({
+      where: { user_id: user_id }
+    });
+
+    const userposition = position[0].position
 
     const validStatuses = {
       CHEF: ["PENDING", "PREPARING", "READY"],
-      ADMIN: ["READY", "OUT_FOR_DELIVERY", "DELIVERED"],
+      ADMIN: ["PENDING", "PREPARING", "READY"],
       DELIVERY: ["OUT_FOR_DELIVERY", "DELIVERED"]
     };
 
-    if (!validStatuses[user_position]?.includes(status)) {
+    if (!validStatuses[userposition]?.includes(status)) {
       return res.status(400).json({
         success: false,
-        message: `Invalid status transition for ${user_position}`
+        message: `Invalid status transition for ${userposition}`
       });
     }
+
     const result = await prisma.$transaction(async (prisma) => {
-      const updatedOrder = await prisma.orders.update({
-        where: { id: order_id },
-        data: { status }
+      const updatedOrder = await prisma.Orders.update({
+        where: { id: parseInt(order_id)  },
+        data: {  status }
       });
 
-      const orderResponse = await prisma.order_Response.create({
-        data: {
-          status,
+      const subscription = await prisma.User_Subscription.findFirst({
+        where: {
           customer_id: updatedOrder.customer_id,
-          delivery_user_id: user_position === "DELIVERY" ? user_id : null,
-          user_subscription_id: updatedOrder.subscription_id
-        }
+        },
+        orderBy: {
+          created_at: 'desc', 
+        },include: { userSubscriptionDetails: true }
       });
 
-      if (status === "DELIVERED") {
-        await prisma.delivery.create({
-          data: {
-            oredr_id: order_id,
-            delivery_user_id: user_id,
-            customer_id: updatedOrder.customer_id,
-            delivery_status: "DELIVERED",
-            delivery_response: "SUCCESS"
-          }
+      if (status === "PREPARING" && (userposition === "CHEF" || userposition === "ADMIN")) {
+        await prisma.Order_Response.createMany({
+          data: [
+            {
+              status: "PENDING",
+              address_id: parseInt(address_id),
+              customer_id: subscription.user_id,
+              delivery_user_id: 0,
+              chef_id: user_id,
+              order_id: parseInt(order_id),
+              user_subscription_id: parseInt(subscription_id),
+              customer_id:parseInt(customer_id)
+            },
+            {
+              status: "PREPARING",
+              address_id: parseInt(address_id),
+              delivery_user_id: 0,
+              chef_id: user_id,
+              order_id: parseInt(order_id),
+              user_subscription_id: parseInt(subscription_id),
+              customer_id:parseInt(customer_id)
+            }
+          ]
         });
       }
 
-      return { updatedOrder, orderResponse };
-    });
+      if (status === "READY" && (userposition === "CHEF" || userposition === "ADMIN")) {
+        await prisma.Order_Response.createMany({
+          data: [
+            {
+              status: "READY",
+              address_id: parseInt(address_id),
+              delivery_user_id: 0,
+              chef_id: user_id,
+              order_id: parseInt(order_id),
+              user_subscription_id: parseInt(subscription_id),
+              customer_id:parseInt(customer_id)
+            },
+            {
+              status: "OUT_FOR_DELIVERY",
+              address_id: parseInt(address_id),
+              delivery_user_id: 0,
+              chef_id: user_id,
+              order_id: parseInt(order_id),
+              user_subscription_id: parseInt(subscription_id),
+              customer_id:parseInt(customer_id)
+            }
+          ]
+        });
+      }
+      
+      if (status === "DELIVERED") {
+        await prisma.Delivery.createMany({
+          data: {
+            order_id: parseInt(order_id),
+            delivery_user_id: user_id,
+            customer_id: customer_id,
+            delivery_status: "DELIVERED",
+            delivery_response: "DELIVERED",
+            image_url: image_url
+          }
+        });
 
-    if (["READY", "OUT_FOR_DELIVERY"].includes(status)) {
-      await createNotification(
-        result.updatedOrder.customer_id,
-        `Your order #${order_id} status changed to ${status}`,
-        "ORDER_STATUS_UPDATE"
-      );
-    }
+        await prisma.Orders.update({
+          where: { id: parseInt(order_id) },
+          data: { status: "DELIVERED" }
+        });
+
+        await prisma.Order_Response.updateMany({
+          where: {
+            order_id: parseInt(order_id)
+          },
+          data: {
+            delivery_user_id: user_id 
+          }
+        });
+
+        await prisma.Order_Response.create({
+          data: 
+            {
+              status: "DELIVERED",
+              address_id: parseInt(address_id),
+              delivery_user_id: user_id,
+              chef_id: user_id,
+              order_id: parseInt(order_id),
+              user_subscription_id: parseInt(subscription_id),
+              customer_id:parseInt(customer_id)
+            }
+        });
+      }
+    });
 
     res.status(200).json({
       success: true,
-      data: result
     });
 
   } catch (error) {
@@ -240,89 +322,5 @@ const updateOrderStatus = async (req, res) => {
   }
 };
 
-const chefStatusUpdate = async (req, res) => {
-  try {
-    const { order_id, status } = req.body;
-    
-    if (!["PREPARING", "READY"].includes(status)) {
-      return res.status(400).json({
-        success: false,
-        message: "Chef can only update status to PREPARING or READY"
-      });
-    }
 
-    req.user = { ...req.user, position: "CHEF" };
-    return updateOrderStatus(req, res);
-
-  } catch (error) {
-    console.error("Error in chef status update:", error);
-    res.status(500).json({
-      success: false,
-      message: "Failed to update chef status",
-      error: error.message
-    });
-  }
-};
-
-const adminStatusUpdate = async (req, res) => {
-  try {
-    const { order_id, status, delivery_user_id } = req.body;
-    
-    if (!["OUT_FOR_DELIVERY", "DELIVERED"].includes(status)) {
-      return res.status(400).json({
-        success: false,
-        message: "Admin can only update status to OUT_FOR_DELIVERY or DELIVERED"
-      });
-    }
-
-    if (status === "OUT_FOR_DELIVERY" && !delivery_user_id) {
-      return res.status(400).json({
-        success: false,
-        message: "Delivery user ID is required for OUT_FOR_DELIVERY status"
-      });
-    }
-    req.user = { ...req.user, position: "ADMIN" };
-    return updateOrderStatus(req, res);
-
-  } catch (error) {
-    console.error("Error in admin status update:", error);
-    res.status(500).json({
-      success: false,
-      message: "Failed to update admin status",
-      error: error.message
-    });
-  }
-};
-
-const deliveryStatusUpdate = async (req, res) => {
-  try {
-    const { order_id, status, delivery_proof } = req.body;
-    
-    if (status !== "DELIVERED") {
-      return res.status(400).json({
-        success: false,
-        message: "Delivery can only update status to DELIVERED"
-      });
-    }
-
-    if (!delivery_proof) {
-      return res.status(400).json({
-        success: false,
-        message: "Delivery proof is required for DELIVERED status"
-      });
-    }
-
-    req.user = { ...req.user, position: "DELIVERY" };
-    return updateOrderStatus(req, res);
-
-  } catch (error) {
-    console.error("Error in delivery status update:", error);
-    res.status(500).json({
-      success: false,
-      message: "Failed to update delivery status",
-      error: error.message
-    });
-  }
-};
-
-module.exports = { getOrderDetails,verifyUserPosition, updateOrderStatus, chefStatusUpdate,adminStatusUpdate, deliveryStatusUpdate };
+module.exports = { getOrderDetails,verifyUserPosition, updateOrderStatus};
